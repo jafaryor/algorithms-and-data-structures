@@ -1,0 +1,25 @@
+{
+    "name": "algorithms-and-data-structures",
+    "version": "1.0.0",
+    "description": "All Algorithms",
+    "main": "dist/index.js",
+    "typings": "dist/index.d.ts",
+    "repository": "www.jafar.me",
+    "author": "Jafar Yormahmadzoda",
+    "license": "MIT",
+    "scripts": {
+        "compile": "npm run lint && npm run remove-dist && tsc",
+        "test": "jest",
+        "watch-test": "npm test -- --watchAll",
+        "lint": "tslint -c tslint.json 'src/**/*.ts'",
+        "remove-dist": "rm -rf dist"
+    },
+    "devDependencies": {
+        "@types/jest": "^22.2.3",
+        "jest": "^22.4.3",
+        "ts-jest": "^22.4.6",
+        "tslint": "^5.10.0",
+        "typescript": "^2.8.3"
+    },
+    "dependencies": {}
+}
