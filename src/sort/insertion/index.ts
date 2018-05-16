@@ -12,7 +12,7 @@ function InsertionSort(array: number[]) {
          * in the unsorted section, shift all items in the sorted section over
          * by one. This creates space in which to insert the value.
          */
-        for (j = i - 1; j > 0 && array[j] > key; --j) {
+        for (j = i - 1; j >= 0 && array[j] > key; --j) {
             array[j + 1] = array[j];
         }
 
