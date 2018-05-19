@@ -1,13 +1,11 @@
+import bubbleSort from './bubble';
 import insertionSort from './insertion';
 import mergeSort from './merge';
 
-describe('InsertionSortSpec', () => {
-    const sortArray = (arr: number[]) => {
-        if (!arr) return;
-
-        return arr.sort((a: number, b: number) => a - b);
-    };
+describe('SortingSpecs', () => {
     let array: number[];
+    let sortedArray: number[];
+    const sortArray = (arr: number[]) => arr.sort((a: number, b: number) => a - b);
 
     test('basic case', () => {
         array = [5, 9, 13, 4, 1, 6];
@@ -38,6 +36,11 @@ describe('InsertionSortSpec', () => {
         // array = undefined;
     });
 
-    afterEach(() => expect(insertionSort(array)).toEqual(sortArray(array)));
-    afterEach(() => expect(mergeSort(array)).toEqual(sortArray(array)));
+    afterEach(() => {
+        sortedArray = sortArray(array);
+
+        expect(insertionSort(array)).toEqual(sortedArray);
+        expect(mergeSort(array)).toEqual(sortedArray);
+        expect(bubbleSort(array)).toEqual(sortedArray);
+    });
 });

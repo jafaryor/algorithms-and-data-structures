@@ -19,7 +19,7 @@ function merge(left: number[], right: number[]): number[] {
 }
 
 function mergeSort(array: number[]): number[] {
-    if (!array.length || array.length === 1) {
+    if (array.length <= 1) {
         // return if empty array or one item is in the array
         return array;
     }
