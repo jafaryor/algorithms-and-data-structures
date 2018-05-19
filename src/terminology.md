@@ -5,6 +5,6 @@
 
     An algorithm which is not in-place is sometimes called __not-in-place__ or __out-of-place__.
 
-* __stable sort algorithms__ - sort identical elements in the same order that they appear in the input.
+* __stable sort algorithms__ - sort identical elements in the same order that they appear in the input. Preserves the input order of equal elements in the sorted output.
 
 * __adaptive sort__ - if it takes advantage of existing order in its input. It benefits from the presortedness in the input sequence – or a limited amount of disorder for various definitions of measures of disorder – and sorts faster.

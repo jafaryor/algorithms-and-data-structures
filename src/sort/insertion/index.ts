@@ -1,4 +1,4 @@
-function InsertionSort(array: number[]) {
+function insertionSort(array: number[]): number[] {
     let i: number;          // index into unsorted section
     let j: number;          // index into sorted section
     let key: number;        // the value currently being compared
@@ -22,4 +22,4 @@ function InsertionSort(array: number[]) {
     return array;
 }
 
-export default InsertionSort;
+export default insertionSort;

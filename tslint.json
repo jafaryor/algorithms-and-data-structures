@@ -6,7 +6,12 @@
     "jsRules": {},
     "rules": {
         "eofline": false,
-        "quotemark": [ true, "single", "avoid-escape" ]
+        "quotemark": [true, "single", "avoid-escape"],
+        "trailing-comma": [true, {
+            "multiline": "never",
+            "singleline": "never"
+        }],
+        "curly": [true, "ignore-same-line"]
     },
     "rulesDirectory": []
 }

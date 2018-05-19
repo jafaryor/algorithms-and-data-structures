@@ -27,3 +27,23 @@ Suppose we have a worst-case running time as `an^2+bn+c`. The __rate of growth__
 We usually consider one algorithm to be _more efficient_ than another if its worstcase running time has a lower order of growth. Due to constant factors and lower-order terms, an algorithm whose running time has a higher order of growth might take less time for small inputs than an algorithm whose running time has a lower-order of growth. But for large enough inputs, `O(n^2)` algorithm, for example, will run more quickly in the worst case than a `O(n^3)` algorithm.
 
 ## Designing Algorithms
+### Incremental Approach
+We can choose from a wide range of algorithm design techniques. An __incremental approach__: having sorted the subarray `A[1..j-1]` , we inserted the single element `A[j]` into its proper place, yielding the sorted subarray `A[1..j]`.
+
+> For _insertion sort_, we used an _incremental approach_
+
+### The Divide-and-Conquer Approach
+The divide-and-conquer paradigm involves three steps at each level of the recursion:
+* __Divide__ the problem into a number of subproblems that are smaller instances of the same problem.
+* __Conquer__ the subproblems by solving them recursively. If the subproblem sizes are small enough, however, just solve the subproblems in a straightforward manner.
+* __Combine__ these solutions to create a solution to the original problem.
+
+> The _merge sort_ algorithm closely follows the _divide-and-conquer paradigm_
+
+When an algorithm contains a recursive call to itself, we can often describe its running time by a __recurrence equation__ or __recurrence__, which describes the overall running time
+
+A recurrence for the running time of a _divide-and-conquer algorithm_ falls out from the three steps of the basic paradigm. As before, we let `T(n)` be the running time on a problem of size `n`. If the problem size is small enough, say `n <= c` for some constant `c`, the straightforward solution takes constant time, which we write as `O(1)`. Suppose that our division of the problem yields `a` subproblems, each of which is `1/b` the size of the original. (For merge sort, both `a` and `b` are `2`, but we shall see many divide-and-conquer algorithms in which `a != b`) It takes time `T(n/b)` to solve one subproblem of size `n/b`, and so it takes time `aT(n/b)` to solve `a` of them. If we take `D(n)` time to divide the problem into subproblems and `C(n)` time to combine the solutions to the subproblems into the solution to the original problem, we get the recurrence.
+
+![divide-and-conquer-recurrence](./images/divide-and-conquer-recurrence.png)
+
+
