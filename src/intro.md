@@ -243,4 +243,60 @@ Which is the definition of `Θ(f(n)+g(n))` with `c1 = 1/2`, `c2 = 1`.
 
 * Logarithms
 
-    
+    Notations:
+    * `lg(n) = log_2(n)` (binary logarithm)
+    * `ln(n) = log_e(n)` (natural logarithm)
+    * `lg^k(n) = (lg(n))^k` (exponentiation)
+    * `lg lg(n) = lg(lg(n))` (composition)
+
+    For all real `a > 0`, `b > 0`, `c > 0`, `n`, and bases of algorithms are not `1`:
+    * `a = b^(log_b(a))`
+    * `log_c(ab) = log_c(a) + log_c(b)`
+    * `log_b(a^n) = n log_b(a)`
+    * `log_b(a) = log_c(a) / log_c(b)` (*)
+    * `log_b(1/a) = -log_b(a)`
+    * `log_b(a) = 1 / log_a(b)`
+    * `a^(log_b(c)) = c^(log_b(a))`
+
+    > __By equation (*), changing the base of a logarithm from one constant to another changes the value of the logarithm by only a constant factor, and so we shall often use the notation `lg n` when we don’t care about constant factors, such as in `O`-notation.__
+
+    ![ln-series.png](./images/ln-series.png)
+
+    Any positive polynomial function grows faster than any polylogarithmic function: `lg^b(n) = o(n^1))`
+
+* Factorials
+
+    A weak upper bound on the factorial function is `n! ≤ n^n`.
+    * `n! = o(n^n)`
+    * `n! = ω(2^n)`
+    * `lg(n!) = θ(n lg(n))`
+
+    Strirling's approximation:
+
+    ![](./images/stirling-approximation.png)
+
+    The following equation also holds for all `n ≥ 1`:
+
+    ![](./images/n!-equation.png)
+
+* Functional Iteration
+
+    We use the notation `f^(i)(n)` to denote the function `f(n)` iteratively applied `i` times to an initial value of `n`.
+
+    ![functional-iteration](./images/functional-iteration.png)
+
+    `lg^*(n) = min{i ≥ 0: lg^(i)(n) ≤ 1}`
+
+* Fibonacci Numbers
+
+    `F_0 = 0`, `F_1 = 1`, `F_i = F_i-1 + F_i-2` for `i ≥ 2`
+
+    Thus, each Fibonacci number is the sum of the two previous ones, yielding the sequence: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, ...
+
+    Fibonacci numbers are related to the __golden ratio `φ`__ and to its _conjugate `Φ`_, which are the two roots of the equation `x^2 = x + 1`
+    1. `φ = (1 + sqrt(5))/2 = 1.61803...`
+    2. `Φ = (1 - sqrt(5))/2 = -0.61803...`
+
+    Specifically, we have:
+    * `F_i = (φ^i - Φ^i)/sqrt(5)`
+    * `F_i =` &lfloor; `φ^i/sqrt(5) + 1/2` &rfloor;
