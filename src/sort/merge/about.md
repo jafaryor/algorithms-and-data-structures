@@ -2,8 +2,8 @@
 
 |  | Worst | Average | Best |
 |:--|:-:|:-:|---|
-| __Time Complexity__ | `O(n logn)` | `O(n logn)` | `O(n logn)` |
-| __Space Complexity__ | `O(1)` | `O(1)` | `O(1)` |
+| __Time Complexity__ | `O(n logn)` | `θ(n logn)` | `Ω(n logn)` |
+| __Space Complexity__ | `O(1)` | `θ(1)` | `Ω(1)` |
 
 Merge Sort - is an efficient, general-purpose, comparison-based sorting algorithm.
 

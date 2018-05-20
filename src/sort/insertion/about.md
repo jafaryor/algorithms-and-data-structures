@@ -2,8 +2,8 @@
 
 |  | Worst | Average | Best |
 |:--|:-:|:-:|---|
-| __Time Complexity__ | `O(n^2)` | `O(n^2)` | `O(n)` |
-| __Space Complexity__ | `O(1)` | `O(1)` | `O(1)` |
+| __Time Complexity__ | `O(n^2)` | `θ(n^2)` | `Ω(n)` |
+| __Space Complexity__ | `O(1)` | `θ(1)` | `Ω(1)` |
 
 * __Efficient for (quite) small data sets__, much like other quadratic sorting algorithms
 * More efficient in practice than most other simple quadratic (i.e., `O(n^2)`) algorithms such as _selection sort_ or _bubble sort_.
