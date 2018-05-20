@@ -140,7 +140,107 @@ In case: `2n^2 + θ(n) = θ(n^2)`, the right-hand side of an equation provides a
 
 ### Comparing functions
 Assume that `f(n)` and `g(n)` are asymptotically positive.
+* Transitivity
+    * `f(n) = θ(g(n)) and g(n) = θ(h(n)) imply f(n) = θ(h(n))`
+    * `f(n) = O(g(n)) and g(n) = O(h(n)) imply f(n) = O(h(n))`
+    * `f(n) = Ω(g(n)) and g(n) = Ω(h(n)) imply f(n) = Ω(h(n))`
+    * `f(n) = o(g(n)) and g(n) = o(h(n)) imply f(n) = o(h(n))`
+    * `f(n) = ω(g(n)) and g(n) = ω(h(n)) imply f(n) = ω(h(n))`
+* Reflexivity
+    * `f(n) = θ(f(n))`
+    * `f(n) = O(f(n))`
+    * `f(n) = Ω(f(n))`
+* Symmetry
+    * `f(n) = θ(g(n)) if and only if g(n) = θ(f(n))`
+* Transpose symmetry
+    * `f(n) = O(g(n)) if and only if g(n) = Ω(f(n))`
+    * `f(n) = o(g(n)) if and only if g(n) = ω(f(n))`
+    
+We say that `f(n)` is __asymptotically smaller__ than `g(n)` if `f(n) = o(g(n))`, and `f(n)` is __asymptotically larger__ than `g(n)` if `f(n) = ω(g(n))`.
 
+__Although any two real numbers can be compared, not all functions are asymptotically comparable. That is, for two functions `f(n)` and `g(n)`, it may be the case that neither `f(n) = O(g(n))` nor `f(n) = Ω(g(n))` holds.__ For example, we cannot compare the functions `n` and `n^(1 + sin n)` using asymptotic notation, since the value of the exponent in `n^(1 + sin n)` oscillates between `0` and `2`, taking on all values in between.
 
+> __Assertion__: `max(f(n), g(n)) = Θ(f(n)+g(n))`
 
+Prove:
 
+Let `n0 = max(n1,n2)`. Some obvious things for `n > n0`:
+
+`f(n) ≤ max(f(n),g(n))` and `g(n) ≤ max(f(n),g(n))`
+
+Sum two above inequalities: `(f(n)+g(n))/2 ≤ max(f(n),g(n))`
+
+We know: `max(f(n),g(n)) ≤ f(n)+g(n)`
+
+From the last two inequalities, we get:
+
+`0 ≤ (f(n)+g(n)) / 2 ≤ max(f(n),g(n)) ≤ f(n)+g(n)` for `n > n0`
+
+Which is the definition of `Θ(f(n)+g(n))` with `c1 = 1/2`, `c2 = 1`.
+
+### Standard Notations and Common Functions
+* Monotonicity
+    * `f(n)` is __monotonically increasing__ if `m ≤ n` ⇒ `f(m) ≤ f(n)`
+    * `f(n)` is __monotonically decreasing__ if `m ≥ n` ⇒ `f(m) ≥ f(n)`
+    * `f(n)` is __strictly increasing__ if `m<n` ⇒ `f(m) < f(n)`
+    * `f(n)` is __strictly decreasing__ if `m>n` ⇒ `f(m) > f(n)`
+
+* Floors and ceilings
+
+    For any real number `x`, we denote the greatest integer less than or equal to `x` by __&lfloor; `x` &rfloor;__ (read _“the floor of `x`”_) and the least integer greater than or equal to `x` by __&lceil; `x` &rceil;__ (read _“the ceiling of x”_).
+    
+    For all real `x`, `x - 1 <` &lfloor; `x` &rfloor; `≤ x ≤` &lceil; `x` &rceil; `< x + 1`
+
+    For any integer `n`, &lfloor; `n/2` &rfloor; + &lceil; `n/2` &rceil; = `n`
+
+    ![floors-and-ceiling-formulas](./images/floors-and-ceiling-formulas.png)
+
+* Modular arithmetic
+
+    For any integer `a` and any positive integer `n`, the value `a mod n` is the __remainder__ (or residue) of the quotient `a/n`: `a mod n = a - n` &lfloor; `a/n` &rfloor;
+
+    It follows that: `0 ≤ a mod n < n`
+
+    If `(a mod n) = (b mod n)`, we write `a ≡ b (mod n)` and say that `a` is __equivalent__ to `b`, modulo `n`. In other words, `a ≡ b (mod n)` if `a` and `b` have the same remainder when divided by `n`.
+
+    Equivalently, `a ≡ b (mod n)` if and only if `n` is a divisor of `b - a`.
+
+* Polynomials
+
+    Given a nonnegative integer `d`, a __polynomial in `n` of degree `d`__ is a function `p(n)` of the form.
+
+    ![polynomials](./images/polynomials.png)
+
+    where the constants `a0, a1, ... ad` are the _coefficients_ of the polynomial and `ad ≠ 0`.
+
+    A polynomial is _asymptotically positive_ if and only if `ad > 0`.
+
+    For an asymptotically positive polynomial `p(n)` of degree `d` , we have `p(n) = θ(n^d)`.
+
+    We say that a function `f(n)` is __polynomially bounded__ if `f(n) = O(n^k)` for some constant `k`.
+
+* Exponentials
+
+    For all real `a > 0`, `m`, and `n`, we have the following identities:
+    * `a^0 = 1`
+    * `a^1 = a`
+    * `a^-1 = 1/a`
+    * `(a^m)^n = a^mn`
+    * `(a^m)^n = (a^n)^m`
+    * `a^m * a^n = a^(m+n)`
+
+    When convenient, we shall assume `0^0 = 1`.
+
+    As any exponential function with a base strictly greater than 1 grows faster than any polynomial function, `n^b = o(a^n)`
+
+    ![e-formula](./images/e-formula.png)
+
+    For all real x, we have the inequality: `e^x ≥ 1 + x`, where equality holds only when `x = 0`.
+    
+    When `|x| ≤ 1`, we have the approximation `1 + x ≤ e^x ≤ 1 + x + x^2`
+
+    ![e-limit](./images/e-limit.png)
+
+* Logarithms
+
+    
