@@ -1,4 +1,4 @@
-import { findMaxSubArray, KadaneAlgorithms } from '../max-subarray';
+import { findMaxSubArray, KadaneAlgorithm } from '../max-subarray';
 
 describe('MaxSubArrayProblemSpec', () => {
     let input: number[];
@@ -32,7 +32,5 @@ describe('MaxSubArrayProblemSpec', () => {
     });
 
     // Kadane Algorihm
-    afterEach(() => {
-        expect(KadaneAlgorithms(input)).toEqual(sum);
-    });
+    afterEach(() => expect(KadaneAlgorithm(input)).toEqual(sum));
 });

@@ -84,7 +84,7 @@ export function findMaxSubArray(array: number[]): ISubArray {
  * @complexity - O(n)
  * @param array - the array
  */
-export function KadaneAlgorithms(array: number[]): number {
+export function KadaneAlgorithm(array: number[]): number {
     let currentMax: number = array[0];
 
     return array.reduce((max, item) => {
