@@ -1,4 +1,4 @@
-import { findMaxSubArray, KadaneAlgorithm } from '../max-subarray';
+import { findMaximumSubArray, KadaneAlgorithm } from '../max-subarray';
 
 describe('MaxSubArrayProblemSpec', () => {
     let input: number[];
@@ -25,7 +25,7 @@ describe('MaxSubArrayProblemSpec', () => {
 
     // Devide and Conquire Method
     afterEach(() => {
-        const result = findMaxSubArray(input);
+        const result = findMaximumSubArray(input);
 
         expect(input.slice(result.left, result.right + 1)).toEqual(output);
         expect(result.sum).toEqual(sum);

@@ -51,15 +51,15 @@ function findMaxCrossingSubArray(array: number[], left: number, mid: number, rig
  * @param left - left index in the array
  * @param right - right index in the array
  */
-function findMaximumSubArray(array: number[], left: number, right: number): ISubArray {
+function findMaxSubArray(array: number[], left: number, right: number): ISubArray {
     if (left === right) {
         // base case - only one element
         return { left, right, sum: array[left] };
     } else {
         const mid = Math.floor((left + right) / 2);
 
-        const leftSubArr = findMaximumSubArray(array, left, mid);
-        const rightSubArr = findMaximumSubArray(array, mid + 1, right);
+        const leftSubArr = findMaxSubArray(array, left, mid);
+        const rightSubArr = findMaxSubArray(array, mid + 1, right);
         const crossSubArr = findMaxCrossingSubArray(array, left, mid, right);
 
         if (leftSubArr.sum >= rightSubArr.sum && leftSubArr.sum >= crossSubArr.sum) {
@@ -75,8 +75,8 @@ function findMaximumSubArray(array: number[], left: number, right: number): ISub
     }
 }
 
-export function findMaxSubArray(array: number[]): ISubArray {
-    return findMaximumSubArray(array, 0, array.length - 1);
+export function findMaximumSubArray(array: number[]): ISubArray {
+    return findMaxSubArray(array, 0, array.length - 1);
 }
 
 /**
