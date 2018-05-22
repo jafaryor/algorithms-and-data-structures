@@ -59,12 +59,4 @@ class InvertionCounter {
     }
 }
 
-const counter = new InvertionCounter();
-
-/*
-*/
-
-console.log(counter.count([7, 6, 5, 4, 3, 2, 1]));  // (7 * (7 - 1)) / 2 = 21
-console.log(counter.count([4, 3, 2, 1]));  // (4 * (4 - 1)) / 2 = 6
-
-export default InvertionCounter;
+export const invertionCounter = new InvertionCounter();

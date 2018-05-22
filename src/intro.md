@@ -264,6 +264,10 @@ Which is the definition of `Θ(f(n)+g(n))` with `c1 = 1/2`, `c2 = 1`.
 
     Any positive polynomial function grows faster than any polylogarithmic function: `lg^b(n) = o(n^1))`
 
+    Some useful equations:
+
+    ![some-equations](./images/some-equations.png)
+
 * Factorials
 
     A weak upper bound on the factorial function is `n! ≤ n^n`.
@@ -300,3 +304,4 @@ Which is the definition of `Θ(f(n)+g(n))` with `c1 = 1/2`, `c2 = 1`.
     Specifically, we have:
     * `F_i = (φ^i - Φ^i)/sqrt(5)`
     * `F_i =` &lfloor; `φ^i/sqrt(5) + 1/2` &rfloor;
+
