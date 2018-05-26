@@ -11,10 +11,16 @@ describe('MaxSubArrayProblemSpec', () => {
         sum = 43;
     });
 
-    it('if no negative number then whole array is max sub-array', () => {
+    it('no negative number, then whole array is max sub-array', () => {
         input = [1, 2, 3, 4, 5];
         output = input;
         sum = 15;
+    });
+
+    it('all items are negative, then will return a single-element array with the largest negative integer.', () => {
+        input = [-1, -2, -3, -4, -5];
+        output = [-1];
+        sum = -1;
     });
 
     it('single item', () => {

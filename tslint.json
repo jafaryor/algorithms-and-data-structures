@@ -11,7 +11,9 @@
             "multiline": "never",
             "singleline": "never"
         }],
-        "curly": [true, "ignore-same-line"]
+        "curly": [true, "ignore-same-line"],
+        "object-literal-sort-keys": false,
+        "ordered-imports": false
     },
     "rulesDirectory": []
 }

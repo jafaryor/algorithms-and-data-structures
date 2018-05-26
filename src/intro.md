@@ -56,6 +56,17 @@ A recurrence for the running time of a _divide-and-conquer algorithm_ falls out 
 
 ![divide-and-conquer-recurrence](./images/divide-and-conquer-recurrence.png)
 
+In practice, we neglect certain technical details when we state and solve recur- rences.
+* If we call MERGE-SORT on `n` elements when `n` is odd, we end up with subproblems of size &lfloor;`n/2`&rfloor; and &lceil;`n/2`&rceil;. Neither size is actually `n/2`, because `n/2` is not an integer when `n` is odd. Technically, the recurrence describing the worst-case running time of MERGE-SORT is really
+
+    ![precise-recurrency](./images/precise-recurrency.png)
+
+* Since the running time of an algorithm on a constant-sized input is a constant, the recurrences that arise from the running times of algorithms generally have `T(n) = θ(1)` for sufficiently small `n`. Consequently, for convenience, we shall generally omit statements of the boundary conditions of recurrences and assume that `T(n)` is constant for small `n`. For example, we normally state recurrence as:
+
+    `T(n) = 2T(n/2) + θ(n)`
+
+    without explicitly giving values for small `n`. The reason is that although changing the value of `T(1)` changes the exact solution to the recurrence, the solution typically doesn’t change by more than a constant factor, and so the order of growth is unchanged.
+
 ## Growth of Functions
 #### Asymptotic notation
 Asymptotic notation is a way to describe behavior of functions in the limit, describe growth of functions.
@@ -187,17 +198,17 @@ Which is the definition of `Θ(f(n)+g(n))` with `c1 = 1/2`, `c2 = 1`.
 
 * Floors and ceilings
 
-    For any real number `x`, we denote the greatest integer less than or equal to `x` by __&lfloor; `x` &rfloor;__ (read _“the floor of `x`”_) and the least integer greater than or equal to `x` by __&lceil; `x` &rceil;__ (read _“the ceiling of x”_).
+    For any real number `x`, we denote the greatest integer less than or equal to `x` by __&lfloor;`x`&rfloor;__ (read _“the floor of `x`”_) and the least integer greater than or equal to `x` by __&lceil;`x`&rceil;__ (read _“the ceiling of x”_).
     
-    For all real `x`, `x - 1 <` &lfloor; `x` &rfloor; `≤ x ≤` &lceil; `x` &rceil; `< x + 1`
+    For all real `x`, `x - 1 <` &lfloor;`x`&rfloor; `≤ x ≤` &lceil;`x`&rceil; `< x + 1`
 
-    For any integer `n`, &lfloor; `n/2` &rfloor; + &lceil; `n/2` &rceil; = `n`
+    For any integer `n`, &lfloor;`n/2`&rfloor; + &lceil;`n/2`&rceil; = `n`
 
     ![floors-and-ceiling-formulas](./images/floors-and-ceiling-formulas.png)
 
 * Modular arithmetic
 
-    For any integer `a` and any positive integer `n`, the value `a mod n` is the __remainder__ (or residue) of the quotient `a/n`: `a mod n = a - n` &lfloor; `a/n` &rfloor;
+    For any integer `a` and any positive integer `n`, the value `a mod n` is the __remainder__ (or residue) of the quotient `a/n`: `a mod n = a - n` &lfloor;`a/n`&rfloor;
 
     It follows that: `0 ≤ a mod n < n`
 
@@ -303,5 +314,5 @@ Which is the definition of `Θ(f(n)+g(n))` with `c1 = 1/2`, `c2 = 1`.
 
     Specifically, we have:
     * `F_i = (φ^i - Φ^i)/sqrt(5)`
-    * `F_i =` &lfloor; `φ^i/sqrt(5) + 1/2` &rfloor;
+    * `F_i =` &lfloor;`φ^i/sqrt(5) + 1/2`&rfloor;
 

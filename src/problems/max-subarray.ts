@@ -1,3 +1,12 @@
+/*
+    Suppose that you been offered the opportunity to invest in the Volatile Chemical Corporation.
+    Like the chemicals the company produces, the stock price of the Volatile Chemical Corporation
+    is rather volatile. Your goal is to maximize your profit.
+
+    Instead of looking at the daily prices, let us instead consider the daily change in price,
+    where the change on day i is the difference between the prices after day i-1 and after day i.
+*/
+
 export interface ISubArray {
     left: number;
     right: number;
