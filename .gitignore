@@ -4,8 +4,5 @@
 out
 gen
 
-# Visual Studio Code
-.vscode
-
 /node_modules
 /dist
