@@ -8,14 +8,17 @@ import { Matrix } from '../classes/matrix';
  * @param b
  */
 export function matrixMultiplyWithDevideAndConquer(a: number[][], b: number[][]): number[][] {
+    let isMatrixOrderIncreased: boolean = false;
+
     if (a.length === 1) {
         return Matrix.multiply1xMatrices(a, b);
     } else if (a.length === 2) {
         return Matrix.multiply2xMatrices(a, b);
-    } else if (a.length % 2 !== 0 || b.length % 2 !== 0) {
-        throw new Error(
-            'Martix multiplication implemented by Devide and Conquer Method IS NOT WORKING WITH ODD ORDERED MARTICES'
-        );
+    } else if (a.length % 2 !== 0) {
+        // if order is odd, then increase order by adding zero column and zero row
+        a = Matrix.increaseOrder(a);
+        b = Matrix.increaseOrder(b);
+        isMatrixOrderIncreased = true;
     }
 
     const order = a.length;
@@ -29,9 +32,8 @@ export function matrixMultiplyWithDevideAndConquer(a: number[][], b: number[][])
         [Matrix.subMatrix(b, 0, 0, mid, mid), Matrix.subMatrix(b, 0, mid, mid, order)],
         [Matrix.subMatrix(b, mid, 0, order, mid), Matrix.subMatrix(b, mid, mid, order, order)]
     ];
-
     // doing the same operation as in case of multiplication of two squared matrices of order two
-    return Matrix.formMatrixFromFourSquareMatrices(
+    const result = Matrix.merge(
         Matrix.add(
             matrixMultiplyWithDevideAndConquer(devidedA[0][0], devidedB[0][0]),
             matrixMultiplyWithDevideAndConquer(devidedA[0][1], devidedB[1][0])
@@ -49,6 +51,8 @@ export function matrixMultiplyWithDevideAndConquer(a: number[][], b: number[][])
             matrixMultiplyWithDevideAndConquer(devidedA[1][1], devidedB[1][1])
         )
     );
+
+    return isMatrixOrderIncreased ? Matrix.decreaseOrder(result) : result;
 }
 
 /**

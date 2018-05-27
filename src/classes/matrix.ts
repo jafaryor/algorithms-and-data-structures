@@ -5,19 +5,43 @@ export interface IMatrixSize {
 
 export class Matrix {
     /**
-     * validates matrix by setting undefined item to 0
+     * increases the order of squared matrix by adding zero row and zero column
+     * in order to make its order even (for Devide and Conquer and Strassen algorithms)
+     * and returns new matrix
      * @param matrix
      */
-    public static validate(matrix: number[][]): number[][] {
-        const { rows, columns } = Matrix.size(matrix);
+    public static increaseOrder(matrix: number[][]): number[][] {
+        const order = matrix.length;
+        const result: number[][] = [];
+        const zeroRow: number[] = [];
 
-        for (let i = 0; i < rows; ++i) {
-            for (let j = 0; j < columns; ++j) {
-                matrix[i][j] = matrix[i][j] || 0;
-            }
+        for (let i = 0; i < order; ++i) {
+            result.push([...matrix[i], 0]);
+            zeroRow[i] = 0;
         }
 
-        return matrix;
+        result.push([...zeroRow, 0]);
+
+        return result;
+    }
+
+    /**
+     * removes last row and last column of the squared matrix and returns new matrix
+     * @param matrix
+     */
+    public static decreaseOrder(matrix: number[][]): number[][] {
+        if (!matrix.length) {
+            throw new Error('Cannot decrease order of empty matrix');
+        }
+
+        const newOrder = matrix.length - 1;
+        const result: number[][] = [];
+
+        for (let i = 0; i < newOrder; ++i) {
+            result.push(matrix[i].slice(0, -1));
+        }
+
+        return result;
     }
 
     /**
@@ -39,11 +63,27 @@ export class Matrix {
      * @param a
      * @param b
      */
-    public static isEqualSize(a: number[][], b: number[][]): boolean {
+    public static equalSize(a: number[][], b: number[][]): boolean {
         const aSize = Matrix.size(a);
         const bSize = Matrix.size(b);
 
         return aSize.rows === bSize.rows && aSize.columns === bSize.columns;
+    }
+
+    public static equalItems(a: number[][], b: number[][]): boolean {
+        for (let i = 0; i < a.length; ++i) {
+            for (let j = 0; j < a[i].length; ++j) {
+                if (a[i][j] !== b[i][j]) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public static equal(a: number[][], b: number[][]): boolean {
+        return Matrix.equalSize(a, b) && Matrix.equalItems(a, b);
     }
 
     /**
@@ -86,7 +126,7 @@ export class Matrix {
      * @param b
      */
     public static add(a: number[][], b: number[][]): number[][] {
-        if (!Matrix.isEqualSize(a, b)) {
+        if (!Matrix.equalSize(a, b)) {
             throw new Error('Matrixes are not equal size!');
         }
 
@@ -153,12 +193,7 @@ export class Matrix {
      * @param a21
      * @param a22
      */
-    public static formMatrixFromFourSquareMatrices(
-        a11: number[][],
-        a12: number[][],
-        a21: number[][],
-        a22: number[][]
-    ): number[][] {
+    public static merge(a11: number[][], a12: number[][], a21: number[][], a22: number[][]): number[][] {
         const result: number[][] = [];
 
         for (let i = 0; i < a11.length; ++i) {

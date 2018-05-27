@@ -24,12 +24,35 @@ describe('MatrixMultiplicationSpec', () => {
         result = [[3, 26, -15, -13], [-38, 23, 94, -6], [31, 27, 87, 67], [11, 17, -18, 8]];
     });
 
+    test('multiply arrays of order six', () => {
+        a = [
+            [1, 2, 3, 4, 0, 5],
+            [0, 9, 7, 5, 3, 2],
+            [5, 7, 6, 2, 0, -2],
+            [-5, -4, -8, -5, -9, -7],
+            [2, -3, 5, -4, 1, 5],
+            [3, 3, -7, 4, 8, 0]
+        ];
+        b = [
+            [8, -2, 7, -7, 3, 1],
+            [-8, -9, 9, 1, 7, 8],
+            [2, 3, 4, 5, 6, -5],
+            [-4, -6, -9, -1, 3, 7],
+            [-10, 5, 4, 1, 3, -8],
+            [4, -9, -8, -7, 3, 1]
+        ];
+        result = [
+            [2, -80, -39, -29, 62, 35],
+            [-100, -93, 60, 28, 135, 50],
+            [-20, -49, 120, 14, 100, 43],
+            [58, 70, -38, 36, -154, 33],
+            [76, 22, 7, -22, 21, -78],
+            [-110, -38, 16, -49, 24, 26]
+        ];
+    });
+
     afterEach(() => {
-        if (a.length < 3 || a.length % 2 === 0) {
-            expect(matrixMultiplyWithDevideAndConquer(a, b)).toEqual(result);
-        } else {
-            expect(() => matrixMultiplyWithDevideAndConquer(a, b)).toThrowError();
-        }
+        expect(matrixMultiplyWithDevideAndConquer(a, b)).toEqual(result);
     });
 
     afterEach(() => {
