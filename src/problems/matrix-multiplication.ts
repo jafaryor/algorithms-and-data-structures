@@ -13,8 +13,9 @@ export function matrixMultiplyWithDevideAndConquer(a: number[][], b: number[][])
     } else if (a.length === 2) {
         return Matrix.multiply2xMatrices(a, b);
     } else if (a.length % 2 !== 0 || b.length % 2 !== 0) {
-        // tslint:disable-next-line
-        throw new Error('Martix multiplication implemented by Devide and Conquer Method IS NOT WORKING WITH ODD ORDERED MARTICES');
+        throw new Error(
+            'Martix multiplication implemented by Devide and Conquer Method IS NOT WORKING WITH ODD ORDERED MARTICES'
+        );
     }
 
     const order = a.length;

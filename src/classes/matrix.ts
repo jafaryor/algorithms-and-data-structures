@@ -26,8 +26,7 @@ export class Matrix {
      */
     public static size(matrix: number[][]): IMatrixSize {
         const columns = !matrix.length ? 0 : matrix.length;
-        const rows = matrix.reduce((maxRowLength, row) =>
-            Math.max(maxRowLength, !row.length ? 0 : row.length), 0);
+        const rows = matrix.reduce((maxRowLength, row) => Math.max(maxRowLength, !row.length ? 0 : row.length), 0);
 
         return {
             rows,
@@ -44,7 +43,7 @@ export class Matrix {
         const aSize = Matrix.size(a);
         const bSize = Matrix.size(b);
 
-        return (aSize.rows === bSize.rows) && (aSize.columns === bSize.columns);
+        return aSize.rows === bSize.rows && aSize.columns === bSize.columns;
     }
 
     /**
@@ -60,7 +59,8 @@ export class Matrix {
         rowStart: number,
         columnStart: number,
         rowEnd?: number,
-        columnEnd?: number): number[][] {
+        columnEnd?: number
+    ): number[][] {
         const subMatrix: number[][] = [];
 
         if (!rowEnd || !columnEnd) {
@@ -132,8 +132,8 @@ export class Matrix {
      */
     public static multiply2xMatrices(a: number[][], b: number[][]): number[][] {
         return [
-            [ (a[0][0] * b[0][0] + a[0][1] * b[1][0]), (a[0][0] * b[0][1] + a[0][1] * b[1][1]) ],
-            [ (a[1][0] * b[0][0] + a[1][1] * b[1][0]), (a[1][0] * b[0][1] + a[1][1] * b[1][1]) ]
+            [a[0][0] * b[0][0] + a[0][1] * b[1][0], a[0][0] * b[0][1] + a[0][1] * b[1][1]],
+            [a[1][0] * b[0][0] + a[1][1] * b[1][0], a[1][0] * b[0][1] + a[1][1] * b[1][1]]
         ];
     }
 
@@ -143,7 +143,7 @@ export class Matrix {
      * @param b
      */
     public static multiply1xMatrices(a: number[][], b: number[][]): number[][] {
-        return [[ (a[0][0] * b[0][0]) ]];
+        return [[a[0][0] * b[0][0]]];
     }
 
     /**
@@ -157,7 +157,8 @@ export class Matrix {
         a11: number[][],
         a12: number[][],
         a21: number[][],
-        a22: number[][]): number[][] {
+        a22: number[][]
+    ): number[][] {
         const result: number[][] = [];
 
         for (let i = 0; i < a11.length; ++i) {

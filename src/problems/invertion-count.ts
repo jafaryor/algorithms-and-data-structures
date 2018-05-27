@@ -19,8 +19,8 @@ class InvertionCounter {
 
     private merge(left: number[], right: number[]): number[] {
         const result: number[] = [];
-        let i: number = 0;  // for left array
-        let j: number = 0;  // for right array
+        let i: number = 0; // for left array
+        let j: number = 0; // for right array
 
         // compare the arrays item by item and fill the result array
         while (i < left.length && j < right.length) {
@@ -52,10 +52,7 @@ class InvertionCounter {
         // items on the right side
         const right: number[] = array.slice(middle);
 
-        return this.merge(
-            this.mergeSort(left),
-            this.mergeSort(right)
-        );
+        return this.merge(this.mergeSort(left), this.mergeSort(right));
     }
 }
 
