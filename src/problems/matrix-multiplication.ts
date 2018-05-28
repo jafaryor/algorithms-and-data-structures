@@ -63,7 +63,7 @@ export function matrixMultiplyWithDevideAndConquer(a: number[][], b: number[][])
  * @param a
  * @param b
  */
-export function Strassen(a: number[][], b: number[][]): number[][] {
+export function StrassenAlgorithm(a: number[][], b: number[][]): number[][] {
     /*
     That is, instead of performing eight recursive multiplications of n/2 * n/2 matrices,
     it performs only seven. The cost of eliminating one matrix multiplication will be

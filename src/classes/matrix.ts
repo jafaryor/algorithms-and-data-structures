@@ -8,7 +8,6 @@ export class Matrix {
      * increases the order of squared matrix by adding zero row and zero column
      * in order to make its order even (for Devide and Conquer and Strassen algorithms)
      * and returns new matrix
-     * @param matrix
      */
     public static increaseOrder(matrix: number[][]): number[][] {
         const order = matrix.length;
@@ -27,7 +26,6 @@ export class Matrix {
 
     /**
      * removes last row and last column of the squared matrix and returns new matrix
-     * @param matrix
      */
     public static decreaseOrder(matrix: number[][]): number[][] {
         if (!matrix.length) {
@@ -46,7 +44,6 @@ export class Matrix {
 
     /**
      * returns size of matrix
-     * @param matrix
      */
     public static size(matrix: number[][]): IMatrixSize {
         const columns = !matrix.length ? 0 : matrix.length;
@@ -60,8 +57,6 @@ export class Matrix {
 
     /**
      * Checks if size of two matrices is equal
-     * @param a
-     * @param b
      */
     public static equalSize(a: number[][], b: number[][]): boolean {
         const aSize = Matrix.size(a);
@@ -82,8 +77,34 @@ export class Matrix {
         return true;
     }
 
+    /**
+     * Checks if two matrices are equal
+     */
     public static equal(a: number[][], b: number[][]): boolean {
         return Matrix.equalSize(a, b) && Matrix.equalItems(a, b);
+    }
+
+    /**
+     * prints the matrix
+     */
+    public static toString(matrix: number[][]): void {
+        /* tslint:disable */
+        if (!matrix.length) console.log('| |');
+
+        let row: string;
+        console.log('');
+
+        for (let i = 0; i < matrix.length; ++i) {
+            row = '| ';
+            for (let j = 0; j < matrix[i].length; ++j) {
+                row += `${matrix[i][j]} `;
+            }
+            row += '|';
+            console.log(row);
+        }
+
+        console.log('');
+        /* tslint:enable */
     }
 
     /**
@@ -122,8 +143,6 @@ export class Matrix {
 
     /**
      * sums two matrices
-     * @param a
-     * @param b
      */
     public static add(a: number[][], b: number[][]): number[][] {
         if (!Matrix.equalSize(a, b)) {
@@ -143,9 +162,27 @@ export class Matrix {
     }
 
     /**
+     * subtracts second matrix from the first matrix
+     */
+    public static subtract(a: number[][], b: number[][]): number[][] {
+        if (!Matrix.equalSize(a, b)) {
+            throw new Error('Matrixes are not equal size!');
+        }
+
+        const c: number[][] = [];
+
+        for (let i = 0; i < a.length; ++i) {
+            c[i] = [];
+            for (let j = 0; j < a[i].length; ++j) {
+                c[i][j] = a[i][j] - b[i][j];
+            }
+        }
+
+        return c;
+    }
+
+    /**
      * naive method of multiplying matrices
-     * @param a
-     * @param b
      */
     public static multiply(a: number[][], b: number[][]): number[][] {
         const result: number[][] = [];
@@ -167,8 +204,6 @@ export class Matrix {
 
     /**
      * multiplies two squared matrices of order two
-     * @param a
-     * @param b
      */
     public static multiply2xMatrices(a: number[][], b: number[][]): number[][] {
         return [
@@ -179,8 +214,6 @@ export class Matrix {
 
     /**
      * multiplies two matrices of order one
-     * @param a
-     * @param b
      */
     public static multiply1xMatrices(a: number[][], b: number[][]): number[][] {
         return [[a[0][0] * b[0][0]]];
@@ -188,10 +221,6 @@ export class Matrix {
 
     /**
      * Combines all matrices in their index order, e.g. [[a11, a12], [a21, a22]]
-     * @param a11
-     * @param a12
-     * @param a21
-     * @param a22
      */
     public static merge(a11: number[][], a12: number[][], a21: number[][], a22: number[][]): number[][] {
         const result: number[][] = [];

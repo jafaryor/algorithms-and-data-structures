@@ -1,7 +1,7 @@
-## Analyzing algorithms
+# Analyzing algorithms
 __Algorithm__ - is any well-defined computational procedure that takes some value, or set of values, as _input_ and produces some value, or set of values, as _output_. An algorithm is thus a sequence of computational steps that transform the input into the output.
 
-### Input Size
+## Input Size
 The best notion for __input size__ depends on the problem being studied.
 
 For many problems, such as sorting or computing discrete Fourier transforms, the most natural measure is the _number of items_ in the input—for example, the array size `n` for sorting.
@@ -12,7 +12,7 @@ Sometimes, it is more appropriate to describe the size of the input with two num
 
 > We shall indicate which input size measure is being used with each problem we study.
 
-### Running Time
+## Running Time
 The __running time__ of an algorithm on a particular input is the number of primitive operations or _“steps”_ executed.
 
 It is convenient to define the notion of step so that it is as machine-independent as possible. For the moment, let us adopt the following view.
@@ -21,7 +21,7 @@ A constant amount of time is required to execute each line of our pseudocode. On
 
 This viewpoint is in keeping with the RAM model, and it also reflects how the pseudocode would be implemented on most actual computers.
 
-### Order of growth
+## Order of growth
 Look only at the leading term of the formula for running time.
 * Drop lower-order terms.
 * Ignore the constant coefficient in the leading term.
@@ -36,39 +36,9 @@ We say that the running time is `O(n^2)` to capture the notion that the _order o
 
 We usually consider one algorithm to be _more efficient_ than another if its worst-case running time has a smaller order of growth.
 
-## Designing Algorithms
-### Incremental Approach
-We can choose from a wide range of algorithm design techniques. An __incremental approach__: having sorted the subarray `A[1..j-1]` , we inserted the single element `A[j]` into its proper place, yielding the sorted subarray `A[1..j]`.
 
-> For _insertion sort_, we used an _incremental approach_
-
-### The Divide-and-Conquer Approach
-The divide-and-conquer paradigm involves three steps at each level of the recursion:
-* __Divide__ the problem into a number of subproblems that are smaller instances of the same problem.
-* __Conquer__ the subproblems by solving them recursively. If the subproblem sizes are small enough, however, just solve the subproblems in a straightforward manner.
-* __Combine__ these solutions to create a solution to the original problem.
-
-> The _merge sort_ algorithm closely follows the _divide-and-conquer paradigm_
-
-When an algorithm contains a recursive call to itself, we can often describe its running time by a __recurrence equation__ or __recurrence__, which describes the overall running time
-
-A recurrence for the running time of a _divide-and-conquer algorithm_ falls out from the three steps of the basic paradigm. As before, we let `T(n)` be the running time on a problem of size `n`. If the problem size is small enough, say `n <= c` for some constant `c`, the straightforward solution takes constant time, which we write as `O(1)`. Suppose that our division of the problem yields `a` subproblems, each of which is `1/b` the size of the original. (For merge sort, both `a` and `b` are `2`, but we shall see many divide-and-conquer algorithms in which `a != b`) It takes time `T(n/b)` to solve one subproblem of size `n/b`, and so it takes time `aT(n/b)` to solve `a` of them. If we take `D(n)` time to divide the problem into subproblems and `C(n)` time to combine the solutions to the subproblems into the solution to the original problem, we get the recurrence.
-
-![divide-and-conquer-recurrence](./images/divide-and-conquer-recurrence.png)
-
-In practice, we neglect certain technical details when we state and solve recur- rences.
-* If we call MERGE-SORT on `n` elements when `n` is odd, we end up with subproblems of size &lfloor;`n/2`&rfloor; and &lceil;`n/2`&rceil;. Neither size is actually `n/2`, because `n/2` is not an integer when `n` is odd. Technically, the recurrence describing the worst-case running time of MERGE-SORT is really
-
-    ![precise-recurrency](./images/precise-recurrency.png)
-
-* Since the running time of an algorithm on a constant-sized input is a constant, the recurrences that arise from the running times of algorithms generally have `T(n) = θ(1)` for sufficiently small `n`. Consequently, for convenience, we shall generally omit statements of the boundary conditions of recurrences and assume that `T(n)` is constant for small `n`. For example, we normally state recurrence as:
-
-    `T(n) = 2T(n/2) + θ(n)`
-
-    without explicitly giving values for small `n`. The reason is that although changing the value of `T(1)` changes the exact solution to the recurrence, the solution typically doesn’t change by more than a constant factor, and so the order of growth is unchanged.
-
-## Growth of Functions
-#### Asymptotic notation
+# Growth of Functions
+## Asymptotic notation
 Asymptotic notation is a way to describe behavior of functions in the limit, describe growth of functions.
 
 It is about focusing on whatís important by abstracting away low-order terms and constant factors.
@@ -144,7 +114,7 @@ The running time of insertion sort therefore belongs to both `Ω(n)` and `O(n^2)
 
 > __Theorem__: `f(n) = θ(g(n))` if and only if `f(n) = O(g(n))` and `f(n) = Ω(g(n))`.
 
-### Asymptotic notation in equations and inequalities
+## Asymptotic notation in equations and inequalities
 When asymptotic notation appears in a formula (`2n^2 + 3n + 1 = 2n^2 + θ(n)`), we interpret it as standing for some anonymous function that we do not care to name.
 
 In case: `2n^2 + θ(n) = θ(n^2)`, the right-hand side of an equation provides a coarser (грубее) level of detail than the left-hand side.
@@ -189,7 +159,7 @@ From the last two inequalities, we get:
 
 Which is the definition of `Θ(f(n)+g(n))` with `c1 = 1/2`, `c2 = 1`.
 
-### Standard Notations and Common Functions
+## Standard Notations and Common Functions
 * Monotonicity
     * `f(n)` is __monotonically increasing__ if `m ≤ n` ⇒ `f(m) ≤ f(n)`
     * `f(n)` is __monotonically decreasing__ if `m ≥ n` ⇒ `f(m) ≥ f(n)`
@@ -315,4 +285,87 @@ Which is the definition of `Θ(f(n)+g(n))` with `c1 = 1/2`, `c2 = 1`.
     Specifically, we have:
     * `F_i = (φ^i - Φ^i)/sqrt(5)`
     * `F_i =` &lfloor;`φ^i/sqrt(5) + 1/2`&rfloor;
+
+
+# Designing Algorithms
+## Incremental Approach
+We can choose from a wide range of algorithm design techniques. An __incremental approach__: having sorted the subarray `A[1..j-1]` , we inserted the single element `A[j]` into its proper place, yielding the sorted subarray `A[1..j]`.
+
+> For _insertion sort_, we used an _incremental approach_
+
+## The Divide-and-Conquer Approach
+The divide-and-conquer paradigm involves three steps at each level of the recursion:
+* __Divide__ the problem into a number of subproblems that are smaller instances of the same problem.
+* __Conquer__ the subproblems by solving them recursively. If the subproblem sizes are small enough, however, just solve the subproblems in a straightforward manner.
+* __Combine__ these solutions to create a solution to the original problem.
+
+> The _merge sort_ algorithm closely follows the _divide-and-conquer paradigm_
+
+When an algorithm contains a recursive call to itself, we can often describe its running time by a __recurrence equation__ or __recurrence__, which describes the overall running time
+
+A recurrence for the running time of a _divide-and-conquer algorithm_ falls out from the three steps of the basic paradigm. As before, we let `T(n)` be the running time on a problem of size `n`. If the problem size is small enough, say `n <= c` for some constant `c`, the straightforward solution takes constant time, which we write as `O(1)`. Suppose that our division of the problem yields `a` subproblems, each of which is `1/b` the size of the original. (For merge sort, both `a` and `b` are `2`, but we shall see many divide-and-conquer algorithms in which `a != b`) It takes time `T(n/b)` to solve one subproblem of size `n/b`, and so it takes time `aT(n/b)` to solve `a` of them. If we take `D(n)` time to divide the problem into subproblems and `C(n)` time to combine the solutions to the subproblems into the solution to the original problem, we get the recurrence.
+
+![divide-and-conquer-recurrence](./images/divide-and-conquer-recurrence.png)
+
+In practice, we neglect certain technical details when we state and solve recur- rences.
+* If we call MERGE-SORT on `n` elements when `n` is odd, we end up with subproblems of size &lfloor;`n/2`&rfloor; and &lceil;`n/2`&rceil;. Neither size is actually `n/2`, because `n/2` is not an integer when `n` is odd. Technically, the recurrence describing the worst-case running time of MERGE-SORT is really
+
+    ![precise-recurrency](./images/precise-recurrency.png)
+
+* Since the running time of an algorithm on a constant-sized input is a constant, the recurrences that arise from the running times of algorithms generally have `T(n) = θ(1)` for sufficiently small `n`. Consequently, for convenience, we shall generally omit statements of the boundary conditions of recurrences and assume that `T(n)` is constant for small `n`. For example, we normally state recurrence as:
+
+    `T(n) = 2T(n/2) + θ(n)`
+
+    without explicitly giving values for small `n`. The reason is that although changing the value of `T(1)` changes the exact solution to the recurrence, the solution typically doesn’t change by more than a constant factor, and so the order of growth is unchanged.
+
+### Solving recurrencies methods:
+* __Substitution method__
+
+    Algorithm:
+    1. Guess the solution e.g. `T(n)`.
+    2. Use induction to find the constants and show that the solution works. That is, replace `T(n)` with our guess.
+
+    Example: `2T(n/2) + n`
+    1. Guess: `T(n) = n * log(n) + n`
+    2. Induction:
+
+        ![substitution-example](./images/substitution-example.png)
+
+    3. `T(n) = θ(n * log(n) + n) = θ(n log(n))`
+
+    Example: `T(n) = 2T(`&lfloor;`sqrt(n)`&rfloor;`) + lgn`
+    1. Rename `m = lgn` => `T(2^m) = 2T(2^(m/2)) + m`
+    2. Rename `S(m) = T(2^m)` => `S(m) = 2S(m/2) + m`
+    3. Guess: `S(m) = θ(m log(m))`
+    4. Induction: `T(n) = T(2^m) = S(m) = θ(m log(m)) = θ(lg(n)*lg(lg(n)))`
+
+* __Recursion trees__
+
+    Used to generate a guess. Then verify by substitution method.
+
+    In a _recursion tree_, each node represents the cost of a single subproblem somewhere in the set of recursive function invocations. We sum the costs within each level of the tree to obtain a set of per-level costs, and then we sum all the per-level costs to determine the total cost of all levels of the recursion.
+
+    Example: `T(n) = 3T(`&lfloor;`n/4`&rfloor;`) + θ(n^2)`
+    1. Get rid of &lfloor; for simplicity => `T(n) = 3T(n/4) + c*n^2` for `c > 0`
+    2. For convenience, assume `n` is exact power of `4`
+    3. Build the tree: 
+
+        ![recursion-trees](./images/recursion-trees.jpg)
+
+    4. The subproblem size for a node at depth `i` is `n/4^i`. Thus, the subproblem size hits `n = 1` when `n/4^i = 1` => `i = log_4(n)`. Thus the tree has `log_4(n) + 1` levels (at depth `0,1,2 ... log_4(n)`)
+    5. Each level has three times more nodes than the level above, and so the number of nodes at depth `i` is `3^i`. And each node at depth `i` has a cost of `c(n/4^i)^2`. Multiplying, we see that the total cost over all nodes at depth `i`, for `i = 0,1,2 ... log_4(n) - 1`, is `3^i * c(n/4^i)^2 = c * n^2 * (3/16)^i`
+    6. The bottom level, at depth `i = log_4(n)`, has `3^i = 3^(log_4(n)) = n^(log_4(3))` each contributing cost `T(1)`, for a total cost of `T(1) * n^(log_4(3))` which is `θ(n^(log_4(3))`, since we assume that `T(1)` is a constant.
+    7. Now we add up the costs over all levels to determine the cost for the entire tree:
+
+        ![resursion-sum](images/recursion-sum.png)
+
+    8. This last formula looks somewhat messy until we realize that we can again take advantage of small amounts of sloppiness (неряшливость) and use an infinite decreasing geometric series as an upper bound.
+
+        ![recursion-sloppiness](./images/recursion-sloppiness.png)
+
+    9. Thus we have derived a guess of `T(n) = O(n^2)`
+
+* __Master method__
+
+    The master method provides a “cookbook” method for solving recurrences of the form: `T(n) = a*T(n/b) + f(n)`
 
