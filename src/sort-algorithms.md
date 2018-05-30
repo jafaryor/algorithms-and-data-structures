@@ -57,5 +57,15 @@ Counting sort is an integer sorting algorithm that assumes that each of the `n` 
 
 ![counting-sort](./images/counting-sort.gif)
 
+## Radix sort
+| Best-case | Worst-case | Average-case | Space Complexity | Stable? |
+|:-:|:-:|:-:|:-:|:-:|
+| `O(d(k + n))` | `O(d(k + n))` | `O(d(k + n))` | `?` | ? |
+
+## Bucket sort
+| Best-case | Worst-case | Average-case | Space Complexity | Stable? |
+|:-:|:-:|:-:|:-:|:-:|
+| `O(n^2)` | `O(n^2)` | `O(n^2)` | `?` | Yes |
+
 ### Stability
 A sorting algorithm is __stable__ if it preserves the original order of elements with equal key values

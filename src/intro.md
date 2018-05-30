@@ -318,7 +318,7 @@ In practice, we neglect certain technical details when we state and solve recur-
 
     without explicitly giving values for small `n`. The reason is that although changing the value of `T(1)` changes the exact solution to the recurrence, the solution typically doesn’t change by more than a constant factor, and so the order of growth is unchanged.
 
-### Solving recurrencies methods:
+## Solving recurrencies methods:
 * __Substitution method__
 
     Algorithm:
@@ -368,4 +368,25 @@ In practice, we neglect certain technical details when we state and solve recur-
 * __Master method__
 
     The master method provides a “cookbook” method for solving recurrences of the form: `T(n) = a*T(n/b) + f(n)`
+
+    __MASTER THEOREM__.
+
+    ![master-theorem](./images/master-theorem.png)
+
+    In each of the three cases, we compare the function `f(n)` with the function `n^(log_b(a))`. Intuitively, the larger of the two functions determines the solution to the recurrence.
+    * If, as in case 1, the function `n^(log_b(a))` is the larger, then the solution `T(n) = θ(n^(log_b(a)))`
+    * If, as in case 3, the function `f(n)` is the larger, then the solution is `T(n) = θ(f(n))`
+    * If, as in case 2, the two functions are the same size, we multiply by a logarithmic factor, and the solution is `T(n) = θ(n^(log_b(a)) * lg(n)) = θ(f(n) * lg(n))`
+
+    Beyond this intuition, you need to be aware of some technicalities. In the first case, not only must `f(n)` be smaller than `n^(log_b(a))`, it must be _polynomially smaller_. That is, `f(n)` must be asymptotically smaller than `n^(log_b(a))` by a factor of `n^ε` for some constant `ε > 0`. In the third case, not only must `f(n)` be larger than `n^(log_b(a))`, it also must be _polynomially larger_ and in addition satisfy the “regularity” condition that `a*f(n/b) ≤ c*f(n)`. This condition is satisfied by most of the polynomially bounded functions that we shall encounter.
+
+    > Note that the three cases do not cover all the possibilities for `f(n)`. There is a gap between cases 1 and 2 when `f(n)` is smaller than `n^(log_b(a))` but not polynomially smaller. Similarly, there is a gap between cases 2 and 3 when `f(n)` is larger than `n^(log_b(a))` but not polynomially larger. If the function `f(n)` falls into one of these gaps, or if the regularity condition in case 3 fails to hold, you cannot use the master method to solve the recurrence.
+
+    In particular case for `f(n) = O(n^k)`:
+
+    ![simple-master-therorem](./images/simple-master-therorem.png)
+
+## Sorting and Order Statistics
+    
+
 
