@@ -1,6 +1,7 @@
 import bubbleSort from './bubble';
 import insertionSort from './insertion';
 import mergeSort from './merge';
+import { heapSort } from './heapsort/index';
 
 describe('SortingSpecs', () => {
     let array: number[];
@@ -37,10 +38,11 @@ describe('SortingSpecs', () => {
     });
 
     afterEach(() => {
-        sortedArray = sortArray(array);
+        sortedArray = [...sortArray(array)];
 
         expect(insertionSort(array)).toEqual(sortedArray);
         expect(mergeSort(array)).toEqual(sortedArray);
         expect(bubbleSort(array)).toEqual(sortedArray);
+        expect(heapSort(array)).toEqual(sortedArray);
     });
 });
