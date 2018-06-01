@@ -5,10 +5,10 @@ export function heapSort(array: number[]) {
     let min: number;
     const result: number[] = [];
     // build min heap from the array
-    const maxHeap = new MinHeap(array);
+    const heap = new MinHeap(array);
 
-    for (let i = maxHeap.size - 1; i >= 0; --i) {
-        min = maxHeap.poll();
+    for (let i = heap.size - 1; i >= 0; --i) {
+        min = heap.poll();
         result.push(min);
     }
 
