@@ -20,7 +20,10 @@ On the other hand, merge sort has several advantages over heapsort:
 * Merge sort can be adapted to operate on singly linked lists with `O(1)` extra space. Heapsort can be adapted to operate on doubly linked lists with only `O(1)` extra space overhead.
 * Merge sort is used in _external sorting_; heapsort is not. Locality of reference is the issue.
 
-Example:
+### Complexity
+We have `θ(n)` from biulding heap and `θ(n logn)` from the loop with heapification. Overall complexity: `θ(n*logn + n) = θ(n logn)`
+
+### Example
 
 ![heap-sort](./images/heap-sort.gif)
 

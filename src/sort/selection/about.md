@@ -13,6 +13,6 @@ Complexity:
 
 ![](./images/selection-sort-complexity.png)
 
-Example:
+### Example:
 
 ![selection-sort](./images/selection-sort.gif)

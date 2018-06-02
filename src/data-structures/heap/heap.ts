@@ -1,3 +1,5 @@
+import { swap } from '../../utils/utils';
+
 export abstract class BinaryHeap {
     protected nodes: number[] = [];
 
@@ -18,14 +20,6 @@ export abstract class BinaryHeap {
     public abstract heapifyUp(): void;
     public abstract heapifyDown(i?: number): void;
 
-    // build min/max heap from provided array
-    public build() {
-        // Math.floor(this.size / 2) = amount of parent nodes
-        for (let i = Math.floor(this.size / 2); i >= 0; --i) {
-            this.heapifyDown(i);
-        }
-    }
-
     // returns the root node (min/max)
     public peek(): number {
         if (!this.nodes.length) throw new Error('The Heap is empty!');
@@ -34,6 +28,7 @@ export abstract class BinaryHeap {
     }
 
     // removes root node and put last note instead of root
+    // @complexity: O(logn)
     public poll(): number {
         if (!this.nodes.length) throw new Error('The Heap is empty!');
 
@@ -49,6 +44,7 @@ export abstract class BinaryHeap {
     }
 
     // adds new node to right-most parent. Heap is populate from left to right.
+    // @complexity: O(logn)
     public add(node: number): void {
         this.nodes.push(node);
         this.heapifyUp();
@@ -56,9 +52,7 @@ export abstract class BinaryHeap {
 
     // swaps two nodes
     protected swap(firstIndex: number, secondIndex: number): void {
-        if (firstIndex === secondIndex) return;
-
-        [this.nodes[firstIndex], this.nodes[secondIndex]] = [this.nodes[secondIndex], this.nodes[firstIndex]];
+        swap(this.nodes, firstIndex, secondIndex);
     }
 
     // returns left index
@@ -98,5 +92,14 @@ export abstract class BinaryHeap {
     // check if parent node exists
     protected hasParent(index: number): boolean {
         return this.parentIndex(index) >= 0;
+    }
+
+    // build min/max heap from provided array
+    // @complexity: O(n)
+    private build() {
+        // Math.floor(this.size / 2) = amount of parent nodes
+        for (let i = Math.floor(this.size / 2); i >= 0; --i) {
+            this.heapifyDown(i);
+        }
     }
 }

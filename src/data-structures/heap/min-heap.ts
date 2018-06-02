@@ -9,6 +9,7 @@ export class MinHeap extends BinaryHeap {
     /**
      * moves last node to its proper place (as much higher as it is possible),
      * as max node should be at the root
+     * @complexity: O(h) = O(logn)
      */
     public heapifyUp(): void {
         for (let i = this.size - 1; this.hasParent(i) && this.parent(i) > this.nodes[i]; i = this.parentIndex(i)) {
@@ -19,6 +20,7 @@ export class MinHeap extends BinaryHeap {
     /**
      * moves small root node to its proper place,
      * so we will have max node at the root
+     * @complexity: O(h) = O(logn)
      * @param i - parent index to start from
      */
     public heapifyDown(i: number = 0): void {

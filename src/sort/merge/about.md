@@ -11,10 +11,6 @@ Merge Sort - is an efficient, general-purpose, comparison-based sorting algorith
 * A divide and conquer algorithm
 * Merge sort is more efficient than quicksort for some types of lists if the data to be sorted can only be efficiently accessed sequentially (like _linked list_).
 
-Example:
-
-![Merge Sort Example](./images/merge-sort.gif)
-
 ### Time Complexity
 * `Divide`: The divide step just computes the middle of the subarray, which takes constant time. Thus, `D(n) = O(1)`.
 * `Conquer`: We recursively solve two subproblems, each of size `n=2`, which contributes `2T(n/2)` to the running time.
@@ -40,6 +36,10 @@ Explanation:
 Solution: `O(n * logn)`
 
 ![Merge Sort Analysis](./images/merge-sort-analysis.jpeg)
+
+### Example:
+
+![Merge Sort Example](./images/merge-sort.gif)
 
 ### Sequentially accessed data structures
 In data structures, a data structure is said to have __sequential access__ if one can only visit the values it contains in one particular order. The canonical example is the _linked list_. Indexing into a list that has sequential access requires `O(n)` time, where `n` is the index. As a result, many algorithms such as _quicksort_ and _binary search_ degenerate into bad algorithms that are even less efficient than their naive alternatives; these algorithms are impractical without __random access__. On the other hand, some algorithms, typically those that do not have index, require only sequential access, such as _mergesort_, and face no penalty.

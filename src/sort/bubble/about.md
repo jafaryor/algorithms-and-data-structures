@@ -11,4 +11,6 @@ Although the algorithm is simple, it is too slow and impractical for most proble
 
 Bubble sort can be practical if the input is in _mostly sorted_ order with some out-of-order elements nearly in position.
 
+### Example:
+
 ![Bubble sort](./images/bubble-sort.gif)
