@@ -1,7 +1,12 @@
+/**
+ * Merge Sort Helper Function
+ * @param left
+ * @param right
+ */
 function merge(left: number[], right: number[]): number[] {
     const result: number[] = [];
-    let i: number = 0;  // for left array
-    let j: number = 0;  // for right array
+    let i: number = 0; // for left array
+    let j: number = 0; // for right array
 
     // compare the arrays item by item and fill the result array
     while (i < left.length && j < right.length) {
@@ -18,7 +23,11 @@ function merge(left: number[], right: number[]): number[] {
     return [...result, ...left.slice(i), ...right.slice(j)];
 }
 
-function mergeSort(array: number[]): number[] {
+/**
+ * Merge Sort
+ * @param array
+ */
+export function mergeSort(array: number[]): number[] {
     if (array.length <= 1) {
         // return if empty array or one item is in the array
         return array;
@@ -31,10 +40,5 @@ function mergeSort(array: number[]): number[] {
     // items on the right side
     const right: number[] = array.slice(middle);
 
-    return merge(
-        mergeSort(left),
-        mergeSort(right)
-    );
+    return merge(mergeSort(left), mergeSort(right));
 }
-
-export default mergeSort;

@@ -1,7 +1,11 @@
 import { MinHeap } from '../../data-structures/heap';
 
-// sort the array in place => empties array at the end
-export function heapSort(array: number[]) {
+/**
+ * Heap Sort
+ * sort the array in place => empties array at the end
+ * @param array
+ */
+export function heapSort(array: number[]): number[] {
     let min: number;
     const result: number[] = [];
     // build min heap from the array
@@ -15,4 +19,4 @@ export function heapSort(array: number[]) {
     return result;
 }
 
-// Note: for obtaining descendant order use MaaxHeap instead
+// Note: for obtaining descendant order use MaxHeap instead

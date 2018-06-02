@@ -1,4 +1,10 @@
-function bubbleSort(array: number[]): number[] {
+import { swap } from '../../utils/utils';
+
+/**
+ * Bubble Sort
+ * @param array
+ */
+export function bubbleSort(array: number[]): number[] {
     let swapped: boolean;
 
     do {
@@ -6,7 +12,7 @@ function bubbleSort(array: number[]): number[] {
 
         for (let i = 0; i < array.length - 1; ++i) {
             if (array[i] > array[i + 1]) {
-                [array[i], array[i + 1]] = [array[i + 1], array[i]];
+                swap(array, i, i + 1);
                 swapped = true;
             }
         }
@@ -14,5 +20,3 @@ function bubbleSort(array: number[]): number[] {
 
     return array;
 }
-
-export default bubbleSort;
