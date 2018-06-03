@@ -3,6 +3,7 @@ import { insertionSort } from './insertion';
 import { mergeSort } from './merge';
 import { heapSort } from './heap/index';
 import { selectionSort } from './selection/index';
+import { quickSortBasic, quickSort } from './quick/index';
 
 describe('SortingSpecs', () => {
     let array: number[];
@@ -46,5 +47,7 @@ describe('SortingSpecs', () => {
         expect(bubbleSort([...array])).toEqual(sortedArray);
         expect(heapSort([...array])).toEqual(sortedArray);
         expect(selectionSort([...array])).toEqual(sortedArray);
+        expect(quickSortBasic([...array])).toEqual(sortedArray);
+        expect(quickSort([...array])).toEqual(sortedArray);
     });
 });
