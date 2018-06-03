@@ -17,8 +17,8 @@ export abstract class BinaryHeap {
     }
 
     // abstract methods are defined in derived classes
-    public abstract heapifyUp(): void;
-    public abstract heapifyDown(i?: number): void;
+    public abstract heapifyUp(index?: number): void;
+    public abstract heapifyDown(index?: number): void;
 
     // returns the root node (min/max)
     public peek(): number {
@@ -48,6 +48,16 @@ export abstract class BinaryHeap {
     public add(node: number): void {
         this.nodes.push(node);
         this.heapifyUp();
+    }
+
+    // gets rid of all nodes
+    public clear(): void {
+        this.nodes = [];
+    }
+
+    // tells if the haep is empty
+    public isEmpty(): boolean {
+        return this.size > 0;
     }
 
     // swaps two nodes
