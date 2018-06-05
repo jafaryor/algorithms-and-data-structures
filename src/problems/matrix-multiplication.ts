@@ -1,4 +1,4 @@
-import { Matrix } from '../classes/matrix';
+import { Matrix } from '../data-structures/matrix/index';
 
 /**
  * multiplies two squared array of the same order by Devide and Conquer metod

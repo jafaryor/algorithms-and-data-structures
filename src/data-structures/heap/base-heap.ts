@@ -1,4 +1,4 @@
-import { swap } from '../../utils/utils';
+import { swap } from '../../utils';
 
 export abstract class BinaryHeap {
     protected nodes: number[] = [];

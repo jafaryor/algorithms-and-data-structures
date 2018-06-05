@@ -1,4 +1,17 @@
-import { swap } from '../../utils/utils';
+import { swap, shuffle } from '../../utils';
+
+/**
+ * Randomises the array before sorting
+ * @complexity - O(n*log) even in worst case
+ * @param array
+ * @param left
+ * @param right
+ */
+export function randomizedQuickSort(array: number[], left: number = 0, right: number = array.length - 1): number[] {
+    const shuffledArray = shuffle(array);
+
+    return quickSort(shuffledArray);
+}
 
 /**
  * Quick Sort

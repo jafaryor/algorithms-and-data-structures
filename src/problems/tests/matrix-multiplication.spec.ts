@@ -1,5 +1,5 @@
 import { matrixMultiplyWithDevideAndConquer } from '../matrix-multiplication';
-import { Matrix } from '../../classes/matrix';
+import { Matrix } from '../../data-structures/matrix/index';
 
 describe('MatrixMultiplicationSpec', () => {
     let a: number[][];
