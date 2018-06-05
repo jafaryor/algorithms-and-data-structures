@@ -4,6 +4,7 @@ import { mergeSort } from './merge';
 import { heapSort } from './heap/index';
 import { selectionSort } from './selection/index';
 import { quickSortBasic, quickSort, randomizedQuickSort } from './quick/index';
+import { countSort } from './count/index';
 
 describe('SortingSpecs', () => {
     let array: number[];
@@ -50,5 +51,6 @@ describe('SortingSpecs', () => {
         expect(quickSortBasic([...array])).toEqual(sortedArray);
         expect(quickSort([...array])).toEqual(sortedArray);
         expect(randomizedQuickSort([...array])).toEqual(sortedArray);
+        expect(countSort([...array])).toEqual(sortedArray);
     });
 });

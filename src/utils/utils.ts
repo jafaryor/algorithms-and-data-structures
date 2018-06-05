@@ -1,3 +1,8 @@
+export interface IExtremes {
+    min: number;
+    max: number;
+}
+
 /**
  * swaps two item in place
  * @param array
@@ -30,4 +35,19 @@ export function shuffle(array: any[]): any[] {
     }
 
     return array;
+}
+
+/**
+ * finds max and min in the array
+ * @complexity - O(n)
+ * @param array
+ */
+export function findExtremes(array: number[]): IExtremes {
+    return array.reduce(
+        (extreme, item) => ({
+            min: Math.min(extreme.min, item),
+            max: Math.max(extreme.max, item)
+        }),
+        { min: Infinity, max: -Infinity }
+    );
 }

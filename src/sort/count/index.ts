@@ -1,41 +1,39 @@
-export function countSort(array: number[], min: number, max: number): number[] {
-    let i: number;
-    let z: number = 0;
-    const count: number[] = [];
+import { findExtremes } from '../../utils';
 
+/**
+ * Count Sort (can sort negative integers as well)
+ * @complexity - O((max - min + n)
+ * @param array - array to be sorted
+ * @param min - min possible value
+ * @param max - max possible value
+ */
+export function countSort(array: number[], min?: number, max?: number): number[] {
+    let i: number;
+    let j: number = 0;
+    const count: number[] = []; // count array
+
+    // if no max or min is provided, find them out
+    if (!min || !max) {
+        const extremes = findExtremes(array);
+
+        min = extremes.min;
+        max = extremes.max;
+    }
+
+    // initialize count array with 0
     for (i = min; i <= max; i++) {
         count[i] = 0;
     }
 
+    // counting occurrences of each number of array
     for (i = 0; i < array.length; i++) {
         count[array[i]]++;
     }
 
+    // form sorted array
     for (i = min; i <= max; i++) {
         while (count[i]-- > 0) {
-            array[z++] = i;
-        }
-    }
-
-    return array;
-}
-
-function sort(array: number[], maxValue: number): number[] {
-    const buckets = new Array(maxValue + 1);
-    let sortedIndex = 0;
-    let i;
-
-    for (i = 0; i < array.length; i++) {
-        if (!buckets[array[i]]) {
-            buckets[array[i]] = 0;
-        }
-        buckets[array[i]]++;
-    }
-
-    for (i = 0; i < buckets.length; i++) {
-        while (buckets[i] > 0) {
-            array[sortedIndex++] = i;
-            buckets[i]--;
+            array[j++] = i;
         }
     }
 
