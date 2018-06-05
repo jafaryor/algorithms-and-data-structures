@@ -386,7 +386,28 @@ In practice, we neglect certain technical details when we state and solve recur-
 
     ![simple-master-therorem](./images/simple-master-therorem.png)
 
-## Sorting and Order Statistics
-    
 
+# Sorting
+In a comparison sort, we use only comparisons between elements to gain order information about an input sequence.
 
+## Decision Tree
+
+We can view comparison sorts abstractly in terms of decision trees. A __decision tree__ is a full binary tree that represents the comparisons between elements that are performed by a particular sorting algorithm operating on an input of a given size.
+
+> In short __decision tree__ is a abstraction of any comparison sort.
+
+Control, data movement, and all other aspects of the algorithm are ignored. Each internal node indicates a comparison `a[i] ≤ a[j]`. When we come to a leaf, the sorting algorithm has established the ordering.
+
+> The __execution__ of the sorting algorithm corresponds to tracing a simple path from the root of the decision tree down to a leaf.
+
+> __Worst-case__ number of comparisons for a given comparison sort algorithm equals the height of its decision tree.
+
+![sorting-decision-tree](./images/sorting-decision-tree.png)
+
+### Lemma: Any binary tree of height `h` has `≤ 2^h` leaves.
+
+### Theorem: Any comparison sort algorithm requires `Ω(n lgn)` comparisons in the worst case.
+
+![comparison-sort-theorem-proof](./images/comparison-sort-theorem.png)
+
+### Corollary: _HeapSort_ and _MergeSort_ are asymptotically optimal comparison sorts.
