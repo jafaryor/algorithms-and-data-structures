@@ -51,3 +51,28 @@ export function findExtremes(array: number[]): IExtremes {
         { min: Infinity, max: -Infinity }
     );
 }
+
+/**
+ * returns i-th digit from number 'n'
+ * @param {number} n
+ * @param {index} i - zero-based index
+ * @returns {number}
+ */
+export function digitOf(n: number, i: number = 0): number | undefined {
+    const digit: string = String(n).charAt(i);
+
+    return digit === '' ? undefined : Number(digit);
+}
+
+/**
+ * returns last digit from number 'n'
+ * @param {number} n
+ * @param {index} i - zero-based index
+ * @returns {number}
+ */
+export function lastDigitOf(n: number): number | undefined {
+    const lastDigitIndex = String(n).length - 1;
+    const digit: string = String(n).charAt(lastDigitIndex);
+
+    return digit === '' ? undefined : Number(digit);
+}

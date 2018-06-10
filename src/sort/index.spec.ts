@@ -1,56 +1,99 @@
-import { bubbleSort } from './bubble';
-import { insertionSort } from './insertion';
-import { mergeSort } from './merge';
-import { heapSort } from './heap/index';
-import { selectionSort } from './selection/index';
-import { quickSortBasic, quickSort, randomizedQuickSort } from './quick/index';
-import { countSort } from './count/index';
+import { difference } from 'lodash';
+import {
+    bubbleSort,
+    insertionSort,
+    mergeSort,
+    heapSort,
+    selectionSort,
+    quickSortBasic,
+    quickSort,
+    randomizedQuickSort,
+    countSort,
+    radixSort
+} from './index';
 
 describe('SortingSpecs', () => {
     let array: number[];
     let sortedArray: number[];
+    let skipAlgorithms: Function[];
     const sortArray = (arr: number[]) => arr.sort((a: number, b: number) => a - b);
+    const sortingAlgorithms: Function[] = [
+        bubbleSort,
+        insertionSort,
+        mergeSort,
+        heapSort,
+        selectionSort,
+        quickSortBasic,
+        quickSort,
+        randomizedQuickSort,
+        countSort,
+        radixSort
+    ];
 
-    test('basic case', () => {
-        array = [5, 9, 13, 4, 1, 6];
-    });
-
-    test('negative and positive numbers', () => {
-        array = [8, -2, 0, -10, 10];
-    });
-
-    test('sorted array', () => {
-        array = [1, 2, 3, 4, 5, 6, 7];
-    });
-
-    test('array with -1', () => {
-        array = [-1, -1, -1, -1];
-    });
-
-    test('one item', () => {
-        array = [2];
+    beforeEach(() => {
+        skipAlgorithms = [];
     });
 
     test('empty array', () => {
         array = [];
     });
 
+    test('single number', () => {
+        array = [2];
+    });
+
+    test('repeated numbers', () => {
+        array = [-1, -1, -1, -1];
+    });
+
+    test('positive integers', () => {
+        array = [5, 9, 13, 4, 1, 6];
+    });
+
+    test('positive and negative integers', () => {
+        array = [8, -2, 0, -10, 10];
+        skipAlgorithms = [radixSort];
+    });
+
+    test('positive floating numbers', () => {
+        array = [1 / 2, 1.2, 10 / 3, 0.4, 6.6];
+        skipAlgorithms = [countSort, radixSort];
+    });
+
+    test('positive and negative floating numbers', () => {
+        array = [10 / 2, -1.2, 10 / 7, 0.54, -7.6];
+        skipAlgorithms = [countSort, radixSort];
+    });
+
+    test('positive and negative real numbers', () => {
+        array = [1 / 3, -1.5, -7 / 3, 1.4, 5.5, 1, 8, -10];
+        skipAlgorithms = [countSort, radixSort];
+    });
+
+    test('real and +/-Infinity numbers', () => {
+        array = [1 / 2, 1 / 3, -7 / 3, 1.9, +Infinity, -Infinity, 0];
+        skipAlgorithms = [countSort, radixSort];
+    });
+
+    test('ascending sorted array', () => {
+        array = [1, 2, 3, 4, 5, 6, 7];
+    });
+
+    test('descending sorted array', () => {
+        array = [7, 6, 5, 4, 3, 2, 1];
+    });
+
     test('no array', () => {
         // TODO: implement this case
         // array = undefined;
+        // skipAlgorithms = [];
     });
 
     afterEach(() => {
         sortedArray = sortArray(array);
 
-        expect(insertionSort([...array])).toEqual(sortedArray);
-        expect(mergeSort([...array])).toEqual(sortedArray);
-        expect(bubbleSort([...array])).toEqual(sortedArray);
-        expect(heapSort([...array])).toEqual(sortedArray);
-        expect(selectionSort([...array])).toEqual(sortedArray);
-        expect(quickSortBasic([...array])).toEqual(sortedArray);
-        expect(quickSort([...array])).toEqual(sortedArray);
-        expect(randomizedQuickSort([...array])).toEqual(sortedArray);
-        expect(countSort([...array])).toEqual(sortedArray);
+        difference(sortingAlgorithms, skipAlgorithms).forEach(algorithm =>
+            expect(algorithm([...array])).toEqual(sortedArray)
+        );
     });
 });

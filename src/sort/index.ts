@@ -4,3 +4,5 @@ export * from './bubble';
 export * from './heap';
 export * from './quick';
 export * from './selection';
+export * from './count';
+export * from './radix';
