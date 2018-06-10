@@ -2,11 +2,11 @@
 
 |  | Worst | Average | Best |
 |:--|:-:|:-:|---|
-| __Time Complexity__ | `O(wn)` | `θ(wn)` | `Ω(wn)` |
-| __Space Complexity__ | `O(w + n)` | `θ(w + n)` | `Ω(w + n)` |
+| __Time Complexity__ | `O(d(k + n))` | `θ(d(k + n))` | `Ω(d(k + n))` |
+| __Space Complexity__ | `O(n)` | `θ(n)` | `Ω(n)` |
 | __Stable__ | Yes | |
 
-> `w` - word size (e.g. number of digits)
+> `d` - word size (e.g. number of digits)
 
 _Radix Sort_ - a non-comparative integer sorting algorithm that sorts data with integer keys by grouping keys by the individual digits which share the same significant position and value. A positional notation is required, but because integers can represent strings of characters (e.g., names or dates) and specially formatted floating point numbers, radix sort is not limited to integers.
 
@@ -18,7 +18,10 @@ Radix sorts can be implemented to start at either the __most significant digit__
 
 Note that this recursive sorting algorithm has particular application to parallel computing, as each of the bins can be sorted independently. In this case, each bin is passed to the next available processor.
 
-
+### Complexity
+We call `d` times CountSort which has `θ(k + n)` time complexity, where
+* `d` - amount of digits in max from `n` numbers
+* `k` - maximum possible value
 
 ### LSD Example:
 ![](./images/radix-sort-lsd.gif)

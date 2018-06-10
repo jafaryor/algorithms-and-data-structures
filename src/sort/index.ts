@@ -6,3 +6,4 @@ export * from './quick';
 export * from './selection';
 export * from './count';
 export * from './radix';
+export * from './bucket';

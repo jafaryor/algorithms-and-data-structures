@@ -3,9 +3,9 @@ import { isNumber } from 'lodash';
 
 /**
  * Count Sort (can sort negative integers as well)
- * Time complexity for RadixSort is equal to O(10 + n) = O(n)
- * @time complexity - O(k + n)
- * @space complexity - O(k + n)
+ * Space complexity for RadixSort is equal to O(10 + n) = O(n)
+ * @time complexity - O(max - min + n)
+ * @space complexity - O(max - min + n)
  * @param array - array to be sorted
  * @param min - min possible value
  * @param max - max possible value

@@ -9,7 +9,8 @@ import {
     quickSort,
     randomizedQuickSort,
     countSort,
-    radixSort
+    radixSort,
+    bucketSort
 } from './index';
 
 describe('SortingSpecs', () => {
@@ -27,7 +28,8 @@ describe('SortingSpecs', () => {
         quickSort,
         randomizedQuickSort,
         countSort,
-        radixSort
+        radixSort,
+        bucketSort
     ];
 
     beforeEach(() => {
@@ -43,7 +45,7 @@ describe('SortingSpecs', () => {
     });
 
     test('repeated numbers', () => {
-        array = [-1, -1, -1, -1];
+        array = [7, 7, 7, 7, 7, 7, 7];
     });
 
     test('positive integers', () => {
@@ -52,7 +54,7 @@ describe('SortingSpecs', () => {
 
     test('positive and negative integers', () => {
         array = [8, -2, 0, -10, 10];
-        skipAlgorithms = [radixSort];
+        skipAlgorithms = [radixSort, bucketSort];
     });
 
     test('positive floating numbers', () => {
@@ -62,17 +64,17 @@ describe('SortingSpecs', () => {
 
     test('positive and negative floating numbers', () => {
         array = [10 / 2, -1.2, 10 / 7, 0.54, -7.6];
-        skipAlgorithms = [countSort, radixSort];
+        skipAlgorithms = [countSort, radixSort, bucketSort];
     });
 
     test('positive and negative real numbers', () => {
         array = [1 / 3, -1.5, -7 / 3, 1.4, 5.5, 1, 8, -10];
-        skipAlgorithms = [countSort, radixSort];
+        skipAlgorithms = [countSort, radixSort, bucketSort];
     });
 
     test('real and +/-Infinity numbers', () => {
         array = [1 / 2, 1 / 3, -7 / 3, 1.9, +Infinity, -Infinity, 0];
-        skipAlgorithms = [countSort, radixSort];
+        skipAlgorithms = [countSort, radixSort, bucketSort];
     });
 
     test('ascending sorted array', () => {

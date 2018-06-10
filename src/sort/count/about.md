@@ -4,10 +4,9 @@
 |:--|:-:|:-:|---|
 | __Time Complexity__ | `O(k + n)` | `θ(k + n)` | `Ω(k + n)` |
 | __Space Complexity__ | `O(k + n)` | `θ(k + n)` | `Ω(k + n)` |
+| __Stable__ | Yes | |
 
 Counting sort is an integer sorting algorithm that assumes that each of the `n` input elements in a list has a key value ranging from `0` to `k`, for some integer `k`.
-
-> Counting Sort is __stable__ algorithm.
 
 In the most general case, the input to counting sort consists of a collection of n items, each of which has a non-negative integer key whose maximum value is at most `k`.
 
