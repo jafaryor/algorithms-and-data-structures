@@ -54,7 +54,7 @@ function findMaxCrossingSubArray(array: number[], left: number, mid: number, rig
 }
 
 /**
- * finds maximum sub-array using devide-and-conquier method
+ * finds maximum sub-array using divide-and-conquier method
  * @complexity - O(n logn)
  * @param array - the array
  * @param left - left index in the array

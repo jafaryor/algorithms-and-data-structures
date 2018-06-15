@@ -6,7 +6,7 @@ export interface IMatrixSize {
 export class Matrix {
     /**
      * increases the order of squared matrix by adding zero row and zero column
-     * in order to make its order even (for Devide and Conquer and Strassen algorithms)
+     * in order to make its order even (for Divide and Conquer and Strassen algorithms)
      * and returns new matrix
      */
     public static increaseOrder(matrix: number[][]): number[][] {

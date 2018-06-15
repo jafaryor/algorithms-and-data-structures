@@ -1,4 +1,4 @@
-import { matrixMultiplyWithDevideAndConquer } from '../matrix-multiplication';
+import { matrixMultiplyWithDivideAndConquer } from '../matrix-multiplication';
 import { Matrix } from '../../data-structures/matrix/index';
 
 describe('MatrixMultiplicationSpec', () => {
@@ -52,7 +52,7 @@ describe('MatrixMultiplicationSpec', () => {
     });
 
     afterEach(() => {
-        expect(matrixMultiplyWithDevideAndConquer(a, b)).toEqual(result);
+        expect(matrixMultiplyWithDivideAndConquer(a, b)).toEqual(result);
     });
 
     afterEach(() => {

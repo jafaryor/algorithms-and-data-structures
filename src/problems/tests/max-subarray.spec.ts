@@ -29,7 +29,7 @@ describe('MaxSubArrayProblemSpec', () => {
         sum = 7;
     });
 
-    // Devide and Conquire Method
+    // Divide and Conquire Method
     afterEach(() => {
         const result = findMaximumSubArray(input);
 

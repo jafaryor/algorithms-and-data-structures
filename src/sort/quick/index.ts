@@ -41,7 +41,7 @@ export function quickSort(array: number[], left: number = 0, right: number = arr
  * @param left - left pointer
  * @param right - right pointer
  * @param pivot - pivot item
- * @returns partiotion pointer, pointer where the array should b devided half
+ * @returns partiotion pointer, pointer where the array should b divided half
  */
 function partition(array: number[], left: number, right: number, pivot: number): number {
     while (left <= right) {
