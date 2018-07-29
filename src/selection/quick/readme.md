@@ -1,7 +1,10 @@
 ## QuickSelect
-In `QuickSort`, we recursively sort both branches, leading to best-case `O(n log n)` time. However, when doing selection, we already know which partition our desired element lies in, since the pivot is in its final sorted position, with all those preceding it in an unsorted order and all those following it in an unsorted order. Therefore, a single recursive call locates the desired element in the correct partition, and we build upon this for quickselect.
 
-### Time complexity
-Like quicksort, the quickselect has good average performance, but is sensitive to the pivot that is chosen. If good pivots are chosen, meaning ones that consistently decrease the search set by a given fraction, then the search set decreases in size exponentially and by induction (or summing the geometric series) one sees that performance is linear, as each step is linear and the overall time is a constant times this (depending on how quickly the search set reduces). However, if bad pivots are consistently chosen, such as decreasing by only a single element each time, then worst-case performance is quadratic: `O(n2)`. This occurs for example in searching for the maximum element of a set, using the first element as the pivot, and having sorted data.
+|  | Worst | Average | Best |
+|:--|:-:|:-:|---|
+| __Time Complexity__ | `O(n^2)` | `θ(n)` | `Ω(n)` |
+| __Space Complexity__ | `O(n)` | `θ(n)` | `Ω(1)` |
+
+In `QuickSort`, we recursively sort both branches, leading to best-case `O(n log n)` time. However, when doing selection, we already know which partition our desired element lies in, since the pivot is in its final sorted position, with all those preceding it in an unsorted order and all those following it in an unsorted order. Therefore, a single recursive call locates the desired element in the correct partition, and we build upon this for quickselect.
 
 __Median of Medians__ is an approximate (median) selection algorithm, frequently used to supply a good pivot for an exact selection algorithm, mainly the quickselect, that selects the kth largest element.
