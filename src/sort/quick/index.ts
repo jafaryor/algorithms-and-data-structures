@@ -23,13 +23,15 @@ export function randomizedQuickSort(array: number[], left: number = 0, right: nu
  * @returns sorted array
  */
 export function quickSort(array: number[], left: number = 0, right: number = array.length - 1): number[] {
-    if (left >= right) return array;
+    if (left >= right) {
+        return array;
+    }
 
     const mid = Math.floor((left + right) / 2);
-    const pivot = array[mid];
-    const index = partition(array, left, right, pivot);
-    quickSort(array, left, index - 1);
-    quickSort(array, index, right);
+    const pivotIndex = partition(array, left, right, array[mid]);
+
+    quickSort(array, left, pivotIndex - 1);
+    quickSort(array, pivotIndex, right);
 
     return array;
 }
@@ -41,9 +43,9 @@ export function quickSort(array: number[], left: number = 0, right: number = arr
  * @param left - left pointer
  * @param right - right pointer
  * @param pivot - pivot item
- * @returns partiotion pointer, pointer where the array should b divided half
+ * @returns partition pointer, pointer where the array should be divided by half
  */
-function partition(array: number[], left: number, right: number, pivot: number): number {
+export function partition(array: number[], left: number, right: number, pivot: number): number {
     while (left <= right) {
         while (array[left] < pivot) {
             ++left;

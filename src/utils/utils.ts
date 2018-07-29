@@ -48,8 +48,37 @@ export function findExtremes(array: number[]): IExtremes {
             min: Math.min(extreme.min, item),
             max: Math.max(extreme.max, item)
         }),
-        { min: Infinity, max: -Infinity }
+        {min: Infinity, max: -Infinity}
     );
+}
+
+/**
+ * optimized option of the findExtremes utility function
+ * @complexity - O(3n/2)
+ * @param array
+ */
+export function findMinAndMax(array: number[]): IExtremes {
+    let index = 0;
+    let max = Infinity;
+    let min = -Infinity;
+
+    if (array.length % 2 !== 0) {
+        min = array[0];
+        max = array[0];
+        index = 1;
+    }
+
+    for (; index < array.length; index += 2) {
+        if (array[index - 1] < array[index]) {
+            max = Math.max(max, array[index]);
+            min = Math.min(min, array[index - 1]);
+        } else {
+            max = Math.max(max, array[index - 1]);
+            min = Math.min(min, array[index]);
+        }
+    }
+
+    return { min, max };
 }
 
 /**
