@@ -20,7 +20,6 @@ export function quickSelect(
 
     const mid = Math.floor((left + right) / 2);
     const pivotIndex = partition(array, left, right, mid);
-    // const i = pivotIndex + 1 - left; // number of elements in less part of partiotion
 
     if (k === pivotIndex) {
         // the desired element if found
@@ -32,6 +31,33 @@ export function quickSelect(
         // the desired element lies on the high side of the partition
         return quickSelect(array, k, pivotIndex + 1, right);
     }
+}
+
+/**
+ * partitions the array so that
+ * left side with respect to the pivot is less than the pivot
+ * and the right side is bigger than the pivot
+ * @complexity: O(n)
+ * @param array - array to be partitioned
+ * @param left - left pointer index
+ * @param right - right pointer index
+ * @param pivotIndex - pivot index
+ */
+function partition(array: number[], left: number, right: number, pivotIndex: number): number {
+    const pivotValue = array[pivotIndex];
+
+    swap(array, pivotIndex, right); // Move pivot to end
+
+    for (let i = left; i < right; i++) {
+        if (array[i] < pivotValue) {
+            swap(array, left, i);
+            left++;
+        }
+    }
+
+    swap(array, left, right); // Move pivot to its final place
+
+    return left;
 }
 
 /**
@@ -64,30 +90,4 @@ export function quickSelectWithLoop(
             left = pivotIndex + 1;
         }
     }
-}
-
-/**
- * partitions the array so that
- * left side with respect to the pivot is less than the pivot
- * and the right side is bigger than the pivot
- * @complexity: O(n)
- * @param array - array to be partitioned
- * @param left - left pointer index
- * @param right - right pointer index
- * @param pivotIndex - pivot index
- */
-function partition(array: number[], left: number, right: number, pivotIndex: number): number {
-    const pivotValue = array[pivotIndex];
-    swap(array, pivotIndex, right); // Move pivot to end
-
-    for (let i = left; i < right; i++) {
-        if (array[i] < pivotValue) {
-            swap(array, left, i);
-            left++;
-        }
-    }
-
-    swap(array, left, right); // Move pivot to its final place
-
-    return left;
 }
