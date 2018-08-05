@@ -10,7 +10,8 @@ import {
     randomizedQuickSort,
     countSort,
     radixSort,
-    bucketSort
+    bucketSort,
+    shellSort
 } from './index';
 
 describe('SortingSpecs', () => {
@@ -29,7 +30,8 @@ describe('SortingSpecs', () => {
         randomizedQuickSort,
         countSort,
         radixSort,
-        bucketSort
+        bucketSort,
+        shellSort
     ];
 
     beforeEach(() => {

@@ -12,11 +12,13 @@
 * __In-place__; i.e., only requires a constant amount `O(1)` of additional memory space
 * __Online__; i.e., can sort a list as it receives it
 
-__Insertion sort is one of the fastest algorithms for sorting very small arrays, even faster than _quicksort_;__ indeed, _good quicksort_ implementations use _insertion sort_ for arrays smaller than a certain threshold.
-
 Insertion sort works the way many people sort a hand of playing cards. We start with an empty left hand and the cards face down on the table. We then remove one card at a time from the table and insert it into the correct position in the left hand. To find the correct position for a card, we compare it with each of the cards already in the hand, from right to left, the cards held in the left hand are sorted, and these cards were originally the top cards of the pile on the table.
 
 ![cards](./images/cards.jpg)
+
+### Usage
+
+> __It is efficient at sorting extremely short arrays due to a very low constant factor in its complexity. It is also extremely good at sorting arrays that are already “almost” sorted. A common use is for re-sorting arrays that have had some small updates to their elements.__
 
 ### Example:
 

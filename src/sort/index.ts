@@ -7,3 +7,4 @@ export * from './selection';
 export * from './count';
 export * from './radix';
 export * from './bucket';
+export * from './shell';

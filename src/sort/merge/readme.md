@@ -37,6 +37,10 @@ Solution: `O(n * logn)`
 
 ![Merge Sort Analysis](./images/merge-sort-analysis.jpeg)
 
+#Usage
+
+> __Merge sort has a much smaller constant factor than Heapsort, but requires O(n) buffer space to store intermediate data, which is very expensive. Its main selling point is that it is stable, as compared to Heapsort which isn’t. In addition, its implementation is very parallelizable.__
+
 ### Example:
 
 ![Merge Sort Example](./images/merge-sort.gif)

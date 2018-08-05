@@ -23,6 +23,10 @@ On the other hand, merge sort has several advantages over heapsort:
 ### Complexity
 We have `θ(n)` from biulding heap and `θ(n logn)` from the loop with heapification. Overall complexity: `θ(n*logn + n) = θ(n logn)`
 
+### Usage
+
+> __Heapsort has reliable time complexity and doesn’t require any extra buffer space. As a result, it is useful in software that requires reliable speed over optimal average runtime, and/or has limited memory to operate with the data. Thus, systems with real time requirements and memory constraints benefit the most from this algorithm.__
+
 ### Example
 
 ![heap-sort](./images/heap-sort.gif)
