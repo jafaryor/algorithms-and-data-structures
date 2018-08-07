@@ -4,7 +4,8 @@
 |:--|:-:|:-:|:-:|
 | __Time Complexity__ | `O(n^2)` | `θ(n)` | `Ω(n)` |
 | __Space Complexity__ | `O(n)` | `θ(n)` | `Ω(n)` |
-| __Stable__ | Yes | |
+| __Stable__ | Yes |
+| __In Place__ | Yes |
 
 Bucket sort, or bin sort, is a sorting algorithm that works by distributing the elements of an array into a number of buckets.
 

@@ -4,7 +4,8 @@
 |:--|:-:|:-:|---|
 | __Time Complexity__ | `O(d(k + n))` | `θ(d(k + n))` | `Ω(d(k + n))` |
 | __Space Complexity__ | `O(n)` | `θ(n)` | `Ω(n)` |
-| __Stable__ | Yes | |
+| __Stable__ | Yes |
+| __In Place__ | No |
 
 > `d` - word size (e.g. number of digits)
 

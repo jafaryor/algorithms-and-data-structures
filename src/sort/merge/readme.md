@@ -3,11 +3,12 @@
 |  | Worst | Average | Best |
 |:--|:-:|:-:|---|
 | __Time Complexity__ | `O(n logn)` | `θ(n logn)` | `Ω(n logn)` |
-| __Space Complexity__ | `O(1)` | `θ(1)` | `Ω(1)` |
+| __Space Complexity__ | `O(n)` | `θ(n)` | `Ω(n)` |
+| __Stable__ | Yes |
+| __In Place__ | No |
 
 Merge Sort - is an efficient, general-purpose, comparison-based sorting algorithm.
 
-* Stable
 * A divide and conquer algorithm
 * Merge sort is more efficient than quicksort for some types of lists if the data to be sorted can only be efficiently accessed sequentially (like _linked list_).
 

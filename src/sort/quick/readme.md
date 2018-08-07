@@ -4,6 +4,8 @@
 |:--|:-:|:-:|---|
 | __Time Complexity__ | `O(n^2)` | `θ(n logn)` | `Ω(n logn)` |
 | __Space Complexity__ | `O(n)` | `θ(n)` | `Ω(logn)` |
+| __Stable__ | No |
+| __In Place__ | Yes |
 
 Quicksort is a comparison-based algorithm that uses divide-and-conquer to sort an array.
 

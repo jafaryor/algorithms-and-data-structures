@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 /*
     Given a Binary Tree (BT), convert it to a Doubly Linked List(DLL) In-Place.
     The left and right pointers in nodes are to be used as previous and next
@@ -34,10 +34,9 @@ function treeToDll(root, list) {
     return list;
 }
 
-
-const tree = new treeNode(10); //              10
-tree.right = new treeNode(15); //           /      \
-tree.left = new treeNode(12); //         12        15
+const tree = new treeNode(10); //                   10
+tree.right = new treeNode(15); //               /      \
+tree.left = new treeNode(12); //               12        15
 tree.right.left = new treeNode(36); //        /  \      /
 tree.left.left = new treeNode(25); //      25   30    36
 tree.left.right = new treeNode(30);

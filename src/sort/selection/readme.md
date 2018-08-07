@@ -4,6 +4,8 @@
 |:--|:-:|:-:|---|
 | __Time Complexity__ | `O(n^2)` | `θ(n^2)` | `Ω(n^2)` |
 | __Space Complexity__ | `O(1)` | `θ(1)` | `Ω(1)` |
+| __Stable__ | No |
+| __In Place__ | Yes |
 
 Selection sort is a sorting algorithm, specifically an in-place comparison sort. It is inefficient on large lists, and generally performs worse than the similar insertion sort.
 

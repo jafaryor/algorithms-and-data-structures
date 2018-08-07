@@ -36,6 +36,18 @@ We say that the running time is `O(n^2)` to capture the notion that the _order o
 
 We usually consider one algorithm to be _more efficient_ than another if its worst-case running time has a smaller order of growth.
 
+## Complexity of Algorithms
+
+__Time complexity__: The number of computations the algorithm does.
+
+__Auxiliary Space__: The extra space that is taken by an algorithm temporarily to finish its work
+
+__Space Complexity__: Space complexity is the total space taken by the algorithm with respect to the input size plus the auxiliary space that the algorithm uses.
+
+__[Youtube Video about Time Complexity Analysis](https://youtu.be/FEnwM-iDb2g?list=PLEbnTDJUr_IeHYw_sfBOJ6gk5pie0yP-0)__
+
+__[Youtube Video abuot Space Complexity Analysis](https://www.youtube.com/watch?v=HEjmH9wKiMo)__
+
 
 # Growth of Functions
 ## Asymptotic notation
@@ -385,29 +397,3 @@ In practice, we neglect certain technical details when we state and solve recur-
     In particular case for `f(n) = O(n^k)`:
 
     ![simple-master-therorem](./images/simple-master-therorem.png)
-
-
-# Sorting
-In a comparison sort, we use only comparisons between elements to gain order information about an input sequence.
-
-## Decision Tree
-
-We can view comparison sorts abstractly in terms of decision trees. A __decision tree__ is a full binary tree that represents the comparisons between elements that are performed by a particular sorting algorithm operating on an input of a given size.
-
-> In short __decision tree__ is a abstraction of any comparison sort.
-
-Control, data movement, and all other aspects of the algorithm are ignored. Each internal node indicates a comparison `a[i] ≤ a[j]`. When we come to a leaf, the sorting algorithm has established the ordering.
-
-> The __execution__ of the sorting algorithm corresponds to tracing a simple path from the root of the decision tree down to a leaf.
-
-> __Worst-case__ number of comparisons for a given comparison sort algorithm equals the height of its decision tree.
-
-![sorting-decision-tree](./images/sorting-decision-tree.png)
-
-### Lemma: Any binary tree of height `h` has `≤ 2^h` leaves.
-
-### Theorem: Any comparison sort algorithm requires `Ω(n lgn)` comparisons in the worst case.
-
-![comparison-sort-theorem-proof](./images/comparison-sort-theorem.png)
-
-### Corollary: _HeapSort_ and _MergeSort_ are asymptotically optimal comparison sorts.
