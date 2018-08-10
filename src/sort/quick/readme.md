@@ -3,7 +3,7 @@
 |  | Worst | Average | Best |
 |:--|:-:|:-:|---|
 | __Time Complexity__ | `O(n^2)` | `θ(n logn)` | `Ω(n logn)` |
-| __Space Complexity__ | `O(n)` | `θ(n)` | `Ω(logn)` |
+| __Space Complexity__ | `O(n)` | `θ(logn)` | `Ω(logn)` |
 | __Stable__ | No |
 | __In Place__ | Yes |
 
@@ -29,6 +29,8 @@ Here is the three-step divide-and-conquer process for sorting a typical subarray
 
     The last line is because `1 + 2 + 3 + ⋯ + n` is the arithmetic series.
 
+    > The Space Complexity is the height of the tree which is equal to `n` (size of the stack).
+
 * __Best-case running time__
 
     Quicksort's best case occurs when the partitions are as evenly balanced as possible: their sizes either are equal or are within 1 of each other. The former case occurs if the subarray has an odd number of elements and the pivot is right in the middle after partitioning, and each partition has `(n-1)/2` elements.
@@ -36,6 +38,8 @@ Here is the three-step divide-and-conquer process for sorting a typical subarray
     ![quick-sort-best-case](./images/quick-sort-best-case.png)
 
     Overall complexity: `Θ(n*log_2(n)) = Θ(n*lgn)`
+
+    > The Space Complexity is the height of the tree which is equal to `log_2(n)` (size of the stack).
 
 * __Average-case running time__
 
@@ -50,6 +54,10 @@ Here is the three-step divide-and-conquer process for sorting a typical subarray
     ![quick-sort-second-average-case](./images/quick-sort-second-average-case.png)
 
     Therefore, even if we got the worst-case split half the time and a split that's 3-to-1 or better half the time, the running time would be about twice the running time of getting a 3-to-1 split every time. Again, that's just a constant factor, and it gets absorbed into the big-O notation.
+
+    > The Space Complexity is the height of the tree which is equal to `log__4/3(n)` (size of the stack).
+
+> __Optimal pivot is in the middle, because when you move it to the left or to the right (or take biggest or smallest item), you increase depth of recursion. In the worst case you will get O(n^2) except of O(n*log2(n)) when taking the middle.__
 
 ### Useage
 Quicksort is sensitive to the data provided. Without usage of random pivots, it uses O(n^2) time for sorting a full sorted array. But by swapping random unsorted elements with the first element, and sorting afterwards, the algorithm becomes less sensitive to data would otherwise cause worst-case behavior (e.g. already sorted arrays).

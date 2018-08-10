@@ -40,9 +40,9 @@ export function quickSort(array: number[], left: number = 0, right: number = arr
  * moves big item, compared to pivot to left AND small item, compared to pivot to right
  * @complexity - O(n)
  * @param array - array to be sorted
- * @param left - left pointer
- * @param right - right pointer
- * @param pivot - pivot item
+ * @param left - left pointer index
+ * @param right - right pointer index
+ * @param pivot - pivot value
  * @returns partition pointer, pointer where the array should be divided by half
  */
 export function partition(array: number[], left: number, right: number, pivot: number): number {

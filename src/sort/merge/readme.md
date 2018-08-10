@@ -3,7 +3,7 @@
 |  | Worst | Average | Best |
 |:--|:-:|:-:|---|
 | __Time Complexity__ | `O(n logn)` | `θ(n logn)` | `Ω(n logn)` |
-| __Space Complexity__ | `O(n)` | `θ(n)` | `Ω(n)` |
+| __Space Complexity__ | `O(n + logn` | `θ(n + logn)` | `Ω(n + logn)` |
 | __Stable__ | Yes |
 | __In Place__ | No |
 
@@ -37,6 +37,12 @@ Explanation:
 Solution: `O(n * logn)`
 
 ![Merge Sort Analysis](./images/merge-sort-analysis.jpeg)
+
+### Space complexity
+
+Merge sort requires `n + logn` space. Where `n` - is the size of the auxiliary array and the `logn` - is the size of the stack required for recursion.
+
+[Youtube Video about Merge Sort Complexity](https://www.youtube.com/watch?v=sfmaf4QpVTw&index=8&list=PLEbnTDJUr_IeHYw_sfBOJ6gk5pie0yP-0)
 
 #Usage
 

@@ -35,7 +35,7 @@ So the amount of nodes in the binary heap is equal to:
 
 We get:
 
-`n = 2^(h + 1) - 1` => `2^(h + 1) = n + 1` => `h =` &lceil;`log_2(n + 1) -1`&rceil;
+`n = 2^(h + 1) - 1` => `2^(h + 1) = n + 1` => `h =` &lceil;`log_2(n + 1) - 1`&rceil;
 
 The ceiling is required because nodes taking up part of a level warrant an extra count to the number of levels.
 
