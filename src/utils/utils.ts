@@ -48,7 +48,7 @@ export function findExtremes(array: number[]): IExtremes {
             min: Math.min(extreme.min, item),
             max: Math.max(extreme.max, item)
         }),
-        {min: Infinity, max: -Infinity}
+        { min: Infinity, max: -Infinity }
     );
 }
 

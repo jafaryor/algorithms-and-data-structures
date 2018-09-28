@@ -1,7 +1,7 @@
 import { Stack } from '../stack';
 
 /**
- * The Queue implemented with a couple of Stacks
+ * The Queue implemented by a couple of Stacks
  */
 export class QueueWithTwoStacks<T> {
     private stack01: Stack<T>;

@@ -1,5 +1,8 @@
 import { Queue } from '../queue';
 
+/**
+ * The Stack implemented by a couple of Queues
+ */
 export class StackWithTwoQueues<T> {
     private queue01: Queue<T>;
     private queue02: Queue<T>;
