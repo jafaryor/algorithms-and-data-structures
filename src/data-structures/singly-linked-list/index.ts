@@ -14,10 +14,24 @@ export class SinglyLinkedList<T> {
     // list length
     private listLength: number = 0;
 
-    constructor(array?: T) {
+    constructor(array?: T[]) {
         if (Array.isArray(array)) {
             array.forEach(element => this.add(element));
         }
+    }
+
+    /**
+     * length of the list
+     */
+    public get length(): number {
+        return this.listLength;
+    }
+
+    /**
+     * tells if the list is empty
+     */
+    public isEmpty(): boolean {
+        return this.listLength === 0;
     }
 
     /**
@@ -50,7 +64,7 @@ export class SinglyLinkedList<T> {
     }
 
     /**
-     * inserts a node after
+     * inserts a node after the value
      * @complexity: O(n)
      * @param value
      * @param newValue
@@ -109,24 +123,10 @@ export class SinglyLinkedList<T> {
         for (let node = this.head; node !== null; node = node.next) {
             const result = fn(node);
 
-            if (result) {
+            if (result !== undefined) {
                 return result;
             }
         }
-    }
-
-    /**
-     * length of the list
-     */
-    public get length(): number {
-        return this.listLength;
-    }
-
-    /**
-     * tells if the list is empty
-     */
-    public isEmpty(): boolean {
-        return this.listLength === 0;
     }
 
     /**

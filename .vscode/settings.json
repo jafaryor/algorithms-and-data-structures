@@ -26,5 +26,7 @@
     },
     "[typescript]": {
         "editor.formatOnSave": true
-    }
+    },
+    "gitlens.views.fileHistory.enabled": true,
+    "gitlens.views.lineHistory.enabled": true
 }
