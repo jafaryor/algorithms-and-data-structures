@@ -1,10 +1,13 @@
+/**
+ * Singly-Linked List Node Interface.
+ */
 export interface ISinglyLinkecListNode<T> {
     data: T;
     next: ISinglyLinkecListNode<T> | null;
 }
 
 /**
- * Singly Linked List Data Structure
+ * Singly Linked List Data Structure.
  */
 export class SinglyLinkedList<T> {
     // pointer to the head of the list
@@ -16,7 +19,8 @@ export class SinglyLinkedList<T> {
 
     constructor(array?: T[]) {
         if (Array.isArray(array)) {
-            array.forEach(element => this.add(element));
+            array.forEach(value => this.insert(value));
+            this.listLength = array.length;
         }
     }
 
@@ -45,11 +49,11 @@ export class SinglyLinkedList<T> {
     }
 
     /**
-     * adds a node to the end of the list
+     * Inserts a node to the end of the list
      * @complexity: O(1)
      * @param value
      */
-    public add(value: T): void {
+    public insert(value: T): void {
         const node = { data: value, next: null };
 
         if (!this.head || !this.tail) {

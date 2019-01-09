@@ -3,7 +3,6 @@
  */
 export class Set<T> {
     private values = new Array<T>();
-
     constructor(array?: T[]) {
         if (Array.isArray(array)) {
             array.forEach(value => this.add(value));
@@ -24,12 +23,22 @@ export class Set<T> {
         return this.values.length === 0;
     }
 
+    /**
+     * adds value to the set
+     * @complexity: O(n)
+     * @param value
+     */
     public add(value: T): void {
         if (!~this.values.indexOf(value)) {
             this.values.push(value);
         }
     }
 
+    /**
+     * removes the value from the set
+     * @complexity: O(n)
+     * @param value
+     */
     public remove(value: T): void {
         const index = this.values.indexOf(value);
 
@@ -38,10 +47,20 @@ export class Set<T> {
         }
     }
 
+    /**
+     * true, is the set contains the value
+     * @complexity: O(n)
+     * @param value
+     */
     public contains(value: T): boolean {
         return this.values.indexOf(value) !== -1;
     }
 
+    /**
+     * set union
+     * @complexity: O(k*n)
+     * @param set - set has length of k
+     */
     public union(set: Set<T>): Set<T> {
         const newSet = new Set<T>(this.values);
 
@@ -50,6 +69,11 @@ export class Set<T> {
         return newSet;
     }
 
+    /**
+     * set intersect
+     * @complexity: O(k*n)
+     * @param set - set has length of k
+     */
     public intersect(set: Set<T>): Set<T> {
         const newSet = new Set<T>();
 
@@ -62,6 +86,11 @@ export class Set<T> {
         return newSet;
     }
 
+    /**
+     * set difference
+     * @complexity: O(k*n)
+     * @param set - set has length of k
+     */
     public difference(set: Set<T>): Set<T> {
         const newSet = new Set<T>();
 
@@ -74,6 +103,11 @@ export class Set<T> {
         return newSet;
     }
 
+    /**
+     * true, if the set is subset of the passed set
+     * @complexity: O(n)
+     * @param set
+     */
     public isSubsetOf(set: Set<T>): boolean {
         return this.values.every(set.contains, set);
     }
