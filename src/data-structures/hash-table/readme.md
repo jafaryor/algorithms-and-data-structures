@@ -71,5 +71,7 @@ __Theorem__: The class of hash functions `H[p, m] = {h[a, b] | a, b âˆˆ Z[p], aâ
 _Note:_ You take two random numbers each time `a` and `b`.
 
 ### Perfect hashing
+_Static Dictionary Problem_ is the problem when you are given `n` keys upfront and you need to build the table which suport searching.
+
 
 
