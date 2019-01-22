@@ -26,7 +26,7 @@ describe('SinglyLinkedListSpec', () => {
     });
 
     it('should remove the middle node', () => {
-        expect(list.remove(20)).toBe(true);
+        expect(list.remove(20)).toBe(20);
         expect(list.length).toEqual(2);
         expect(list.search(20)).toBeNull();
     });

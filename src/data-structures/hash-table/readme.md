@@ -61,17 +61,23 @@ __Theorem__: The class of hash functions `H[u] = {h[a] | a ∈ {0, 1, ..., u - 1
 *  `u=m^r` for integar `r`
 *  `h[a](k) = (ak) mod m`
 
-_Note:_ You take only one random number eash time - `a`.
+> _Note:_ You take only one random number each time - `a`.
 
 __Theorem__: The class of hash functions `H[p, m] = {h[a, b] | a, b ∈ Z[p], a≠0}` is universal. Where:
 * `p` is prime and `p > m`
 * `Z[p] = {0, 1, ..., p-1}`
 * `h[a, b](k) = ((ak + b) mod p) mod m`
 
-_Note:_ You take two random numbers each time `a` and `b`.
+> _Note:_ You take two random numbers each time `a` and `b`.
+
+__Carter and Wegman proposal: `p >= m`__
 
 ### Perfect hashing
-_Static Dictionary Problem_ is the problem when you are given `n` keys upfront and you need to build the table which suport searching.
+_Static Dictionary Problem_ is the problem when you are given `n` keys upfront and the set of keys never change. You need to build the table which suport searching.
 
+__Perfect Hash__ function for a set `S` is a hash function that maps distinct elements in `S` to a set of integers, with no collisions. So we will achieve:
+* `O(1)` worst case time for search
+* `O(n)` worst case space complexity
+* Polynomial build time - `O(nlog^2(n))`
 
-
+Proof of the Theorems is in [here](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-introduction-to-algorithms-sma-5503-fall-2005/video-lectures/lecture-8-universal-hashing-perfect-hashing/lec8.pdf).

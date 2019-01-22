@@ -105,3 +105,37 @@ export function lastDigitOf(n: number): number | undefined {
 
     return digit === '' ? undefined : Number(digit);
 }
+
+/**
+ * Primality Test.
+ * Checks if the number is prime.
+ * @reference: https://en.wikipedia.org/wiki/Primality_test
+ * @complexity: O(sqrt(n))
+ */
+export function isPrime(n: number): boolean {
+    // Corner case
+    if (n <= 3) return n > 1;
+    // This is checked so that we can skip middle five numbers in below loop
+    else if (n % 2 === 0 || n % 3 === 0) return false;
+
+    for (let i = 5; i * i <= n; i += 6) {
+        if (n % i === 0 || n % (i + 2) === 0) return false;
+    }
+
+    return true;
+}
+
+/**
+ * The function finds the closest prime, which is greater than the number.
+ * `Bertrand's postulate` states:
+ *   for every `n>1` there is always at least one prime `p` such that `n<p<2n`.
+ * @reference: https://en.wikipedia.org/wiki/Bertrand%27s_postulate
+ * @complexity: O(n*sqrt(n))
+ */
+export function findClosestPrimeNumber(n: number): number {
+    for (let i = n; i < 2 * n; i++) {
+        if (isPrime(i)) return i;
+    }
+
+    return 0;
+}

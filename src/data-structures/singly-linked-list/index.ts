@@ -1,3 +1,5 @@
+import { EqualFunction } from '../../utils';
+
 /**
  * Singly-Linked List Node Interface.
  */
@@ -17,10 +19,14 @@ export class SinglyLinkedList<T> {
     // list length
     private listLength: number = 0;
 
-    constructor(array?: T[]) {
+    constructor(array?: T[], comparator?: EqualFunction<T>) {
         if (Array.isArray(array)) {
             array.forEach(value => this.insert(value));
             this.listLength = array.length;
+        }
+
+        if (comparator) {
+            this.areEqual = comparator;
         }
     }
 
@@ -32,7 +38,7 @@ export class SinglyLinkedList<T> {
     }
 
     /**
-     * tells if the list is empty
+     * checks if the list is empty
      */
     public isEmpty(): boolean {
         return this.listLength === 0;
@@ -45,7 +51,13 @@ export class SinglyLinkedList<T> {
      * @returns pointer to the node
      */
     public search(value: T): ISinglyLinkecListNode<T> | null {
-        return this.traverse((node: ISinglyLinkecListNode<T>) => (node.data === value ? node : null));
+        for (let node = this.head; node !== null; node = node.next) {
+            if (this.areEqual(node.data, value)) {
+                return node;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -95,27 +107,37 @@ export class SinglyLinkedList<T> {
      * @complexity: O(n)
      * @param value
      */
-    public remove(value: T): boolean {
-        let previous = this.head;
-
-        return (
-            this.traverse((current: ISinglyLinkecListNode<T>) => {
-                if (current.data === value && previous) {
-                    if (current === this.head) {
-                        this.head = this.head.next;
-                    } else if (current === this.tail) {
-                        this.tail = previous;
-                    }
-
-                    previous.next = current.next;
-                    this.listLength--;
-
-                    return true;
+    public remove(value: T): T | null {
+        for (let current = this.head, previous = null; current !== null; previous = current, current = current.next) {
+            if (this.areEqual(current.data, value)) {
+                if (current === this.head) {
+                    this.head = this.head.next;
+                } else if (current === this.tail) {
+                    this.tail = previous;
+                } else {
+                    (previous as ISinglyLinkecListNode<T>).next = current.next;
                 }
 
-                previous = current;
-            }) || false
-        );
+                this.listLength--;
+
+                return current.data;
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * removes the head node
+     */
+    public removeHead() {
+        if (this.head) {
+            this.head = this.head.next;
+        }
+    }
+
+    public getHead(): ISinglyLinkecListNode<T> | null {
+        return this.head;
     }
 
     /**
@@ -140,9 +162,14 @@ export class SinglyLinkedList<T> {
     public print(): void {
         let output = '';
 
-        this.traverse((node: ISinglyLinkecListNode<T>) => (output += `${node.data}, `));
+        this.traverse((node: ISinglyLinkecListNode<T>) => (output += `${JSON.stringify(node.data)}, `));
 
         // tslint:disable-next-line
         console.log(`[${output}]`);
     }
+
+    /**
+     * checks if two values are equal
+     */
+    private areEqual: EqualFunction<T> = (a: T, b: T): boolean => a === b;
 }

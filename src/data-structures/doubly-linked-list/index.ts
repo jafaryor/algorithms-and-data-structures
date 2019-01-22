@@ -108,7 +108,7 @@ export class DoublyLinkedList<T> {
     public print(): void {
         let output = '';
 
-        this.traverse((node: IDoublyLinkedListNode<T>) => (output += `${node.data}, `));
+        this.traverse((node: IDoublyLinkedListNode<T>) => (output += `${JSON.stringify(node.data)}, `));
 
         // tslint:disable-next-line
         console.log(`[${output}]`);
