@@ -21,7 +21,7 @@ export class HashTable<T> {
     }
 
     /**
-     * Is the hash table empty.
+     * Checks if the hash table empty.
      */
     public isEmpty(): boolean {
         return this.itemsCount === 0;
@@ -34,6 +34,9 @@ export class HashTable<T> {
         return this.itemsCount / this.slotsCount;
     }
 
+    /**
+     * The table size.
+     */
     public get size() {
         return this.itemsCount;
     }
@@ -45,6 +48,10 @@ export class HashTable<T> {
     public insert(key: number, value: T) {
         const hash = this.calculateHash(key);
         const list = this.table[hash];
+
+        if (this.loadFactor === 1) {
+            throw new Error('Out of memory!');
+        }
 
         if (list) {
             list.insert({ key, value });
@@ -62,7 +69,7 @@ export class HashTable<T> {
      * Delete the value from the list T[hash(value.key)].
      * @complexity: O(1 + n/m)
      */
-    public remove(key: number): T | null {
+    public delete(key: number): T | null {
         const hash = this.calculateHash(key);
         const list = this.table[hash];
 

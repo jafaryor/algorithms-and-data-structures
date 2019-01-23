@@ -17,7 +17,7 @@ describe('HashTable', () => {
 
     it('should remove the item', () => {
         table.insert(20, 200);
-        table.remove(10);
+        table.delete(10);
 
         expect(table.size).toEqual(1);
         expect(table.search(10)).toEqual(null);
@@ -32,9 +32,9 @@ describe('HashTable', () => {
         expect(table.size).toEqual(5);
         expect(table.isEmpty()).toBe(false);
 
-        table.remove(20);
-        table.remove(30);
-        table.remove(40);
+        table.delete(20);
+        table.delete(30);
+        table.delete(40);
 
         expect(table.size).toEqual(2);
         expect(table.search(20)).toBe(null);
