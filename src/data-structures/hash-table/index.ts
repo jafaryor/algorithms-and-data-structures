@@ -1,5 +1,5 @@
 import { SinglyLinkedList, ISinglyLinkecListNode } from '../singly-linked-list';
-import { randomFromRange, findClosestPrimeNumber } from '../../utils';
+import { randomFromRange, findClosestBiggerPrimeNumber } from '../../utils';
 
 /**
  * Hash Table Data Structure.
@@ -17,7 +17,7 @@ export class HashTable<T> {
         // Select hash function from the Universe of Hash Function.
         this.a = randomFromRange(1, this.slotsCount - 1);
         this.b = randomFromRange(0, this.slotsCount - 1);
-        this.p = findClosestPrimeNumber(slotsCount);
+        this.p = findClosestBiggerPrimeNumber(slotsCount);
     }
 
     /**
@@ -48,10 +48,6 @@ export class HashTable<T> {
     public insert(key: number, value: T) {
         const hash = this.calculateHash(key);
         const list = this.table[hash];
-
-        if (this.loadFactor === 1) {
-            throw new Error('Out of memory!');
-        }
 
         if (list) {
             list.insert({ key, value });

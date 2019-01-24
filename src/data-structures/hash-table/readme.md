@@ -81,3 +81,5 @@ __Perfect Hash__ function for a set `S` is a hash function that maps distinct el
 * Polynomial build time - `O(nlog^2(n))`
 
 Proof of the Theorems is in [here](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-introduction-to-algorithms-sma-5503-fall-2005/video-lectures/lecture-8-universal-hashing-perfect-hashing/lec8.pdf).
+
+[More about Perfect Hashing](http://theory.stanford.edu/~matias/papers/fks.pdf)

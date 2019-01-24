@@ -12,8 +12,7 @@ Operations:
 
 The advantage of open addressing is that it _avoids pointers altogether_. Instead of following pointers, we compute the sequence of slots to be examined. The extra memory freed by not storing pointers provides the hash table with a larger number of slots for the same amount of memory, potentially yielding fewer collisions and faster retrieval.
 
-With open addressing, we require that for every key `k`, the __probe sequence__ `⟨h(k, 0), h(k, 1), ..., h(k, m-1)⟩`
-be a permutation of `⟨0, 1, ..., m-1⟩`.
+With open addressing, we require that for every key `k`, the __probe sequence__ `⟨h(k, 0), h(k, 1), ..., h(k, m-1)⟩` be a permutation of `⟨0, 1, ..., m-1⟩` - __uniform hashing__.
 
 ### Probing
 The ideal situation is __uniform hashing__. It's hard to implement true uniform hashing, so we approximate it with techniques that at least guarantee that the probe sequence is a permutation of `⟨0, 1, ..., m−1⟩`.
@@ -50,5 +49,16 @@ The ideal situation is __uniform hashing__. It's hard to implement true uniform 
 
     where `m′` is chosen to be slightly less than `m` (say, `m - 1`).
 
+_Difference:_
 
+| Seperate Chaining	| Open Addressing |
+| - | - |
+| Chaining is Simpler to implement.	| Open Addressing requires more computation. |
+| In chaining, Hash table never fills up, we can always add more elements to chain. | In open addressing, table may become full. |
+| Chaining is Less sensitive to the hash function or load factors. | Open addressing requires extra care for to avoid clustering and load factor. |
+| Chaining is mostly used when it is unknown how many and how frequently keys may be inserted or deleted. | Open addressing is used when the frequency and number of keys is known. |
+| Cache performance of chaining is not good as keys are stored using linked list. | Open addressing provides better cache performance as everything is stored in the same table. |
+| Wastage of Space (Some Parts of hash table in chaining are never used). | In Open addressing, a slot can be used even if an input doesn’t map to it. |
+| Chaining uses extra space for links. | No links in Open addressing. |
 
+[Read more](http://courses.csail.mit.edu/6.006/fall11/lectures/lecture10.pdf)

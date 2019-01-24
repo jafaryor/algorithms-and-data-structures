@@ -132,8 +132,22 @@ export function isPrime(n: number): boolean {
  * @reference: https://en.wikipedia.org/wiki/Bertrand%27s_postulate
  * @complexity: O(n*sqrt(n))
  */
-export function findClosestPrimeNumber(n: number): number {
+export function findClosestBiggerPrimeNumber(n: number): number {
     for (let i = n; i < 2 * n; i++) {
+        if (isPrime(i)) return i;
+    }
+
+    return 0;
+}
+
+/**
+ * The function finds the closest prime, which is smaller than the number.
+ * `Bertrand's postulate` states:
+ *   for every `n>1` there is always at least one prime `p` such that `n/2<p<n`.
+ * @complexity: O(n*sqrt(n))
+ */
+export function findClosestSmallerPrimeNumber(n: number): number {
+    for (let i = n; i > n / 2; i--) {
         if (isPrime(i)) return i;
     }
 

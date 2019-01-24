@@ -1,13 +1,17 @@
 import { IKeyValueObject } from '../hash-table';
+import { findClosestSmallerPrimeNumber } from '../../utils';
 
 /**
  * Open Adressing Hash Table.
  */
 export class OpenAddressHashTable<T> {
+    private prime: number;
     private itemsCount = 0;
     private readonly table: ITable<T> = {};
 
-    constructor(private readonly capacity: number) {}
+    constructor(private readonly capacity: number) {
+        this.prime = findClosestSmallerPrimeNumber(capacity);
+    }
 
     /**
      * The table size.
@@ -24,16 +28,31 @@ export class OpenAddressHashTable<T> {
     }
 
     /**
+     * Checks if the table is full.
+     */
+    public isFull() {
+        return this.itemsCount === this.capacity;
+    }
+
+    /**
      * Insert the key/value pair to the table.
+     * @complexity: O(1/(1-n/m))
+     * @note: under the assumption of uniform hashing.
      */
     public insert(key: number, value: T) {
         let i = 0;
         let hash: number;
+        let slot: IKeyValueObject<T>;
+
+        if (this.isFull()) {
+            throw new Error('The Hash Table is full!');
+        }
 
         // Find the next free slot.
         do {
             hash = this.calculateHash(key, i++);
-        } while (this.table[hash] && this.table[hash].key !== key && this.table[hash].key !== -1);
+            slot = this.table[hash];
+        } while (slot && slot.key !== key && slot.key !== -1);
 
         // The free slot if found.
         if (!this.table[hash] || this.table[hash].key === -1) {
@@ -44,53 +63,60 @@ export class OpenAddressHashTable<T> {
 
     /**
      * Delete the node with @key.
+     * @complexity: O(1/(1-n/m))
+     * @note: under the assumption of uniform hashing.
      */
     public delete(key: number): T | null {
         let i = 0;
         let hash: number;
+        let slot: IKeyValueObject<T>;
 
         do {
             hash = this.calculateHash(key, i++);
+            slot = this.table[hash];
 
             // Node is found.
-            if (this.table[hash].key === key) {
-                const temp = this.table[hash];
-
+            if (slot && slot.key === key) {
                 this.table[hash] = { key: -1, value: null };
                 this.itemsCount--;
 
-                return temp.value;
+                return slot.value;
             }
-        } while (this.table[hash]);
+        } while (slot);
 
         return null;
     }
 
     /**
      * Search the node with key equal to @key in the table.
+     * @complexity: O(1/(1-n/m))
+     * @note: under the assumption of uniform hashing.
      */
     public search(key: number): T | null {
         let i = 0;
         let counter = 0;
         let hash: number;
+        let slot: IKeyValueObject<T>;
 
         do {
             hash = this.calculateHash(key, i++);
+            slot = this.table[hash];
 
             // Node is found.
-            if (this.table[hash].key === key) return this.table[hash].value;
+            if (slot && slot.key === key) return slot.value;
         } while (this.table[hash] && counter++ <= this.capacity); // to avoid inifinite loop.
 
         return null;
     }
 
     /**
-     * Linear Probing.
+     * Double-Hashing Probing.
      */
     private calculateHash(key: number, i: number): number {
-        const hash = key % this.capacity;
+        const hash01 = key % this.capacity;
+        const hash02 = this.prime - (key % this.prime);
 
-        return (hash + i) % this.capacity;
+        return (hash01 + i * hash02) % this.capacity;
     }
 }
 
