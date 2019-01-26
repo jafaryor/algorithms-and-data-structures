@@ -66,3 +66,18 @@ Quicksort is sensitive to the data provided. Without usage of random pivots, it 
 
 ### Example
 ![quick-sort](./images/quick-sort.gif)
+
+## Randomized Quick Sort
+In order to avoid worst case we can randomize the input before applying the QuickSort algorithm. Another approach to randomization is to randomize choices made within the algorithm. It can done by random picking the pivot.
+
+The __Expected Worst Case__ time complexity of Randomized QuickSort is `O(2*n*lgn)`.
+
+_[Proof](http://www.dcc.fc.up.pt/~pribeiro/aulas/alg1415/slides/2_probabilistic_16102014.pdf)_
+
+In terms of the number of comparisons it makes, _Randomized Quicksort_ is equivalent to randomly shuffling the input and then handing it off to _Naive Quicksort_.
+
+### Further Improvements
+* switch to _insertion sort_ for tiny arrays.
+* __Median-of-three partitioning__.
+
+[More](https://algs4.cs.princeton.edu/23quicksort/)

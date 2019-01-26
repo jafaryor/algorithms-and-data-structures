@@ -3,3 +3,8 @@ export * from './matrix';
 export * from './priority-queue';
 export * from './queue';
 export * from './stack';
+export * from './doubly-linked-list';
+export * from './singly-linked-list';
+export * from './hash-table';
+export * from './open-address-hash-table';
+export * from './set';

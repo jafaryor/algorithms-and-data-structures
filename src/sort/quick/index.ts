@@ -1,16 +1,40 @@
-import { swap, shuffle } from '../../utils';
+import { swap, shuffle, randomFromRange } from '../../utils';
 
 /**
- * Randomises the array before sorting
- * @complexity - O(n*log) even in worst case
- * @param array
- * @param left
- * @param right
+ * Randomized Quick Sort
+ * @time complexity - O(n logn)
+ * @space complexity - O(1)
+ * @param array - array to be sorted
+ * @param left - left pointer
+ * @param right - right pointer
+ * @returns sorted array
  */
-export function randomizedQuickSort(array: number[], left: number = 0, right: number = array.length - 1): number[] {
-    const shuffledArray = shuffle(array);
+export function randomizedQuickSort(array: number[], left = 0, right = array.length - 1): number[] {
+    if (left >= right) {
+        return array;
+    }
 
-    return quickSort(shuffledArray);
+    const pivotIndex = randomizedPartition(array, left, right);
+
+    randomizedQuickSort(array, left, pivotIndex - 1);
+    randomizedQuickSort(array, pivotIndex + 1, right);
+
+    return array;
+}
+
+/**
+ * Randomized partitioning
+ * @complexity - O(n)
+ * @param array - array to be sorted
+ * @param left - left pointer
+ * @param right - right pointer
+ * @returns partition pointer, pointer where the array should be divided by half
+ */
+export function randomizedPartition(array: number[], left = 0, right = array.length - 1): number {
+    const k = randomFromRange(left, right);
+    swap(array, k, right);
+
+    return partition(array, left, right);
 }
 
 /**
@@ -27,11 +51,10 @@ export function quickSort(array: number[], left: number = 0, right: number = arr
         return array;
     }
 
-    const mid = Math.floor((left + right) / 2);
-    const pivotIndex = partition(array, left, right, array[mid]);
+    const pivotIndex = partition(array, left, right);
 
     quickSort(array, left, pivotIndex - 1);
-    quickSort(array, pivotIndex, right);
+    quickSort(array, pivotIndex + 1, right);
 
     return array;
 }
@@ -45,24 +68,21 @@ export function quickSort(array: number[], left: number = 0, right: number = arr
  * @param pivot - pivot value
  * @returns partition pointer, pointer where the array should be divided by half
  */
-export function partition(array: number[], left: number, right: number, pivot: number): number {
-    while (left <= right) {
-        while (array[left] < pivot) {
-            ++left;
-        }
+export function partition(array: number[], left: number, right: number): number {
+    const pivot = array[right]; // last element
+    let i = left - 1; // last sorted element index
 
-        while (array[right] > pivot) {
-            --right;
-        }
-
-        if (left <= right) {
-            swap(array, left, right);
-            ++left;
-            --right;
+    for (let j = left; j < right; ++j) {
+        if (array[j] <= pivot) {
+            ++i;
+            swap(array, i, j);
         }
     }
 
-    return left;
+    // put the pivot element right after the lat moved element
+    swap(array, ++i, right);
+
+    return i;
 }
 
 /**

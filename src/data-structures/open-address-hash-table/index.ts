@@ -7,7 +7,7 @@ import { findClosestSmallerPrimeNumber } from '../../utils';
 export class OpenAddressHashTable<T> {
     private prime: number;
     private itemsCount = 0;
-    private readonly table: ITable<T> = {};
+    private readonly table: IOpenAddressTable<T> = {};
 
     constructor(private readonly capacity: number) {
         this.prime = findClosestSmallerPrimeNumber(capacity);
@@ -123,6 +123,6 @@ export class OpenAddressHashTable<T> {
 /**
  * Open Adress Hash Table Cell interface.
  */
-export interface ITable<T> {
+export interface IOpenAddressTable<T> {
     [key: number]: IKeyValueObject<T>;
 }
