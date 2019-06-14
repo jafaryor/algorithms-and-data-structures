@@ -44,6 +44,8 @@ __Auxiliary Space__: The extra space that is taken by an algorithm temporarily t
 
 __Space Complexity__: Space complexity is the total space taken by the algorithm with respect to the input size plus the auxiliary space that the algorithm uses.
 
+![cheatsheet](./images/cheatsheet.jpg)
+
 __[Youtube Playlist about Time and Space Complexity Analysis](https://www.youtube.com/watch?v=aGjL7YXI31Q&list=PLEbnTDJUr_IeHYw_sfBOJ6gk5pie0yP-0)__
 
 
