@@ -13,21 +13,39 @@ For now we shall assume that any given element is equally likely to hash into an
 
 In a hash table in which collisions are resolved by chaining, a search takes average-case time `θ(1+α)`, under the assumption of simple uniform hashing. As each list has the length `α` and the hash computation time is `θ(1)`. Where `α` is called __load factor__ and is equal to `n/m`.
 
-### Good Hashing Function
-A good hash function satisfies (approximately) the assumption of _simple uniform hashing_. In other words: `Pr{h(k1)=h(k2)}=1/m`.
+## Hashing Functions
+* A __Good Hash Function__ satisfies (approximately) the assumption of _simple uniform hashing_. In other words: `Pr{h(k1)=h(k2)}=1/m`.
+* In practice, itís not possible to satisfy this assumption, since we donít know in advance the probability distribution that keys are drawn from, and the keys may not be drawn independently.
 
-__Devision Method__: `h(k) = k mod m`
+### Devision Method
+
+`h(k) = k mod m`
 
 `m` should not be power of `2`. A prime not too close to an exact power of `2` is often a good choice for `m`.
 
-__Multiplication method__: `h(k) = ` &lfloor;`m(kA mod 1)`&rfloor; , where `0 < A < 1`.
+__Advantage__: Fast, since requires just one division operation.
 
-The value of `m` is not critical. Although this method works with any value of the constant `A`, it works better
-with some values than with others. The optimal choice depends on the characteristics of the data being hashed. Knut suggests that:
+__Disadvantage__: Have to avoid certain values of `m`. Powers of 2 are bad. If `m = 2^p` for integer `p`, then `h(k)` is just the least significant `p` bits of `k`.
+
+### Multiplication method
+
+`h(k) = ` &lfloor;`m(kA mod 1)`&rfloor; = &lfloor;`m(kA - `&lfloor;`kA`&rfloor;`)`&rfloor; , where `0 < A < 1`.
+
+First, we multiply the key `k` by a constant `A` in the range `0 < A < 1` and extract the fractional part of `kA`. Then, we multiply this value by `m` and take the floor of the result.
+
+The value of `m` is not critical. Although this method works with any value of the constant `A`, it works better with some values than with others. The optimal choice depends on the characteristics of the data being hashed. _Knut_ suggests that:
 
 `A ≈ (√5 - 1)/2 = 0.6180339887...`
 
 is likely to work reasonably well.
+
+__Disadvantage__: Slower than division method.
+
+__Advantage__: Value of `m` is not critical.
+
+__(Relatively) easy implementation__:
+
+![multiplication-method](../../images/multiplication-method.png)
 
 ### Universal hashing
 If a malicious adversary chooses the keys to be hashed by some fixed hash function, then the adversary can choose n keys that all hash to the same slot, yielding an av- erage retrieval time of `θ(n)`. Any fixed hash function is vulnerable to such terrible worst-case behavior; the only effective way to improve the situation is to choose the hash function _randomly_ in a way that is _independent_ of the keys that are actually going to be stored. This approach, called __universal hashing__, can yield provably good performance on average, no matter which keys the adversary chooses.
