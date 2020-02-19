@@ -50,13 +50,13 @@ __(Relatively) easy implementation__:
 ### Universal hashing
 If a malicious adversary chooses the keys to be hashed by some fixed hash function, then the adversary can choose n keys that all hash to the same slot, yielding an av- erage retrieval time of `θ(n)`. Any fixed hash function is vulnerable to such terrible worst-case behavior; the only effective way to improve the situation is to choose the hash function _randomly_ in a way that is _independent_ of the keys that are actually going to be stored. This approach, called __universal hashing__, can yield provably good performance on average, no matter which keys the adversary chooses.
 
-In universal hashing, at the beginning of execution we select the hash function at random from a carefully designed class of functions. As in the case of quick- sort, randomization guarantees that no single input will always evoke worst-case behavior. Because we randomly select the hash function, the algorithm can be- have differently on each execution, even for the same input, guaranteeing good average-case performance for any input.
+In universal hashing, at the beginning of execution we select the hash function at random from a carefully designed class of functions.
 
 Let `H` be a finite collection of hash functions that map a given universe `U` of keys into the range `{0, 1, ..., m-1}`. Such a collection is said to be __universal__ if for each pair of distinct keys `k, l ∈ U`, the number of hash functions `h ∈ H` for which `h(k) = h(l)` is at most `|H|/m`. In other words, with a hash function randomly chosen from `H`, the chance of a collision between distinct keys `k` and `l` is no more than the chance `1/m` of a collision if `h(k)` and `h(l)` were randomly and independently chosen from the set `{0, 1, ..., m-1}`.
 
-__Theorem__: For `n` arbitrary distinct keys for random `h ∈ H`, `E[number of keys colliding in slots] <= 1 + α`.
+__Theorem__: For `n` arbitrary distinct keys for random `h ∈ H`, `E[number of keys colliding in slots] <= 1 + α`. Which means that we have no more than `1 + α` items in each slot, if using the chaining to resolve the collision.
 
-_Proof:_ Consider keys`k1, k2, ..., kn`. Let indicator `I[i, j] = {1, if h(ki)=h(kj). 0, if h(ki)≠h(kj)}`
+_Proof:_ Consider keys `k1, k2, ..., kn`. Let indicator `I[i, j] = {1, if h(ki)=h(kj). 0, if h(ki)≠h(kj)}`
 
 So,
 
@@ -101,3 +101,7 @@ __Perfect Hash__ function for a set `S` is a hash function that maps distinct el
 Proof of the Theorems is in [here](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-introduction-to-algorithms-sma-5503-fall-2005/video-lectures/lecture-8-universal-hashing-perfect-hashing/lec8.pdf).
 
 [More about Perfect Hashing](http://theory.stanford.edu/~matias/papers/fks.pdf)
+
+---
+
+### [Read More](http://staff.ustc.edu.cn/~csli/graduate/algorithms/book6/chap12.htm)
