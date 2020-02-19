@@ -26,6 +26,6 @@
     },
     "dependencies": {
         "class-validator": "^0.8.5",
-        "lodash": "^4.17.10"
+        "lodash": "^4.17.13"
     }
 }
