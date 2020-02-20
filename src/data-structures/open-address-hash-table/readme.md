@@ -1,5 +1,5 @@
-## Open Adressing
-Open Adressing is an alternative to chaining for handling collisions. In Open Adressing, all elements are stored in the hash table itself. _So at any point, size of table must be greater than or equal to total number of keys._
+## Open Addressing
+Open Addressing is an alternative to chaining for handling collisions. In Open Addressing, all elements are stored in the hash table itself. _So at any point, size of table must be greater than or equal to total number of keys._
 
 > We can increase table size by copying old data if needed.
 
@@ -17,7 +17,7 @@ With open addressing, we require that for every key `k`, the __probe sequence__ 
 ### Probing
 The ideal situation is __uniform hashing__. It's hard to implement true uniform hashing, so we approximate it with techniques that at least guarantee that the probe sequence is a permutation of `⟨0, 1, ..., m−1⟩`.
 
-* __Linear prbing__: Given auxiliary hash function `h′`, the probe sequence starts at slot `h′(k)` and continues sequentially through the table. Given key `k` and probe number `i` (`0 ≤ i < m`):
+* __Linear probing__: Given auxiliary hash function `h′`, the probe sequence starts at slot `h′(k)` and continues sequentially through the table. Given key `k` and probe number `i` (`0 ≤ i < m`):
     
     `h(k,i) = (h′(k) + i) mod m`
 
@@ -51,7 +51,7 @@ The ideal situation is __uniform hashing__. It's hard to implement true uniform 
 
 _Difference:_
 
-| Seperate Chaining	| Open Addressing |
+| Separate Chaining	| Open Addressing |
 | - | - |
 | Chaining is Simpler to implement.	| Open Addressing requires more computation. |
 | In chaining, Hash table never fills up, we can always add more elements to chain. | In open addressing, table may become full. |

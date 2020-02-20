@@ -96,7 +96,7 @@ __Theorem__: The class of hash functions `H[p, m] = {h[a, b] | a, b âˆˆ Z[p], aâ
 __Carter and Wegman proposal: `p >= m`__
 
 ### Perfect hashing
-_Static Dictionary Problem_ is the problem when you are given `n` keys upfront and the set of keys never change. You need to build the table which suport searching.
+_Static Dictionary Problem_ is the problem when you are given `n` keys upfront and the set of keys never change. You need to build the table which support searching.
 
 __Perfect Hash__ function for a set `S` is a hash function that maps distinct elements in `S` to a set of integers, with no collisions. So we will achieve:
 * `O(1)` worst case time for search
