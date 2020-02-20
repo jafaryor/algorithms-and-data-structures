@@ -75,8 +75,9 @@ By universality definition:
 ` <= Σ[i≠j](1/m) + 1 = 1 + n/m`
 
 
-__Corollary:__ Using universal hashing and collision resolution by chaining in an initially empty table with `m` slots, it takes expected time `O(n)` to handle any sequence of `n` _INSERT_, _SEARCH_, and _DELETE_ operations containing `O(m)` _INSERT_ operations.
+__Corollary:__ Using universal hashing and collision resolution by chaining in an initially empty table with `m` slots, it takes expected time `θ(n)` to handle any sequence of `n` _INSERT_, _SEARCH_, and _DELETE_ operations containing `O(m)` INSERT operations.
 
+_Proof_: Since the number of insertions is `O(m)`, we have `n = O(m)` and so `α = O(1)`. The _INSERT_ and _DELETE_ operations take constant time and, by the above Theorem, the expected time for each _SEARCH_ operation is `O(1)`. By linearity of expectation, therefore, the expected time for the entire sequence of `n` operations is `O(n)`. Since each operation takes `Ω(n)` time, the `θ(n)` bound follows.
 
 __Theorem__: The class of hash functions `H[u] = {h[a] | a ∈ {0, 1, ..., u - 1}}` is universal. Where:
 *  `m` is prime
@@ -84,10 +85,6 @@ __Theorem__: The class of hash functions `H[u] = {h[a] | a ∈ {0, 1, ..., u - 1
 *  `h[a](k) = (ak) mod m`
 
 > _Note:_ You take only one random number each time - `a`.
-
-__Corollary:__ Using universal hashing and collision resolution by chaining in an initially empty table with `m` slots, it takes expected time `θ(n)` to handle any sequence of `n` _INSERT_, _SEARCH_, and _DELETE_ operations containing `O(m)` INSERT operations.
-
-_Proof_: Since the number of insertions is `O(m)`, we have `n = O(m)` and so `α = O(1)`. The _INSERT_ and _DELETE_ operations take constant time and, by the above Theorem, the expected time for each _SEARCH_ operation is `O(1)`. By linearity of expectation, therefore, the expected time for the entire sequence of `n` operations is `O(n)`. Since each operation takes `Ω(n)` time, the `θ(n)` bound follows.
 
 __Theorem__: The class of hash functions `H[p, m] = {h[a, b] | a, b ∈ Z[p], a≠0}` is universal. Where:
 * `p` is prime and `p > m`
