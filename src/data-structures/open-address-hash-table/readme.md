@@ -49,11 +49,21 @@ The ideal situation is __uniform hashing__. It's hard to implement true uniform 
 
     where `m′` is chosen to be slightly less than `m` (say, `m - 1`).
 
+
+__Theorem:__ Given an open-address hash table with load factor `α = n/m < 1`, the expected number of probes in an unsuccessful search is at most `1 / (1 - α)`, assuming _uniform hashing_.
+
+
+__Corollary:__ Inserting an element into an open-address hash table with load factor  ̨ requires at most `1 / (1 - α)` probes on average, assuming _uniform hashing_.
+
+
+__Theorem:__ Given an open-address hash table with load factor `α < 1`, the expected number of probes in a successful search is at most `1/α * ln(1/(1-α))` assuming _uniform hashing_ and assuming that each key in the table is equally likely to be searched for.
+
+
 _Difference:_
 
 | Separate Chaining	| Open Addressing |
 | - | - |
-| Chaining is Simpler to implement.	| Open Addressing requires more computation. |
+| Chaining is simpler to implement.	| Open Addressing requires more computation. |
 | In chaining, Hash table never fills up, we can always add more elements to chain. | In open addressing, table may become full. |
 | Chaining is Less sensitive to the hash function or load factors. | Open addressing requires extra care for to avoid clustering and load factor. |
 | Chaining is mostly used when it is unknown how many and how frequently keys may be inserted or deleted. | Open addressing is used when the frequency and number of keys is known. |

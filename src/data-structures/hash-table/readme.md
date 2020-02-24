@@ -96,12 +96,40 @@ __Theorem__: The class of hash functions `H[p, m] = {h[a, b] | a, b ∈ Z[p], a�
 __Carter and Wegman proposal: `p >= m`__
 
 ### Perfect hashing
-_Static Dictionary Problem_ is the problem when you are given `n` keys upfront and the set of keys never change. You need to build the table which support searching.
+_Static Dictionary Problem_ is the problem when you are given `n` keys upfront and the set of keys never change. You need to build the table which support searching only (no delete and insert).
 
 __Perfect Hash__ function for a set `S` is a hash function that maps distinct elements in `S` to a set of integers, with no collisions. So we will achieve:
 * `O(1)` worst case time for search
 * `O(n)` worst case space complexity
 * Polynomial build time - `O(nlog^2(n))`
+
+
+To create a perfect hashing scheme, we use two levels of hashing, with universal hashing at each level.
+
+__Building steps:__
+1. Hash the `n` keys into `m` slots using a hash function `h` carefully selected from a family of universal hash functions.
+
+    The first-level hash function comes from the class `H[p, m]`, where `p` is a prime number greater than any key value.
+
+2. Instead of making a linked list of the keys hashing to slot `j` , however, we use a small secondary hash table `S[j]` with an associated hash function `h[j]` . By choosing the hash functions `h[j]` carefully, we can guarantee that there are no collisions at the secondary level.
+    
+    In order to guarantee that there are no collisions at the secondary level, however, we will need to let the size `m[j]` of hash table `S[j]` be the square of the number `n[j]` of keys hashing to slot `j`.
+
+    Those keys hashing to slot `j` are re-hashed into a secondary hash table `S[j]` of size `m[j]` using a hash function `h[j]` chosen from the class `H[p, m[j]]`.
+
+
+    __Theorem:__ Suppose that we store `n` keys in a hash table of size `m = n^2` using a hash function `h` randomly chosen from a universal class of hash functions. Then, the probability is less than `1/2` that there are any collisions.
+
+3. If the the below theorem condition is not satisfied, REDO STEP 1.
+
+    ![perfect-hashing-theorem](../../images/perfect-hashing-theorem.png)
+
+    __Corollary:__ Suppose that we store `n` keys in a hash table of size `m = n` using a hash function `h` randomly chosen from a universal class of hash functions, and we set the size of each secondary hash table to `m[j] = n[j]^2` for `0 ≤ j ≤ m-1`. Then, the expected amount of storage required for all secondary hash tables in a perfect hashing scheme is less than `2n`.
+
+    __Corollary:__ Suppose that we store `n` keys in a hash table of size `m = n` using a hash function `h` randomly chosen from a universal class of hash functions, and we set the size of each secondary hash table to `m[j] = n[j]^2` for `0 ≤ j ≤ m-1`. Then, the probability is less than `1/2` that the total storage used for secondary hash tables equals or exceeds `4n`.
+
+4. In the situation described in above Theorem, where `m = n^2`, it follows that a hash function `h` chosen at random from `H` is more likely than not to have no collisions. Given the set `K` of `n` keys to be hashed (remember that `K` is static), it is thus easy to find a collision-free hash function `h` with a few random trials (REDOING STEP 2).
+
 
 Proof of the Theorems is in [here](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-introduction-to-algorithms-sma-5503-fall-2005/video-lectures/lecture-8-universal-hashing-perfect-hashing/lec8.pdf).
 
