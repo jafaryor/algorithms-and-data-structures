@@ -18,36 +18,40 @@ With open addressing, we require that for every key `k`, the __probe sequence__ 
 The ideal situation is __uniform hashing__. It's hard to implement true uniform hashing, so we approximate it with techniques that at least guarantee that the probe sequence is a permutation of `⟨0, 1, ..., m−1⟩`.
 
 * __Linear prbing__: Given auxiliary hash function `h′`, the probe sequence starts at slot `h′(k)` and continues sequentially through the table. Given key `k` and probe number `i` (`0 ≤ i < m`):
-    
+
     `h(k,i) = (h′(k) + i) mod m`
 
-    > Linearly probe for next slot.
+    Linearly probe for next slot. Then when the end is reached, start from very first slot.
 
-    > _Disadvantage:_ __Clustering__ will happen since most of the values will be stored in the same part of the table since the position is only incremented by 1. Clustering is the tendency to store most values in adjacent locations near the hash position rather than distributing values equally across all open table locations. This problem will cause performance issues as the cluster grows larger.
+    __Advntage:__ Easy to implement.
+
+    __Disadvantage:__ __Primary Clustering__ will happen since most of the values will be stored in the same part of the table since the position is only incremented by 1. Clustering is the tendency to store most values in adjacent locations near the hash position rather than distributing values equally across all open table locations. This problem will cause performance issues as the cluster grows larger.
 
 * __Quadratic probing__: Unlike linear probing, it jumps around in the table according to a quadratic function of the probe number:
 
-    `h(k,i) = (h′(k) + c1*i+c2*i^2) mod m`, where `c1, c2 ≠ 0` are constants.
+    `h(k,i) = (h′(k) + c1*i+c2*i^2) mod m`, where `c1, c2 ≠ 0` are constants and `h′` is an auxiliary hash function.
 
-    > Look for `i^2`‘th slot in `i`’th iteration.
+    Look for `i^2`‘th slot in `i`’th iteration.
 
-    > _Disadvantage:_ Leads to a milder form of clustering, called __secondary clustering__.
+    __Disadvantage:__ Leads to a milder form of clustering, called __secondary clustering__.
 
 * __Double Hashing__: Offers one of the best methods available for open addressing because the permutations produced have many of the characteristics of randomly chosen permutations. Use two auxiliary hash functions, `h1` and `h2`. `h1` gives the initial probe, and `h2` gives the remaining probes:
 
     `h(k,i) = (h1(k) + i*h2(k)) mod m.`
 
-    Must have `h2(k)` be relatively prime to `m` (no factors in common other than `1`) in order to guarantee that the probe sequence is a full permutation of `⟨0, 1, ..., m−1⟩`.
+    The `h2(k)` must be relatively prime to `m` (no factors in common other than `1`) in order to guarantee that the probe sequence is a full permutation of `⟨0, 1, ..., m−1⟩`.
 
     A convenient way to ensure this condition is to let `m` be a power of `2` and to design `h2` so that it always produces an _odd number_.
 
     Another way is to let `m` be prime and to design `h2` so that it always returns a positive integer less than `m`. For example, we could choose `m` prime and let
-    
+
     `h1(k) = k mod m`;
-    
+
     `h2(k) = 1 + (k mod m′)`;
 
     where `m′` is chosen to be slightly less than `m` (say, `m - 1`).
+
+    When `m` is prime or a power of 2, double hashing improves over linear or quadratic probing, since each possible `(h1(k), h2(k))` pair yields a distinct probe sequence. As a result, for such values of m, the performance of double hashing appears to be very close to the performance of the “ideal” scheme of uniform hashing.
 
 _Difference:_
 
