@@ -1,5 +1,5 @@
-## Open Adressing
-Open Adressing is an alternative to chaining for handling collisions. In Open Adressing, all elements are stored in the hash table itself. _So at any point, size of table must be greater than or equal to total number of keys._
+## Open Addressing
+Open Addressing is an alternative to chaining for handling collisions. In Open Addressing, all elements are stored in the hash table itself. _So at any point, size of table must be greater than or equal to total number of keys._
 
 > We can increase table size by copying old data if needed.
 
@@ -17,7 +17,7 @@ With open addressing, we require that for every key `k`, the __probe sequence__ 
 ### Probing
 The ideal situation is __uniform hashing__. It's hard to implement true uniform hashing, so we approximate it with techniques that at least guarantee that the probe sequence is a permutation of `⟨0, 1, ..., m−1⟩`.
 
-* __Linear prbing__: Given auxiliary hash function `h′`, the probe sequence starts at slot `h′(k)` and continues sequentially through the table. Given key `k` and probe number `i` (`0 ≤ i < m`):
+* __Linear probing__: Given auxiliary hash function `h′`, the probe sequence starts at slot `h′(k)` and continues sequentially through the table. Given key `k` and probe number `i` (`0 ≤ i < m`):
 
     `h(k,i) = (h′(k) + i) mod m`
 
@@ -53,11 +53,20 @@ The ideal situation is __uniform hashing__. It's hard to implement true uniform 
 
     When `m` is prime or a power of 2, double hashing improves over linear or quadratic probing, since each possible `(h1(k), h2(k))` pair yields a distinct probe sequence. As a result, for such values of m, the performance of double hashing appears to be very close to the performance of the “ideal” scheme of uniform hashing.
 
+__Theorem:__ Given an open-address hash table with load factor `α = n/m < 1`, the expected number of probes in an unsuccessful search is at most `1 / (1 - α)`, assuming _uniform hashing_.
+
+
+__Corollary:__ Inserting an element into an open-address hash table with load factor  ̨ requires at most `1 / (1 - α)` probes on average, assuming _uniform hashing_.
+
+
+__Theorem:__ Given an open-address hash table with load factor `α < 1`, the expected number of probes in a successful search is at most `1/α * ln(1/(1-α))` assuming _uniform hashing_ and assuming that each key in the table is equally likely to be searched for.
+
+
 _Difference:_
 
-| Seperate Chaining	| Open Addressing |
+| Separate Chaining	| Open Addressing |
 | - | - |
-| Chaining is Simpler to implement.	| Open Addressing requires more computation. |
+| Chaining is simpler to implement.	| Open Addressing requires more computation. |
 | In chaining, Hash table never fills up, we can always add more elements to chain. | In open addressing, table may become full. |
 | Chaining is Less sensitive to the hash function or load factors. | Open addressing requires extra care for to avoid clustering and load factor. |
 | Chaining is mostly used when it is unknown how many and how frequently keys may be inserted or deleted. | Open addressing is used when the frequency and number of keys is known. |
