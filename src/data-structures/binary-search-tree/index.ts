@@ -10,6 +10,32 @@ export class BinarySearchTree<T> {
   }
 
   /**
+   * Prints the tree from left to right (from min to max).
+   * @complexity O(n)
+   */
+  inorderTreeWalk(node?: BinaryNode<T>): void {
+    if (!node) return;
+
+    this.inorderTreeWalk(node.left);
+    console.log(node.value);
+    this.inorderTreeWalk(node.right);
+  }
+
+  /**
+   * Prints the tree from root to leaves,
+   * starting from the specified node.
+   * @complexity O(n)
+   */
+  preorderTreeWalk(node?: BinaryNode<T>): void {}
+
+  /**
+   * Prints the tree from leaves to root,
+   * starting from the specified node.
+   * @complexity O(n)
+   */
+  postorderTreeWalk(node?: BinaryNode<T>): void {}
+
+  /**
    * Recursively searches for a value in the binary tree starting from root.
    * @complexity O(h)
    */
@@ -43,31 +69,64 @@ export class BinarySearchTree<T> {
   }
 
   /**
-   * Prints the tree from left to right,
-   * starting from the specified node.
-   * @complexity O(n)
+   * Return the pointer to the node with the minimum key.
+   * @complexity O(h)
    */
-  inorderTreeWalk(node?: BinaryNode<T>): void {
-    if (!node) return;
+  min(node: BinaryNode<T> = this.root): BinaryNode<T> {
+    let current = node;
 
-    this.inorderTreeWalk(node.left);
-    console.log(node.value);
-    this.inorderTreeWalk(node.right);
+    while (current.left) {
+      current = current.left;
+    }
+
+    return current;
   }
 
   /**
-   * Prints the tree from root to leaves,
-   * starting from the specified node.
-   * @complexity O(n)
+   * Return the pointer to the node with the maximum key.
+   * @complexity O(h)
    */
-  preorderTreeWalk(node?: BinaryNode<T>): void {}
+  max(node: BinaryNode<T> = this.root): BinaryNode<T> {
+    let current = node;
+
+    while (current.right) {
+      current = current.right;
+    }
+
+    return current;
+  }
 
   /**
-   * Prints the tree from leaves to root,
-   * starting from the specified node.
-   * @complexity O(n)
+   * Returns the pointer to the successor of the node.
+   * The successor of a node A is a node with the smallest key,
+   * grater than A.key.
+   * Basically if you order all tree values from min to max,
+   * the successor is the item located from the right side of the item.
+   * @complexity O(h)
    */
-  postorderTreeWalk(node?: BinaryNode<T>): void {}
+  successor(node: BinaryNode<T>): BinaryNode<T>|undefined {
+    if (node.right) return this.min(node.right);
+
+    let a = node;
+    let b = node.parent;
+
+    while (b && a === b.right) {
+      a = b;
+      b = b.parent;
+    }
+
+    return b;
+  }
+
+  /**
+   * Return the pointer to the predecessor of the node.
+   * The predecessor of a node A is the node with the greatest key,
+   * smaller than A.key.
+   * @complexity O(h)
+   */
+  predecessor(node: BinaryNode<T>): BinaryNode<T>|undefined {
+    return node;
+  }
 }
 
 
