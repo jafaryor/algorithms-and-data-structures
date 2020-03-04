@@ -26,4 +26,5 @@ By the geometric progression formula:
 `T(n) = 2^log_2(n) + c * (2^(log_2(n) + 1) - 1)`
 `T(n) = n + c *2 * n - c = O(n)`
 
-
+### Node removing
+![bst-node-remove](../../images/bst-node-remove.png)

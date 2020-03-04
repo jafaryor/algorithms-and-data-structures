@@ -18,7 +18,8 @@
         "ban-types": false,
         "no-console": false,
         "newline-before-return": true,
-        "no-bitwise": false
+        "no-bitwise": false,
+        "member-access": [true, "no-public"]
     },
     "rulesDirectory": []
 }
