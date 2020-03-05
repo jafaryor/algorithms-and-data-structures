@@ -248,6 +248,7 @@ export class BinarySearchTree<T> {
 
             // Links the succesor to node's parent.
             this.transplant(node, succesor);
+
             // Links the successor to the node's left subtree.
             succesor.left = node.left;
             succesor.left.parent = succesor;
