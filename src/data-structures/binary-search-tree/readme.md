@@ -1,4 +1,4 @@
-## Binary Search Tree
+## Binary Search Tree (BST)
 We can represent a binary tree by a linked data structure in which each node is an object. In addition to a _key_ and _satellite data_, each node contains attributes _left_, _right_, and _p_ that point to the nodes corresponding to its left child, its right child, and its parent, respectively. If a child or the parent is missing, the appropriate attribute contains the value `NIL`. The root node is the only node in the tree whose parent is `NIL`.
 
 The keys in a binary search tree are always stored in such a way as to satisfy the __binary-search-tree property__:
@@ -27,4 +27,18 @@ By the geometric progression formula:
 `T(n) = n + c *2 * n - c = O(n)`
 
 ### Node removing
+The overall strategy for deleting a node from a BST has 3 basic cases:
+1. The node is a leaf
+
+    Just remove it from the tree (cutt off the links).
+
+2. The node has one child.
+
+    Elevate that child to take the position of the node (parent).
+
+3. The node has both children.
+
+    Find the successor of the node (which is in the right subtree) and have the successor take the node's position.
+
+
 ![bst-node-remove](../../images/bst-node-remove.png)

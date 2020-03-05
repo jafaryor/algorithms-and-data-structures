@@ -1,4 +1,4 @@
-import { BinaryNode } from './node';
+import {BinaryNode} from './node';
 
 /**
  * The Binary Search Tree.
@@ -217,7 +217,7 @@ export class BinarySearchTree<T> {
         // "a" is the right child of its parent.
         else a.parent.right = b;
 
-        // Connect "b" to parent of "a".
+        // Links "b" to the parent of "a".
         if (b) b.parent = a.parent;
     }
 
@@ -232,18 +232,25 @@ export class BinarySearchTree<T> {
         else if (!node.right) this.transplant(node, node.left);
         // A node has both children.
         else {
-            // Successor of a node.
-            const b = this.successor(node);
+            const succesor = this.successor(node) as BinaryNode<T>;
 
-            if (b.parent !== node) {
-                this.transplant(b, b.right);
-                b.right = node.right;
-                b.right.parent = b;
+            // Handles right side pointers.
+            if (succesor.parent !== node) {
+                // Successor may only have right child, but no left child,
+                // as the successor is the min in the right subtree.
+                // Replace the successor with its right subtree.
+                this.transplant(succesor, succesor.right);
+
+                // Links the successor to the node's right subtree.
+                succesor.right = node.right;
+                succesor.right.parent = succesor;
             }
 
-            this.transplant(node, b);
-            b.left = node.left;
-            b.left.parent = b;
+            // Links the succesor to node's parent.
+            this.transplant(node, succesor);
+            // Links the successor to the node's left subtree.
+            succesor.left = node.left;
+            succesor.left.parent = succesor;
         }
     }
 }
