@@ -6,10 +6,12 @@ import {BinaryNode} from './node';
  * The height of the binary tree is h = log_2(n)
  */
 export class BinarySearchTree<T> {
-    root: BinaryNode<T> | undefined;
-    inorderWalkLogs: number[] = [];
+    protected root: BinaryNode<T> | undefined;
+    protected inorderWalkLogs: number[] = [];
 
-    constructor(key: number, value: T) {
+    constructor(key?: number, value?: T) {
+        if (!key || !value) return;
+
         this.root = new BinaryNode<T>(key, value);
     }
 
