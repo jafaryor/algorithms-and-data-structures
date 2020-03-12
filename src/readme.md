@@ -397,3 +397,7 @@ In practice, we neglect certain technical details when we state and solve recur-
     In particular case for `f(n) = O(n^k)`:
 
     ![simple-master-therorem](./images/simple-master-therorem.png)
+
+---
+
+[Solutions to Introduction to Algorithms Third Edition Book](https://walkccc.github.io/CLRS/)
