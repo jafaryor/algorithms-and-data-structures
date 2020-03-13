@@ -1,5 +1,5 @@
 import {BinarySearchTree} from '../binary-search-tree';
-import {BinaryNode} from '../binary-search-tree/node';
+import {RedBlackNode} from './node';
 
 /**
  * The Red-Black Tree implmenetation.
@@ -13,8 +13,8 @@ export class RedBlackTree<T> extends BinarySearchTree {
      * Rotates the node left.
      * @complexity O(1)
      */
-    leftRotate(node: BinaryNode<T>) {
-        const right = node.right as BinaryNode<T>;
+    leftRotate(node: RedBlackNode<T>) {
+        const right = node.right as RedBlackNode<T>;
 
         // Turn the left subtree of "right" into right subtree of "node".
         node.right = right.left;
@@ -41,8 +41,8 @@ export class RedBlackTree<T> extends BinarySearchTree {
      * Rotates the node right.
      * @complexity O(1)
      */
-    rightRotate(node: BinaryNode<T>) {
-        const left = node.left as BinaryNode<T>;
+    rightRotate(node: RedBlackNode<T>) {
+        const left = node.left as RedBlackNode<T>;
 
         // Turn the right subtree of "left" into left subtree of "node".
         node.left = left.right;
