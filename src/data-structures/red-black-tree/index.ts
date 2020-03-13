@@ -95,6 +95,7 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
 
     /**
      * Restores the reb-black tree properties after insertion.
+     * @complexity O(lg n)
      */
     insertFixup(newNode: RedBlackNode<T>) {
         let node = newNode as RedBlackNode<T>;

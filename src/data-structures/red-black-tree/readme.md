@@ -22,3 +22,11 @@ Because INSERT and DELETE modify the tree, the result may violate the red-black 
 ![rbt-rotations](../../images/rbt-rotations.png)
 
 ### Insertion
+To guarantee that the red-black properties are preserved, we then call an auxiliary procedure __FIXUP__ to recolor nodes and perform rotations.
+
+Which of the red-black properties might be violated upon the call to _FIXUP_?
+* Property 1 certainly continues to hold, as does property 3.
+* Property 5, which says that the number of black nodes is the same on every simple path from a given node, is satisfied as well, because node replaces the (black) leaf, and node is red.
+* The only properties that might be violated are property 2, which requires the root to be black, and property 4, which says that a red node cannot have a red child. Both possible violations are due to being colored red.
+* Property 2 is violated if node is the root.
+* Property 4 is violated if node’s parent is red.
