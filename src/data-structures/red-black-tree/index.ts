@@ -1,18 +1,11 @@
-import {swap} from '../../utils';
 import {BinarySearchTree} from '../binary-search-tree';
-import {RedBlackColorEnum as RedBlackNodeColor, RedBlackNode} from './node';
+import {RedBlackNodeColor} from '../binary-search-tree/node';
+import {RedBlackNode} from './node';
 
 /**
- * The Red-Black Tree implmenetation.
+ * The Red-Black Tree implementation.
  */
 export class RedBlackTree<T> extends BinarySearchTree<T> {
-    root: RedBlackNode<T> | undefined;
-
-    constructor() {
-        super();
-        this.root = undefined;
-    }
-
     /**
      * Rotates the node left.
      * @complexity O(1)
@@ -74,7 +67,7 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
      * @complexity O(lg n)
      */
     insert(newNode: RedBlackNode<T>) {
-        this.super.insert(newNode);
+        super.insert(newNode);
 
         newNode.color = RedBlackNodeColor.RED;
 
@@ -86,7 +79,7 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
      * @complexity O(lg n)
      */
     iterativeInsert(newNode: RedBlackNode<T>) {
-        this.super.iterativeInsert(newNode);
+        super.iterativeInsert(newNode);
 
         newNode.color = RedBlackNodeColor.RED;
 
@@ -94,21 +87,77 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
     }
 
     /**
+     * Removes the node from the tree.
+     * @complexity O(h) -> [because of the "successor" method]
+     */
+    remove(node: RedBlackNode<T>): void {
+        let color = node.color;
+        let fixupPointer: RedBlackNode<T> | undefined;
+
+        if (!node.left) {
+            // A node has no left child.
+            fixupPointer = node.right;
+            this.transplant(node, node.right);
+        } else if (!node.right) {
+            // A node has left child, but no right child.
+            fixupPointer = node.left;
+            this.transplant(node, node.left);
+        } else {
+            // A node has both children.
+            const successor = this.successor(node) as RedBlackNode<T>;
+
+            color = successor.color;
+            fixupPointer = successor.right;
+
+            // Handles right side pointers.
+            if (successor.parent !== node) {
+                // Successor may only have right child, but no left child,
+                // as the successor is the min in the right subtree.
+                // Replace the successor with its right subtree.
+                this.transplant(successor, successor.right);
+
+                // Links the successor to the node's right subtree.
+                successor.right = node.right;
+                successor.right.parent = successor;
+            } else if (fixupPointer) {
+                fixupPointer.parent = successor;
+            }
+
+            // Links the successor to node's parent.
+            this.transplant(node, successor);
+
+            // Links the successor to the node's left subtree.
+            successor.left = node.left;
+            successor.left.parent = successor;
+            successor.color = node.color;
+        }
+
+        if (color === RedBlackNodeColor.BLACK) {
+            this.deleteFixup(fixupPointer);
+        }
+    }
+
+    /**
      * Restores the reb-black tree properties after insertion.
+     * It also balances the tree.
      * @complexity O(lg n)
      */
-    insertFixup(newNode: RedBlackNode<T>) {
+    insertFixup(newNode: RedBlackNode<T>): void {
         let node = newNode as RedBlackNode<T>;
         let parent: RedBlackNode<T>;
         let grandParent: RedBlackNode<T>;
-        let uncle: RedBlackNode<T>;
+        let uncle: RedBlackNode<T> | undefined;
 
-        while (node !== this.root
-            && node.color !== RedBlackNodeColor.BLACK
-            && node.parent.color === RedBlackNodeColor.RED
+        while (
+            node !== this.root &&
+            node.color !== RedBlackNodeColor.BLACK &&
+            node.parent!.color === RedBlackNodeColor.RED
         ) {
-            parent = node.parent;
-            grandParent = parent.parent;
+            // As the node is not the root, it has parent.
+            parent = node.parent as RedBlackNode<T>;
+            // As the the parent is red, it cannot be root.
+            // Because the root is black. It means the parent has parent.
+            grandParent = parent.parent as RedBlackNode<T>;
 
             // Case A: parent is left child of grandparent.
             if (grandParent.left === parent) {
@@ -127,13 +176,13 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
                         // Rotate left.
                         this.leftRotate(parent);
                         node = parent;
-                        parent = node.parent;
+                        parent = node.parent as RedBlackNode<T>;
                     }
 
                     // Case 3: node is left child.
                     // Rotate right.
                     this.rightRotate(grandParent);
-                    swap(parent.color, grandParent.color);
+                    this.swapColor(parent, grandParent);
                     node = parent;
                 }
             } else {
@@ -149,23 +198,41 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
                     node = grandParent;
                 } else {
                     // Case 2: node is left child.
-                    if (uncle && uncle.color === RedBlackNodeColor.RED) {
+                    if (parent.left === node) {
                         // Rotate right.
                         this.rightRotate(parent);
                         node = parent;
-                        parent = node.parent;
+                        parent = node.parent as RedBlackNode<T>;
                     }
 
                     // Case 3: node is right child.
                     // Rotate left.
                     this.leftRotate(grandParent);
-                    swap(parent.color, grandParent.color);
+                    this.swapColor(parent, grandParent);
                     node = parent;
                 }
             }
         }
 
-        this.root.color = RedBlackNodeColor.BLACK;
+        this.root!.color = RedBlackNodeColor.BLACK;
+    }
+
+    /**
+     * Restores the reb-black tree properties after deletion.
+     * It also balances the tree.
+     * @complexity O(lg n)
+     */
+    private deleteFixup(): void {}
+
+    /**
+     * Swaps the color of the nodes.
+     * @complexity O(1)
+     */
+    private swapColor(a: RedBlackNode<T>, b: RedBlackNode<T>): void {
+        const temp = a.color;
+
+        a.color = b.color;
+        b.color = temp;
     }
 }
 

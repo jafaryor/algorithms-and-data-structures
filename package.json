@@ -4,7 +4,7 @@
     "description": "All Algorithms",
     "main": "dist/index.js",
     "typings": "dist/index.d.ts",
-    "repository": "www.jafar.me",
+    "repository": "https://github.com/jafaryor/algorithms-and-data-structures",
     "author": "Jafar Yormahmadzoda",
     "license": "MIT",
     "scripts": {
@@ -16,16 +16,16 @@
     },
     "devDependencies": {
         "@types/jest": "^22.2.3",
-        "@types/lodash": "^4.14.109",
-        "@types/node": "^10.12.18",
-        "jest": "^22.4.3",
+        "@types/lodash": "^4.14.149",
+        "@types/node": "^10.17.17",
+        "jest": "^22.4.4",
         "ts-jest": "^22.4.6",
-        "ts-node": "^6.0.5",
-        "tslint": "^5.10.0",
-        "typescript": "^2.8.3"
+        "ts-node": "^6.2.0",
+        "tslint": "^5.20.1",
+        "typescript": "^2.9.2"
     },
     "dependencies": {
         "class-validator": "^0.8.5",
-        "lodash": "^4.17.10"
+        "lodash": "^4.17.15"
     }
 }

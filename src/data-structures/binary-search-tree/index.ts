@@ -1,4 +1,4 @@
-import {BinaryNode} from './node';
+import {BinarySearchNode, BinaryNode} from './node';
 
 /**
  * The Binary Search Tree.
@@ -8,12 +8,6 @@ import {BinaryNode} from './node';
 export class BinarySearchTree<T> {
     protected root: BinaryNode<T> | undefined;
     protected inorderWalkLogs: number[] = [];
-
-    constructor(key?: number, value?: T) {
-        if (!key || !value) return;
-
-        this.root = new BinaryNode<T>(key, value);
-    }
 
     /**
      * Prints the tree in the following pattern: [ left | parent | right ]
@@ -66,7 +60,10 @@ export class BinarySearchTree<T> {
      * Recursively searches for a value in the binary tree starting from root.
      * @complexity O(h)
      */
-    search(value: T, node: BinaryNode<T> | undefined = this.root): BinaryNode<T> | undefined {
+    search(
+        value: T,
+        node: BinaryNode<T> | undefined = this.root
+    ): BinaryNode<T> | undefined {
         if (!node) return;
         else if (node.value === value) return node;
 
@@ -81,7 +78,10 @@ export class BinarySearchTree<T> {
      * Iteratively searches for a value in the binary tree starting from root.
      * @complexity O(h)
      */
-    iterativeSearch(value: T, node: BinaryNode<T> | undefined = this.root): BinaryNode<T> | undefined {
+    iterativeSearch(
+        value: T,
+        node: BinaryNode<T> | undefined = this.root
+    ): BinaryNode<T> | undefined {
         let activeNode: BinaryNode<T> | undefined = node;
 
         while (activeNode && activeNode.value !== value) {
@@ -99,7 +99,9 @@ export class BinarySearchTree<T> {
      * Return the pointer to the node with the minimum key.
      * @complexity O(h)
      */
-    min(node: BinaryNode<T> | undefined = this.root): BinaryNode<T> | undefined {
+    min(
+        node: BinaryNode<T> | undefined = this.root
+    ): BinaryNode<T> | undefined {
         let current = node;
 
         while (current && current.left) {
@@ -113,7 +115,9 @@ export class BinarySearchTree<T> {
      * Return the pointer to the node with the maximum key.
      * @complexity O(h)
      */
-    max(node: BinaryNode<T> | undefined = this.root): BinaryNode<T> | undefined {
+    max(
+        node: BinaryNode<T> | undefined = this.root
+    ): BinaryNode<T> | undefined {
         let current = node;
 
         while (current && current.right) {
@@ -167,7 +171,10 @@ export class BinarySearchTree<T> {
      * Inserts a new node into the tree. (Recursive approach)
      * @complexity O(h)
      */
-    insert(newNode: BinaryNode<T>, node: BinaryNode<T> = this.root as BinaryNode<T>): void {
+    insert(
+        newNode: BinaryNode<T>,
+        node: BinaryNode<T> = this.root as BinaryNode<T>
+    ): void {
         if (!this.root) this.root = newNode;
 
         if (newNode.key < node.key) {
@@ -234,26 +241,26 @@ export class BinarySearchTree<T> {
         else if (!node.right) this.transplant(node, node.left);
         // A node has both children.
         else {
-            const succesor = this.successor(node) as BinaryNode<T>;
+            const successor = this.successor(node) as BinaryNode<T>;
 
             // Handles right side pointers.
-            if (succesor.parent !== node) {
+            if (successor.parent !== node) {
                 // Successor may only have right child, but no left child,
                 // as the successor is the min in the right subtree.
                 // Replace the successor with its right subtree.
-                this.transplant(succesor, succesor.right);
+                this.transplant(successor, successor.right);
 
                 // Links the successor to the node's right subtree.
-                succesor.right = node.right;
-                succesor.right.parent = succesor;
+                successor.right = node.right;
+                successor.right.parent = successor;
             }
 
-            // Links the succesor to node's parent.
-            this.transplant(node, succesor);
+            // Links the successor to node's parent.
+            this.transplant(node, successor);
 
             // Links the successor to the node's left subtree.
-            succesor.left = node.left;
-            succesor.left.parent = succesor;
+            successor.left = node.left;
+            successor.left.parent = successor;
         }
     }
 }

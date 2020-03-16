@@ -94,5 +94,5 @@
     "restrict-plus-operands": true,
     "strip-private-property-underscore": true,
     "strip-private-method-underscore": true
-  },
+  }
 }
