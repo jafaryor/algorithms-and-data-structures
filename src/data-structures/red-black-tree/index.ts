@@ -142,7 +142,7 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
      * It also balances the tree.
      * @complexity O(lg n)
      */
-    insertFixup(newNode: RedBlackNode<T>): void {
+    private insertFixup(newNode: RedBlackNode<T>): void {
         let node = newNode as RedBlackNode<T>;
         let parent: RedBlackNode<T>;
         let grandParent: RedBlackNode<T>;
@@ -236,4 +236,5 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
     }
 }
 
-// https://www.geeksforgeeks.org/c-program-red-black-tree-insertion/
+// https://www.programiz.com/dsa/deletion-from-a-red-black-tree
+// https://www.codesdope.com/course/data-structures-red-black-trees-deletion/
