@@ -222,7 +222,86 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
      * It also balances the tree.
      * @complexity O(lg n)
      */
-    private deleteFixup(): void {}
+    private deleteFixup(node: RedBlackNode<T>): void {
+        let current = node;
+        let parent: RedBlackNode<T>;
+        let rightChild: RedBlackNode<T> | undefined;
+        let leftChild: RedBlackNode<T> | undefined;
+
+        while (
+            current !== this.root &&
+            current.color === RedBlackNodeColor.BLACK
+        ) {
+            parent = current.parent as RedBlackNode<T>;
+
+            // Parent exists because the "current" is not root.
+            if (current === parent.left) {
+                // TODO: Why right child exists?
+                rightChild = parent.right as RedBlackNode<T>;
+
+                if (rightChild.color === RedBlackNodeColor.RED) {
+                    rightChild.color = RedBlackNodeColor.BLACK;
+                    parent.color = RedBlackNodeColor.RED;
+                    this.leftRotate(parent);
+                    rightChild = parent.right;
+                }
+
+                if (
+                    rightChild.left.color === RedBlackNodeColor.BLACK &&
+                    rightChild.right.color === RedBlackNodeColor.BLACK
+                ) {
+                    rightChild.color = RedBlackNodeColor.RED;
+                    current = parent;
+                } else {
+                    if (rightChild.right.color === RedBlackNodeColor.BLACK) {
+                        rightChild.left.color = RedBlackNodeColor.BLACK;
+                        rightChild.color = RedBlackNodeColor.RED;
+                        this.rightRotate(rightChild);
+                        rightChild = parent.right;
+                    }
+
+                    rightChild.color = parent.color;
+                    parent.color = RedBlackNodeColor.BLACK;
+                    rightChild.right.color = RedBlackNodeColor.BLACK;
+                    this.leftRotate(parent);
+                    current = this.root;
+                }
+            } else {
+                // TODO: Why left child exists?
+                leftChild = current.left as RedBlackNode<T>;
+
+                if (leftChild.color === RedBlackNodeColor.RED) {
+                    leftChild.color = RedBlackNodeColor.BLACK;
+                    parent.color = RedBlackNodeColor.RED;
+                    this.rightRotate(parent);
+                    leftChild = parent.left;
+                }
+
+                if (
+                    leftChild.right.color === RedBlackNodeColor.BLACK &&
+                    leftChild.left.color === RedBlackNodeColor.BLACK
+                ) {
+                    leftChild.color = RedBlackNodeColor.RED;
+                    current = parent;
+                } else {
+                    if (leftChild.left.color === RedBlackNodeColor.BLACK) {
+                        leftChild.right.color = RedBlackNodeColor.BLACK;
+                        leftChild.color = RedBlackNodeColor.RED;
+                        this.leftRotate(leftChild);
+                        leftChild = parent.left;
+                    }
+
+                    leftChild.color = parent.color;
+                    parent.color = RedBlackNodeColor.BLACK;
+                    leftChild.left.color = RedBlackNodeColor.BLACK;
+                    this.rightRotate(parent);
+                    current = this.root;
+                }
+            }
+        }
+
+        current.color = RedBlackNodeColor.BLACK;
+    }
 
     /**
      * Swaps the color of the nodes.
