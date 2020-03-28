@@ -1,60 +1,12 @@
-import {BinarySearchNode, BinaryNode} from './node';
+import {BinaryTree} from '../binary-tree';
+import {BinarySearchNode} from './node';
 
 /**
  * The Binary Search Tree.
  * [ left < root >= right ]
- * The height of the binary tree is h = log_2(n)
  */
-export class BinarySearchTree<T> {
-    protected root: BinaryNode<T> | undefined;
-    protected inorderWalkLogs: number[] = [];
-
-    /**
-     * Prints the tree in the following pattern: [ left | parent | right ]
-     * Prints the left -> root -> right
-     * @complexity O(n)
-     */
-    inorderTreeWalk(node: BinaryNode<T> | undefined = this.root): void {
-        if (!node) return;
-
-        this.inorderTreeWalk(node.left);
-
-        console.log(node.value);
-        // logging logic - start.
-        if (node === this.root) this.inorderWalkLogs = [];
-        this.inorderWalkLogs.push(node.key);
-        // end.
-
-        this.inorderTreeWalk(node.right);
-    }
-
-    /**
-     * Prints the tree in the following pattern: [ parent | left | right ]
-     * Prints children -> root
-     * @complexity O(n)
-     */
-    preorderTreeWalk(node?: BinaryNode<T>): void {
-        if (!node) return;
-
-        console.log(node.value);
-
-        this.preorderTreeWalk(node.left);
-        this.preorderTreeWalk(node.right);
-    }
-
-    /**
-     * Prints the tree in the following pattern: [ left | right | parent ]
-     * Prints root -> children
-     * @complexity O(n)
-     */
-    postorderTreeWalk(node?: BinaryNode<T>): void {
-        if (!node) return;
-
-        this.postorderTreeWalk(node.left);
-        this.postorderTreeWalk(node.right);
-
-        console.log(node.value);
-    }
+export class BinarySearchTree<T> extends BinaryTree<T> {
+    protected root?: BinarySearchNode<T>;
 
     /**
      * Recursively searches for a value in the binary tree starting from root.
@@ -62,8 +14,8 @@ export class BinarySearchTree<T> {
      */
     search(
         value: T,
-        node: BinaryNode<T> | undefined = this.root
-    ): BinaryNode<T> | undefined {
+        node: BinarySearchNode<T> | undefined = this.root
+    ): BinarySearchNode<T> | undefined {
         if (!node) return;
         else if (node.value === value) return node;
 
@@ -80,19 +32,19 @@ export class BinarySearchTree<T> {
      */
     iterativeSearch(
         value: T,
-        node: BinaryNode<T> | undefined = this.root
-    ): BinaryNode<T> | undefined {
-        let activeNode: BinaryNode<T> | undefined = node;
+        node: BinarySearchNode<T> | undefined = this.root
+    ): BinarySearchNode<T> | undefined {
+        let current: BinarySearchNode<T> | undefined = node;
 
-        while (activeNode && activeNode.value !== value) {
-            if (value < activeNode.value) {
-                activeNode = activeNode.left;
+        while (current && current.value !== value) {
+            if (value < current.value) {
+                current = current.left;
             } else {
-                activeNode = activeNode.right;
+                current = current.right;
             }
         }
 
-        return activeNode;
+        return current;
     }
 
     /**
@@ -100,8 +52,8 @@ export class BinarySearchTree<T> {
      * @complexity O(h)
      */
     min(
-        node: BinaryNode<T> | undefined = this.root
-    ): BinaryNode<T> | undefined {
+        node: BinarySearchNode<T> | undefined = this.root
+    ): BinarySearchNode<T> | undefined {
         let current = node;
 
         while (current && current.left) {
@@ -116,8 +68,8 @@ export class BinarySearchTree<T> {
      * @complexity O(h)
      */
     max(
-        node: BinaryNode<T> | undefined = this.root
-    ): BinaryNode<T> | undefined {
+        node: BinarySearchNode<T> | undefined = this.root
+    ): BinarySearchNode<T> | undefined {
         let current = node;
 
         while (current && current.right) {
@@ -133,7 +85,7 @@ export class BinarySearchTree<T> {
      * grater than A.key.
      * @complexity O(h)
      */
-    successor(node: BinaryNode<T>): BinaryNode<T> | undefined {
+    successor(node: BinarySearchNode<T>): BinarySearchNode<T> | undefined {
         if (node.right) return this.min(node.right);
 
         let a = node;
@@ -153,7 +105,7 @@ export class BinarySearchTree<T> {
      * smaller than A.key.
      * @complexity O(h)
      */
-    predecessor(node: BinaryNode<T>): BinaryNode<T> | undefined {
+    predecessor(node: BinarySearchNode<T>): BinarySearchNode<T> | undefined {
         if (node.left) return this.max(node.left);
 
         let a = node;
@@ -172,8 +124,8 @@ export class BinarySearchTree<T> {
      * @complexity O(h)
      */
     insert(
-        newNode: BinaryNode<T>,
-        node: BinaryNode<T> = this.root as BinaryNode<T>
+        newNode: BinarySearchNode<T>,
+        node: BinarySearchNode<T> = this.root as BinarySearchNode<T>
     ): void {
         if (!this.root) this.root = newNode;
 
@@ -196,10 +148,10 @@ export class BinarySearchTree<T> {
      * Inserts a new node into the tree. (Iterative approach)
      * @complexity O(h)
      */
-    iterativeInsert(newNode: BinaryNode<T>): void {
+    iterativeInsert(newNode: BinarySearchNode<T>): void {
         // Keep pointers to two nodes, child (a) and parent (b).
-        let a: BinaryNode<T> | undefined = this.root;
-        let b: BinaryNode<T>;
+        let a: BinarySearchNode<T> | undefined = this.root;
+        let b: BinarySearchNode<T> | undefined;
 
         while (a) {
             b = a;
@@ -208,40 +160,23 @@ export class BinarySearchTree<T> {
 
         newNode.parent = b;
 
-        if (!b) this.root = newNode;
+        if (b == null) this.root = newNode;
         else if (newNode.key < b.key) b.left = newNode;
         else b.right = newNode;
-    }
-
-    /**
-     * Replaces one subtree with another subtree.
-     * If the "b" is undefined, the subtree "a" will be just removed.
-     * @complexity O(1)
-     */
-    transplant(a: BinaryNode<T>, b: BinaryNode<T> | undefined): void {
-        // "a" is root f the tree.
-        if (!a.parent) this.root = b;
-        // "a" is a left child of its parent.
-        else if (a === a.parent.left) a.parent.left = b;
-        // "a" is the right child of its parent.
-        else a.parent.right = b;
-
-        // Links "b" to the parent of "a".
-        if (b) b.parent = a.parent;
     }
 
     /**
      * Removes the node from the tree.
      * @complexity O(h) -> [because of the "successor" method]
      */
-    remove(node: BinaryNode<T>): void {
+    remove(node: BinarySearchNode<T>): void {
         // A node has no left child.
         if (!node.left) this.transplant(node, node.right);
         // A node has left child, but no right child.
         else if (!node.right) this.transplant(node, node.left);
         // A node has both children.
         else {
-            const successor = this.successor(node) as BinaryNode<T>;
+            const successor = this.successor(node) as BinarySearchNode<T>;
 
             // Handles right side pointers.
             if (successor.parent !== node) {

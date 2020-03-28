@@ -1,30 +1,38 @@
-import {BinaryNode} from '../binary-tree/node';
-
 /**
  * Binary Search Tree Node.
  */
-export class BinarySearchNode<T> extends BinaryNode<T> {
+export class BinaryNode<T> {
+    key: number;
+    value: T;
+    parent?: BinaryNode<T>;
+    left?: BinaryNode<T>;
+    right?: BinaryNode<T>;
+
     constructor(
         key: number,
         value: T,
-        parent?: BinarySearchNode<T>,
-        left?: BinarySearchNode<T>,
-        right?: BinarySearchNode<T>
+        parent?: BinaryNode<T>,
+        left?: BinaryNode<T>,
+        right?: BinaryNode<T>
     ) {
-        super(key, value, parent, left, right);
+        this.key = key;
+        this.value = value;
+        this.parent = parent;
+        this.left = left;
+        this.right = right;
     }
 
     /**
      * Return the grandparent.
      */
-    get grandparent(): BinarySearchNode<T> | undefined {
+    get grandparent(): BinaryNode<T> | undefined {
         return this.parent?.parent;
     }
 
     /**
      * Return the sibling.
      */
-    get sibling(): BinarySearchNode<T> | undefined {
+    get sibling(): BinaryNode<T> | undefined {
         return this.parent?.right === this
             ? this.parent?.left
             : this.parent?.right;
@@ -33,7 +41,7 @@ export class BinarySearchNode<T> extends BinaryNode<T> {
     /**
      * Return the uncle.
      */
-    get uncle(): BinarySearchNode<T> | undefined {
+    get uncle(): BinaryNode<T> | undefined {
         return this.grandparent?.right === this.parent
             ? this.grandparent?.left
             : this.grandparent?.right;

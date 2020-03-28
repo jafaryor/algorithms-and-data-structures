@@ -56,6 +56,8 @@ of the input keys is equally likely.
 
 __Theorem:__ The expected height of a randomly built binary search tree on `n` distinct keys is `O(lg n)`.
 
+> But in the worst case (all children are right or all are left) it might be `h = n`.
+
 
 ## Binary search trees with equal keys
 Equal keys pose a problem for the implementation of BST.
@@ -113,3 +115,6 @@ Let `b_n` denote the number of different binary trees with `n` nodes.
 
 __Theorem:__ ![number-of-bst](../../images/number-of-bst.png)
 
+---
+
+#### [Read More](https://www.codesdope.com/course/data-structures-binary-search-trees/)
