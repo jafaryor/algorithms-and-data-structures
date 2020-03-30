@@ -1,5 +1,5 @@
-import { SinglyLinkedList, ISinglyLinkecListNode } from '../singly-linked-list';
-import { randomFromRange, findClosestBiggerPrimeNumber } from '../../utils';
+import {SinglyLinkedList, SinglyLinkedListNode} from '../singly-linked-list';
+import {randomFromRange, findClosestBiggerPrimeNumber} from '../../utils';
 
 /**
  * Hash Table Data Structure.
@@ -11,7 +11,7 @@ export class HashTable<T> {
     private b: number;
     private p: number;
     private itemsCount = 0;
-    private readonly table: ITable<T> = {};
+    private readonly table: Table<T> = {};
 
     constructor(private readonly slotsCount: number) {
         // Select hash function from the Universe of Hash Function.
@@ -50,11 +50,11 @@ export class HashTable<T> {
         const list = this.table[hash];
 
         if (list) {
-            list.insert({ key, value });
+            list.insert({key, value});
         } else {
-            this.table[hash] = new SinglyLinkedList<IKeyValueObject<T>>(
-                [{ key, value }],
-                (a: IKeyValueObject<T>, b: IKeyValueObject<T>) => a.key === b.key
+            this.table[hash] = new SinglyLinkedList<KeyValueObject<T>>(
+                [{key, value}],
+                (a: KeyValueObject<T>, b: KeyValueObject<T>) => a.key === b.key
             );
         }
 
@@ -70,7 +70,7 @@ export class HashTable<T> {
         const list = this.table[hash];
 
         if (list) {
-            const removedNode = list.remove({ key, value: null });
+            const removedNode = list.remove({key, value: null});
 
             if (removedNode) {
                 this.itemsCount--;
@@ -90,7 +90,7 @@ export class HashTable<T> {
         const hash = this.calculateHash(key);
         const list = this.table[hash];
 
-        return list && list.search({ key, value: null });
+        return list && list.search({key, value: null});
     }
 
     /**
@@ -104,7 +104,7 @@ export class HashTable<T> {
 /**
  * Key-Value object stored in the linked list.
  */
-export interface IKeyValueObject<T> {
+export interface KeyValueObject<T> {
     key: number;
     value: T | null;
 }
@@ -112,16 +112,16 @@ export interface IKeyValueObject<T> {
 /**
  * Hash Table List Node type.
  */
-export type HashTableListNode<T> = ISinglyLinkecListNode<IKeyValueObject<T>>;
+export type HashTableListNode<T> = SinglyLinkedListNode<KeyValueObject<T>>;
 
 /**
  * Hash Table List type.
  */
-export type HashTableList<T> = SinglyLinkedList<IKeyValueObject<T>>;
+export type HashTableList<T> = SinglyLinkedList<KeyValueObject<T>>;
 
 /**
  * Hash Table Cell interface.
  */
-export interface ITable<T> {
+export interface Table<T> {
     [key: number]: HashTableList<T> | null;
 }

@@ -1,13 +1,13 @@
-import { IKeyValueObject } from '../hash-table';
-import { findClosestSmallerPrimeNumber } from '../../utils';
+import {KeyValueObject} from '../hash-table';
+import {findClosestSmallerPrimeNumber} from '../../utils';
 
 /**
- * Open Adressing Hash Table.
+ * Open Addressing Hash Table.
  */
 export class OpenAddressHashTable<T> {
     private prime: number;
     private itemsCount = 0;
-    private readonly table: IOpenAddressTable<T> = {};
+    private readonly table: OpenAddressTable<T> = {};
 
     constructor(private readonly capacity: number) {
         this.prime = findClosestSmallerPrimeNumber(capacity);
@@ -16,21 +16,21 @@ export class OpenAddressHashTable<T> {
     /**
      * The table size.
      */
-    public get size() {
+    get size() {
         return this.itemsCount;
     }
 
     /**
      * Checks if the hash table empty.
      */
-    public isEmpty() {
+    isEmpty() {
         return this.itemsCount === 0;
     }
 
     /**
      * Checks if the table is full.
      */
-    public isFull() {
+    isFull() {
         return this.itemsCount === this.capacity;
     }
 
@@ -39,10 +39,10 @@ export class OpenAddressHashTable<T> {
      * @complexity: O(1/(1-n/m))
      * @note: under the assumption of uniform hashing.
      */
-    public insert(key: number, value: T) {
+    insert(key: number, value: T) {
         let i = 0;
         let hash: number;
-        let slot: IKeyValueObject<T>;
+        let slot: KeyValueObject<T>;
 
         if (this.isFull()) {
             throw new Error('The Hash Table is full!');
@@ -57,7 +57,7 @@ export class OpenAddressHashTable<T> {
         // The free slot if found.
         if (!this.table[hash] || this.table[hash].key === -1) {
             this.itemsCount++;
-            this.table[hash] = { key, value };
+            this.table[hash] = {key, value};
         }
     }
 
@@ -66,10 +66,10 @@ export class OpenAddressHashTable<T> {
      * @complexity: O(1/(1-n/m))
      * @note: under the assumption of uniform hashing.
      */
-    public delete(key: number): T | null {
+    delete(key: number): T | null {
         let i = 0;
         let hash: number;
-        let slot: IKeyValueObject<T>;
+        let slot: KeyValueObject<T>;
 
         do {
             hash = this.calculateHash(key, i++);
@@ -77,7 +77,7 @@ export class OpenAddressHashTable<T> {
 
             // Node is found.
             if (slot && slot.key === key) {
-                this.table[hash] = { key: -1, value: null };
+                this.table[hash] = {key: -1, value: null};
                 this.itemsCount--;
 
                 return slot.value;
@@ -92,11 +92,11 @@ export class OpenAddressHashTable<T> {
      * @complexity: O(1/(1-n/m))
      * @note: under the assumption of uniform hashing.
      */
-    public search(key: number): T | null {
+    search(key: number): T | null {
         let i = 0;
         let counter = 0;
         let hash: number;
-        let slot: IKeyValueObject<T>;
+        let slot: KeyValueObject<T>;
 
         do {
             hash = this.calculateHash(key, i++);
@@ -123,6 +123,6 @@ export class OpenAddressHashTable<T> {
 /**
  * Open Adress Hash Table Cell interface.
  */
-export interface IOpenAddressTable<T> {
-    [key: number]: IKeyValueObject<T>;
+export interface OpenAddressTable<T> {
+    [key: number]: KeyValueObject<T>;
 }

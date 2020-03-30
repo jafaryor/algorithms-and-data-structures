@@ -71,8 +71,8 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
      * Recursive insert.
      * @complexity O(lg n)
      */
-    insert(newNode: RedBlackNode<T>) {
-        super.insert(newNode);
+    recursiveInsert(newNode: RedBlackNode<T>) {
+        super.recursiveInsert(newNode);
 
         this.paintRed(newNode);
 
@@ -83,8 +83,8 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
      * Iterative insert.
      * @complexity O(lg n)
      */
-    iterativeInsert(newNode: RedBlackNode<T>) {
-        super.iterativeInsert(newNode);
+    insert(newNode: RedBlackNode<T>) {
+        super.insert(newNode);
 
         this.paintRed(newNode);
 

@@ -123,20 +123,22 @@ export class BinarySearchTree<T> extends BinaryTree<T> {
      * Inserts a new node into the tree. (Recursive approach)
      * @complexity O(h)
      */
-    insert(
+    recursiveInsert(
         newNode: BinarySearchNode<T>,
         node: BinarySearchNode<T> = this.root as BinarySearchNode<T>
     ): void {
-        if (!this.root) this.root = newNode;
+        // Increase the amount of nodes.
+        if (node === this.root) this.nodesCount++;
 
-        if (newNode.key < node.key) {
-            if (node.left) return this.insert(newNode, node.left);
+        if (!this.root) this.root = newNode;
+        else if (newNode.key < node.key) {
+            if (node.left) return this.recursiveInsert(newNode, node.left);
             else {
                 newNode.parent = node;
                 node.left = newNode;
             }
         } else {
-            if (node.right) return this.insert(newNode, node.right);
+            if (node.right) return this.recursiveInsert(newNode, node.right);
             else {
                 newNode.parent = node;
                 node.right = newNode;
@@ -148,7 +150,7 @@ export class BinarySearchTree<T> extends BinaryTree<T> {
      * Inserts a new node into the tree. (Iterative approach)
      * @complexity O(h)
      */
-    iterativeInsert(newNode: BinarySearchNode<T>): void {
+    insert(newNode: BinarySearchNode<T>): void {
         // Keep pointers to two nodes, child (a) and parent (b).
         let a: BinarySearchNode<T> | undefined = this.root;
         let b: BinarySearchNode<T> | undefined;
@@ -163,6 +165,9 @@ export class BinarySearchTree<T> extends BinaryTree<T> {
         if (b == null) this.root = newNode;
         else if (newNode.key < b.key) b.left = newNode;
         else b.right = newNode;
+
+        // Increase the amount of nodes.
+        this.nodesCount++;
     }
 
     /**
@@ -197,5 +202,8 @@ export class BinarySearchTree<T> extends BinaryTree<T> {
             successor.left = node.left;
             successor.left.parent = successor;
         }
+
+        // Decrease the amount of nodes.
+        this.nodesCount--;
     }
 }

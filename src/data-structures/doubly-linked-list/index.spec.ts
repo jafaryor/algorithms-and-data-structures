@@ -1,6 +1,6 @@
-import { DoublyLinkedList } from './index';
+import {DoublyLinkedList} from './index';
 
-describe('DoublyLinkedListSpec', () => {
+xdescribe('DoublyLinkedListSpec', () => {
     const list = new DoublyLinkedList<number>();
 
     it('should be empty', () => {

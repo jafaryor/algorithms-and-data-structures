@@ -1,5 +1,4 @@
-import { SinglyLinkedList } from '.';
-import { DoublyLinkedList } from '../doubly-linked-list/index';
+import {SinglyLinkedList} from '.';
 
 describe('SinglyLinkedListSpec', () => {
     const list = new SinglyLinkedList<number>();
@@ -15,7 +14,7 @@ describe('SinglyLinkedListSpec', () => {
         expect(list.search(10)).toBeDefined();
     });
 
-    it('should inster after the first node', () => {
+    it('should insert after the first node', () => {
         list.insert(30);
         list.insertAfter(10, 20);
 
@@ -32,7 +31,7 @@ describe('SinglyLinkedListSpec', () => {
     });
 
     it('should not be empty', () => {
-        const newList = new DoublyLinkedList<number>([10, 20, 30]);
+        const newList = new SinglyLinkedList<number>([10, 20, 30]);
 
         expect(newList.isEmpty()).toBe(false);
         expect(newList.length).toEqual(3);

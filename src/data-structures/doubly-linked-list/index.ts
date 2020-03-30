@@ -1,10 +1,10 @@
 /**
  * Doubly-Linked List Node interface.
  */
-export interface IDoublyLinkedListNode<T> {
+export interface DoublyLinkedListNode<T> {
     data: T | null;
-    previous: IDoublyLinkedListNode<T>;
-    next: IDoublyLinkedListNode<T>;
+    previous: DoublyLinkedListNode<T>;
+    next: DoublyLinkedListNode<T>;
 }
 
 /**
@@ -13,15 +13,14 @@ export interface IDoublyLinkedListNode<T> {
  */
 export class DoublyLinkedList<T> {
     private listLength = 0;
-    private readonly sentinel: IDoublyLinkedListNode<T> = {
-        data: null,
-        previous: this.sentinel,
-        next: this.sentinel
-    };
+    private readonly sentinel: DoublyLinkedListNode<T>;
 
     constructor(array?: T[]) {
-        this.sentinel.previous = this.sentinel;
-        this.sentinel.next = this.sentinel;
+        this.sentinel = {
+            data: null,
+            previous: this.sentinel,
+            next: this.sentinel,
+        };
 
         if (Array.isArray(array)) {
             array.forEach(value => this.insert(value));
@@ -32,7 +31,7 @@ export class DoublyLinkedList<T> {
     /**
      * length of the list.
      */
-    public get length(): number {
+    get length(): number {
         return this.listLength;
     }
 
@@ -41,12 +40,12 @@ export class DoublyLinkedList<T> {
      * @complexity: O(1)
      * @param value
      */
-    public insert(value: T) {
+    insert(value: T) {
         const last = this.sentinel.previous;
-        const node: IDoublyLinkedListNode<T> = {
+        const node: DoublyLinkedListNode<T> = {
             data: value,
             previous: last,
-            next: this.sentinel
+            next: this.sentinel,
         };
 
         last.next = node;
@@ -59,7 +58,7 @@ export class DoublyLinkedList<T> {
      * @complexity: O(n)
      * @param value
      */
-    public remove(value: T) {
+    remove(value: T) {
         const node = this.search(value);
 
         if (node) {
@@ -75,8 +74,10 @@ export class DoublyLinkedList<T> {
      * @param value
      * @returns pointer to the node
      */
-    public search(value: T): IDoublyLinkedListNode<T> | null {
-        return this.traverse((node: IDoublyLinkedListNode<T>) => (node.data === value ? node : null));
+    search(value: T): DoublyLinkedListNode<T> | null {
+        return this.traverse((node: DoublyLinkedListNode<T>) =>
+            node.data === value ? node : null
+        );
     }
 
     /**
@@ -84,8 +85,13 @@ export class DoublyLinkedList<T> {
      * @complexity: O(n)
      * @param fn
      */
-    public traverse(fn: Function): any {
-        for (let node = this.sentinel.next; node !== this.sentinel; node = node.next) {
+    // tslint:disable-next-line: no-any
+    traverse(fn: Function): any {
+        for (
+            let node = this.sentinel.next;
+            node !== this.sentinel;
+            node = node.next
+        ) {
             const result = fn(node);
 
             if (result !== undefined) {
@@ -97,7 +103,7 @@ export class DoublyLinkedList<T> {
     /**
      * tells if the list is empty
      */
-    public isEmpty() {
+    isEmpty() {
         return this.listLength === 0;
     }
 
@@ -105,12 +111,15 @@ export class DoublyLinkedList<T> {
      * prints the list
      * @complexity: O(n)
      */
-    public print(): void {
+    print(): void {
         let output = '';
 
-        this.traverse((node: IDoublyLinkedListNode<T>) => (output += `${JSON.stringify(node.data)}, `));
+        this.traverse(
+            (node: DoublyLinkedListNode<T>) =>
+                (output += `${JSON.stringify(node.data)}, `)
+        );
 
-        // tslint:disable-next-line
+        // tslint-disable-next-line
         console.log(`[${output}]`);
     }
 }

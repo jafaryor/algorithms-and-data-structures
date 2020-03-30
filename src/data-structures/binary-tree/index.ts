@@ -3,27 +3,58 @@ import {BinaryNode} from './node';
 /**
  * The Binary Tree.
  */
-export class BinaryTree<T> {
+export abstract class BinaryTree<T> {
     protected root?: BinaryNode<T>;
-    protected inorderWalkLogs: number[] = [];
+    protected nodesCount = 0;
+
+    /**
+     * Return the height of a binary tree.
+     * The height of root is 1.
+     */
+    get height(): number {
+        if (this.isEmpty()) return 0;
+
+        return this.heightGetterHelper(this.root!, 1);
+    }
+
+    /**
+     * Returns the amount of node.
+     */
+    get nodes(): number {
+        return this.nodesCount;
+    }
+
+    /**
+     * Checks if the tree is empty.
+     * @complexity O(1)
+     */
+    isEmpty(): boolean {
+        return this.nodesCount === 0;
+    }
+
+    /**
+     * Return the root.
+     */
+    getRoot(): BinaryNode<T> | undefined {
+        return this.root;
+    }
 
     /**
      * Prints the tree in the following pattern: [ left | parent | right ]
      * Prints the left -> root -> right
      * @complexity O(n)
      */
-    inorderTreeWalk(node: BinaryNode<T> | undefined = this.root): void {
+    inorderTraverse(
+        node = this.root,
+        callback: TraverseCallback<T> = this.loggingCallback
+    ): void {
         if (!node) return;
 
-        this.inorderTreeWalk(node.left);
+        node.left && this.inorderTraverse(node.left);
 
-        console.log(node.value);
-        // logging logic - start.
-        if (node === this.root) this.inorderWalkLogs = [];
-        this.inorderWalkLogs.push(node.key);
-        // end.
+        callback(node);
 
-        this.inorderTreeWalk(node.right);
+        node.right && this.inorderTraverse(node.right);
     }
 
     /**
@@ -31,13 +62,16 @@ export class BinaryTree<T> {
      * Prints children -> root
      * @complexity O(n)
      */
-    preorderTreeWalk(node?: BinaryNode<T>): void {
+    preorderTraverse(
+        node = this.root,
+        callback: TraverseCallback<T> = this.loggingCallback
+    ): void {
         if (!node) return;
 
-        console.log(node.value);
+        callback(node);
 
-        this.preorderTreeWalk(node.left);
-        this.preorderTreeWalk(node.right);
+        node.left && this.preorderTraverse(node.left);
+        node.right && this.preorderTraverse(node.right);
     }
 
     /**
@@ -45,13 +79,16 @@ export class BinaryTree<T> {
      * Prints root -> children
      * @complexity O(n)
      */
-    postorderTreeWalk(node?: BinaryNode<T>): void {
+    postorderTraverse(
+        node = this.root,
+        callback: TraverseCallback<T> = this.loggingCallback
+    ): void {
         if (!node) return;
 
-        this.postorderTreeWalk(node.left);
-        this.postorderTreeWalk(node.right);
+        node.left && this.postorderTraverse(node.left);
+        node.right && this.postorderTraverse(node.right);
 
-        console.log(node.value);
+        callback(node);
     }
 
     /**
@@ -72,28 +109,28 @@ export class BinaryTree<T> {
     }
 
     /**
-     * Prints the tree starting from root.
+     * The default callback for *Traverse methods.
      */
-    print(
-        node: BinaryNode<T> | undefined = this.root,
-        indent: string,
-        last: boolean
-    ): void {
-        if (!node) return;
+    private loggingCallback(node?: BinaryNode<T>): void {
+        console.log(`[${node?.key}, ${node?.value}]`);
+    }
 
-        let line = indent;
+    /**
+     * Height getter helper method.
+     */
+    private heightGetterHelper(node: BinaryNode<T>, height: number): number {
+        const leftHeight = node.left
+            ? this.heightGetterHelper(node.left, height + 1)
+            : height;
+        const rightHeight = node.right
+            ? this.heightGetterHelper(node.right, height + 1)
+            : height;
 
-        if (last) {
-            line += 'R----';
-            indent += '   ';
-        } else {
-            line += 'L----';
-            indent += '|  ';
-        }
-
-        console.log(`${line}[${node.key}, ${node.value}]`);
-
-        this.print(node.left, indent, false);
-        this.print(node.right, indent, true);
+        return Math.max(leftHeight, rightHeight);
     }
 }
+
+/**
+ * Binary tree traverse callback.
+ */
+export type TraverseCallback<T> = (node?: BinaryNode<T>) => void;

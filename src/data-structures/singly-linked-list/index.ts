@@ -1,11 +1,11 @@
-import { EqualFunction } from '../../utils';
+import {EqualFunction} from '../../utils';
 
 /**
  * Singly-Linked List Node Interface.
  */
-export interface ISinglyLinkecListNode<T> {
+export interface SinglyLinkedListNode<T> {
     data: T;
-    next: ISinglyLinkecListNode<T> | null;
+    next: SinglyLinkedListNode<T> | null;
 }
 
 /**
@@ -13,9 +13,9 @@ export interface ISinglyLinkecListNode<T> {
  */
 export class SinglyLinkedList<T> {
     // pointer to the head of the list
-    private head: ISinglyLinkecListNode<T> | null = null;
+    private head: SinglyLinkedListNode<T> | null = null;
     // pointer to the tail of the list
-    private tail: ISinglyLinkecListNode<T> | null = null;
+    private tail: SinglyLinkedListNode<T> | null = null;
     // list length
     private listLength: number = 0;
 
@@ -33,14 +33,14 @@ export class SinglyLinkedList<T> {
     /**
      * length of the list
      */
-    public get length(): number {
+    get length(): number {
         return this.listLength;
     }
 
     /**
      * checks if the list is empty
      */
-    public isEmpty(): boolean {
+    isEmpty(): boolean {
         return this.listLength === 0;
     }
 
@@ -50,7 +50,7 @@ export class SinglyLinkedList<T> {
      * @param value
      * @returns pointer to the node
      */
-    public search(value: T): ISinglyLinkecListNode<T> | null {
+    search(value: T): SinglyLinkedListNode<T> | null {
         for (let node = this.head; node !== null; node = node.next) {
             if (this.areEqual(node.data, value)) {
                 return node;
@@ -65,8 +65,8 @@ export class SinglyLinkedList<T> {
      * @complexity: O(1)
      * @param value
      */
-    public insert(value: T): void {
-        const node = { data: value, next: null };
+    insert(value: T): void {
+        const node = {data: value, next: null};
 
         if (!this.head || !this.tail) {
             this.head = node;
@@ -85,11 +85,11 @@ export class SinglyLinkedList<T> {
      * @param value
      * @param newValue
      */
-    public insertAfter(value: T, newValue: T): void {
+    insertAfter(value: T, newValue: T): void {
         const node = this.search(value);
 
         if (node) {
-            const newNode = { data: newValue, next: node.next };
+            const newNode = {data: newValue, next: node.next};
 
             node.next = newNode;
 
@@ -107,15 +107,19 @@ export class SinglyLinkedList<T> {
      * @complexity: O(n)
      * @param value
      */
-    public remove(value: T): T | null {
-        for (let current = this.head, previous = null; current !== null; previous = current, current = current.next) {
+    remove(value: T): T | null {
+        for (
+            let current = this.head, previous = null;
+            current !== null;
+            previous = current, current = current.next
+        ) {
             if (this.areEqual(current.data, value)) {
                 if (current === this.head) {
                     this.head = this.head.next;
                 } else if (current === this.tail) {
                     this.tail = previous;
                 } else {
-                    (previous as ISinglyLinkecListNode<T>).next = current.next;
+                    (previous as SinglyLinkedListNode<T>).next = current.next;
                 }
 
                 this.listLength--;
@@ -130,13 +134,13 @@ export class SinglyLinkedList<T> {
     /**
      * removes the head node
      */
-    public removeHead() {
+    removeHead() {
         if (this.head) {
             this.head = this.head.next;
         }
     }
 
-    public getHead(): ISinglyLinkecListNode<T> | null {
+    getHead(): SinglyLinkedListNode<T> | null {
         return this.head;
     }
 
@@ -145,7 +149,7 @@ export class SinglyLinkedList<T> {
      * @complexity: O(n)
      * @param fn
      */
-    public traverse(fn: Function): any {
+    traverse(fn: Function): any {
         for (let node = this.head; node !== null; node = node.next) {
             const result = fn(node);
 
@@ -159,10 +163,13 @@ export class SinglyLinkedList<T> {
      * prints the list
      * @complexity: O(n)
      */
-    public print(): void {
+    print(): void {
         let output = '';
 
-        this.traverse((node: ISinglyLinkecListNode<T>) => (output += `${JSON.stringify(node.data)}, `));
+        this.traverse(
+            (node: SinglyLinkedListNode<T>) =>
+                (output += `${JSON.stringify(node.data)}, `)
+        );
 
         // tslint:disable-next-line
         console.log(`[${output}]`);

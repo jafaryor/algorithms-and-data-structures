@@ -1,4 +1,4 @@
-import { Queue } from '../queue';
+import {Queue} from '../queue';
 
 /**
  * The Stack implemented by a couple of Queues
@@ -17,7 +17,7 @@ export class StackWithTwoQueues<T> {
      * @complexity: O(1)
      * @param value
      */
-    public push(value: T): void {
+    push(value: T): void {
         this.queue01.enqueue(value);
     }
 
@@ -26,7 +26,7 @@ export class StackWithTwoQueues<T> {
      * @complexity: O(n)
      * @returns the pulled out item's value
      */
-    public pop(): T | undefined {
+    pop(): T | undefined {
         this.moveItemsToSecondQueue();
 
         const value = this.queue01.dequeue();
@@ -40,14 +40,14 @@ export class StackWithTwoQueues<T> {
      * returns the value of the top item
      * @complexity: O(n)
      */
-    public peek(): T | undefined {
+    peek(): T | undefined {
         this.moveItemsToSecondQueue();
 
         const value = this.queue01.peek();
 
         if (!this.queue01.isEmpty()) {
             // move the last item to the second queue
-            this.queue02.enqueue(this.queue01.dequeue());
+            this.queue02.enqueue(this.queue01.dequeue()!);
         }
 
         this.swapQueues();
@@ -58,21 +58,21 @@ export class StackWithTwoQueues<T> {
     /**
      * returns the length of the stack
      */
-    public get length(): number {
+    get length(): number {
         return this.queue01.length + this.queue02.length;
     }
 
     /**
      * tells if the queue is empty
      */
-    public isEmpty(): boolean {
+    isEmpty(): boolean {
         return this.queue01.isEmpty() && this.queue02.isEmpty();
     }
 
     /**
      * prints the stack
      */
-    public print(): void {
+    print(): void {
         this.queue01.print();
         this.queue02.print();
     }
@@ -83,7 +83,7 @@ export class StackWithTwoQueues<T> {
      */
     private moveItemsToSecondQueue(): void {
         while (this.queue01.length > 1) {
-            this.queue02.enqueue(this.queue01.dequeue());
+            this.queue02.enqueue(this.queue01.dequeue()!);
         }
     }
 
