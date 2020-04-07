@@ -33,9 +33,9 @@ describe('BinarySearchTree', () => {
     });
 
     it('should have height of 3 and 7 nodes', () => {
-        const node = tree.search('10');
+        const node = tree.search(10);
 
-        tree.remove(node!);
+        tree.delete(node!);
 
         expect(tree.nodes).toEqual(7);
         expect(tree.height).toEqual(3);
@@ -56,23 +56,31 @@ describe('BinarySearchTree', () => {
     it('should return the correct predecessor', () => {
         insertNodes(tree, [3, 45]);
 
-        const node = tree.iterativeSearch('19');
+        const node = tree.iterativeSearch(19);
 
         expect(tree.predecessor(node!)!.value).toEqual('17');
     });
 
     it('should return the correct successor', () => {
-        const node = tree.iterativeSearch('23');
+        const node = tree.iterativeSearch(23);
 
         expect(tree.successor(node!)!.value).toEqual('26');
     });
 
     it('should remove the root', () => {
-        const root = tree.search('26');
+        const root = tree.search(26);
 
-        tree.remove(root!);
+        tree.delete(root!);
 
         expect(tree.getRoot()!.value).toEqual('28');
+    });
+
+    it('should empty the tree', () => {
+        tree.empty();
+
+        expect(tree.isEmpty()).toBe(true);
+        expect(tree.height).toEqual(0);
+        expect(tree.nodes).toEqual(0);
     });
 });
 

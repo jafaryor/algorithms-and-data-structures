@@ -6,6 +6,9 @@ import {BinaryNode} from './node';
 export abstract class BinaryTree<T> {
     protected root?: BinaryNode<T>;
     protected nodesCount = 0;
+    private printLogs = '';
+    private nodeDistance = 10;
+    private nodePrinterCallback = this.printNodeHelper;
 
     /**
      * Return the height of a binary tree.
@@ -29,7 +32,7 @@ export abstract class BinaryTree<T> {
      * @complexity O(1)
      */
     isEmpty(): boolean {
-        return this.nodesCount === 0;
+        return this.root == null;
     }
 
     /**
@@ -37,6 +40,14 @@ export abstract class BinaryTree<T> {
      */
     getRoot(): BinaryNode<T> | undefined {
         return this.root;
+    }
+
+    /**
+     * Empties the tree.
+     */
+    empty(): void {
+        this.root = undefined;
+        this.nodesCount = 0;
     }
 
     /**
@@ -109,10 +120,35 @@ export abstract class BinaryTree<T> {
     }
 
     /**
-     * The default callback for *Traverse methods.
+     * Prints (Draws) the binary tree in the console.
      */
-    private loggingCallback(node?: BinaryNode<T>): void {
-        console.log(`[${node?.key}, ${node?.value}]`);
+    print(
+        nodePrinterCallback: nodePrinterCallback<T> = this.printNodeHelper
+    ): void {
+        this.printLogs = '';
+        this.nodeDistance = this.height * 2;
+        this.nodePrinterCallback = nodePrinterCallback;
+
+        console.log(this.printHelper(this.root, 0));
+    }
+
+    /**
+     * Print helper function.
+     */
+    private printHelper(node?: BinaryNode<T>, space = 0): string {
+        if (!node) return this.printLogs;
+
+        space += this.nodeDistance;
+
+        this.printHelper(node.right, space);
+
+        this.printLogs += '\n';
+        this.printLogs += ' '.repeat(space - this.nodeDistance);
+        this.printLogs += `${this.nodePrinterCallback(node)}\n`;
+
+        this.printHelper(node.left, space);
+
+        return this.printLogs;
     }
 
     /**
@@ -128,9 +164,28 @@ export abstract class BinaryTree<T> {
 
         return Math.max(leftHeight, rightHeight);
     }
+
+    /**
+     * The callback function which print/draws a single node.
+     */
+    private printNodeHelper(node: BinaryNode<T>): string {
+        return `${node.value}`;
+    }
+
+    /**
+     * The default callback for *Traverse methods.
+     */
+    private loggingCallback(node?: BinaryNode<T>): void {
+        console.log(`[${node?.key}, ${node?.value}]`);
+    }
 }
 
 /**
  * Binary tree traverse callback.
  */
 export type TraverseCallback<T> = (node?: BinaryNode<T>) => void;
+
+/**
+ * Node printer callback function.
+ */
+export type nodePrinterCallback<T> = (node: BinaryNode<T>) => string;

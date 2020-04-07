@@ -1,10 +1,18 @@
+import {nodePrinterCallback} from '../binary-tree';
 import {BinarySearchTree} from '../binary-search-tree';
 import {RedBlackNode, RedBlackNodeColor} from './node';
 
 /**
  * The Red-Black Tree.
+ * Note: DOESN'T SUPPORT NODES WITH EQUAL KEYS.
  */
 export class RedBlackTree<T> extends BinarySearchTree<T> {
+    // The tree null is only used in delete() method to store the reference to the parent node.
+    private readonly treeNull = {
+        parent: undefined,
+        color: RedBlackNodeColor.BLACK,
+    } as RedBlackNode<T>;
+
     protected root?: RedBlackNode<T>;
 
     /**
@@ -47,7 +55,7 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
         // Turn the right subtree of "left" into left subtree of "node".
         node.left = left.right;
 
-        if (left.right != null) {
+        if (left.right) {
             left.right.parent = node;
         }
 
@@ -68,18 +76,6 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
     }
 
     /**
-     * Recursive insert.
-     * @complexity O(lg n)
-     */
-    recursiveInsert(newNode: RedBlackNode<T>) {
-        super.recursiveInsert(newNode);
-
-        this.paintRed(newNode);
-
-        this.insertFixup(newNode);
-    }
-
-    /**
      * Iterative insert.
      * @complexity O(lg n)
      */
@@ -93,29 +89,33 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
 
     /**
      * Removes the node from the tree.
+     * The idea is the same as in the BinaryTree.
      * @complexity O(h) -> [because of the "successor" method]
      */
-    remove(node: RedBlackNode<T>): void {
+    delete(node: RedBlackNode<T>): void {
         let originalColor = node.color;
-        let fixupPointer: RedBlackNode<T> | undefined;
+        // The sentinel is used here to store the reference to the parent node.
+        let fixupPointer: RedBlackNode<T>;
 
         if (!node.left) {
             // A node has no left child.
-            fixupPointer = node.right;
-            this.transplant(node, node.right);
+            fixupPointer = node.right || this.treeNull;
+            this.transplant(node, fixupPointer);
         } else if (!node.right) {
             // A node has left child, but no right child.
-            fixupPointer = node.left;
-            this.transplant(node, node.left);
+            fixupPointer = node.left || this.treeNull;
+            this.transplant(node, fixupPointer);
         } else {
             // A node has both children.
             const successor = this.successor(node) as RedBlackNode<T>;
 
             originalColor = successor.color;
-            fixupPointer = successor.right;
+            fixupPointer = successor.right || this.treeNull;
 
             // Handles right side pointers.
-            if (successor.parent !== node) {
+            if (successor.parent === node) {
+                fixupPointer.parent = node;
+            } else {
                 // Successor may only have right child, but no left child,
                 // as the successor is the min in the right subtree.
                 // Replace the successor with its right subtree.
@@ -124,8 +124,6 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
                 // Links the successor to the node's right subtree.
                 successor.right = node.right;
                 successor.right.parent = successor;
-            } else if (fixupPointer) {
-                fixupPointer.parent = successor;
             }
 
             // Links the successor to node's parent.
@@ -137,9 +135,12 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
             successor.color = node.color;
         }
 
-        if (originalColor === RedBlackNodeColor.BLACK && fixupPointer) {
+        if (originalColor === RedBlackNodeColor.BLACK) {
             this.deleteFixup(fixupPointer);
         }
+
+        // Resets the tree null.
+        this.looseTreeNull();
     }
 
     /**
@@ -152,10 +153,9 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
         let uncle: RedBlackNode<T> | undefined;
 
         while (node !== this.root && this.isRedNode(node.parent)) {
-            // As the node is not the root, it has parent.
-
-            // As the the parent is red, it cannot be root.
-            // Because the root is black. It means the parent has parent.
+            // * As the node is not the root, it has parent.
+            // * As the the parent is red, it cannot be root.
+            // Because the root is black. It means the node has grandparent.
 
             // Case A: parent is left child of grandparent.
             if (node.grandparent!.left === node.parent) {
@@ -171,9 +171,9 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
                 } else {
                     // Case 2: node is right child.
                     if (node.parent!.right === node) {
-                        // Rotate left.
-                        this.leftRotate(node.parent!);
+                        // Rotate parent left.
                         node = node.parent!;
+                        this.leftRotate(node);
                     }
 
                     // Case 3: node is left child.
@@ -188,7 +188,7 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
                 // Case B: Parent is right child of grandparent.
                 uncle = node.grandparent!.left;
 
-                // Case 1: uncle is also RED.
+                // Case 1: The uncle is RED.
                 if (uncle && this.isRedNode(uncle)) {
                     // Repaint.
                     this.paintRed(node.grandparent);
@@ -198,9 +198,9 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
                 } else {
                     // Case 2: node is left child.
                     if (node.parent!.left === node) {
-                        // Rotate right.
-                        this.rightRotate(node.parent!);
+                        // Rotate parent right.
                         node = node.parent!;
+                        this.rightRotate(node);
                     }
 
                     // Case 3: node is right child.
@@ -222,69 +222,79 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
      */
     private deleteFixup(startNode: RedBlackNode<T>): void {
         let node = startNode;
-        let rightSibling: RedBlackNode<T>;
-        let leftSibling: RedBlackNode<T>;
+        let sibling: RedBlackNode<T>;
 
         while (node !== this.root && this.isBlackNode(node)) {
             // Parent exists because the node is not the root.
-            if (node === node.parent!.left) {
-                rightSibling = node.parent!.right!;
 
-                if (this.isRedNode(rightSibling)) {
+            // Case A: node is left child of parent.
+            if (node === node.parent!.left) {
+                sibling = node.parent!.right || this.treeNull;
+
+                // Case 1: right sibling is red.
+                if (this.isRedNode(sibling)) {
                     // right sibling exists because it is a red node.
-                    this.paintBlack(rightSibling);
+                    this.paintBlack(sibling);
                     this.paintRed(node.parent);
                     this.leftRotate(node.parent!);
-                    rightSibling = node.parent!.right!;
+                    sibling = node.parent!.right || this.treeNull;
                 }
 
+                // Case 2: children of right sibling are black.
                 if (
-                    this.isBlackNode(rightSibling.left) &&
-                    this.isBlackNode(rightSibling.right)
+                    this.isBlackNode(sibling.left) &&
+                    this.isBlackNode(sibling.right)
                 ) {
-                    this.paintRed(rightSibling);
+                    this.paintRed(sibling);
                     node = node.parent!;
                 } else {
-                    if (this.isBlackNode(rightSibling.right)) {
-                        this.paintBlack(rightSibling.left);
-                        this.paintRed(rightSibling);
-                        this.rightRotate(rightSibling);
-                        rightSibling = node.parent!.right!;
+                    // Case 3: ony right child of right sibling s black.
+                    if (this.isBlackNode(sibling.right)) {
+                        this.paintBlack(sibling.left);
+                        this.paintRed(sibling);
+                        this.rightRotate(sibling);
+                        sibling = node.parent!.right || this.treeNull;
                     }
 
-                    rightSibling.color = node.parent!.color;
+                    // Case 4: either left of both children of right sibling are red.
+                    sibling.color = node.parent!.color;
                     this.paintBlack(node.parent);
-                    this.paintBlack(rightSibling.right);
+                    this.paintBlack(sibling.right);
                     this.leftRotate(node.parent!);
                     node = this.root!;
                 }
             } else {
-                leftSibling = node.parent!.left!;
+                // Case B: node is right child of parent.
+                sibling = node.parent!.left || this.treeNull;
 
-                if (this.isRedNode(leftSibling)) {
-                    this.paintBlack(leftSibling);
+                // Case 1: left sibling is red.
+                if (this.isRedNode(sibling)) {
+                    this.paintBlack(sibling);
                     this.paintRed(node.parent);
                     this.rightRotate(node.parent!);
-                    leftSibling = node.parent!.left!;
+                    sibling = node.parent!.left || this.treeNull;
                 }
 
+                // Case 2: children of left sibling are black.
                 if (
-                    this.isBlackNode(leftSibling.right) &&
-                    this.isBlackNode(leftSibling.left)
+                    this.isBlackNode(sibling.right) &&
+                    this.isBlackNode(sibling.left)
                 ) {
-                    this.paintRed(leftSibling);
+                    this.paintRed(sibling);
                     node = node.parent!;
                 } else {
-                    if (this.isBlackNode(leftSibling.left)) {
-                        this.paintBlack(leftSibling.right);
-                        this.paintRed(leftSibling);
-                        this.leftRotate(leftSibling);
-                        leftSibling = node.parent!.left!;
+                    // Case 3: only left child of left sibling is back.
+                    if (this.isBlackNode(sibling.left)) {
+                        this.paintBlack(sibling.right);
+                        this.paintRed(sibling);
+                        this.leftRotate(sibling);
+                        sibling = node.parent!.left || this.treeNull;
                     }
 
-                    leftSibling.color = node.parent!.color;
+                    // Case 4: either right or both children are red.
+                    sibling.color = node.parent!.color;
                     this.paintBlack(node.parent);
-                    this.paintBlack(leftSibling.left);
+                    this.paintBlack(sibling.left);
                     this.rightRotate(node.parent!);
                     node = this.root!;
                 }
@@ -295,11 +305,18 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
     }
 
     /**
+     * Prints/draws a red-black tree.
+     */
+    print(): void {
+        super.print(this.printNode as nodePrinterCallback<T>);
+    }
+
+    /**
      * Checks if the node is red.
      */
     isRedNode(node?: RedBlackNode<T>): boolean {
         // if node is null, it is a left. Every leaf is BLACK.
-        return node != null && node.isRed();
+        return !this.isNullNode(node) && node!.isRed();
     }
 
     /**
@@ -307,7 +324,14 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
      */
     isBlackNode(node?: RedBlackNode<T>): boolean {
         // if node is null, it is a left. Every leaf is BLACK.
-        return node == null || node.isBlack();
+        return this.isNullNode(node) || node!.isBlack();
+    }
+
+    /**
+     * Checks if the node is undefined or treeNull.
+     */
+    isNullNode(node?: RedBlackNode<T>): boolean {
+        return node == null || node === this.treeNull;
     }
 
     /**
@@ -326,5 +350,27 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
         if (!node) return;
 
         node.color = RedBlackNodeColor.BLACK;
+    }
+
+    /**
+     * Prints a red-lack node.
+     */
+    private printNode(node: RedBlackNode<T>): string {
+        return `${node.value}[${node.isRed() ? 'R' : 'B'}]`;
+    }
+
+    /**
+     * Unlinks the treeNull from the tree.
+     */
+    private looseTreeNull() {
+        const parent = this.treeNull.parent;
+
+        if (!parent) return;
+
+        if (parent.left === this.treeNull) {
+            parent.left = undefined;
+        } else {
+            parent.right = undefined;
+        }
     }
 }

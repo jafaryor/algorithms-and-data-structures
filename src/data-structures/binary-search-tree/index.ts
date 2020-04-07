@@ -13,16 +13,16 @@ export class BinarySearchTree<T> extends BinaryTree<T> {
      * @complexity O(h)
      */
     search(
-        value: T,
+        key: number,
         node: BinarySearchNode<T> | undefined = this.root
     ): BinarySearchNode<T> | undefined {
         if (!node) return;
-        else if (node.value === value) return node;
+        else if (node.key === key) return node;
 
-        if (value < node.value) {
-            return this.search(value, node.left);
+        if (key < node.key) {
+            return node.left && this.search(key, node.left);
         } else {
-            return this.search(value, node.right);
+            return node.right && this.search(key, node.right);
         }
     }
 
@@ -31,13 +31,13 @@ export class BinarySearchTree<T> extends BinaryTree<T> {
      * @complexity O(h)
      */
     iterativeSearch(
-        value: T,
+        key: number,
         node: BinarySearchNode<T> | undefined = this.root
     ): BinarySearchNode<T> | undefined {
         let current: BinarySearchNode<T> | undefined = node;
 
-        while (current && current.value !== value) {
-            if (value < current.value) {
+        while (current && current.key !== key) {
+            if (key < current.key) {
                 current = current.left;
             } else {
                 current = current.right;
@@ -174,7 +174,7 @@ export class BinarySearchTree<T> extends BinaryTree<T> {
      * Removes the node from the tree.
      * @complexity O(h) -> [because of the "successor" method]
      */
-    remove(node: BinarySearchNode<T>): void {
+    delete(node: BinarySearchNode<T>): void {
         // A node has no left child.
         if (!node.left) this.transplant(node, node.right);
         // A node has left child, but no right child.
