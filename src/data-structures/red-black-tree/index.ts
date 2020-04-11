@@ -1,9 +1,9 @@
-import {nodePrinterCallback} from '../binary-tree';
 import {BinarySearchTree} from '../binary-search-tree';
 import {RedBlackNode, RedBlackNodeColor} from './node';
+import {nodePrinterCallback} from '../binary-tree';
 
 /**
- * The Red-Black Tree.
+ * The Red-Black Tree (without a sentinel node).
  * Note: DOESN'T SUPPORT NODES WITH EQUAL KEYS.
  */
 export class RedBlackTree<T> extends BinarySearchTree<T> {
@@ -16,81 +16,21 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
     protected root?: RedBlackNode<T>;
 
     /**
-     * Rotates the node left.
-     * @complexity O(1)
-     */
-    leftRotate(node: RedBlackNode<T>) {
-        const right = node.right!;
-
-        // Turn the left subtree of "right" into right subtree of "node".
-        node.right = right.left;
-
-        if (right.left) {
-            right.left.parent = node;
-        }
-
-        // Turn the parent of "node" into parent of "right".
-        right.parent = node.parent;
-
-        if (node.parent == null) {
-            this.root = right;
-        } else if (node === node.parent.left) {
-            node.parent.left = right;
-        } else {
-            node.parent.right = right;
-        }
-
-        // Turn the "node" into left subtree of "right".
-        right.left = node;
-        node.parent = right;
-    }
-
-    /**
-     * Rotates the node right.
-     * @complexity O(1)
-     */
-    rightRotate(node: RedBlackNode<T>) {
-        const left = node.left!;
-
-        // Turn the right subtree of "left" into left subtree of "node".
-        node.left = left.right;
-
-        if (left.right) {
-            left.right.parent = node;
-        }
-
-        // Turn the parent of "node" into parent of "left".
-        left.parent = node.parent;
-
-        if (node.parent == null) {
-            this.root = left;
-        } else if (node === node.parent.right) {
-            node.parent.right = left;
-        } else {
-            node.parent.left = left;
-        }
-
-        // Turn the "node" into right subtree of "left".
-        left.right = node;
-        node.parent = left;
-    }
-
-    /**
      * Iterative insert.
      * @complexity O(lg n)
      */
-    insert(newNode: RedBlackNode<T>) {
-        super.insert(newNode);
+    insert(node: RedBlackNode<T>) {
+        super.insert(node);
 
-        this.paintRed(newNode);
+        this.paintRed(node);
 
-        this.insertFixup(newNode);
+        this.insertFixup(node);
     }
 
     /**
      * Removes the node from the tree.
      * The idea is the same as in the BinaryTree.
-     * @complexity O(h) -> [because of the "successor" method]
+     * @complexity O(lg n) -> [because of the "successor" method]
      */
     delete(node: RedBlackNode<T>): void {
         let originalColor = node.color;

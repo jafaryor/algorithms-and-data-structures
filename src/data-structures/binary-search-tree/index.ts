@@ -150,21 +150,21 @@ export class BinarySearchTree<T> extends BinaryTree<T> {
      * Inserts a new node into the tree. (Iterative approach)
      * @complexity O(h)
      */
-    insert(newNode: BinarySearchNode<T>): void {
+    insert(node: BinarySearchNode<T>): void {
         // Keep pointers to two nodes, child (a) and parent (b).
         let a: BinarySearchNode<T> | undefined = this.root;
         let b: BinarySearchNode<T> | undefined;
 
         while (a) {
             b = a;
-            a = newNode.key < a.key ? a.left : a.right;
+            a = node.key < a.key ? a.left : a.right;
         }
 
-        newNode.parent = b;
+        node.parent = b;
 
-        if (b == null) this.root = newNode;
-        else if (newNode.key < b.key) b.left = newNode;
-        else b.right = newNode;
+        if (b == null) this.root = node;
+        else if (node.key < b.key) b.left = node;
+        else b.right = node;
 
         // Increase the amount of nodes.
         this.nodesCount++;

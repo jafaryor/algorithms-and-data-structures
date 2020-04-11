@@ -199,7 +199,6 @@ describe('RedBlackTree', () => {
             sibling = parent.right; // 5
 
             tree.delete(node);
-            tree.print();
 
             expect(tree.search(1)).toBeUndefined();
             expect(parent.left).toBeUndefined();

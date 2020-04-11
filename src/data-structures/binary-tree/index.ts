@@ -120,7 +120,68 @@ export abstract class BinaryTree<T> {
     }
 
     /**
+     * Rotates the node to the left side.
+     * @complexity O(1)
+     */
+    leftRotate(node: BinaryNode<T>): void {
+        const right = node.right!;
+
+        // Turn the left subtree of "right" into right subtree of "node".
+        node.right = right.left;
+
+        if (right.left) {
+            right.left.parent = node;
+        }
+
+        // Turn the parent of "node" into parent of "right".
+        right.parent = node.parent;
+
+        if (node.parent == null) {
+            this.root = right;
+        } else if (node === node.parent.left) {
+            node.parent.left = right;
+        } else {
+            node.parent.right = right;
+        }
+
+        // Turn the "node" into left subtree of "right".
+        right.left = node;
+        node.parent = right;
+    }
+
+    /**
+     * Rotates the node to the right side.
+     * @complexity O(1)
+     */
+    rightRotate(node: BinaryNode<T>): void {
+        const left = node.left!;
+
+        // Turn the right subtree of "left" into left subtree of "node".
+        node.left = left.right;
+
+        if (left.right) {
+            left.right.parent = node;
+        }
+
+        // Turn the parent of "node" into parent of "left".
+        left.parent = node.parent;
+
+        if (node.parent == null) {
+            this.root = left;
+        } else if (node === node.parent.right) {
+            node.parent.right = left;
+        } else {
+            node.parent.left = left;
+        }
+
+        // Turn the "node" into right subtree of "left".
+        left.right = node;
+        node.parent = left;
+    }
+
+    /**
      * Prints (Draws) the binary tree in the console.
+     * @complexity O(n)
      */
     print(
         nodePrinterCallback: nodePrinterCallback<T> = this.printNodeHelper
@@ -134,6 +195,7 @@ export abstract class BinaryTree<T> {
 
     /**
      * Print helper function.
+     * @complexity O(n)
      */
     private printHelper(node?: BinaryNode<T>, space = 0): string {
         if (!node) return this.printLogs;
@@ -153,6 +215,7 @@ export abstract class BinaryTree<T> {
 
     /**
      * Height getter helper method.
+     * @complexity O(n)
      */
     private heightGetterHelper(node: BinaryNode<T>, height: number): number {
         const leftHeight = node.left
