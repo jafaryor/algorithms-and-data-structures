@@ -94,9 +94,9 @@ export class AvlTree<T> extends BinarySearchTree<T> {
      * @complexity O(lg n)
      */
     private insertFixup(node: AvlNode<T>): void {
-        let current = node; // z
-        let parent = node.parent!; // y
-        let grandparent: AvlNode<T>; // x
+        let current = node;
+        let parent = node.parent!;
+        let grandparent: AvlNode<T>;
 
         while (parent) {
             parent.height = this.calculateNodeHeight(parent);

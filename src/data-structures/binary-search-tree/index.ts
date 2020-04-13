@@ -3,7 +3,7 @@ import {BinarySearchNode} from './node';
 
 /**
  * The Binary Search Tree.
- * [ left < root >= right ]
+ * [ left.key < parent.key <= right.key ]
  */
 export class BinarySearchTree<T> extends BinaryTree<T> {
     protected root?: BinarySearchNode<T>;

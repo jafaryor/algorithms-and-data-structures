@@ -238,4 +238,87 @@ describe('RedBlackTree', () => {
             expect(tree.isBlackNode(sibling!.right)).toBe(true);
         });
     });
+
+    afterEach(() => {
+        expect(isValidRedBlackTree(tree)).toBe(true);
+    });
 });
+
+/**
+ * Checks if the tree is a valid red-black tree.
+ */
+function isValidRedBlackTree<T>(tree: RedBlackTree<T>): boolean {
+    const root = tree.getRoot() as RedBlackNode<T>;
+
+    return (
+        isRootBlack(tree) &&
+        isRedHasBlackChildren(tree, root) &&
+        areAllLeafHasEqualBlackHeight(tree)
+    );
+}
+
+/**
+ * Checks if the root is black.
+ */
+function isRootBlack<T>(tree: RedBlackTree<T>): boolean {
+    return tree.isBlackNode(tree.getRoot() as RedBlackNode<T>);
+}
+
+/**
+ * Checks if every red node has black children.
+ */
+function isRedHasBlackChildren<T>(
+    tree: RedBlackTree<T>,
+    node?: RedBlackNode<T>
+): boolean {
+    if (!node) return true;
+
+    const left = isRedHasBlackChildren(tree, node.left);
+    const right = isRedHasBlackChildren(tree, node.right);
+
+    if (node.isRed()) {
+        return (
+            left &&
+            right &&
+            tree.isBlackNode(node.left) &&
+            tree.isBlackNode(node.right)
+        );
+    } else {
+        return left && right;
+    }
+}
+
+/**
+ * Checks if the black height of all leafs are equal.
+ */
+function areAllLeafHasEqualBlackHeight<T>(tree: RedBlackTree<T>): boolean {
+    const root = tree.getRoot() as RedBlackNode<T>;
+    const blackHeight = root ? areAllLeafHasEqualBlackHeightHelper(1, root) : 0;
+
+    return blackHeight < 0 ? false : true;
+}
+
+/**
+ * Calculates the black height of a node and
+ * checks if black height of its children are equal.
+ */
+function areAllLeafHasEqualBlackHeightHelper<T>(
+    height: number,
+    node?: RedBlackNode<T>
+): number {
+    // Leaf is a black node.
+    if (!node) return height + 1;
+
+    const blackHeight = node.isBlack() ? height + 1 : height;
+    const leftBlackHeight = areAllLeafHasEqualBlackHeightHelper(
+        blackHeight,
+        node.left
+    );
+    const rightBlackHeight = areAllLeafHasEqualBlackHeightHelper(
+        blackHeight,
+        node.right
+    );
+
+    // -1 is an unbalance indicator.
+    return leftBlackHeight === rightBlackHeight ? leftBlackHeight : -1;
+}

@@ -82,6 +82,10 @@ describe('BinarySearchTree', () => {
         expect(tree.height).toEqual(0);
         expect(tree.nodes).toEqual(0);
     });
+
+    afterEach(() => {
+        expect(isValidBinarySearchTree(tree.getRoot())).toBe(true);
+    });
 });
 
 /**
@@ -91,4 +95,29 @@ function insertNodes(tree: BinarySearchTree<string>, nodes: number[]): void {
     nodes.forEach((node: number) => {
         tree.insert(new BinarySearchNode<string>(node, node.toString()));
     });
+}
+
+/**
+ * Checks if the tree is valid.
+ */
+function isValidBinarySearchTree<T>(node?: BinarySearchNode<T>): boolean {
+    if (!node) return true;
+
+    const left = isValidBinarySearchTree(node.left);
+    const right = isValidBinarySearchTree(node.right);
+
+    if (node.left && !node.right) {
+        return left && right && node.left.key < node.key;
+    } else if (!node.left && node.right) {
+        return left && right && node.key <= node.right.key;
+    } else if (node.left && node.right) {
+        return (
+            left &&
+            right &&
+            node.left.key < node.key &&
+            node.key <= node.right.key
+        );
+    } else {
+        return left && right;
+    }
 }
