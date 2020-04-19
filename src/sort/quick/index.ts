@@ -2,7 +2,7 @@ import {swap, randomFromRange} from '../../utils';
 
 /**
  * Randomized Quick Sort
- * @time complexity - O(n logn)
+ * @time complexity [expected] - O(n logn)
  * @space complexity - O(1)
  * @param array - array to be sorted
  * @param left - left pointer
@@ -27,7 +27,7 @@ export function randomizedQuickSort(
 }
 
 /**
- * Randomized partitioning
+ * Randomized partitioning (Lomuto Partitioning)
  * @complexity - O(n)
  * @param array - array to be sorted
  * @param left - left pointer

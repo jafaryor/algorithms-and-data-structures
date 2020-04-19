@@ -19,6 +19,11 @@ Here is the three-step divide-and-conquer process for sorting a typical subarray
 ### Complexity
 * __Worst-case running time__
 
+    The worst case happens when:
+    1. Input sorted or reverse sorted
+    2. Partition around min or max element.
+    3. One side of partition always has no element.
+
     When quicksort always has the most unbalanced partitions possible (already sorted array), then the original call takes `cn` time for some constant `c`, the recursive call on `n-1` elements takes `c(n-1)` time, the recursive call on `n-2` elements takes `c(n-2)` time, and so on. Here's a tree of the subproblem sizes with their partitioning times:
 
     ![quick-sort-worst-case](./images/quick-sort-worst-case.png)
@@ -59,7 +64,7 @@ Here is the three-step divide-and-conquer process for sorting a typical subarray
 
 > __Optimal pivot is in the middle, because when you move it to the left or to the right (or take biggest or smallest item), you increase depth of recursion. In the worst case you will get O(n^2) except of O(n*log2(n)) when taking the middle.__
 
-### Useage
+### Usage
 Quicksort is sensitive to the data provided. Without usage of random pivots, it uses O(n^2) time for sorting a full sorted array. But by swapping random unsorted elements with the first element, and sorting afterwards, the algorithm becomes less sensitive to data would otherwise cause worst-case behavior (e.g. already sorted arrays).
 
 > __Heapsort or Merge sort, it has a very low constant factor to its execution speed, which generally gives it a speed advantage when working with lots of random data.__
@@ -68,16 +73,22 @@ Quicksort is sensitive to the data provided. Without usage of random pivots, it 
 ![quick-sort](./images/quick-sort.gif)
 
 ## Randomized Quick Sort
-In order to avoid worst case we can randomize the input before applying the QuickSort algorithm. Another approach to randomization is to randomize choices made within the algorithm. It can done by random picking the pivot.
+Approaches:
+* In order to avoid worst case we can randomize the input before applying the QuickSort algorithm.
+* Randomize choices made within the algorithm. We will select a randomly chosen element from the subarray `A[p..r]`. We do so by first exchanging `A[r]` with an element chosen at random from `A[p..r]`. __By randomly sampling the range `p,...,r`, we ensure that the pivot element `x = A[r]` is equally likely to be any of the `r - p + 1` elements in the subarray. Because we randomly choose the pivot element, we expect the split of the input array to be reasonably well balanced on average.__
 
 The __Expected Worst Case__ time complexity of Randomized QuickSort is `O(2*n*lgn)`.
 
-_[Proof](http://www.dcc.fc.up.pt/~pribeiro/aulas/alg1415/slides/2_probabilistic_16102014.pdf)_
+If, in each level of recursion, the split induced by `RANDOMIZED-PARTITION` puts any constant fraction of the elements on one side of the partition, then the recursion tree has depth `O(lg n)`, and `O(n)` work is performed at each level. Even if we add a few new levels with the most unbalanced split possible between these levels, the total time remains `(n*lg n)`.
 
-In terms of the number of comparisons it makes, _Randomized Quicksort_ is equivalent to randomly shuffling the input and then handing it off to _Naive Quicksort_.
+> In terms of the number of comparisons it makes, _Randomized Quicksort_ is equivalent to randomly shuffling the input and then handing it off to _Naive Quicksort_.
+
+The `QUICKSORT` and `RANDOMIZED-QUICKSORT` procedures differ only in how they select pivot elements. 
 
 ### Further Improvements
 * switch to _insertion sort_ for tiny arrays.
 * __Median-of-three partitioning__.
 
-[More](https://algs4.cs.princeton.edu/23quicksort/)
+---
+
+[Read More](https://www.codesdope.com/course/algorithms-quicksort/)
