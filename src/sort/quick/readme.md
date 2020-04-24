@@ -64,11 +64,6 @@ Here is the three-step divide-and-conquer process for sorting a typical subarray
 
 > __Optimal pivot is in the middle, because when you move it to the left or to the right (or take biggest or smallest item), you increase depth of recursion. In the worst case you will get O(n^2) except of O(n*log2(n)) when taking the middle.__
 
-### Usage
-Quicksort is sensitive to the data provided. Without usage of random pivots, it uses O(n^2) time for sorting a full sorted array. But by swapping random unsorted elements with the first element, and sorting afterwards, the algorithm becomes less sensitive to data would otherwise cause worst-case behavior (e.g. already sorted arrays).
-
-> __Heapsort or Merge sort, it has a very low constant factor to its execution speed, which generally gives it a speed advantage when working with lots of random data.__
-
 ### Example
 ![quick-sort](./images/quick-sort.gif)
 
@@ -84,6 +79,16 @@ If, in each level of recursion, the split induced by `RANDOMIZED-PARTITION` puts
 > In terms of the number of comparisons it makes, _Randomized Quicksort_ is equivalent to randomly shuffling the input and then handing it off to _Naive Quicksort_.
 
 The `QUICKSORT` and `RANDOMIZED-QUICKSORT` procedures differ only in how they select pivot elements. 
+
+### Usage
+Quicksort is sensitive to the data provided. Without usage of random pivots, it uses O(n^2) time for sorting a full sorted array. But by swapping random unsorted elements with the first element, and sorting afterwards, the algorithm becomes less sensitive to data would otherwise cause worst-case behavior (e.g. already sorted arrays).
+
+> __Heapsort or Merge sort, it has a very low constant factor to its execution speed, which generally gives it a speed advantage when working with lots of random data.__
+
+In practice:
+* Quicksort is a great general-purpose sorting algorithm.
+* Quicksort is typically over twice as fast as merge sort.
+* Quicksort behaves well even with caching and virtual memory.
 
 ### Further Improvements
 * switch to _insertion sort_ for tiny arrays.

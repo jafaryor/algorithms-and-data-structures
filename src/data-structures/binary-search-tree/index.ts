@@ -9,7 +9,7 @@ export class BinarySearchTree<T> extends BinaryTree<T> {
     protected root?: BinarySearchNode<T>;
 
     /**
-     * Recursively searches for a value in the binary tree starting from root.
+     * Recursively searches for a value in the tree starting from root.
      * @complexity O(h)
      */
     search(

@@ -1,15 +1,19 @@
 import {BinaryHeap} from './base-heap';
 
-// MinHeap is a heap where each parent node is less than their children
+/**
+ * MinHeap is a heap where each parent node
+ * is less than their children nodes.
+ */
 export class MaxHeap extends BinaryHeap {
     constructor(array?: number[]) {
         super(array);
     }
 
     /**
-     * moves last node to its proper place (as much higher as it is possible),
+     * Moves last node to its proper place
+     * (as much higher as it is possible),
      * as max node should be at the root
-     * @complexity: O(h) = O(logn)
+     * @complexity O(h) = O(lg n)
      */
     heapifyUp(index: number = this.size - 1): void {
         for (
@@ -22,10 +26,9 @@ export class MaxHeap extends BinaryHeap {
     }
 
     /**
-     * moves small root node to its proper place,
+     * Moves small root node to its proper place,
      * so we will have max node at the root
-     * @complexity: O(h) = O(logn)
-     * @param i - parent index to start from
+     * @complexity O(h) = O(lg n)
      */
     heapifyDown(index: number = 0): void {
         let i: number = index;
