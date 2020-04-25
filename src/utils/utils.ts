@@ -9,10 +9,17 @@ export interface IExtremes {
  * @param firstIndex
  * @param secondIndex
  */
-export function swap(array: number[], firstIndex: number, secondIndex: number): void {
+export function swap(
+    array: any[],
+    firstIndex: number,
+    secondIndex: number
+): void {
     if (firstIndex === secondIndex) return;
 
-    [array[firstIndex], array[secondIndex]] = [array[secondIndex], array[firstIndex]];
+    [array[firstIndex], array[secondIndex]] = [
+        array[secondIndex],
+        array[firstIndex],
+    ];
 }
 
 /**
@@ -20,7 +27,8 @@ export function swap(array: number[], firstIndex: number, secondIndex: number): 
  * @param min - min range value
  * @param max - max range value
  */
-export const randomFromRange = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1) + min);
+export const randomFromRange = (min: number, max: number) =>
+    Math.floor(Math.random() * (max - min + 1) + min);
 
 /**
  * randomizez the array items
@@ -46,9 +54,9 @@ export function findExtremes(array: number[]): IExtremes {
     return array.reduce(
         (extreme, item) => ({
             min: Math.min(extreme.min, item),
-            max: Math.max(extreme.max, item)
+            max: Math.max(extreme.max, item),
         }),
-        { min: Infinity, max: -Infinity }
+        {min: Infinity, max: -Infinity}
     );
 }
 
@@ -78,7 +86,7 @@ export function findMinAndMax(array: number[]): IExtremes {
         }
     }
 
-    return { min, max };
+    return {min, max};
 }
 
 /**

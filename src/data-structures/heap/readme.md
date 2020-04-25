@@ -1,7 +1,11 @@
 ## Heap
+A __heap__ is a data structure which uses a binary tree for its implementation. It is the base of the algorithm __heapsort__ and is also used to implement _priority queue_. It is basically a complete binary tree.
+
 A __Min Heap__ is a tree data structure with ordered nodes where the _min_ (or _max_ in __Max Heap__) value is the root of the tree and all children are less than (or greater than) their parent nodes.
 
 __Binary Heap__ is a heap where each node has two children.
+
+__Heapify__ is an operation applied on a node of a heap to maintain the heap property. It is applied on a node when its children (left and right) are heap (follow the property of heap) but the node itself may be violating the property.
 
 > So the min/max element in the heap is always at the root node.
 
@@ -69,3 +73,7 @@ Put all together:
 Hence proved that the Time complexity for Building a Binary Heap is `O(n)`.
 
 [Watch more about `Heap` here](https://www.youtube.com/watch?v=t0Cq6tVNRBA)
+
+---
+
+#### [Read More](https://www.codesdope.com/course/data-structures-heap/)

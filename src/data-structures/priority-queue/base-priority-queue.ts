@@ -1,5 +1,8 @@
-import { MaxHeap, MinHeap } from '../heap';
+import {MaxHeap, MinHeap} from '../heap';
 
+/**
+ * Priority Queue.
+ */
 export abstract class PriorityQueue {
     protected nodes: number[];
     protected abstract heap: MaxHeap | MinHeap;
@@ -9,18 +12,18 @@ export abstract class PriorityQueue {
     }
 
     /**
-     * checks if the queue is empty
+     * Checks if the queue is empty.
+     * @complexity O(1)
      */
-    public isEmpty(): boolean {
+    isEmpty(): boolean {
         return this.heap.isEmpty();
     }
 
     /**
-     * adds item to the queue
-     * @complexity: O(logn)
-     * @param node
+     * Inserts item to the queue.
+     * @complexity O(lg n)
      */
-    public insert(node: number) {
+    insert(node: number) {
         this.heap.add(node);
     }
 }

@@ -1,14 +1,15 @@
 import {swap} from '../../utils';
+import {HeapNode} from './node';
 
 /**
  * Binary Heap Base Class.
  * Array representation of the binary heap.
  */
-export abstract class BinaryHeap {
-    protected nodes: number[] = [];
+export abstract class BinaryHeap<T> {
+    protected nodes: Array<HeapNode<T>> = [];
 
-    constructor(array?: number[]) {
-        if (Array.isArray(array)) {
+    constructor(array?: Array<HeapNode<T>>) {
+        if (Array.isArray(array) && array.length) {
             // use the allocated space (array) to spare space.
             this.nodes = array;
             this.build();
@@ -27,26 +28,30 @@ export abstract class BinaryHeap {
 
     /**
      * Returns the root node (min/max).
+     * @complexity O(1)
      */
-    peek(): number {
+    peek(): HeapNode<T> {
         if (!this.nodes.length) throw new Error('The Heap is empty!');
 
         return this.nodes[0];
     }
 
     /**
-     * Removes root node and put last note instead of root.
+     * Removes root node and put last node instead of root.
      * @complexity O(lg n)
      */
-    poll(): number {
+    poll(): HeapNode<T> {
         if (!this.nodes.length) throw new Error('The Heap is empty!');
 
         const root = this.nodes[0];
-        // replace root with last node
+
+        // Replace root with last node.
         this.swap(0, this.size - 1);
-        // remove last node
+
+        // Remove last node.
         this.nodes.pop();
-        // heapify from root
+
+        // Heapify from root.
         this.heapifyDown();
 
         return root;
@@ -57,7 +62,7 @@ export abstract class BinaryHeap {
      * Heap is populate from left to right.
      * @complexity O(lg n)
      */
-    add(node: number): void {
+    add(node: HeapNode<T>): void {
         this.nodes.push(node);
         this.heapifyUp();
     }
@@ -107,21 +112,21 @@ export abstract class BinaryHeap {
     /**
      * Returns left node.
      */
-    protected leftChild(index: number): number {
+    protected leftChild(index: number): HeapNode<T> {
         return this.nodes[this.leftChildIndex(index)];
     }
 
     /**
      * Returns right node.
      */
-    protected rightChild(index: number): number {
+    protected rightChild(index: number): HeapNode<T> {
         return this.nodes[this.rightChildIndex(index)];
     }
 
     /**
      * Returns parent node.
      */
-    protected parent(index: number): number {
+    protected parent(index: number): HeapNode<T> {
         return this.nodes[this.parentIndex(index)];
     }
 

@@ -1,10 +1,11 @@
 ## Priority Queue
+Priority Queue is an abstract data type which is like a regular queue or stack data structure, but where additionally each element has a _"priority"_ associated with it
 
-Priority Queue is an abstract data type which is like a regular queue or stack data structure, but where additionally each element has a _"priority"_ associated with it. In a priority queue, an element with high priority is served before an element with low priority. If two elements have the same priority, they are served according to their order in the queue.
+In a priority queue, an element with high priority is served before an element with low priority. If two elements have the same priority, they are served according to their order in the queue.
 
-While priority queues are often implemented with heaps, they are conceptually distinct from heaps. A priority queue is an abstract concept like "a list" or "a map"; just as a list can be implemented with a linked list or an array, a priority queue can be implemented with a heap or a variety of other methods such as an unordered array.
+While priority queues are often implemented with heaps, they are conceptually distinct from heaps. A priority queue is an abstract concept like "list" or "map"; just as a list can be implemented with a linked list or an array, a priority queue can be implemented with a heap or a variety of other methods such as an unordered array.
 
-THere two types of Priority Queeues: _Min Priority Queeue_ and _Max Priority Queeue_.
+There are two types of Priority Queues: _Min Priority Queue_ and _Max Priority Queue_. Thus, a max-priority queue returns the element with the maximum key first whereas, a min-priority queue returns the element with the smallest key first.
 
 ### Applications
 * Bandwidth management
@@ -22,3 +23,7 @@ THere two types of Priority Queeues: _Min Priority Queeue_ and _Max Priority Que
 * Prim's algorithm for minimum spanning tree
 
     Using Min Heap Priority queue in Prim's algorithm to find the minimum spanning tree of a connected and undirected graph, one can achieve a good running time.
+
+---
+
+#### [Read More](https://www.codesdope.com/course/data-structures-priority-queues/)

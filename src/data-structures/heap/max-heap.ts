@@ -1,11 +1,12 @@
+import {HeapNode} from './node';
 import {BinaryHeap} from './base-heap';
 
 /**
  * MinHeap is a heap where each parent node
  * is less than their children nodes.
  */
-export class MaxHeap extends BinaryHeap {
-    constructor(array?: number[]) {
+export class MaxHeap<T> extends BinaryHeap<T> {
+    constructor(array?: Array<HeapNode<T>>) {
         super(array);
     }
 
@@ -18,7 +19,7 @@ export class MaxHeap extends BinaryHeap {
     heapifyUp(index: number = this.size - 1): void {
         for (
             let i = index;
-            this.hasParent(i) && this.parent(i) < this.nodes[i];
+            this.hasParent(i) && this.parent(i).key < this.nodes[i].key;
             i = this.parentIndex(i)
         ) {
             this.swap(this.parentIndex(i), i);
@@ -37,11 +38,12 @@ export class MaxHeap extends BinaryHeap {
         while (this.hasLeftChild(i)) {
             // take min node between left and right children
             largestChildIndex =
-                this.hasRightChild(i) && this.rightChild(i) > this.leftChild(i)
+                this.hasRightChild(i) &&
+                this.rightChild(i).key > this.leftChild(i).key
                     ? this.rightChildIndex(i)
                     : this.leftChildIndex(i);
 
-            if (this.nodes[i] > this.nodes[largestChildIndex]) {
+            if (this.nodes[i].key > this.nodes[largestChildIndex].key) {
                 // parent node is smaller than its smaller child
                 break;
             } else {

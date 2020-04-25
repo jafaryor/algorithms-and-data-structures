@@ -59,7 +59,7 @@ export class SplayTree<T> extends BinarySearchTree<T> {
             leftSubtree.root.right = rightSubtree.root;
             this.root = leftSubtree.root;
 
-            // Links the left subtree to the leftSubtree.
+            // Links the rightSubtree to the leftSubtree.
             if (rightSubtree.root) rightSubtree.root.parent = this.root;
         } else {
             this.root = rightSubtree.root;

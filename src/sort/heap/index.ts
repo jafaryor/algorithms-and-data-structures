@@ -1,4 +1,5 @@
-import { MinHeap } from '../../data-structures/heap';
+import {HeapNode} from '../../data-structures/heap/node';
+import {MinHeap} from '../../data-structures/heap';
 
 /**
  * Heap Sort
@@ -6,14 +7,18 @@ import { MinHeap } from '../../data-structures/heap';
  * @param array
  */
 export function heapSort(array: number[]): number[] {
-    let min: number;
+    let min: HeapNode<number>;
     const result: number[] = [];
-    // build min heap from the array
-    const heap = new MinHeap(array);
+    const heapNodeArray: Array<HeapNode<number>> = array.map(
+        (item) => new HeapNode<number>(item, item)
+    );
+
+    // Build min heap from the array.
+    const heap = new MinHeap(heapNodeArray);
 
     for (let i = heap.size - 1; i >= 0; --i) {
         min = heap.poll();
-        result.push(min);
+        result.push(min.value);
     }
 
     return result;
