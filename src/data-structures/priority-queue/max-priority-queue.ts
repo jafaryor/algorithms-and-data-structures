@@ -1,46 +1,51 @@
+import {HeapNode} from '../heap/node';
 import {MaxHeap} from '../heap';
 import {PriorityQueue} from './base-priority-queue';
 
 /**
  * Max Priority Queue.
  */
-export class MaxPriorityQueue extends PriorityQueue {
-    protected heap: MaxHeap;
+export class MaxPriorityQueue<T> extends PriorityQueue<T> {
+    protected heap: MaxHeap<T>;
 
-    constructor(array: number[]) {
-        super(array);
+    constructor(nodes: Array<HeapNode<T>>) {
+        super();
 
-        this.heap = new MaxHeap(this.nodes);
+        this.heap = new MaxHeap(nodes);
     }
 
     /**
-     * Returns max node.
+     * Returns max node (root).
      * @complexity O(1)
      */
-    get max(): number {
+    get max(): HeapNode<T> {
         return this.heap.peek();
     }
 
     /**
      * Extracts the max nodes and heapifies the heap.
+     * Extracts the root and replace it with the last node and heapifies the tree.
      * @complexity O(lg n)
      */
-    extractMax(): number {
+    extractMax(): HeapNode<T> {
         return this.heap.poll();
     }
 
     /**
-     * Increase the priority to 'newValue' of node with 'index'.
+     * Increase the priority of node.
      * @complexity O(lg n)
-     * @param index - index of node to increase the priority
-     * @param newValue - new priority
      */
-    increaseAt(index: number, newValue: number): void {
-        if (this.nodes[index] > newValue) {
-            throw new Error('New passed value is less than current value');
-        }
+    increasePriority(index: number, newPriority: number): void {
+        // As the node with the higher key is closer to the root (max).
+        this.heap.increaseKey(index, newPriority);
+    }
 
-        this.nodes[index] = newValue;
-        this.heap.heapifyUp(index);
+    /**
+     * Decreases the priority of node.
+     * @complexity O(lg n)
+     */
+    decreasePriority(index: number, newPriority: number): void {
+        // As the node with the higher key is closer to the root (max).
+        this.heap.decreaseKey(index, newPriority);
     }
 }

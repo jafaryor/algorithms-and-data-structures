@@ -2,8 +2,8 @@ import {HeapNode} from './node';
 import {BinaryHeap} from './base-heap';
 
 /**
- * MinHeap is a heap where each parent node
- * is less than their children nodes.
+ * MinHeap is a heap where key of each parent node
+ * is less than the key of their children nodes.
  */
 export class MinHeap<T> extends BinaryHeap<T> {
     constructor(array?: Array<HeapNode<T>>) {
@@ -53,5 +53,39 @@ export class MinHeap<T> extends BinaryHeap<T> {
 
             i = smallestChildIndex;
         }
+    }
+
+    // The following methods used only in Priority Queue implementation.
+
+    /**
+     * Increase the key of a node.
+     * Which means the node should get closer to the root (min).
+     * @complexity O(lg n)
+     */
+    increaseKey(index: number, newKey: number): void {
+        const node = this.nodes[index];
+
+        if (newKey < node.key) {
+            throw new Error('New key should be greater than current value.');
+        }
+
+        node.key = newKey;
+        this.heapifyDown(index);
+    }
+
+    /**
+     * Decrease the key of a node.
+     * Which means the node should get farther from the root (min).
+     * @complexity O(lg n)
+     */
+    decreaseKey(index: number, newKey: number): void {
+        const node = this.nodes[index];
+
+        if (newKey > node.key) {
+            throw new Error('New key should be less than current key.');
+        }
+
+        node.key = newKey;
+        this.heapifyUp(index);
     }
 }

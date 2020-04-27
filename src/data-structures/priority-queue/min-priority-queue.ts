@@ -1,46 +1,51 @@
+import {HeapNode} from '../heap/node';
 import {MinHeap} from '../heap';
 import {PriorityQueue} from './base-priority-queue';
 
 /**
  * Min Priority Queue.
  */
-export class MinPriorityQueue extends PriorityQueue {
-    protected heap: MinHeap;
+export class MinPriorityQueue<T> extends PriorityQueue<T> {
+    protected heap: MinHeap<T>;
 
-    constructor(array: number[]) {
-        super(array);
+    constructor(nodes: Array<HeapNode<T>>) {
+        super();
 
-        this.heap = new MinHeap(this.nodes);
+        this.heap = new MinHeap(nodes);
     }
 
     /**
-     * Return min node.
+     * Return min node (root).
      * @complexity O(1)
      */
-    get min(): number {
+    get min(): HeapNode<T> | undefined {
         return this.heap.peek();
     }
 
     /**
      * Extracts the min nodes and heapifies the heap.
+     * Extracts the root and replace it with the last node and heapifies the tree.
      * @complexity O(lg n)
      */
-    extractMin(): number {
+    extractMin(): HeapNode<T> | undefined {
         return this.heap.poll();
     }
 
     /**
-     * Decrease the priority to 'newValue' of node with 'index'.
+     * Increase the priority of node.
      * @complexity O(lg n)
-     * @param index - index of node to decrease the priority
-     * @param newValue - new priority
      */
-    decreaseAt(index: number, newValue: number): void {
-        if (this.nodes[index] < newValue) {
-            throw new Error('New passed value is bigger than current value');
-        }
+    increasePriority(index: number, newPriority: number): void {
+        // As the node with the lower key is closer to the root (max).
+        this.heap.decreaseKey(index, newPriority);
+    }
 
-        this.nodes[index] = newValue;
-        this.heap.heapifyUp(index);
+    /**
+     * Decreases the priority of node.
+     * @complexity O(lg n)
+     */
+    decreasePriority(index: number, newPriority: number): void {
+        // As the node with the lower key is closer to the root (max).
+        this.heap.increaseKey(index, newPriority);
     }
 }

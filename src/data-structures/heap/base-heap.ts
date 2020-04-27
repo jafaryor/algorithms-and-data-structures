@@ -27,6 +27,13 @@ export abstract class BinaryHeap<T> {
     }
 
     /**
+     * Returns the copy of heap nodes.
+     */
+    getNodes(): Array<HeapNode<T>> {
+        return [...this.nodes];
+    }
+
+    /**
      * Returns the root node (min/max).
      * @complexity O(1)
      */
@@ -78,7 +85,7 @@ export abstract class BinaryHeap<T> {
      * Checks if the haep is empty.
      */
     isEmpty(): boolean {
-        return this.size > 0;
+        return this.size === 0;
     }
 
     /**
@@ -160,5 +167,21 @@ export abstract class BinaryHeap<T> {
         for (let i = Math.floor(this.size / 2); i >= 0; --i) {
             this.heapifyDown(i);
         }
+    }
+
+    /**
+     * Prints the heap.
+     */
+    print(): void {
+        const output = this.nodes.reduce(
+            (output: string, node: HeapNode<T>) => {
+                output += `[${node.key}, ${node.value}] `;
+
+                return output;
+            },
+            ''
+        );
+
+        console.log(output);
     }
 }
