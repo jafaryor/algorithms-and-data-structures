@@ -1,8 +1,9 @@
-import {RedBlackTree} from '../red-black-tree';
-import {OrderStatisticNode} from './node';
+import { RedBlackTree } from '../red-black-tree';
+import { OrderStatisticNode } from './node';
 
 /**
  * The Order Statistic Tree.
+ * height = O(lg n)
  */
 export class OrderStatisticTree<T> extends RedBlackTree<T> {
     protected root?: OrderStatisticNode<T>;
@@ -58,14 +59,17 @@ export class OrderStatisticTree<T> extends RedBlackTree<T> {
     }
 
     /**
-     * Maintains the order statistic tree properties.
+     * Inserts the node into the tree.
      * @complexity O(lg n)
      */
-    insertFixup(node: OrderStatisticNode<T>): void {
+    insert(node: OrderStatisticNode<T>): void {
+        super.insert(node);
+
         // Increments the size of each node along the path from node up to the root.
+        // @complexity O(lg n)
         for (
             let current = node;
-            current !== this.root;
+            current != null;
             current = current.parent!
         ) {
             current.size++;
@@ -73,19 +77,47 @@ export class OrderStatisticTree<T> extends RedBlackTree<T> {
     }
 
     /**
-     * Fixes the involved nodes' size after rotation.
+     * Removes the node from the tree.
+     * @complexity O(lg n)
      */
-    leftRotate(node: OrderStatisticNode<T>): void {
-        super.leftRotate(node);
-        // TODO: finish it.
+    delete(node: OrderStatisticNode<T>): void {
+        // Decrease the size of each node along the path from node up to the root.
+        // @complexity O(lg n)
+        for (
+            let current = node;
+            current != null;
+            current = current.parent!
+        ) {
+            current.size--;
+        }
+
+        super.delete(node);
     }
 
     /**
-     * Fixes the involved nodes' size after rotation.
+     * Fixes the involved nodes' size after left rotation.
+     * @complexity O(1)
+     */
+    leftRotate(node: OrderStatisticNode<T>): void {
+        const right = node.right!;
+
+        super.leftRotate(node);
+
+        right.size = this.getNodeSize(node);
+        node.size = this.getNodeSize(node.left) + this.getNodeSize(node.right) + 1;
+    }
+
+    /**
+     * Fixes the involved nodes' size after right rotation.
+     * @complexity O(1)
      */
     rightRotate(node: OrderStatisticNode<T>): void {
-        super.leftRotate(node);
-        // TODO: finish it.
+        const left = node.left!;
+
+        super.rightRotate(node);
+
+        left.size = this.getNodeSize(node);
+        node.size = this.getNodeSize(node.left) + this.getNodeSize(node.right) + 1;
     }
 
     //==================================

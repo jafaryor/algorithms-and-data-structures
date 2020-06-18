@@ -1,5 +1,6 @@
-import {RedBlackTree} from './index';
-import {RedBlackNode} from './node';
+import { RedBlackTree } from './index';
+import { RedBlackNode } from './node';
+import { isValidBinarySearchTree } from '../binary-search-tree/index.spec';
 
 describe('RedBlackTree', () => {
     const tree = new RedBlackTree<string>();
@@ -247,10 +248,11 @@ describe('RedBlackTree', () => {
 /**
  * Checks if the tree is a valid red-black tree.
  */
-function isValidRedBlackTree<T>(tree: RedBlackTree<T>): boolean {
+export function isValidRedBlackTree<T>(tree: RedBlackTree<T>): boolean {
     const root = tree.getRoot() as RedBlackNode<T>;
 
     return (
+        isValidBinarySearchTree &&
         isRootBlack(tree) &&
         isRedHasBlackChildren(tree, root) &&
         areAllLeafHasEqualBlackHeight(tree)
