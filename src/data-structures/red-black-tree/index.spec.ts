@@ -1,14 +1,18 @@
-import { RedBlackTree } from './index';
-import { RedBlackNode } from './node';
-import { isValidBinarySearchTree } from '../binary-search-tree/index.spec';
+import {RedBlackTree} from './index';
+import {RedBlackNode} from './node';
+import {isValidBinarySearchTree} from '../binary-search-tree/index.spec';
 
 describe('RedBlackTree', () => {
-    const tree = new RedBlackTree<string>();
+    let tree: RedBlackTree<string>;
     let grandparent: RedBlackNode<string>;
     let parent: RedBlackNode<string>;
     let node: RedBlackNode<string>;
     let uncle: RedBlackNode<string> | undefined;
     let sibling: RedBlackNode<string> | undefined;
+
+    beforeAll(() => {
+        tree = new RedBlackTree<string>();
+    });
 
     it('should be empty', () => {
         expect(tree.getRoot()).toBeUndefined();

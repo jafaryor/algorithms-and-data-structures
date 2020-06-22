@@ -161,3 +161,25 @@ export function findClosestSmallerPrimeNumber(n: number): number {
 
     return 0;
 }
+
+/**
+ * Replaces the method with the provided function starting from
+ * the specified context and all the way down along the prototype chain,
+ * until the native object prototype is reached.
+ */
+export function replaceMethodInContext(
+    methodName: string,
+    replaceTo: Function,
+    inContext: object
+): void {
+    let currentContext = inContext;
+
+    do {
+        if (currentContext.hasOwnProperty(methodName)) {
+            // tslint:disable-next-line: no-any
+            (currentContext as any)[methodName] = replaceTo;
+        }
+
+        currentContext = Object.getPrototypeOf(currentContext);
+    } while (!currentContext.hasOwnProperty('valueOf'));
+}

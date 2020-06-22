@@ -2,7 +2,11 @@ import {BinarySearchTree} from './index';
 import {BinarySearchNode} from './node';
 
 describe('BinarySearchTree', () => {
-    const tree = new BinarySearchTree<string>();
+    let tree: BinarySearchTree<string>;
+
+    beforeAll(() => {
+        tree = new BinarySearchTree<string>();
+    });
 
     it('should be no root', () => {
         expect(tree.isEmpty()).toBe(true);

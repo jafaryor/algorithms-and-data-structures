@@ -59,7 +59,7 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
                 // Successor may only have right child, but no left child,
                 // as the successor is the min in the right subtree.
                 // Replace the successor with its right subtree.
-                this.transplant(successor, successor.right);
+                this.transplant(successor, successor.right || this.treeNull);
 
                 // Links the successor to the node's right subtree.
                 successor.right = node.right;
@@ -79,6 +79,8 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
             this.deleteFixup(fixupPointer);
         }
 
+        // Decrease the amount of nodes.
+        this.nodesCount--;
         // Resets the tree null.
         this.looseTreeNull();
     }
@@ -247,8 +249,8 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
     /**
      * Prints/draws a red-black tree.
      */
-    print(): void {
-        super.print(this.printNode as nodePrinterCallback<T>);
+    printRBTree(): void {
+        super.print(this.printRBNode as nodePrinterCallback<T>);
     }
 
     /**
@@ -295,22 +297,26 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
     /**
      * Prints a red-lack node.
      */
-    private printNode(node: RedBlackNode<T>): string {
+    private printRBNode(node: RedBlackNode<T>): string {
         return `${node.value}[${node.isRed() ? 'R' : 'B'}]`;
     }
 
     /**
-     * Unlinks the treeNull from the tree.
+     * Unlinks the treeNull from the tree and vise versa.
      */
     private looseTreeNull() {
         const parent = this.treeNull.parent;
 
         if (!parent) return;
 
+        // Unlink the null from the tree.
         if (parent.left === this.treeNull) {
             parent.left = undefined;
         } else {
             parent.right = undefined;
         }
+
+        // Unlink the tree from the treeNull.
+        this.treeNull.parent = undefined;
     }
 }

@@ -1,5 +1,6 @@
-import { RedBlackTree } from '../red-black-tree';
-import { OrderStatisticNode } from './node';
+import {RedBlackTree} from '../red-black-tree';
+import {OrderStatisticNode} from './node';
+import {nodePrinterCallback} from '../binary-tree';
 
 /**
  * The Order Statistic Tree.
@@ -60,31 +61,35 @@ export class OrderStatisticTree<T> extends RedBlackTree<T> {
 
     /**
      * Inserts the node into the tree.
-     * @complexity O(lg n)
+     * @complexity O(lg n) + O(lg n)
      */
     insert(node: OrderStatisticNode<T>): void {
         super.insert(node);
 
         // Increments the size of each node along the path from node up to the root.
-        // @complexity O(lg n)
-        for (
-            let current = node;
-            current != null;
-            current = current.parent!
-        ) {
+        for (let current = node; current != null; current = current.parent!) {
             current.size++;
         }
     }
 
     /**
      * Removes the node from the tree.
-     * @complexity O(lg n)
+     * @complexity O(lg n) + O(lg n)
      */
     delete(node: OrderStatisticNode<T>): void {
-        // Decrease the size of each node along the path from node up to the root.
-        // @complexity O(lg n)
+        let startNode: OrderStatisticNode<T>;
+
+        if (node.left && node.right) {
+            // Decrease the size of each node along the path from successor up to the root.
+            // Because the root will be transplanted with its successor.
+            startNode = this.successor(node) as OrderStatisticNode<T>;
+        } else {
+            // Decrease the size of each node along the path from node up to the root.
+            startNode = node;
+        }
+
         for (
-            let current = node;
+            let current = startNode;
             current != null;
             current = current.parent!
         ) {
@@ -104,7 +109,8 @@ export class OrderStatisticTree<T> extends RedBlackTree<T> {
         super.leftRotate(node);
 
         right.size = this.getNodeSize(node);
-        node.size = this.getNodeSize(node.left) + this.getNodeSize(node.right) + 1;
+        node.size =
+            this.getNodeSize(node.left) + this.getNodeSize(node.right) + 1;
     }
 
     /**
@@ -117,7 +123,21 @@ export class OrderStatisticTree<T> extends RedBlackTree<T> {
         super.rightRotate(node);
 
         left.size = this.getNodeSize(node);
-        node.size = this.getNodeSize(node.left) + this.getNodeSize(node.right) + 1;
+        node.size =
+            this.getNodeSize(node.left) + this.getNodeSize(node.right) + 1;
+    }
+
+    /**
+     * Fixes the involved nodes' size after transplantation.
+     * @complexity O(1)
+     */
+    transplant(
+        a: OrderStatisticNode<T>,
+        b: OrderStatisticNode<T> | undefined
+    ): void {
+        super.transplant(a, b);
+
+        if (b) b.size = this.getNodeSize(a);
     }
 
     //==================================
@@ -194,6 +214,20 @@ export class OrderStatisticTree<T> extends RedBlackTree<T> {
     //==================================
     // RECURSIVE IMPLEMENTATION - END
     //==================================
+
+    /**
+     * Prints/draws an order statistic node tree.
+     */
+    printOSTree(): void {
+        super.print(this.printOSNode as nodePrinterCallback<T>);
+    }
+
+    /**
+     * Prints an order statistic node.
+     */
+    private printOSNode(node: OrderStatisticNode<T>): string {
+        return `${node.value}[${node.isRed() ? 'R' : 'B'}][${node.size}]`;
+    }
 
     /**
      * Returns the size of the node.
