@@ -96,8 +96,6 @@ describe('Interval Tree', () => {
 
             tree.delete(node);
 
-            tree.printIntervalTree();
-
             expect(tree.getRoot()).toBe(tree.search(17));
             expect(tree.search(16)).toBeUndefined();
             expect(tree.nodes).toEqual(8);
