@@ -4,7 +4,7 @@ import {nodePrinterCallback} from '../binary-tree';
 
 /**
  * The Order Statistic Tree.
- * height = O(lg n)
+ * @height = O(lg n)
  */
 export class OrderStatisticTree<T> extends RedBlackTree<T> {
     protected root?: OrderStatisticNode<T>;
@@ -60,7 +60,7 @@ export class OrderStatisticTree<T> extends RedBlackTree<T> {
     }
 
     /**
-     * Inserts the node into the tree.
+     * Inserts a node into the tree.
      * @complexity O(lg n) + O(lg n)
      */
     insert(node: OrderStatisticNode<T>): void {
@@ -73,7 +73,7 @@ export class OrderStatisticTree<T> extends RedBlackTree<T> {
     }
 
     /**
-     * Removes the node from the tree.
+     * Removes a node from the tree.
      * @complexity O(lg n) + O(lg n)
      */
     delete(node: OrderStatisticNode<T>): void {
