@@ -1,7 +1,5 @@
-export interface IExtremes {
-    min: number;
-    max: number;
-}
+import * as _ from 'lodash';
+import {Extremes} from './types';
 
 /**
  * swaps two item in place
@@ -50,7 +48,7 @@ export function shuffle(array: any[]): any[] {
  * @complexity - O(n)
  * @param array
  */
-export function findExtremes(array: number[]): IExtremes {
+export function findExtremes(array: number[]): Extremes {
     return array.reduce(
         (extreme, item) => ({
             min: Math.min(extreme.min, item),
@@ -65,7 +63,7 @@ export function findExtremes(array: number[]): IExtremes {
  * @complexity - O(3n/2)
  * @param array
  */
-export function findMinAndMax(array: number[]): IExtremes {
+export function findMinAndMax(array: number[]): Extremes {
     let index = 0;
     let max = Infinity;
     let min = -Infinity;
@@ -182,4 +180,11 @@ export function replaceMethodInContext(
 
         currentContext = Object.getPrototypeOf(currentContext);
     } while (!currentContext.hasOwnProperty('valueOf'));
+}
+
+/**
+ * Creates and array of sze "size" and fills it with "value".
+ */
+export function createArrayAndFillWith(size: number, value: any): any[] {
+    return _.times(size, _.constant(value));
 }

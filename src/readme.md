@@ -396,8 +396,30 @@ In practice, we neglect certain technical details when we state and solve recur-
 
     In particular case for `f(n) = O(n^k)`:
 
-    ![simple-master-therorem](./images/simple-master-therorem.png)
+    ![simple-master-theorem](./images/simple-master-theorem.png)
+
+## Dynamic programming
+Dynamic programming, like the divide-and-conquer method, solves problems by combining the solutions to subproblems. ("Programming" in this context refers to a tabular method, not to writing computer code.) As we saw in Chapter 1, divide-and-conquer algorithms partition the problem into independent subproblems, solve the subproblems recursively, and then combine their solutions to solve the original problem. In contrast, dynamic programming is applicable when the subproblems are not independent, that is, when subproblems share subsubproblems. In this context, a divide-and-conquer algorithm does more work than necessary, repeatedly solving the common subsubproblems. A dynamic-programming algorithm solves every subsubproblem just once and then saves its answer in a table, thereby avoiding the work of recomputing the answer every time the subsubproblem is encountered.
+
+Dynamic programming is typically applied to optimization problems. In such problems there can be many possible solutions. Each solution has a value, and we wish to find a solution with the optimal (minimum or maximum) value. We call such a solution an optimal solution to the problem, as opposed to the optimal solution, since there may be several solutions that achieve the optimal value.
+
+The development of a dynamic-programming algorithm can be broken into a sequence of four steps.
+1. Characterize the structure of an optimal solution.
+2. Recursively define the value of an optimal solution.
+3. Compute the value of an optimal solution in a bottom-up fashion.
+4. Construct an optimal solution from computed information.
+
+When we think about a dynamic-programming problem, we should understand the set of subproblems involved and how subproblems depend on one another. The __subproblem graph__ for the problem embodies exactly this information. See the subproblem graph for the _rod-cutting problem_ below.
+
+![subproblem-graph](./images/rod-cutting-problem.png)
+
+The size of the subproblem graphGD.V; E/can help us determine the running time of the dynamic programming algorithm. Since we solve each subproblem just once, the running time is the sum of the times needed to solve each subproblem.
+
+See also:
+* Rod Cutting Problem (`problems/rod-cutting.ts`)
 
 ---
+
+[Introduction to Algorithms by Thomas H. Cormen, Charles E. Leiserson, and Ronald L. Rivest](http://staff.ustc.edu.cn/~csli/graduate/algorithms/book6/toc.htm)
 
 [Solutions to Introduction to Algorithms Third Edition Book](https://walkccc.github.io/CLRS/)

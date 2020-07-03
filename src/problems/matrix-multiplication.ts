@@ -1,13 +1,14 @@
-import { Matrix } from '../data-structures/matrix/index';
+import {Matrix} from '../data-structures/matrix/index';
 
 /**
  * multiplies two squared array of the same order by Divide and Conquer metod
  * @constrains: works only with matrices of even order
  * @complexity: O(n^3)
- * @param a
- * @param b
  */
-export function matrixMultiplyWithDivideAndConquer(a: number[][], b: number[][]): number[][] {
+export function matrixMultiplyWithDivideAndConquer(
+    a: number[][],
+    b: number[][]
+): number[][] {
     let isMatrixOrderIncreased: boolean = false;
 
     if (a.length === 1) {
@@ -25,12 +26,24 @@ export function matrixMultiplyWithDivideAndConquer(a: number[][], b: number[][])
     const mid = order / 2;
     // deviding each array into frour pieces
     const dividedA = [
-        [Matrix.subMatrix(a, 0, 0, mid, mid), Matrix.subMatrix(a, 0, mid, mid, order)],
-        [Matrix.subMatrix(a, mid, 0, order, mid), Matrix.subMatrix(a, mid, mid, order, order)]
+        [
+            Matrix.subMatrix(a, 0, 0, mid, mid),
+            Matrix.subMatrix(a, 0, mid, mid, order),
+        ],
+        [
+            Matrix.subMatrix(a, mid, 0, order, mid),
+            Matrix.subMatrix(a, mid, mid, order, order),
+        ],
     ];
     const dividedB = [
-        [Matrix.subMatrix(b, 0, 0, mid, mid), Matrix.subMatrix(b, 0, mid, mid, order)],
-        [Matrix.subMatrix(b, mid, 0, order, mid), Matrix.subMatrix(b, mid, mid, order, order)]
+        [
+            Matrix.subMatrix(b, 0, 0, mid, mid),
+            Matrix.subMatrix(b, 0, mid, mid, order),
+        ],
+        [
+            Matrix.subMatrix(b, mid, 0, order, mid),
+            Matrix.subMatrix(b, mid, mid, order, order),
+        ],
     ];
     // doing the same operation as in case of multiplication of two squared matrices of order two
     const result = Matrix.merge(
@@ -60,8 +73,6 @@ export function matrixMultiplyWithDivideAndConquer(a: number[][], b: number[][])
  * @complexity: O(n^(lg7))
  * @url: https://www.geeksforgeeks.org/easy-way-remember-strassens-matrix-equation/
  * @code: https://github.com/dmitr1y/StrassenVizi/blob/master/files/js/Strassen.js
- * @param a
- * @param b
  */
 export function StrassenAlgorithm(a: number[][], b: number[][]): number[][] {
     /*

@@ -16,12 +16,13 @@ export interface ISubArray {
 /**
  * Finds the maximum sum including the middle element.
  * @complexity - O(n)
- * @param array - the array
- * @param left - left index in the array
- * @param mid - mid index in the array
- * @param right - right index in the array
  */
-function findMaxCrossingSubArray(array: number[], left: number, mid: number, right: number): ISubArray {
+function findMaxCrossingSubArray(
+    array: number[],
+    left: number,
+    mid: number,
+    right: number
+): ISubArray {
     let sum: number;
     let maxLeft: number = mid;
     let maxRight: number = mid + 1;
@@ -50,20 +51,21 @@ function findMaxCrossingSubArray(array: number[], left: number, mid: number, rig
         }
     }
 
-    return { left: maxLeft, right: maxRight, sum: leftSum + rightSum };
+    return {left: maxLeft, right: maxRight, sum: leftSum + rightSum};
 }
 
 /**
  * finds maximum sub-array using divide-and-conquier method
  * @complexity - O(n logn)
- * @param array - the array
- * @param left - left index in the array
- * @param right - right index in the array
  */
-function findMaxSubArray(array: number[], left: number, right: number): ISubArray {
+function findMaxSubArray(
+    array: number[],
+    left: number,
+    right: number
+): ISubArray {
     if (left === right) {
         // base case - only one element
-        return { left, right, sum: array[left] };
+        return {left, right, sum: array[left]};
     } else {
         const mid = Math.floor((left + right) / 2);
 
@@ -71,10 +73,16 @@ function findMaxSubArray(array: number[], left: number, right: number): ISubArra
         const rightSubArr = findMaxSubArray(array, mid + 1, right);
         const crossSubArr = findMaxCrossingSubArray(array, left, mid, right);
 
-        if (leftSubArr.sum >= rightSubArr.sum && leftSubArr.sum >= crossSubArr.sum) {
+        if (
+            leftSubArr.sum >= rightSubArr.sum &&
+            leftSubArr.sum >= crossSubArr.sum
+        ) {
             // if left sub-array's sum is bigger than sum of other sub-arrays
             return leftSubArr;
-        } else if (rightSubArr.sum >= leftSubArr.sum && rightSubArr.sum >= crossSubArr.sum) {
+        } else if (
+            rightSubArr.sum >= leftSubArr.sum &&
+            rightSubArr.sum >= crossSubArr.sum
+        ) {
             // if right sub-array's sum is bigger than sum of other sub-arrays
             return rightSubArr;
         } else {
@@ -91,7 +99,6 @@ export function findMaximumSubArray(array: number[]): ISubArray {
 /**
  * Kadane's algorithm for solving maximum sub-array problem
  * @complexity - O(n)
- * @param array - the array
  */
 export function KadaneAlgorithm(array: number[]): number {
     let currentMax: number = array[0];
