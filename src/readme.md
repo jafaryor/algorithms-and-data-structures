@@ -417,6 +417,7 @@ The size of the subproblem graphGD.V; E/can help us determine the running time o
 
 See also:
 * Rod Cutting Problem (`problems/rod-cutting.ts`)
+* Matrix-chain multiplication (`problems/matrix-multiplication`)
 
 ---
 

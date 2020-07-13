@@ -1,9 +1,10 @@
 import {Matrix} from '../data-structures/matrix/index';
 
 /**
- * multiplies two squared array of the same order by Divide and Conquer metod
- * @constrains: works only with matrices of even order
- * @complexity: O(n^3)
+ * Multiplies two squared array of the same order by
+ * Divide and Conquer method.
+ * @constrains - works only with matrices of even order (0, 2, 4, 6, ...)
+ * @complexity - O(n^3)
  */
 export function matrixMultiplyWithDivideAndConquer(
     a: number[][],
@@ -24,7 +25,7 @@ export function matrixMultiplyWithDivideAndConquer(
 
     const order = a.length;
     const mid = order / 2;
-    // deviding each array into frour pieces
+    // Divides each array into four pieces.
     const dividedA = [
         [
             Matrix.subMatrix(a, 0, 0, mid, mid),
@@ -45,7 +46,8 @@ export function matrixMultiplyWithDivideAndConquer(
             Matrix.subMatrix(b, mid, mid, order, order),
         ],
     ];
-    // doing the same operation as in case of multiplication of two squared matrices of order two
+    // Does the same operation as in case of multiplication
+    // of two squared matrices of order two.
     const result = Matrix.merge(
         Matrix.add(
             matrixMultiplyWithDivideAndConquer(dividedA[0][0], dividedB[0][0]),
@@ -69,7 +71,7 @@ export function matrixMultiplyWithDivideAndConquer(
 }
 
 /**
- * multiplies two squared array by Strassen's Algorithm
+ * Multiplies two squared array by Strassen's Algorithm
  * @complexity: O(n^(lg7))
  * @url: https://www.geeksforgeeks.org/easy-way-remember-strassens-matrix-equation/
  * @code: https://github.com/dmitr1y/StrassenVizi/blob/master/files/js/Strassen.js

@@ -1,15 +1,13 @@
-export interface IMatrixSize {
-    rows: number;
-    columns: number;
-}
-
+/**
+ * The 2D Matrix.
+ */
 export class Matrix {
     /**
-     * increases the order of squared matrix by adding zero row and zero column
-     * in order to make its order even (for Divide and Conquer and Strassen algorithms)
-     * and returns new matrix
+     * Increases the order of squared matrix by adding zero row and zero column
+     * in order to make its order even (for Divide and Conquer
+     * and Strassen algorithms) and returns new matrix.
      */
-    public static increaseOrder(matrix: number[][]): number[][] {
+    static increaseOrder(matrix: number[][]): number[][] {
         const order = matrix.length;
         const result: number[][] = [];
         const zeroRow: number[] = [];
@@ -25,9 +23,10 @@ export class Matrix {
     }
 
     /**
-     * removes last row and last column of the squared matrix and returns new matrix
+     * Removes last row and last column of the
+     * squared matrix and returns new matrix.
      */
-    public static decreaseOrder(matrix: number[][]): number[][] {
+    static decreaseOrder(matrix: number[][]): number[][] {
         if (!matrix.length) {
             throw new Error('Cannot decrease order of empty matrix');
         }
@@ -43,29 +42,36 @@ export class Matrix {
     }
 
     /**
-     * returns size of matrix
+     * Returns size of matrix.
      */
-    public static size(matrix: number[][]): IMatrixSize {
+    static size(matrix: number[][]): MatrixSize {
         const columns = !matrix.length ? 0 : matrix.length;
-        const rows = matrix.reduce((maxRowLength, row) => Math.max(maxRowLength, !row.length ? 0 : row.length), 0);
+        const rows = matrix.reduce(
+            (maxRowLength, row) =>
+                Math.max(maxRowLength, !row.length ? 0 : row.length),
+            0
+        );
 
         return {
             rows,
-            columns
+            columns,
         };
     }
 
     /**
-     * Checks if size of two matrices is equal
+     * Checks if size of two matrices is equal.
      */
-    public static equalSize(a: number[][], b: number[][]): boolean {
+    static equalSize(a: number[][], b: number[][]): boolean {
         const aSize = Matrix.size(a);
         const bSize = Matrix.size(b);
 
         return aSize.rows === bSize.rows && aSize.columns === bSize.columns;
     }
 
-    public static equalItems(a: number[][], b: number[][]): boolean {
+    /**
+     * Checks if the matrix items are equal.
+     */
+    static equalItems(a: number[][], b: number[][]): boolean {
         for (let i = 0; i < a.length; ++i) {
             for (let j = 0; j < a[i].length; ++j) {
                 if (a[i][j] !== b[i][j]) {
@@ -78,16 +84,16 @@ export class Matrix {
     }
 
     /**
-     * Checks if two matrices are equal
+     * Checks if two matrices are equal.
      */
-    public static equal(a: number[][], b: number[][]): boolean {
+    static equal(a: number[][], b: number[][]): boolean {
         return Matrix.equalSize(a, b) && Matrix.equalItems(a, b);
     }
 
     /**
-     * prints the matrix
+     * Prints the matrix.
      */
-    public static toString(matrix: number[][]): void {
+    static toString(matrix: number[][]): void {
         /* tslint:disable */
         if (!matrix.length) console.log('| |');
 
@@ -108,14 +114,14 @@ export class Matrix {
     }
 
     /**
-     * return sub-matrix of the matrix
+     * Return sub-matrix of the matrix.
      * @param matrix
      * @param i - row index at which to begin extraction
      * @param j - column index at which to begin extraction
      * @param rows - row index before which to end extraction. If no value provided then extract till lart row
      * @param columns - column index before which to end extraction. If no value provided then extract till lat column
      */
-    public static subMatrix(
+    static subMatrix(
         matrix: number[][],
         rowStart: number,
         columnStart: number,
@@ -142,9 +148,9 @@ export class Matrix {
     }
 
     /**
-     * sums two matrices
+     * Sums two matrices.
      */
-    public static add(a: number[][], b: number[][]): number[][] {
+    static add(a: number[][], b: number[][]): number[][] {
         if (!Matrix.equalSize(a, b)) {
             throw new Error('Matrixes are not equal size!');
         }
@@ -162,9 +168,9 @@ export class Matrix {
     }
 
     /**
-     * subtracts second matrix from the first matrix
+     * Subtracts second matrix from the first matrix.
      */
-    public static subtract(a: number[][], b: number[][]): number[][] {
+    static subtract(a: number[][], b: number[][]): number[][] {
         if (!Matrix.equalSize(a, b)) {
             throw new Error('Matrixes are not equal size!');
         }
@@ -182,18 +188,24 @@ export class Matrix {
     }
 
     /**
-     * naive method of multiplying matrices
+     * Naive method of multiplying compatible matrices.
+     * @complexity - O(a.rows * a.columns * b.columns)
      */
-    public static multiply(a: number[][], b: number[][]): number[][] {
+    static multiply(a: number[][], b: number[][]): number[][] {
         const result: number[][] = [];
+
+        // a.columns should be equal to b.rows.
+        if (a[0].length !== b.length) {
+            throw new Error('Incompatible Matrices');
+        }
 
         for (let i = 0; i < a.length; ++i) {
             result[i] = [];
 
-            for (let j = 0; j < a[i].length; ++j) {
+            for (let j = 0; j < b[i].length; ++j) {
                 result[i][j] = 0;
 
-                for (let k = 0; k < b.length; ++k) {
+                for (let k = 0; k < a[i].length; ++k) {
                     result[i][j] += a[i][k] * b[k][j];
                 }
             }
@@ -203,26 +215,38 @@ export class Matrix {
     }
 
     /**
-     * multiplies two squared matrices of order two
+     * Multiplies two squared matrices of order two.
      */
-    public static multiply2xMatrices(a: number[][], b: number[][]): number[][] {
+    static multiply2xMatrices(a: number[][], b: number[][]): number[][] {
         return [
-            [a[0][0] * b[0][0] + a[0][1] * b[1][0], a[0][0] * b[0][1] + a[0][1] * b[1][1]],
-            [a[1][0] * b[0][0] + a[1][1] * b[1][0], a[1][0] * b[0][1] + a[1][1] * b[1][1]]
+            [
+                a[0][0] * b[0][0] + a[0][1] * b[1][0],
+                a[0][0] * b[0][1] + a[0][1] * b[1][1],
+            ],
+            [
+                a[1][0] * b[0][0] + a[1][1] * b[1][0],
+                a[1][0] * b[0][1] + a[1][1] * b[1][1],
+            ],
         ];
     }
 
     /**
-     * multiplies two matrices of order one
+     * Multiplies two matrices of order one.
      */
-    public static multiply1xMatrices(a: number[][], b: number[][]): number[][] {
+    static multiply1xMatrices(a: number[][], b: number[][]): number[][] {
         return [[a[0][0] * b[0][0]]];
     }
 
     /**
-     * Combines all matrices in their index order, e.g. [[a11, a12], [a21, a22]]
+     * Combines all matrices in their index order, e.g.
+     * [[a11, a12], [a21, a22]].
      */
-    public static merge(a11: number[][], a12: number[][], a21: number[][], a22: number[][]): number[][] {
+    static merge(
+        a11: number[][],
+        a12: number[][],
+        a21: number[][],
+        a22: number[][]
+    ): number[][] {
         const result: number[][] = [];
 
         for (let i = 0; i < a11.length; ++i) {
@@ -235,4 +259,22 @@ export class Matrix {
 
         return result;
     }
+
+    /**
+     * Creates an empty matrix of size i x j.
+     */
+    static createEmptyMatrixOfSize(i: number, j: number): number[][] {
+        const matrix = new Array(i);
+
+        for (let k = 0; k < i; k++) {
+            matrix[k] = new Array(j);
+        }
+
+        return matrix;
+    }
+}
+
+export interface MatrixSize {
+    rows: number;
+    columns: number;
 }
