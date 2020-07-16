@@ -1,3 +1,5 @@
+import * as _ from 'lodash';
+
 /**
  * The 2D Matrix.
  */
@@ -268,6 +270,23 @@ export class Matrix {
 
         for (let k = 0; k < i; k++) {
             matrix[k] = new Array(j);
+        }
+
+        return matrix;
+    }
+
+    /**
+     * Creates and array of sze "size" and fills it with "value".
+     */
+    static createMatrixAndFillWith(
+        rows: number,
+        columns: number,
+        value: any
+    ): any[][] {
+        const matrix = new Array<number[]>(rows);
+
+        for (let i = 0; i < rows; i++) {
+            matrix[i] = _.times(columns, _.constant(value));
         }
 
         return matrix;

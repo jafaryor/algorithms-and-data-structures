@@ -1,6 +1,7 @@
 import {
     matrixChainOrder,
     printOptimalParenthesis,
+    recursiveMatrixChain,
 } from '../matrix-chain-multiplication';
 
 describe('Matrix-chain Multiplication', () => {
@@ -24,6 +25,7 @@ describe('Matrix-chain Multiplication', () => {
             },
         ];
         const {costs, positions} = matrixChainOrder(matrixSizes);
+        const recursiveCosts = recursiveMatrixChain(matrixSizes);
         const result = printOptimalParenthesis(
             positions,
             1,
@@ -47,6 +49,7 @@ describe('Matrix-chain Multiplication', () => {
             [undefined, undefined, undefined, 2, 3],
             [undefined, undefined, undefined, undefined, 3],
         ]);
+        expect(recursiveCosts).toEqual(costs);
     });
 
     it('6 matrices', () => {
@@ -77,6 +80,7 @@ describe('Matrix-chain Multiplication', () => {
             },
         ];
         const {costs, positions} = matrixChainOrder(matrixSizes);
+        const recursiveCosts = recursiveMatrixChain(matrixSizes);
         const result = printOptimalParenthesis(
             positions,
             1,
@@ -136,5 +140,6 @@ describe('Matrix-chain Multiplication', () => {
                 5,
             ],
         ]);
+        expect(recursiveCosts).toEqual(costs);
     });
 });

@@ -78,6 +78,13 @@ function getMatrixDimensions(matrixSizes: MatrixSize[]): number[] {
  * Calculates the optimal costs and optimal positions of multiplications.
  * costs[i][j] - contains the optimal cost (min number of multiplications) for Ai * Aj.
  * position[i][j] - contains the optimal splitting index of Ai * Aj.
+ *
+ * Idea: First takes each pair of matrices and finds optimal costs of
+ * multiplication, then takes set of three matrices and using the previous
+ * calculations for the set of two matrices, calculates the optimal cost of
+ * multiplication for the set of three matrices and so on.
+ * Until the set of matrices of length n is reached.
+ *
  * @complexity - O(n^3) because each loop takes on at most n-1 values.
  * @spaceComplexity - O(n^2)
  * @see - images/matrix-chain-multiplication-complexity.png
@@ -119,6 +126,60 @@ export function matrixChainOrder(
     }
 
     return {costs, positions};
+}
+
+/**
+ * Recursive implementation of the problem.
+ * @complexity - O(n^3)
+ * @spaceComplexity - O(n^2)
+ */
+export function recursiveMatrixChain(matrixSizes: MatrixSize[]): number[][] {
+    const n = matrixSizes.length + 1;
+    const dimensions = getMatrixDimensions(matrixSizes);
+    const costs = Matrix.createMatrixAndFillWith(n, n, Infinity);
+
+    lookupChain(dimensions, costs, 1, n - 1);
+
+    return costs;
+}
+
+/**
+ * The recursiveMatrixChain helper function.
+ * @complexity - O(n^3)
+ * Proof: There two types of call:
+ * 1. Call in which costs[i][j] = Infinity.
+ * 2. Calls in which costs[i][j] < Infinity.
+ * There are O(n^2) calls of the first type, one per table entry.
+ * All calls of the second type are made as recursive calls by calls
+ * of the first type. Whenever a given call makes recursive calls,
+ * it makes O(n) them. Therefore, there are O(n^3) calls of the second type
+ * in all. Each call of the second type takes O(1) time, and each call
+ * of the first type takes O(n) time plus the time spent in its recursive
+ * calls. The total time, therefore, is O(n^3).
+ */
+function lookupChain(
+    dimensions: number[],
+    costs: number[][],
+    i: number,
+    j: number
+): number {
+    let cost: number;
+
+    // Returns previously computed value.
+    if (costs[i][j] < Infinity) return costs[i][j];
+
+    if (i === j) return (costs[i][j] = 0);
+
+    for (let k = i; k < j; k++) {
+        cost =
+            lookupChain(dimensions, costs, i, k) +
+            lookupChain(dimensions, costs, k + 1, j) +
+            dimensions[i - 1] * dimensions[k] * dimensions[j];
+
+        if (cost < costs[i][j]) costs[i][j] = cost;
+    }
+
+    return costs[i][j];
 }
 
 /**

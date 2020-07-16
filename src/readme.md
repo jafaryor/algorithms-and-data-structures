@@ -399,7 +399,7 @@ In practice, we neglect certain technical details when we state and solve recur-
     ![simple-master-theorem](./images/simple-master-theorem.png)
 
 ## Dynamic programming
-Dynamic programming, like the divide-and-conquer method, solves problems by combining the solutions to subproblems. ("Programming" in this context refers to a tabular method, not to writing computer code.) As we saw in Chapter 1, divide-and-conquer algorithms partition the problem into independent subproblems, solve the subproblems recursively, and then combine their solutions to solve the original problem. In contrast, dynamic programming is applicable when the subproblems are not independent, that is, when subproblems share subsubproblems. In this context, a divide-and-conquer algorithm does more work than necessary, repeatedly solving the common subsubproblems. A dynamic-programming algorithm solves every subsubproblem just once and then saves its answer in a table, thereby avoiding the work of recomputing the answer every time the subsubproblem is encountered.
+Dynamic programming, like the divide-and-conquer method, solves problems by combining the solutions to subproblems. ("Programming" in this context refers to a tabular method, not to writing computer code.) As we saw divide-and-conquer algorithms partition the problem into independent subproblems, solve the subproblems recursively, and then combine their solutions to solve the original problem. In contrast, dynamic programming is applicable when the subproblems are not independent, that is, when subproblems share subsubproblems. In this context, a divide-and-conquer algorithm does more work than necessary, repeatedly solving the common subsubproblems. A dynamic-programming algorithm solves every subsubproblem just once and then saves its answer in a table, thereby avoiding the work of recomputing the answer every time the subsubproblem is encountered.
 
 Dynamic programming is typically applied to optimization problems. In such problems there can be many possible solutions. Each solution has a value, and we wish to find a solution with the optimal (minimum or maximum) value. We call such a solution an optimal solution to the problem, as opposed to the optimal solution, since there may be several solutions that achieve the optimal value.
 
@@ -418,6 +418,19 @@ The size of the subproblem graphGD.V; E/can help us determine the running time o
 See also:
 * Rod Cutting Problem (`problems/rod-cutting.ts`)
 * Matrix-chain multiplication (`problems/matrix-multiplication`)
+
+Recall that a problem exhibits __optimal substructure__ if an optimal solution to the problem contains within it optimal solutions to subproblems.  Whenever a problem exhibits optimal substructure,we have a good clue that dynamic programming might apply.
+
+Dynamic programming often uses optimal substructure in a bottom-up fashion.That is, we first find optimal solutions to subproblems and, having solved the sub-problems, we find an optimal solution to the problem
+
+In rod cutting Problem, we observed that the optimal way of cutting up a rod of length `n` (if we make any cuts at all) involves optimally cutting up the two pieces resulting from the first cut. In matrix-chain multiplication, we observed that an optimal parenthesization of set of matrices that splits the product between `A_k` and `A_k+1` contains within it optimal solutions to the problems of parenthesizing `<A_1, A_2, ..., A_k>` and `<A_k+1, A_k+2, ..., An>`.
+
+Informally, the running time of a dynamic-programming algorithm depends on the  product  of  two  factors:   the  number  of  subproblems  overall  and  how  many choices we look at for each subproblem. In rod cutting, we had `O(n)` subproblems overall, and at most n choices to examine for each, yielding an `O(n^2)` running time. Matrix-chain multiplication had `O(n^2)` subproblems overall, and in each we had at most `n - 1` choices, giving an `O(n^3)` running time.
+
+Usually, the subproblem graph gives an alternative way to perform the  same analysis. Each vertex corresponds to a subproblem, and the choices for a  subproblem are the edges incident to that subproblem.
+
+
+
 
 ---
 
