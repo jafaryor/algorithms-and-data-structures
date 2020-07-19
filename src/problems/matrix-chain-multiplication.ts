@@ -96,8 +96,8 @@ export function matrixChainOrder(
     let cost: number;
     const n = matrixSizes.length + 1;
     const dimensions = getMatrixDimensions(matrixSizes);
-    const costs = Matrix.createEmptyMatrixOfSize(n, n);
-    const positions = Matrix.createEmptyMatrixOfSize(n - 1, n);
+    const costs = Matrix.createEmptyMatrixOfSize<number>(n, n);
+    const positions = Matrix.createEmptyMatrixOfSize<number>(n - 1, n);
 
     for (let i = 1; i < n; i++) {
         // Because the cost of multiplying a matrix with nothing is 0.
@@ -136,7 +136,7 @@ export function matrixChainOrder(
 export function recursiveMatrixChain(matrixSizes: MatrixSize[]): number[][] {
     const n = matrixSizes.length + 1;
     const dimensions = getMatrixDimensions(matrixSizes);
-    const costs = Matrix.createMatrixAndFillWith(n, n, Infinity);
+    const costs = Matrix.createMatrixAndFillWith<number>(n, n, Infinity);
 
     lookupChain(dimensions, costs, 1, n - 1);
 

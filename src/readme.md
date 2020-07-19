@@ -319,7 +319,7 @@ A recurrence for the running time of a _divide-and-conquer algorithm_ falls out 
 
 ![divide-and-conquer-recurrence](./images/divide-and-conquer-recurrence.png)
 
-In practice, we neglect certain technical details when we state and solve recur- rences.
+In practice, we neglect certain technical details when we state and solve recurrences.
 * If we call MERGE-SORT on `n` elements when `n` is odd, we end up with subproblems of size &lfloor;`n/2`&rfloor; and &lceil;`n/2`&rceil;. Neither size is actually `n/2`, because `n/2` is not an integer when `n` is odd. Technically, the recurrence describing the worst-case running time of MERGE-SORT is really
 
     ![precise-recurrency](./images/precise-recurrency.png)
@@ -369,7 +369,7 @@ In practice, we neglect certain technical details when we state and solve recur-
     6. The bottom level, at depth `i = log_4(n)`, has `3^i = 3^(log_4(n)) = n^(log_4(3))` each contributing cost `T(1)`, for a total cost of `T(1) * n^(log_4(3))` which is `θ(n^(log_4(3))`, since we assume that `T(1)` is a constant.
     7. Now we add up the costs over all levels to determine the cost for the entire tree:
 
-        ![resursion-sum](images/recursion-sum.png)
+        ![recursion-sum](images/recursion-sum.png)
 
     8. This last formula looks somewhat messy until we realize that we can again take advantage of small amounts of sloppiness (неряшливость) and use an infinite decreasing geometric series as an upper bound.
 
@@ -399,7 +399,7 @@ In practice, we neglect certain technical details when we state and solve recur-
     ![simple-master-theorem](./images/simple-master-theorem.png)
 
 ## Dynamic programming
-Dynamic programming, like the divide-and-conquer method, solves problems by combining the solutions to subproblems. ("Programming" in this context refers to a tabular method, not to writing computer code.) As we saw divide-and-conquer algorithms partition the problem into independent subproblems, solve the subproblems recursively, and then combine their solutions to solve the original problem. In contrast, dynamic programming is applicable when the subproblems are not independent, that is, when subproblems share subsubproblems. In this context, a divide-and-conquer algorithm does more work than necessary, repeatedly solving the common subsubproblems. A dynamic-programming algorithm solves every subsubproblem just once and then saves its answer in a table, thereby avoiding the work of recomputing the answer every time the subsubproblem is encountered.
+Dynamic programming, like the divide-and-conquer method, solves problems by combining the solutions to subproblems. ("Programming" in this context refers to a tabular method, not to writing computer code.) As we saw in Chapter 1, divide-and-conquer algorithms partition the problem into independent subproblems, solve the subproblems recursively, and then combine their solutions to solve the original problem. In contrast, dynamic programming is applicable when the subproblems are not independent, that is, when subproblems share subsubproblems. In this context, a divide-and-conquer algorithm does more work than necessary, repeatedly solving the common subsubproblems. A dynamic-programming algorithm solves every subsubproblem just once and then saves its answer in a table, thereby avoiding the work of recomputing the answer every time the subsubproblem is encountered.
 
 Dynamic programming is typically applied to optimization problems. In such problems there can be many possible solutions. Each solution has a value, and we wish to find a solution with the optimal (minimum or maximum) value. We call such a solution an optimal solution to the problem, as opposed to the optimal solution, since there may be several solutions that achieve the optimal value.
 
@@ -418,6 +418,7 @@ The size of the subproblem graphGD.V; E/can help us determine the running time o
 See also:
 * Rod Cutting Problem (`problems/rod-cutting.ts`)
 * Matrix-chain multiplication (`problems/matrix-multiplication`)
+* Longest Common Subsequence (`problems/longest-common-subsequence`)
 
 Recall that a problem exhibits __optimal substructure__ if an optimal solution to the problem contains within it optimal solutions to subproblems.  Whenever a problem exhibits optimal substructure,we have a good clue that dynamic programming might apply.
 

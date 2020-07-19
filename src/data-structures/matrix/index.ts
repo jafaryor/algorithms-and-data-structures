@@ -265,11 +265,11 @@ export class Matrix {
     /**
      * Creates an empty matrix of size i x j.
      */
-    static createEmptyMatrixOfSize(i: number, j: number): number[][] {
-        const matrix = new Array(i);
+    static createEmptyMatrixOfSize<T>(i: number, j: number): T[][] {
+        const matrix = new Array<T[]>(i);
 
         for (let k = 0; k < i; k++) {
-            matrix[k] = new Array(j);
+            matrix[k] = new Array<T>(j);
         }
 
         return matrix;
@@ -278,12 +278,12 @@ export class Matrix {
     /**
      * Creates and array of sze "size" and fills it with "value".
      */
-    static createMatrixAndFillWith(
+    static createMatrixAndFillWith<T>(
         rows: number,
         columns: number,
-        value: any
-    ): any[][] {
-        const matrix = new Array<number[]>(rows);
+        value: T
+    ): T[][] {
+        const matrix = new Array<T[]>(rows);
 
         for (let i = 0; i < rows; i++) {
             matrix[i] = _.times(columns, _.constant(value));
