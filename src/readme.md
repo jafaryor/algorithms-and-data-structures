@@ -413,16 +413,28 @@ When we think about a dynamic-programming problem, we should understand the set 
 
 ![subproblem-graph](./images/rod-cutting-problem.png)
 
-The size of the subproblem graphGD.V; E/can help us determine the running time of the dynamic programming algorithm. Since we solve each subproblem just once, the running time is the sum of the times needed to solve each subproblem.
+The size of the subproblem graph can help us determine the running time of the dynamic programming algorithm. Since we solve each subproblem just once, the running time is the sum of the times needed to solve each subproblem.
 
 See also:
+* Fibonacci Sequence (`problems/fibonacci.ts`)
 * Rod Cutting Problem (`problems/rod-cutting.ts`)
 * Matrix-chain multiplication (`problems/matrix-multiplication`)
 * Longest Common Subsequence (`problems/longest-common-subsequence`)
+* Longest Increasing Subsequence (`problems/longest-increasing-subsequence`)
+*  
 
-Recall that a problem exhibits __optimal substructure__ if an optimal solution to the problem contains within it optimal solutions to subproblems.  Whenever a problem exhibits optimal substructure,we have a good clue that dynamic programming might apply.
+Following are the two main properties of a problem that suggest that the given problem can be solved using Dynamic programming:
+* __Overlapping Subproblem__
 
-Dynamic programming often uses optimal substructure in a bottom-up fashion.That is, we first find optimal solutions to subproblems and, having solved the sub-problems, we find an optimal solution to the problem
+    A given problems has Optimal Substructure Property if optimal solution of the given problem can be obtained by using optimal solutions of its subproblems.
+
+    For example, the Shortest Path problem has following optimal substructure property: If a node x lies in the shortest path from a source node u to destination node v then the shortest path from u to v is combination of shortest path from u to x and shortest path from x to v. The standard All Pair Shortest Path algorithms like _Floyd–Warshall_ and _Bellman–Ford_ are typical examples of Dynamic Programming.
+
+* __Optimal Substructure__
+
+    Like Divide and Conquer, Dynamic Programming combines solutions to sub-problems. Dynamic Programming is mainly used when solutions of same subproblems are needed again and again. In dynamic programming, computed solutions to subproblems are stored in a table so that these don’t have to be recomputed. So Dynamic Programming is not useful when there are no common (overlapping) subproblems because there is no point storing the solutions if they are not needed again.
+
+    Dynamic programming often uses optimal substructure in a bottom-up fashion.That is, we first find optimal solutions to subproblems and, having solved the sub-problems, we find an optimal solution to the problem.
 
 In rod cutting Problem, we observed that the optimal way of cutting up a rod of length `n` (if we make any cuts at all) involves optimally cutting up the two pieces resulting from the first cut. In matrix-chain multiplication, we observed that an optimal parenthesization of set of matrices that splits the product between `A_k` and `A_k+1` contains within it optimal solutions to the problems of parenthesizing `<A_1, A_2, ..., A_k>` and `<A_k+1, A_k+2, ..., An>`.
 

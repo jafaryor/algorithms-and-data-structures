@@ -97,7 +97,7 @@ export function memoizedCutRod(
         // length + 1 - because the array is used to store price
         // and we memorize prices for rod of length
         // 1 till "length" (not length - 1).
-        createArrayAndFillWith(length + 1, -Infinity),
+        createArrayAndFillWith<number>(length + 1, -Infinity),
         priceTable
     );
 }
@@ -163,7 +163,7 @@ export function bottomUpCutRod(
     priceTable: number[] = defaultRodPriceTable
 ): number {
     let price: number;
-    const memoizedSolutions = createArrayAndFillWith(length + 1, 0);
+    const memoizedSolutions = createArrayAndFillWith<number>(length + 1, 0);
 
     // Each time takes a rod of length smaller than original length.
     for (let j = 1; j <= length; j++) {
