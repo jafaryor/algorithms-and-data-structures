@@ -31,5 +31,9 @@
     },
     "gitlens.views.fileHistory.enabled": true,
     "gitlens.views.lineHistory.enabled": true,
-    "editor.detectIndentation": false
+    "editor.detectIndentation": false,
+    "editor.formatOnSave": false,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.tslint": true,
+    }
 }

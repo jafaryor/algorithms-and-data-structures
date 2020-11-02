@@ -14,8 +14,8 @@ Merge Sort - is an efficient, general-purpose, comparison-based sorting algorith
 
 ### Time Complexity
 * `Divide`: The divide step just computes the middle of the subarray, which takes constant time. Thus, `D(n) = O(1)`.
-* `Conquer`: We recursively solve two subproblems, each of size `n=2`, which contributes `2T(n/2)` to the running time.
-* `Combine`: We have already noted that the MERGE procedure on an `n`-element subarray takes time `O(n)`, and so `C(n) = O(n)`.
+* `Conquer`: We recursively solve two sub-problems, each of size `n=2`, which contributes `2T(n/2)` to the running time.
+* `Combine`: We have already noted that the MERGE procedure on an `n`-element sub-array takes time `O(n)`, and so `C(n) = O(n)`.
 
 Explanation:
 1. `T(n) = T(n/2) + T(n/2) + n = 2T(n/2) + n`
