@@ -1,4 +1,4 @@
-import { OpenAddressHashTable } from './index';
+import {OpenAddressHashTable} from './index';
 
 describe('OpenAddressHashTable', () => {
     const table = new OpenAddressHashTable<number>(12);

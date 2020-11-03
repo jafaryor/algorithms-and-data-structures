@@ -173,14 +173,11 @@ export abstract class BinaryHeap<T> {
      * Prints the heap.
      */
     print(): void {
-        const output = this.nodes.reduce(
-            (output: string, node: HeapNode<T>) => {
-                output += `[${node.key}, ${node.value}] `;
+        const output = this.nodes.reduce((output: string, node: HeapNode<T>) => {
+            output += `[${node.key}, ${node.value}] `;
 
-                return output;
-            },
-            ''
-        );
+            return output;
+        }, '');
 
         console.log(output);
     }

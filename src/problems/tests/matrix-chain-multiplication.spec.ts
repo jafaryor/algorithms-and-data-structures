@@ -26,11 +26,7 @@ describe('Matrix-chain Multiplication', () => {
         ];
         const {costs, positions} = matrixChainOrder(matrixSizes);
         const recursiveCosts = recursiveMatrixChain(matrixSizes);
-        const result = printOptimalParenthesis(
-            positions,
-            1,
-            matrixSizes.length
-        );
+        const result = printOptimalParenthesis(positions, 1, matrixSizes.length);
 
         // Parenthesis positions.
         expect(result).toEqual('((A1(A2A3))A4)');
@@ -68,11 +64,7 @@ describe('Matrix-chain Multiplication', () => {
         ];
         const {costs, positions} = matrixChainOrder(matrixSizes);
         const recursiveCosts = recursiveMatrixChain(matrixSizes);
-        const result = printOptimalParenthesis(
-            positions,
-            1,
-            matrixSizes.length
-        );
+        const result = printOptimalParenthesis(positions, 1, matrixSizes.length);
 
         // Parenthesis positions.
         expect(result).toEqual('((A1(A2A3))((A4A5)A6))');

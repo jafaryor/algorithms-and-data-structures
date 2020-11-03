@@ -14,7 +14,7 @@ export class BinarySearchTree<T> extends BinaryTree<T> {
      */
     search(
         key: number,
-        node: BinarySearchNode<T> | undefined = this.root
+        node: BinarySearchNode<T> | undefined = this.root,
     ): BinarySearchNode<T> | undefined {
         if (!node) return;
         else if (node.key === key) return node;
@@ -32,7 +32,7 @@ export class BinarySearchTree<T> extends BinaryTree<T> {
      */
     iterativeSearch(
         key: number,
-        node: BinarySearchNode<T> | undefined = this.root
+        node: BinarySearchNode<T> | undefined = this.root,
     ): BinarySearchNode<T> | undefined {
         let current: BinarySearchNode<T> | undefined = node;
 
@@ -51,9 +51,7 @@ export class BinarySearchTree<T> extends BinaryTree<T> {
      * Return the pointer to the node with the minimum key.
      * @complexity O(h)
      */
-    min(
-        node: BinarySearchNode<T> | undefined = this.root
-    ): BinarySearchNode<T> | undefined {
+    min(node: BinarySearchNode<T> | undefined = this.root): BinarySearchNode<T> | undefined {
         let current = node;
 
         while (current && current.left) {
@@ -67,9 +65,7 @@ export class BinarySearchTree<T> extends BinaryTree<T> {
      * Return the pointer to the node with the maximum key.
      * @complexity O(h)
      */
-    max(
-        node: BinarySearchNode<T> | undefined = this.root
-    ): BinarySearchNode<T> | undefined {
+    max(node: BinarySearchNode<T> | undefined = this.root): BinarySearchNode<T> | undefined {
         let current = node;
 
         while (current && current.right) {
@@ -125,7 +121,7 @@ export class BinarySearchTree<T> extends BinaryTree<T> {
      */
     recursiveInsert(
         newNode: BinarySearchNode<T>,
-        node: BinarySearchNode<T> = this.root as BinarySearchNode<T>
+        node: BinarySearchNode<T> = this.root as BinarySearchNode<T>,
     ): void {
         // Increase the amount of nodes.
         if (node === this.root) this.nodesCount++;

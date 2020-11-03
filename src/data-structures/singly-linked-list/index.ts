@@ -21,7 +21,7 @@ export class SinglyLinkedList<T> {
 
     constructor(array?: T[], comparator?: EqualFunction<T>) {
         if (Array.isArray(array)) {
-            array.forEach(value => this.insert(value));
+            array.forEach((value) => this.insert(value));
             this.listLength = array.length;
         }
 
@@ -149,6 +149,7 @@ export class SinglyLinkedList<T> {
      * @complexity: O(n)
      * @param fn
      */
+    // tslint:disable-next-line: no-any
     traverse(fn: Function): any {
         for (let node = this.head; node !== null; node = node.next) {
             const result = fn(node);
@@ -167,8 +168,7 @@ export class SinglyLinkedList<T> {
         let output = '';
 
         this.traverse(
-            (node: SinglyLinkedListNode<T>) =>
-                (output += `${JSON.stringify(node.data)}, `)
+            (node: SinglyLinkedListNode<T>) => (output += `${JSON.stringify(node.data)}, `),
         );
 
         // tslint:disable-next-line

@@ -7,7 +7,7 @@
     where the change on day i is the difference between the prices after day i-1 and after day i.
 */
 
-export interface ISubArray {
+export interface SubArray {
     left: number;
     right: number;
     sum: number;
@@ -21,8 +21,8 @@ function findMaxCrossingSubArray(
     array: number[],
     left: number,
     mid: number,
-    right: number
-): ISubArray {
+    right: number,
+): SubArray {
     let sum: number;
     let maxLeft: number = mid;
     let maxRight: number = mid + 1;
@@ -58,11 +58,7 @@ function findMaxCrossingSubArray(
  * finds maximum sub-array using divide-and-conquier method
  * @complexity - O(n logn)
  */
-function findMaxSubArray(
-    array: number[],
-    left: number,
-    right: number
-): ISubArray {
+function findMaxSubArray(array: number[], left: number, right: number): SubArray {
     if (left === right) {
         // base case - only one element
         return {left, right, sum: array[left]};
@@ -73,16 +69,10 @@ function findMaxSubArray(
         const rightSubArr = findMaxSubArray(array, mid + 1, right);
         const crossSubArr = findMaxCrossingSubArray(array, left, mid, right);
 
-        if (
-            leftSubArr.sum >= rightSubArr.sum &&
-            leftSubArr.sum >= crossSubArr.sum
-        ) {
+        if (leftSubArr.sum >= rightSubArr.sum && leftSubArr.sum >= crossSubArr.sum) {
             // if left sub-array's sum is bigger than sum of other sub-arrays
             return leftSubArr;
-        } else if (
-            rightSubArr.sum >= leftSubArr.sum &&
-            rightSubArr.sum >= crossSubArr.sum
-        ) {
+        } else if (rightSubArr.sum >= leftSubArr.sum && rightSubArr.sum >= crossSubArr.sum) {
             // if right sub-array's sum is bigger than sum of other sub-arrays
             return rightSubArr;
         } else {
@@ -92,7 +82,7 @@ function findMaxSubArray(
     }
 }
 
-export function findMaximumSubArray(array: number[]): ISubArray {
+export function findMaximumSubArray(array: number[]): SubArray {
     return findMaxSubArray(array, 0, array.length - 1);
 }
 

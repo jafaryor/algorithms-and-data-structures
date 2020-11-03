@@ -178,9 +178,7 @@ describe('OrderStatisticTree', () => {
 /**
  * Checks if the tree is valid order statistic tree.
  */
-export function isValidOrderStatisticTree(
-    tree: OrderStatisticTree<string>
-): boolean {
+export function isValidOrderStatisticTree(tree: OrderStatisticTree<string>): boolean {
     return isValidRedBlackTree(tree) && isNodeSizeValid(tree);
 }
 
@@ -193,8 +191,7 @@ function isNodeSizeValid(tree: OrderStatisticTree<string>): boolean {
     function calculateNodeSize(node?: OrderStatisticNode<string>): number {
         if (!node) return 0;
 
-        const childrenSize =
-            calculateNodeSize(node.left) + calculateNodeSize(node.right);
+        const childrenSize = calculateNodeSize(node.left) + calculateNodeSize(node.right);
 
         valid = valid && childrenSize + 1 === node.size;
 

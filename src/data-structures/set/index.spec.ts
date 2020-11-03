@@ -1,4 +1,4 @@
-import { Set } from './index';
+import {Set} from './index';
 
 describe('Set', () => {
     const set = new Set<number>();

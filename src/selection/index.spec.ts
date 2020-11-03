@@ -1,5 +1,5 @@
-import { QuickSelection } from './quick';
-import { MedianOfMedians } from './median-of-medians';
+import {QuickSelection} from './quick';
+import {MedianOfMedians} from './median-of-medians';
 
 describe('SelectionSpec', () => {
     const quickSelection = new QuickSelection();

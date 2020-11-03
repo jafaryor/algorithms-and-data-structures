@@ -13,7 +13,7 @@ export class BinaryNode<T> {
         value: T,
         parent?: BinaryNode<T>,
         left?: BinaryNode<T>,
-        right?: BinaryNode<T>
+        right?: BinaryNode<T>,
     ) {
         this.key = key;
         this.value = value;
@@ -33,9 +33,7 @@ export class BinaryNode<T> {
      * Return the sibling.
      */
     get sibling(): BinaryNode<T> | undefined {
-        return this.parent?.right === this
-            ? this.parent?.left
-            : this.parent?.right;
+        return this.parent?.right === this ? this.parent?.left : this.parent?.right;
     }
 
     /**

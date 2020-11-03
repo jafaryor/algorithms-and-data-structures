@@ -1,8 +1,5 @@
 import {SplayTree} from './';
-import {
-    isValidBinarySearchTree,
-    insertNodes,
-} from '../binary-search-tree/index.spec';
+import {isValidBinarySearchTree, insertNodes} from '../binary-search-tree/index.spec';
 import {BinarySearchNode} from '../binary-search-tree/node';
 
 describe('Splay Tree', () => {

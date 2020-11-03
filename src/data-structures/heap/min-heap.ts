@@ -38,8 +38,7 @@ export class MinHeap<T> extends BinaryHeap<T> {
         while (this.hasLeftChild(i)) {
             // take min node between left and right children
             smallestChildIndex =
-                this.hasRightChild(i) &&
-                this.rightChild(i).key < this.leftChild(i).key
+                this.hasRightChild(i) && this.rightChild(i).key < this.leftChild(i).key
                     ? this.rightChildIndex(i)
                     : this.leftChildIndex(i);
 

@@ -88,11 +88,7 @@ export class OrderStatisticTree<T> extends RedBlackTree<T> {
             startNode = node;
         }
 
-        for (
-            let current = startNode;
-            current != null;
-            current = current.parent!
-        ) {
+        for (let current = startNode; current != null; current = current.parent!) {
             current.size--;
         }
 
@@ -109,8 +105,7 @@ export class OrderStatisticTree<T> extends RedBlackTree<T> {
         super.leftRotate(node);
 
         right.size = this.getNodeSize(node);
-        node.size =
-            this.getNodeSize(node.left) + this.getNodeSize(node.right) + 1;
+        node.size = this.getNodeSize(node.left) + this.getNodeSize(node.right) + 1;
     }
 
     /**
@@ -123,18 +118,14 @@ export class OrderStatisticTree<T> extends RedBlackTree<T> {
         super.rightRotate(node);
 
         left.size = this.getNodeSize(node);
-        node.size =
-            this.getNodeSize(node.left) + this.getNodeSize(node.right) + 1;
+        node.size = this.getNodeSize(node.left) + this.getNodeSize(node.right) + 1;
     }
 
     /**
      * Fixes the involved nodes' size after transplantation.
      * @complexity O(1)
      */
-    transplant(
-        a: OrderStatisticNode<T>,
-        b: OrderStatisticNode<T> | undefined
-    ): void {
+    transplant(a: OrderStatisticNode<T>, b: OrderStatisticNode<T> | undefined): void {
         super.transplant(a, b);
 
         if (b) b.size = this.getNodeSize(a);
@@ -170,7 +161,7 @@ export class OrderStatisticTree<T> extends RedBlackTree<T> {
      */
     private selectInSubtree(
         i: number,
-        node: OrderStatisticNode<T>
+        node: OrderStatisticNode<T>,
     ): OrderStatisticNode<T> | undefined {
         const rank = this.getNodeSize(node.left) + 1;
 
@@ -203,11 +194,7 @@ export class OrderStatisticTree<T> extends RedBlackTree<T> {
             return this.rankInSubtree(node.left!, key);
         } else {
             // Right exists as the node key is grater than the node's key.
-            return (
-                this.getNodeSize(node.left!) +
-                1 +
-                this.rankInSubtree(node.right!, key)
-            );
+            return this.getNodeSize(node.left!) + 1 + this.rankInSubtree(node.right!, key);
         }
     }
 

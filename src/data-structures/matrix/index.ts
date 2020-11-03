@@ -49,9 +49,8 @@ export class Matrix {
     static size(matrix: number[][]): MatrixSize {
         const columns = !matrix.length ? 0 : matrix.length;
         const rows = matrix.reduce(
-            (maxRowLength, row) =>
-                Math.max(maxRowLength, !row.length ? 0 : row.length),
-            0
+            (maxRowLength, row) => Math.max(maxRowLength, !row.length ? 0 : row.length),
+            0,
         );
 
         return {
@@ -128,7 +127,7 @@ export class Matrix {
         rowStart: number,
         columnStart: number,
         rowEnd?: number,
-        columnEnd?: number
+        columnEnd?: number,
     ): number[][] {
         const subMatrix: number[][] = [];
 
@@ -221,14 +220,8 @@ export class Matrix {
      */
     static multiply2xMatrices(a: number[][], b: number[][]): number[][] {
         return [
-            [
-                a[0][0] * b[0][0] + a[0][1] * b[1][0],
-                a[0][0] * b[0][1] + a[0][1] * b[1][1],
-            ],
-            [
-                a[1][0] * b[0][0] + a[1][1] * b[1][0],
-                a[1][0] * b[0][1] + a[1][1] * b[1][1],
-            ],
+            [a[0][0] * b[0][0] + a[0][1] * b[1][0], a[0][0] * b[0][1] + a[0][1] * b[1][1]],
+            [a[1][0] * b[0][0] + a[1][1] * b[1][0], a[1][0] * b[0][1] + a[1][1] * b[1][1]],
         ];
     }
 
@@ -243,12 +236,7 @@ export class Matrix {
      * Combines all matrices in their index order, e.g.
      * [[a11, a12], [a21, a22]].
      */
-    static merge(
-        a11: number[][],
-        a12: number[][],
-        a21: number[][],
-        a22: number[][]
-    ): number[][] {
+    static merge(a11: number[][], a12: number[][], a21: number[][], a22: number[][]): number[][] {
         const result: number[][] = [];
 
         for (let i = 0; i < a11.length; ++i) {
@@ -278,11 +266,7 @@ export class Matrix {
     /**
      * Creates and array of sze "size" and fills it with "value".
      */
-    static createMatrixAndFillWith<T>(
-        rows: number,
-        columns: number,
-        value: T
-    ): T[][] {
+    static createMatrixAndFillWith<T>(rows: number, columns: number, value: T): T[][] {
         const matrix = new Array<T[]>(rows);
 
         for (let i = 0; i < rows; i++) {

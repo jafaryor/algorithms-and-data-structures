@@ -1,7 +1,6 @@
-import { BinarySearchTree } from '../binary-search-tree';
-import { BinarySearchNode } from '../binary-search-tree/node';
-import { Matrix } from '../matrix';
-
+import {BinarySearchTree} from '../binary-search-tree';
+import {BinarySearchNode} from '../binary-search-tree/node';
+import {Matrix} from '../matrix';
 
 /**
  * Optimal Binary Search Tree.
@@ -13,11 +12,7 @@ export class OptimalBinarySearchTree<T> extends BinarySearchTree<T> {
      * @param nodeProbability - probability of a tree node.
      * @param dummyNodeProbability - probability of a dummy node.
      */
-    constructor(
-        nodeValues: T[],
-        nodeProbability: number[],
-        dummyNodeProbability: number[]
-    ) {
+    constructor(nodeValues: T[], nodeProbability: number[], dummyNodeProbability: number[]) {
         super();
 
         // As the array starts from index 1.
@@ -26,7 +21,6 @@ export class OptimalBinarySearchTree<T> extends BinarySearchTree<T> {
 
         this.root = this.buildTree(nodeValues, roots, 1, n);
     }
-
 
     /**
      * Finds the structure of optimal binary search tree from provided values.
@@ -39,7 +33,7 @@ export class OptimalBinarySearchTree<T> extends BinarySearchTree<T> {
     private findOptimalStructure(
         nodeProbability: number[],
         dummyNodeProbability: number[],
-        n: number
+        n: number,
     ): number[][] {
         const costs = Matrix.createEmptyMatrixOfSize<number>(n + 2, n + 1);
         const probabilities = Matrix.createEmptyMatrixOfSize<number>(n + 2, n + 1);
@@ -49,8 +43,8 @@ export class OptimalBinarySearchTree<T> extends BinarySearchTree<T> {
 
         // Initializes the matrixes with the probability of dummy nodes.
         for (let i = 1; i <= n + 1; i++) {
-            costs[i][i - 1] = dummyNodeProbability[i- 1];
-            probabilities[i][i -1] = dummyNodeProbability[i - 1];
+            costs[i][i - 1] = dummyNodeProbability[i - 1];
+            probabilities[i][i - 1] = dummyNodeProbability[i - 1];
         }
 
         // Calculates the optima cost of search and  finds its roots.
@@ -58,7 +52,8 @@ export class OptimalBinarySearchTree<T> extends BinarySearchTree<T> {
             for (let i = 1; i <= n - l + 1; i++) {
                 j = i + l - 1;
                 costs[i][j] = Infinity;
-                probabilities[i][j] = probabilities[i][j - 1] + nodeProbability[j] + dummyNodeProbability[j];
+                probabilities[i][j] =
+                    probabilities[i][j - 1] + nodeProbability[j] + dummyNodeProbability[j];
 
                 for (let r = i; r <= j; r++) {
                     cost = costs[i][r - 1] + costs[r + 1][j] + probabilities[i][j];
@@ -75,7 +70,6 @@ export class OptimalBinarySearchTree<T> extends BinarySearchTree<T> {
         return roots;
     }
 
-
     /**
      * Builds the tree from calculated structure.
      * @param nodeValues - ascending SORTED node values.
@@ -90,7 +84,7 @@ export class OptimalBinarySearchTree<T> extends BinarySearchTree<T> {
         roots: number[][],
         leftIndex: number,
         rightIndex: number,
-        parent?: BinarySearchNode<T>
+        parent?: BinarySearchNode<T>,
     ): BinarySearchNode<T> | undefined {
         if (leftIndex > rightIndex) return undefined;
 
@@ -99,7 +93,7 @@ export class OptimalBinarySearchTree<T> extends BinarySearchTree<T> {
 
         node.left = this.buildTree(nodeValues, roots, leftIndex, rootIndex - 1, node);
         node.right = this.buildTree(nodeValues, roots, rootIndex + 1, rightIndex, node);
-        
+
         return node;
     }
 }

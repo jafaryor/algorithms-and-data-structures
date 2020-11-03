@@ -95,10 +95,7 @@ describe('BinarySearchTree', () => {
 /**
  * Inserts a bunch of nodes in a loop.
  */
-export function insertNodes(
-    tree: BinarySearchTree<string>,
-    nodes: number[]
-): void {
+export function insertNodes(tree: BinarySearchTree<string>, nodes: number[]): void {
     nodes.forEach((node: number) => {
         tree.insert(new BinarySearchNode<string>(node, node.toString()));
     });
@@ -107,9 +104,7 @@ export function insertNodes(
 /**
  * Checks if the tree is valid.
  */
-export function isValidBinarySearchTree<T>(
-    node?: BinarySearchNode<T>
-): boolean {
+export function isValidBinarySearchTree<T>(node?: BinarySearchNode<T>): boolean {
     if (!node) return true;
 
     const left = isValidBinarySearchTree(node.left);
@@ -120,12 +115,7 @@ export function isValidBinarySearchTree<T>(
     } else if (!node.left && node.right) {
         return left && right && node.key <= node.right.key;
     } else if (node.left && node.right) {
-        return (
-            left &&
-            right &&
-            node.left.key < node.key &&
-            node.key <= node.right.key
-        );
+        return left && right && node.left.key < node.key && node.key <= node.right.key;
     } else {
         return left && right;
     }

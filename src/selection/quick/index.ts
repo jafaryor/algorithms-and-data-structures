@@ -1,4 +1,4 @@
-import { swap } from '../../utils';
+import {swap} from '../../utils';
 
 export class QuickSelection {
     /**
@@ -9,7 +9,12 @@ export class QuickSelection {
      * @param right - right pointer index
      * @param k-th smallest element (0 <= k <= array.length-1)
      */
-    public select(array: number[], k: number = 0, left: number = 0, right: number = array.length - 1): number {
+    select(
+        array: number[],
+        k: number = 0,
+        left: number = 0,
+        right: number = array.length - 1,
+    ): number {
         if (left === right) {
             return array[left];
         }
@@ -37,7 +42,12 @@ export class QuickSelection {
      * @param right - right pointer index
      * @param k-th smallest element (0 <= k <= array.length-1)
      */
-    public loopSelect(array: number[], k: number = 0, left: number = 0, right: number = array.length - 1): number {
+    loopSelect(
+        array: number[],
+        k: number = 0,
+        left: number = 0,
+        right: number = array.length - 1,
+    ): number {
         while (true) {
             if (left === right) {
                 return array[left];

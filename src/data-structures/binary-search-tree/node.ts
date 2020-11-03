@@ -9,7 +9,7 @@ export class BinarySearchNode<T> extends BinaryNode<T> {
         value: T,
         parent?: BinarySearchNode<T>,
         left?: BinarySearchNode<T>,
-        right?: BinarySearchNode<T>
+        right?: BinarySearchNode<T>,
     ) {
         super(key, value, parent, left, right);
     }
@@ -25,9 +25,7 @@ export class BinarySearchNode<T> extends BinaryNode<T> {
      * Return the sibling.
      */
     get sibling(): BinarySearchNode<T> | undefined {
-        return this.parent?.right === this
-            ? this.parent?.left
-            : this.parent?.right;
+        return this.parent?.right === this ? this.parent?.left : this.parent?.right;
     }
 
     /**

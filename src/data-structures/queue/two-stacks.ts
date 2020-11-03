@@ -1,4 +1,4 @@
-import { Stack } from '../stack';
+import {Stack} from '../stack';
 
 /**
  * The Queue implemented by a couple of Stacks
@@ -17,7 +17,7 @@ export class QueueWithTwoStacks<T> {
      * @complexity: O(1)
      * @param value
      */
-    public enqueue(value: T): void {
+    enqueue(value: T): void {
         this.stack01.push(value);
     }
 
@@ -26,7 +26,7 @@ export class QueueWithTwoStacks<T> {
      * @complexity: O(n)
      * @returns the value of the pulled out item
      */
-    public dequeue(): T | undefined {
+    dequeue(): T | undefined {
         if (this.stack02.isEmpty()) {
             this.moveItemsToSecondStack();
         }
@@ -39,7 +39,7 @@ export class QueueWithTwoStacks<T> {
      * @complexity: O(n)
      * @returns the value of the first item
      */
-    public peek(): T | undefined {
+    peek(): T | undefined {
         if (this.stack02.isEmpty()) {
             this.moveItemsToSecondStack();
         }
@@ -50,21 +50,21 @@ export class QueueWithTwoStacks<T> {
     /**
      * tells if the queue is empty
      */
-    public isEmpty(): boolean {
+    isEmpty(): boolean {
         return this.stack01.isEmpty() && this.stack02.isEmpty();
     }
 
     /**
      * returns the length of the queue
      */
-    public get length(): number {
+    get length(): number {
         return this.stack01.length + this.stack02.length;
     }
 
     /**
      * prints the queue
      */
-    public print(): void {
+    print(): void {
         this.stack01.print();
         this.stack02.print();
     }

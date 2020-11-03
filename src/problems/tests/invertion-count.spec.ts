@@ -1,4 +1,4 @@
-import { invertionCounter } from '../invertion-count';
+import {invertionCounter} from '../invertion-count';
 
 describe('InvertionCounterSpec', () => {
     let input: number[];

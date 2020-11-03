@@ -23,7 +23,7 @@ export class DoublyLinkedList<T> {
         };
 
         if (Array.isArray(array)) {
-            array.forEach(value => this.insert(value));
+            array.forEach((value) => this.insert(value));
             this.listLength = array.length;
         }
     }
@@ -41,7 +41,7 @@ export class DoublyLinkedList<T> {
      * @param value
      */
     insert(value: T) {
-        const last = this.sentinel.previous;
+        const last = this.sentinel.previous || this.sentinel;
         const node: DoublyLinkedListNode<T> = {
             data: value,
             previous: last,
@@ -76,7 +76,7 @@ export class DoublyLinkedList<T> {
      */
     search(value: T): DoublyLinkedListNode<T> | null {
         return this.traverse((node: DoublyLinkedListNode<T>) =>
-            node.data === value ? node : null
+            node.data === value ? node : null,
         );
     }
 
@@ -87,11 +87,7 @@ export class DoublyLinkedList<T> {
      */
     // tslint:disable-next-line: no-any
     traverse(fn: Function): any {
-        for (
-            let node = this.sentinel.next;
-            node !== this.sentinel;
-            node = node.next
-        ) {
+        for (let node = this.sentinel.next; node !== this.sentinel; node = node.next) {
             const result = fn(node);
 
             if (result !== undefined) {
@@ -115,8 +111,7 @@ export class DoublyLinkedList<T> {
         let output = '';
 
         this.traverse(
-            (node: DoublyLinkedListNode<T>) =>
-                (output += `${JSON.stringify(node.data)}, `)
+            (node: DoublyLinkedListNode<T>) => (output += `${JSON.stringify(node.data)}, `),
         );
 
         // tslint-disable-next-line

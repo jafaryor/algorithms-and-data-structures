@@ -6,10 +6,7 @@ import {Matrix} from '../data-structures/matrix/index';
  * @constrains - works only with matrices of even order (0, 2, 4, 6, ...)
  * @complexity - O(n^3)
  */
-export function matrixMultiplyWithDivideAndConquer(
-    a: number[][],
-    b: number[][]
-): number[][] {
+export function matrixMultiplyWithDivideAndConquer(a: number[][], b: number[][]): number[][] {
     let isMatrixOrderIncreased: boolean = false;
 
     if (a.length === 1) {
@@ -27,44 +24,32 @@ export function matrixMultiplyWithDivideAndConquer(
     const mid = order / 2;
     // Divides each array into four pieces.
     const dividedA = [
-        [
-            Matrix.subMatrix(a, 0, 0, mid, mid),
-            Matrix.subMatrix(a, 0, mid, mid, order),
-        ],
-        [
-            Matrix.subMatrix(a, mid, 0, order, mid),
-            Matrix.subMatrix(a, mid, mid, order, order),
-        ],
+        [Matrix.subMatrix(a, 0, 0, mid, mid), Matrix.subMatrix(a, 0, mid, mid, order)],
+        [Matrix.subMatrix(a, mid, 0, order, mid), Matrix.subMatrix(a, mid, mid, order, order)],
     ];
     const dividedB = [
-        [
-            Matrix.subMatrix(b, 0, 0, mid, mid),
-            Matrix.subMatrix(b, 0, mid, mid, order),
-        ],
-        [
-            Matrix.subMatrix(b, mid, 0, order, mid),
-            Matrix.subMatrix(b, mid, mid, order, order),
-        ],
+        [Matrix.subMatrix(b, 0, 0, mid, mid), Matrix.subMatrix(b, 0, mid, mid, order)],
+        [Matrix.subMatrix(b, mid, 0, order, mid), Matrix.subMatrix(b, mid, mid, order, order)],
     ];
     // Does the same operation as in case of multiplication
     // of two squared matrices of order two.
     const result = Matrix.merge(
         Matrix.add(
             matrixMultiplyWithDivideAndConquer(dividedA[0][0], dividedB[0][0]),
-            matrixMultiplyWithDivideAndConquer(dividedA[0][1], dividedB[1][0])
+            matrixMultiplyWithDivideAndConquer(dividedA[0][1], dividedB[1][0]),
         ),
         Matrix.add(
             matrixMultiplyWithDivideAndConquer(dividedA[0][0], dividedB[0][1]),
-            matrixMultiplyWithDivideAndConquer(dividedA[0][1], dividedB[1][1])
+            matrixMultiplyWithDivideAndConquer(dividedA[0][1], dividedB[1][1]),
         ),
         Matrix.add(
             matrixMultiplyWithDivideAndConquer(dividedA[1][0], dividedB[0][0]),
-            matrixMultiplyWithDivideAndConquer(dividedA[1][1], dividedB[1][0])
+            matrixMultiplyWithDivideAndConquer(dividedA[1][1], dividedB[1][0]),
         ),
         Matrix.add(
             matrixMultiplyWithDivideAndConquer(dividedA[1][0], dividedB[0][1]),
-            matrixMultiplyWithDivideAndConquer(dividedA[1][1], dividedB[1][1])
-        )
+            matrixMultiplyWithDivideAndConquer(dividedA[1][1], dividedB[1][1]),
+        ),
     );
 
     return isMatrixOrderIncreased ? Matrix.decreaseOrder(result) : result;

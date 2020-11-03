@@ -15,7 +15,7 @@ export class OrderStatisticNode<T> extends RedBlackNode<T> {
         color: RedBlackNodeColor = RedBlackNodeColor.BLACK,
         parent?: OrderStatisticNode<T>,
         left?: OrderStatisticNode<T>,
-        right?: OrderStatisticNode<T>
+        right?: OrderStatisticNode<T>,
     ) {
         super(key, value, color, parent, left, right);
 

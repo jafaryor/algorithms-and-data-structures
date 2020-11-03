@@ -35,10 +35,7 @@ export const defaultRodPriceTable = [0, 1, 5, 8, 9, 10, 17, 17, 20, 24, 30];
  * @complexity - O(2^n)
  * @spaceComplexity - O(1)
  */
-export function cutRod(
-    length: number,
-    priceTable: number[] = defaultRodPriceTable
-): number {
+export function cutRod(length: number, priceTable: number[] = defaultRodPriceTable): number {
     if (length === 0) return 0;
 
     let price = -Infinity;
@@ -90,7 +87,7 @@ export function cutRod(
  */
 export function memoizedCutRod(
     length: number,
-    priceTable: number[] = defaultRodPriceTable
+    priceTable: number[] = defaultRodPriceTable,
 ): number {
     return memoizedCutRodHelper(
         length,
@@ -98,7 +95,7 @@ export function memoizedCutRod(
         // and we memorize prices for rod of length
         // 1 till "length" (not length - 1).
         createArrayAndFillWith<number>(length + 1, -Infinity),
-        priceTable
+        priceTable,
     );
 }
 
@@ -109,7 +106,7 @@ export function memoizedCutRod(
 function memoizedCutRodHelper(
     length: number,
     memoizedSolutions: number[],
-    priceTable: number[] = defaultRodPriceTable
+    priceTable: number[] = defaultRodPriceTable,
 ): number {
     let price;
 
@@ -129,12 +126,7 @@ function memoizedCutRodHelper(
         for (let i = 1; i <= length; i++) {
             price = Math.max(
                 price,
-                priceTable[i] +
-                    memoizedCutRodHelper(
-                        length - i,
-                        memoizedSolutions,
-                        priceTable
-                    )
+                priceTable[i] + memoizedCutRodHelper(length - i, memoizedSolutions, priceTable),
             );
         }
     }
@@ -160,7 +152,7 @@ function memoizedCutRodHelper(
  */
 export function bottomUpCutRod(
     length: number,
-    priceTable: number[] = defaultRodPriceTable
+    priceTable: number[] = defaultRodPriceTable,
 ): number {
     let price: number;
     const memoizedSolutions = createArrayAndFillWith<number>(length + 1, 0);

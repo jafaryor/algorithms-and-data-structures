@@ -38,8 +38,7 @@ export class MaxHeap<T> extends BinaryHeap<T> {
         while (this.hasLeftChild(i)) {
             // take min node between left and right children
             largestChildIndex =
-                this.hasRightChild(i) &&
-                this.rightChild(i).key > this.leftChild(i).key
+                this.hasRightChild(i) && this.rightChild(i).key > this.leftChild(i).key
                     ? this.rightChildIndex(i)
                     : this.leftChildIndex(i);
 

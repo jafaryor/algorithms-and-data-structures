@@ -1,4 +1,4 @@
-import { difference } from 'lodash';
+import {difference} from 'lodash';
 import {
     bubbleSort,
     insertionSort,
@@ -11,7 +11,7 @@ import {
     countSort,
     radixSort,
     bucketSort,
-    shellSort
+    shellSort,
 } from './index';
 
 describe('SortingSpecs', () => {
@@ -31,7 +31,7 @@ describe('SortingSpecs', () => {
         countSort,
         radixSort,
         bucketSort,
-        shellSort
+        shellSort,
     ];
 
     beforeEach(() => {
@@ -96,8 +96,8 @@ describe('SortingSpecs', () => {
     afterEach(() => {
         sortedArray = sortArray(array);
 
-        difference(sortingAlgorithms, skipAlgorithms).forEach(algorithm =>
-            expect(algorithm([...array])).toEqual(sortedArray)
+        difference(sortingAlgorithms, skipAlgorithms).forEach((algorithm) =>
+            expect(algorithm([...array])).toEqual(sortedArray),
         );
     });
 });

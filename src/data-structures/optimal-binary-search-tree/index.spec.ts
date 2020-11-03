@@ -1,6 +1,5 @@
-import { OptimalBinarySearchTree } from '.';
-import { BinarySearchNode } from '../binary-search-tree/node';
-
+import {OptimalBinarySearchTree} from '.';
+import {BinarySearchNode} from '../binary-search-tree/node';
 
 describe('OptimalBinarySearchTree', () => {
     let tree: OptimalBinarySearchTree<string>;
@@ -12,7 +11,7 @@ describe('OptimalBinarySearchTree', () => {
             [0, 0.15, 0.1, 0.05, 0.1, 0.2],
             [0.05, 0.1, 0.05, 0.05, 0.05, 0.1],
         );
-        
+
         root = tree.getRoot()!;
 
         expect(root.value).toEqual('2');
@@ -28,7 +27,7 @@ describe('OptimalBinarySearchTree', () => {
             [0, 0.04, 0.06, 0.08, 0.02, 0.1, 0.12, 0.14],
             [0.06, 0.06, 0.06, 0.06, 0.05, 0.05, 0.05, 0.05],
         );
-        
+
         root = tree.getRoot()!;
 
         expect(root.value).toEqual('5');

@@ -1,4 +1,4 @@
-import { Queue } from '.';
+import {Queue} from '.';
 
 describe('QueueSpec', () => {
     it('should initialize an empty queue', () => {

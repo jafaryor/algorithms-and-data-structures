@@ -15,7 +15,7 @@ export class RedBlackNode<T> extends BinarySearchNode<T> {
         color: RedBlackNodeColor = RedBlackNodeColor.BLACK,
         parent?: RedBlackNode<T>,
         left?: RedBlackNode<T>,
-        right?: RedBlackNode<T>
+        right?: RedBlackNode<T>,
     ) {
         super(key, value, parent, left, right);
 
@@ -33,9 +33,7 @@ export class RedBlackNode<T> extends BinarySearchNode<T> {
      * Return the sibling.
      */
     get sibling(): RedBlackNode<T> | undefined {
-        return this.parent?.right === this
-            ? this.parent?.left
-            : this.parent?.right;
+        return this.parent?.right === this ? this.parent?.left : this.parent?.right;
     }
 
     /**

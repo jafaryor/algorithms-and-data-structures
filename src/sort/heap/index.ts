@@ -10,7 +10,7 @@ export function heapSort(array: number[]): number[] {
     let min: HeapNode<number>;
     const result: number[] = [];
     const heapNodeArray: Array<HeapNode<number>> = array.map(
-        (item) => new HeapNode<number>(item, item)
+        (item) => new HeapNode<number>(item, item),
     );
 
     // Build min heap from the array.

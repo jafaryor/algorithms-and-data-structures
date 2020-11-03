@@ -7,17 +7,11 @@ import {Extremes} from './types';
  * @param firstIndex
  * @param secondIndex
  */
-export function swap(
-    array: any[],
-    firstIndex: number,
-    secondIndex: number
-): void {
+// tslint:disable-next-line: no-any
+export function swap(array: any[], firstIndex: number, secondIndex: number): void {
     if (firstIndex === secondIndex) return;
 
-    [array[firstIndex], array[secondIndex]] = [
-        array[secondIndex],
-        array[firstIndex],
-    ];
+    [array[firstIndex], array[secondIndex]] = [array[secondIndex], array[firstIndex]];
 }
 
 /**
@@ -33,6 +27,7 @@ export const randomFromRange = (min: number, max: number) =>
  * @complexity: O(n)
  * @param array
  */
+// tslint:disable-next-line: no-any
 export function shuffle(array: any[]): any[] {
     const randomIndex = () => randomFromRange(0, array.length - 1);
 
@@ -54,7 +49,7 @@ export function findExtremes(array: number[]): Extremes {
             min: Math.min(extreme.min, item),
             max: Math.max(extreme.max, item),
         }),
-        {min: Infinity, max: -Infinity}
+        {min: Infinity, max: -Infinity},
     );
 }
 
@@ -168,7 +163,7 @@ export function findClosestSmallerPrimeNumber(n: number): number {
 export function replaceMethodInContext(
     methodName: string,
     replaceTo: Function,
-    inContext: object
+    inContext: object,
 ): void {
     let currentContext = inContext;
 

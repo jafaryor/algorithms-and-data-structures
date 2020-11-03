@@ -10,7 +10,7 @@
 class InvertionCounter {
     private k: number = 0;
 
-    public count(array: number[]): number {
+    count(array: number[]): number {
         this.k = 0;
         this.mergeSort(array);
 

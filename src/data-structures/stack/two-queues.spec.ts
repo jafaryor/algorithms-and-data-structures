@@ -1,4 +1,4 @@
-import { StackWithTwoQueues } from './two-queues';
+import {StackWithTwoQueues} from './two-queues';
 
 describe('StackWithTwoQueuesSpec', () => {
     it('should initialize an empty stack', () => {

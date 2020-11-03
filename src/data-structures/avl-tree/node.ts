@@ -14,7 +14,7 @@ export class AvlNode<T> extends BinarySearchNode<T> {
         value: T,
         parent?: BinarySearchNode<T>,
         left?: BinarySearchNode<T>,
-        right?: BinarySearchNode<T>
+        right?: BinarySearchNode<T>,
     ) {
         super(key, value, parent, left, right);
     }
@@ -23,9 +23,6 @@ export class AvlNode<T> extends BinarySearchNode<T> {
      * The balance factor of a node.
      */
     get balanceFactor(): number {
-        return (
-            (this.left ? this.left.height : -1) -
-            (this.right ? this.right.height : -1)
-        );
+        return (this.left ? this.left.height : -1) - (this.right ? this.right.height : -1);
     }
 }

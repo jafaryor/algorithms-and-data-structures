@@ -1,7 +1,7 @@
 import _ from 'lodash';
-import { swap } from '../../utils';
-import { insertionSortOfSubArray } from '../../sort/insertion';
-import { QuickSelection } from '../quick';
+import {swap} from '../../utils';
+import {insertionSortOfSubArray} from '../../sort/insertion';
+import {QuickSelection} from '../quick';
 
 export class MedianOfMedians extends QuickSelection {
     /**
@@ -12,7 +12,12 @@ export class MedianOfMedians extends QuickSelection {
      * @param left - left pointer index
      * @param right - right pointer index
      */
-    public select(array: number[], k: number = 0, left: number = 0, right: number = array.length - 1): number {
+    select(
+        array: number[],
+        k: number = 0,
+        left: number = 0,
+        right: number = array.length - 1,
+    ): number {
         const kthSmallestIndex = this.medianSelect(array, k, left, right);
 
         return array[kthSmallestIndex];
@@ -26,7 +31,12 @@ export class MedianOfMedians extends QuickSelection {
      * @param left - left pointer index
      * @param right - right pointer index
      */
-    protected medianSelect(array: number[], k: number = 0, left: number = 0, right: number = array.length - 1): number {
+    protected medianSelect(
+        array: number[],
+        k: number = 0,
+        left: number = 0,
+        right: number = array.length - 1,
+    ): number {
         while (true) {
             if (left === right) {
                 return left;
@@ -80,7 +90,7 @@ export class MedianOfMedians extends QuickSelection {
             array,
             Math.floor((right - left) / 10) + 1,
             left,
-            left + Math.floor((right - left) / 5)
+            left + Math.floor((right - left) / 5),
         );
     }
 

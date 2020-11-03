@@ -74,14 +74,12 @@ export function printLongestCommonSubsequence(
     x: string,
     y: string,
     i: number,
-    j: number
+    j: number,
 ): string {
     if (lcs[i][j] === 0) return '';
 
     if (x[i - 1] === y[j - 1]) {
-        return `${printLongestCommonSubsequence(lcs, x, y, i - 1, j - 1)}${
-            x[i - 1]
-        }`;
+        return `${printLongestCommonSubsequence(lcs, x, y, i - 1, j - 1)}${x[i - 1]}`;
     } else if (lcs[i - 1][j] >= lcs[i][j - 1]) {
         return printLongestCommonSubsequence(lcs, x, y, i - 1, j);
     } else {

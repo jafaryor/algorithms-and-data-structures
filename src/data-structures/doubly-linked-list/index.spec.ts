@@ -1,7 +1,11 @@
 import {DoublyLinkedList} from './index';
 
-xdescribe('DoublyLinkedListSpec', () => {
-    const list = new DoublyLinkedList<number>();
+describe('DoublyLinkedListSpec', () => {
+    let list: DoublyLinkedList<number>;
+
+    beforeAll(() => {
+        list = new DoublyLinkedList<number>();
+    });
 
     it('should be empty', () => {
         expect(list.isEmpty()).toBe(true);

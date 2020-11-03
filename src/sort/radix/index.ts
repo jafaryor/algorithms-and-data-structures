@@ -1,4 +1,4 @@
-import { countSort } from '../count';
+import {countSort} from '../count';
 
 /**
  * LSD Radix Sort

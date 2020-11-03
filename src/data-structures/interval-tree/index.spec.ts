@@ -37,9 +37,7 @@ describe('Interval Tree', () => {
             tree.insert(new IntervalNode<string>(6, 10, '6 - 10'));
             tree.insert(new IntervalNode<string>(19, 20, '19 - 20'));
 
-            expect(tree.getRoot()).toBe(
-                tree.searchInterval(new Interval(16, 16))
-            );
+            expect(tree.getRoot()).toBe(tree.searchInterval(new Interval(16, 16)));
             expect(tree.nodes).toEqual(10);
             expect(tree.height).toEqual(4);
         });
@@ -47,27 +45,19 @@ describe('Interval Tree', () => {
 
     describe('SearchInterval', () => {
         it('should be fully inside the interval', () => {
-            expect(tree.searchInterval(new Interval(19, 21))?.value).toEqual(
-                '15 - 23'
-            );
+            expect(tree.searchInterval(new Interval(19, 21))?.value).toEqual('15 - 23');
         });
 
         it('should be fully outside the interval', () => {
-            expect(tree.searchInterval(new Interval(7, 10))?.value).toEqual(
-                '8 - 9'
-            );
+            expect(tree.searchInterval(new Interval(7, 10))?.value).toEqual('8 - 9');
         });
 
         it('should overlap partially on the left', () => {
-            expect(tree.searchInterval(new Interval(2, 7))?.value).toEqual(
-                '5 - 8'
-            );
+            expect(tree.searchInterval(new Interval(2, 7))?.value).toEqual('5 - 8');
         });
 
         it('should overlap partially on the right', () => {
-            expect(tree.searchInterval(new Interval(27, 33))?.value).toEqual(
-                '25 - 30'
-            );
+            expect(tree.searchInterval(new Interval(27, 33))?.value).toEqual('25 - 30');
         });
 
         it('should not overlap', () => {
@@ -75,9 +65,7 @@ describe('Interval Tree', () => {
         });
 
         it('should overlap with single point interval', () => {
-            expect(tree.searchInterval(new Interval(16, 16))?.value).toEqual(
-                '16 - 16'
-            );
+            expect(tree.searchInterval(new Interval(16, 16))?.value).toEqual('16 - 16');
         });
     });
 

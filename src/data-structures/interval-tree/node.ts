@@ -17,7 +17,7 @@ export class IntervalNode<T> extends RedBlackNode<T> {
         color: RedBlackNodeColor = RedBlackNodeColor.BLACK,
         parent?: IntervalNode<T>,
         left?: IntervalNode<T>,
-        right?: IntervalNode<T>
+        right?: IntervalNode<T>,
     ) {
         // Low end of the interval in the key.
         super(low, value, color, parent, left, right);
@@ -39,16 +39,19 @@ export class IntervalNode<T> extends RedBlackNode<T> {
  * [low, high]
  */
 export class Interval {
-    constructor(public low: number, public high: number) {}
+    low: number;
+    high: number;
+
+    constructor(low: number, high: number) {
+        this.low = low;
+        this.high = high;
+    }
 
     /**
      * Checks if the two intervals overlap.
      * @complexity O(1)
      */
     isOverlapWith(interval: Interval): boolean {
-        return (
-            Math.max(this.low, interval.low) <=
-            Math.min(this.high, interval.high)
-        );
+        return Math.max(this.low, interval.low) <= Math.min(this.high, interval.high);
     }
 }

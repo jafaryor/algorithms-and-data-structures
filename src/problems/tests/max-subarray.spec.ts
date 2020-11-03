@@ -1,4 +1,4 @@
-import { findMaximumSubArray, KadaneAlgorithm } from '../max-subarray';
+import {findMaximumSubArray, KadaneAlgorithm} from '../max-subarray';
 
 describe('MaxSubArrayProblemSpec', () => {
     let input: number[];

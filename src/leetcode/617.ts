@@ -7,10 +7,10 @@
     the NOT null node will be used as the node of new tree.
 */
 
-interface ITreeNode {
+interface TreeNode {
     value: number;
-    left?: ITreeNode;
-    right?: ITreeNode;
+    left?: TreeNode;
+    right?: TreeNode;
 }
 
 /**
@@ -18,15 +18,15 @@ interface ITreeNode {
  * @param root01 - root of the first tree
  * @param root02 - root of the second tree
  */
-export function mergeBinaryTrees(root01: ITreeNode, root02: ITreeNode): ITreeNode {
-    const result: ITreeNode = { value: (root01 ? root01.value : 0) + (root02 ? root02.value : 0) };
+export function mergeBinaryTrees(root01?: TreeNode, root02?: TreeNode): TreeNode {
+    const result: TreeNode = {value: (root01 ? root01.value : 0) + (root02 ? root02.value : 0)};
 
     if ((root01 && root01.left) || (root02 && root02.left)) {
-        result.left = mergeBinaryTrees(root01.left, root02.left);
+        result.left = mergeBinaryTrees(root01?.left, root02?.left);
     }
 
     if ((root01 && root01.right) || (root02 && root02.right)) {
-        result.right = mergeBinaryTrees(root01.right, root02.right);
+        result.right = mergeBinaryTrees(root01?.right, root02?.right);
     }
 
     return result;

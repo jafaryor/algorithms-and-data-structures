@@ -1,5 +1,5 @@
-import { findExtremes } from '../../utils';
-import { isNumber } from 'lodash';
+import {findExtremes} from '../../utils';
+import {isNumber} from 'lodash';
 
 /**
  * Count Sort (can sort negative integers as well)
@@ -11,7 +11,12 @@ import { isNumber } from 'lodash';
  * @param max - max possible value
  * @param digitPlace - [1, 10, 100, ...]. Used only in RadixSort!
  */
-export function countSort(array: number[], min?: number, max?: number, digitPlace?: number): number[] {
+export function countSort(
+    array: number[],
+    min?: number,
+    max?: number,
+    digitPlace?: number,
+): number[] {
     let i: number;
     let digit: number;
     const count: number[] = []; // count array
@@ -19,7 +24,7 @@ export function countSort(array: number[], min?: number, max?: number, digitPlac
 
     // if no max or min is provided, find them out
     if (!isNumber(min) || !isNumber(max)) {
-        const extremes = isNumber(digitPlace) ? { min: 0, max: 9 } : findExtremes(array);
+        const extremes = isNumber(digitPlace) ? {min: 0, max: 9} : findExtremes(array);
 
         min = extremes.min;
         max = extremes.max;

@@ -11,7 +11,7 @@ export class SplayTree<T> extends BinarySearchTree<T> {
      */
     search(
         key: number,
-        node: BinarySearchNode<T> | undefined = this.root
+        node: BinarySearchNode<T> | undefined = this.root,
     ): BinarySearchNode<T> | undefined {
         const result = super.search(key, node);
 
@@ -140,7 +140,7 @@ export class SplayTree<T> extends BinarySearchTree<T> {
      */
     searchWithoutSplay(
         key: number,
-        node: BinarySearchNode<T> | undefined = this.root
+        node: BinarySearchNode<T> | undefined = this.root,
     ): BinarySearchNode<T> | undefined {
         return super.search(key, node);
     }

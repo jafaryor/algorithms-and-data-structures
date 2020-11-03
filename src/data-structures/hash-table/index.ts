@@ -23,21 +23,21 @@ export class HashTable<T> {
     /**
      * Checks if the hash table empty.
      */
-    public isEmpty(): boolean {
+    isEmpty(): boolean {
         return this.itemsCount === 0;
     }
 
     /**
      * Load Factor - alpha.
      */
-    public get loadFactor(): number {
+    get loadFactor(): number {
         return this.itemsCount / this.slotsCount;
     }
 
     /**
      * The table size.
      */
-    public get size() {
+    get size() {
         return this.itemsCount;
     }
 
@@ -45,7 +45,7 @@ export class HashTable<T> {
      * Inserts the value at the head of the list T[hash(value.key)].
      * @complexity: O(1)
      */
-    public insert(key: number, value: T) {
+    insert(key: number, value: T) {
         const hash = this.calculateHash(key);
         const list = this.table[hash];
 
@@ -54,7 +54,7 @@ export class HashTable<T> {
         } else {
             this.table[hash] = new SinglyLinkedList<KeyValueObject<T>>(
                 [{key, value}],
-                (a: KeyValueObject<T>, b: KeyValueObject<T>) => a.key === b.key
+                (a: KeyValueObject<T>, b: KeyValueObject<T>) => a.key === b.key,
             );
         }
 
@@ -65,7 +65,7 @@ export class HashTable<T> {
      * Delete the value from the list T[hash(value.key)].
      * @complexity: O(1 + n/m)
      */
-    public delete(key: number): T | null {
+    delete(key: number): T | null {
         const hash = this.calculateHash(key);
         const list = this.table[hash];
 
@@ -86,7 +86,7 @@ export class HashTable<T> {
      * Search for an value with key k in list T[hash(k)].
      * @complexity: O(1 + n/m)
      */
-    public search(key: number): HashTableListNode<T> | null {
+    search(key: number): HashTableListNode<T> | null {
         const hash = this.calculateHash(key);
         const list = this.table[hash];
 

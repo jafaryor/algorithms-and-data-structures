@@ -1,4 +1,4 @@
-import { Stack } from '.';
+import {Stack} from '.';
 
 describe('StackSpec', () => {
     it('should initialize an empty stack', () => {

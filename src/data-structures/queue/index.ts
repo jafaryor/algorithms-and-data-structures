@@ -1,4 +1,4 @@
-import { cloneDeep } from 'lodash';
+import {cloneDeep} from 'lodash';
 
 /**
  * The Queue Date Structure
@@ -14,7 +14,7 @@ export class Queue<T> {
      * adds value to queue
      * @param value
      */
-    public enqueue(value: T): void {
+    enqueue(value: T): void {
         this.queue.push(value);
     }
 
@@ -22,35 +22,35 @@ export class Queue<T> {
      * pulls out the first element from the queue
      * @returns the value of the pulled out item
      */
-    public dequeue(): T | undefined {
+    dequeue(): T | undefined {
         return this.queue.shift();
     }
 
     /**
      * return the value of the first item
      */
-    public peek(): T | undefined {
+    peek(): T | undefined {
         return this.queue[0];
     }
 
     /**
      * tells if the queue is empty
      */
-    public isEmpty(): boolean {
+    isEmpty(): boolean {
         return this.length === 0;
     }
 
     /**
      * returns the length of the queue
      */
-    public get length(): number {
+    get length(): number {
         return this.queue.length;
     }
 
     /**
      * prints the queue
      */
-    public print(): void {
+    print(): void {
         // tslint-disable-next-line
         console.log('[', this.queue.join(' '), ']');
     }

@@ -1,4 +1,4 @@
-import { HashTable } from './index';
+import {HashTable} from './index';
 
 describe('HashTable', () => {
     const table = new HashTable<number>(12);
@@ -12,7 +12,7 @@ describe('HashTable', () => {
         table.insert(10, 100);
 
         expect(table.size).toEqual(1);
-        expect(table.search(10)).toEqual(jasmine.objectContaining({ data: { key: 10, value: 100 } }));
+        expect(table.search(10)).toEqual(jasmine.objectContaining({data: {key: 10, value: 100}}));
     });
 
     it('should remove the item', () => {

@@ -9,7 +9,7 @@ export function binarySearch(
     input: number[],
     target: number,
     left: number = 0,
-    right: number = input.length - 1
+    right: number = input.length - 1,
 ): number {
     let pivot: number;
 

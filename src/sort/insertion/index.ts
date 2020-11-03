@@ -32,7 +32,11 @@ export function insertionSort(array: number[]): number[] {
  * @param left - left pointer index, where to start sorting
  * @param right - right pointer index, where we stop sorting
  */
-export function insertionSortOfSubArray(array: number[], left: number = 0, right: number = array.length - 1): number[] {
+export function insertionSortOfSubArray(
+    array: number[],
+    left: number = 0,
+    right: number = array.length - 1,
+): number[] {
     let i: number; // index into unsorted section
     let j: number; // index into sorted section
     let key: number; // the value currently being compared

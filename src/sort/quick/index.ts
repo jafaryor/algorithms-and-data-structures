@@ -9,11 +9,7 @@ import {swap, randomFromRange} from '../../utils';
  * @param right - right pointer
  * @returns sorted array
  */
-export function randomizedQuickSort(
-    array: number[],
-    left = 0,
-    right = array.length - 1
-): number[] {
+export function randomizedQuickSort(array: number[], left = 0, right = array.length - 1): number[] {
     if (left >= right) {
         return array;
     }
@@ -34,11 +30,7 @@ export function randomizedQuickSort(
  * @param right - right pointer
  * @returns partition pointer, pointer where the array should be divided by half
  */
-export function randomizedPartition(
-    array: number[],
-    left = 0,
-    right = array.length - 1
-): number {
+export function randomizedPartition(array: number[], left = 0, right = array.length - 1): number {
     const k = randomFromRange(left, right);
     swap(array, k, right);
 
@@ -57,7 +49,7 @@ export function randomizedPartition(
 export function quickSort(
     array: number[],
     left: number = 0,
-    right: number = array.length - 1
+    right: number = array.length - 1,
 ): number[] {
     if (left >= right) {
         return array;
@@ -80,11 +72,7 @@ export function quickSort(
  * @param pivot - pivot value
  * @returns partition pointer, pointer where the array should be divided by half
  */
-export function partition(
-    array: number[],
-    left: number,
-    right: number
-): number {
+export function partition(array: number[], left: number, right: number): number {
     const pivot = array[right]; // last element
     let i = left - 1; // last sorted element index
 
