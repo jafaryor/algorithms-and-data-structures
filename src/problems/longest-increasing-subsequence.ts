@@ -72,7 +72,8 @@ export function longestIncreasingSubsequence(sequence: number[]): number {
         } else {
             // sequence[i] wants to be current end candidate of an existing
             // subsequence. It will replace ceil value in tailTable.
-            tailTable[binarySearch(tailTable, -1, len - 1, sequence[i])] = sequence[i];
+            tailTable[binarySearch(tailTable, -1, len - 1, sequence[i])] =
+                sequence[i];
         }
     }
 
@@ -84,7 +85,12 @@ export function longestIncreasingSubsequence(sequence: number[]): number {
  * Note: Works only for ascending sorted arrays.
  * @complexity - O(lg n)
  */
-function binarySearch(sequence: number[], left: number, right: number, key: number): number {
+function binarySearch(
+    sequence: number[],
+    left: number,
+    right: number,
+    key: number,
+): number {
     let median: number;
 
     while (right - left > 1) {

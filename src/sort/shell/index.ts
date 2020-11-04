@@ -4,7 +4,11 @@
  */
 export function shellSort(array: number[]): number[] {
     // Start with a big gap, then reduce the gap
-    for (let gap = Math.floor(array.length / 2); gap > 0; gap = Math.floor(gap / 2)) {
+    for (
+        let gap = Math.floor(array.length / 2);
+        gap > 0;
+        gap = Math.floor(gap / 2)
+    ) {
         // Do a gapped insertion sort for this gap size.
         // The first gap elements a[0..gap-1] are already in gapped order
         // keep adding one more element until the entire array is

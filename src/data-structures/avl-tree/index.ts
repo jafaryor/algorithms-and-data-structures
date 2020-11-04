@@ -28,7 +28,10 @@ export class AvlTree<T> extends BinarySearchTree<T> {
      * Calculate the height of a node based on the height of its children.
      */
     calculateNodeHeight(node: AvlNode<T>): number {
-        return 1 + Math.max(this.nodeHeight(node.left), this.nodeHeight(node.right));
+        return (
+            1 +
+            Math.max(this.nodeHeight(node.left), this.nodeHeight(node.right))
+        );
     }
 
     /**
@@ -151,7 +154,10 @@ export class AvlTree<T> extends BinarySearchTree<T> {
             current.height = this.calculateNodeHeight(current);
 
             // grandparent is unbalanced.
-            if (this.nodeBalanceFactor(current) <= -2 || this.nodeBalanceFactor(current) >= 2) {
+            if (
+                this.nodeBalanceFactor(current) <= -2 ||
+                this.nodeBalanceFactor(current) >= 2
+            ) {
                 // -2 <= balance factor <= 2 means the node has at least
                 // one child and one grandchild on one of its subtree.
                 node = current;
@@ -164,9 +170,15 @@ export class AvlTree<T> extends BinarySearchTree<T> {
                 }
 
                 // find the taller grandchild.
-                if (this.nodeHeight(tallerChild.left) > this.nodeHeight(tallerChild.right)) {
+                if (
+                    this.nodeHeight(tallerChild.left) >
+                    this.nodeHeight(tallerChild.right)
+                ) {
                     tallerGrandchild = tallerChild.left!;
-                } else if (this.nodeHeight(tallerChild.left) < this.nodeHeight(tallerChild.right)) {
+                } else if (
+                    this.nodeHeight(tallerChild.left) <
+                    this.nodeHeight(tallerChild.right)
+                ) {
                     tallerGrandchild = tallerChild.right!;
                 } else {
                     // Equal height!

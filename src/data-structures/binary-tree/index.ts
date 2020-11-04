@@ -55,7 +55,10 @@ export abstract class BinaryTree<T> {
      * Prints the left -> root -> right
      * @complexity O(n)
      */
-    inorderTraverse(node = this.root, callback: TraverseCallback<T> = this.loggingCallback): void {
+    inorderTraverse(
+        node = this.root,
+        callback: TraverseCallback<T> = this.loggingCallback,
+    ): void {
         if (!node) return;
 
         node.left && this.inorderTraverse(node.left);
@@ -70,7 +73,10 @@ export abstract class BinaryTree<T> {
      * Prints children -> root
      * @complexity O(n)
      */
-    preorderTraverse(node = this.root, callback: TraverseCallback<T> = this.loggingCallback): void {
+    preorderTraverse(
+        node = this.root,
+        callback: TraverseCallback<T> = this.loggingCallback,
+    ): void {
         if (!node) return;
 
         callback(node);
@@ -177,7 +183,9 @@ export abstract class BinaryTree<T> {
      * Prints (Draws) the binary tree in the console.
      * @complexity O(n)
      */
-    print(nodePrinterCallback: nodePrinterCallback<T> = this.printNodeHelper): void {
+    print(
+        nodePrinterCallback: nodePrinterCallback<T> = this.printNodeHelper,
+    ): void {
         this.printLogs = '';
         this.nodeDistance = this.height * 2;
         this.nodePrinterCallback = nodePrinterCallback;
@@ -210,8 +218,12 @@ export abstract class BinaryTree<T> {
      * @complexity O(n)
      */
     private heightGetterHelper(node: BinaryNode<T>, height: number): number {
-        const leftHeight = node.left ? this.heightGetterHelper(node.left, height + 1) : height;
-        const rightHeight = node.right ? this.heightGetterHelper(node.right, height + 1) : height;
+        const leftHeight = node.left
+            ? this.heightGetterHelper(node.left, height + 1)
+            : height;
+        const rightHeight = node.right
+            ? this.heightGetterHelper(node.right, height + 1)
+            : height;
 
         return Math.max(leftHeight, rightHeight);
     }

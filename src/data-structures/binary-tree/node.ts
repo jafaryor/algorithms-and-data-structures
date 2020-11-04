@@ -33,7 +33,9 @@ export class BinaryNode<T> {
      * Return the sibling.
      */
     get sibling(): BinaryNode<T> | undefined {
-        return this.parent?.right === this ? this.parent?.left : this.parent?.right;
+        return this.parent?.right === this
+            ? this.parent?.left
+            : this.parent?.right;
     }
 
     /**

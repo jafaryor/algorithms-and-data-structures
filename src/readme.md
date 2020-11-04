@@ -98,7 +98,7 @@ A way to compare sizes of functions:
 
 * __`o` ≈ `>`__
 
-    We use `o`-notation to denote an _upper bound_ that is _not asymp- totically tight_.
+    We use `o`-notation to denote an _upper bound_ that is _not asymptotically tight_.
 
     `o(g(n))` = `{` `f(n)`: for any positive constants `c > 0`, ther exists a constant `n0 > 0` such that: `0 ≤ f(n) < cg(n)` for all `n ≥ n0` `}`
 
@@ -443,7 +443,20 @@ Informally, the running time of a dynamic-programming algorithm depends on the  
 Usually, the subproblem graph gives an alternative way to perform the  same analysis. Each vertex corresponds to a subproblem, and the choices for a  subproblem are the edges incident to that subproblem.
 
 
+## Greedy Algorithms
+Algorithms  for optimization  problems typically  go through  a sequence  of  steps,with a set of choices at each step. For many optimization problems, using dynamic programming to determine the best choices is overkill; simpler, more efficient algorithms will do. A __greedy algorithm__ always makes the choice that looks best at the moment. That is, it makes a locally optimal choice in the hope that this choice will lead to a globally optimal solution.
 
+### Greedy choice property
+We can assemble a globally optimal solution by making locally optimal (greedy) choices. In other words, when we are considering which choice to make, we make the choice that looks best in the current problem, without considering results from subproblems.
+
+Here is where greedy algorithms differ from dynamic programming. In dynamic programming, we make a choice at each step, but the choice usually depends on the solutions to subproblems. Consequently, we typically solve dynamic-programming problems in a bottom-up manner, progressing from smaller subproblems to larger subproblems.
+
+In a greedy algorithm, we make whatever choice seems best at the moment and then solve the subproblem that remains. The choice made by a greedy algorithm may depend on choices so far, but it cannot depend on any future choices or on the solutions to subproblems. Thus, unlike dynamic programming, which solves the subproblems before making the first choice, a greedy algorithm  makes  its first choice before solving any subproblems.
+
+A  dynamic-programming  algorithm  proceeds  bottom  up,  whereas  a  greedy  strategy  usually progresses in a top-down fashion, making one greedy choice after another, reducing each given problem instance to a smaller one.
+
+### Optimal substructure
+A problem exhibits __optimal substructure__ if an optimal solution to the  problem contains within it optimal solutions to subproblems. This property is a key ingredient of assessing the applicability of dynamic programming as well as greedy algorithms.
 
 ---
 

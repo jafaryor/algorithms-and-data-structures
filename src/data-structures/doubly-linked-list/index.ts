@@ -87,7 +87,11 @@ export class DoublyLinkedList<T> {
      */
     // tslint:disable-next-line: no-any
     traverse(fn: Function): any {
-        for (let node = this.sentinel.next; node !== this.sentinel; node = node.next) {
+        for (
+            let node = this.sentinel.next;
+            node !== this.sentinel;
+            node = node.next
+        ) {
             const result = fn(node);
 
             if (result !== undefined) {
@@ -111,7 +115,8 @@ export class DoublyLinkedList<T> {
         let output = '';
 
         this.traverse(
-            (node: DoublyLinkedListNode<T>) => (output += `${JSON.stringify(node.data)}, `),
+            (node: DoublyLinkedListNode<T>) =>
+                (output += `${JSON.stringify(node.data)}, `),
         );
 
         // tslint-disable-next-line

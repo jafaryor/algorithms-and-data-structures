@@ -52,6 +52,9 @@ export class Interval {
      * @complexity O(1)
      */
     isOverlapWith(interval: Interval): boolean {
-        return Math.max(this.low, interval.low) <= Math.min(this.high, interval.high);
+        return (
+            Math.max(this.low, interval.low) <=
+            Math.min(this.high, interval.high)
+        );
     }
 }

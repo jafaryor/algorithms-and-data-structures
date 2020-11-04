@@ -12,12 +12,20 @@ export class OptimalBinarySearchTree<T> extends BinarySearchTree<T> {
      * @param nodeProbability - probability of a tree node.
      * @param dummyNodeProbability - probability of a dummy node.
      */
-    constructor(nodeValues: T[], nodeProbability: number[], dummyNodeProbability: number[]) {
+    constructor(
+        nodeValues: T[],
+        nodeProbability: number[],
+        dummyNodeProbability: number[],
+    ) {
         super();
 
         // As the array starts from index 1.
         const n = nodeValues.length - 1;
-        const roots = this.findOptimalStructure(nodeProbability, dummyNodeProbability, n);
+        const roots = this.findOptimalStructure(
+            nodeProbability,
+            dummyNodeProbability,
+            n,
+        );
 
         this.root = this.buildTree(nodeValues, roots, 1, n);
     }
@@ -36,7 +44,10 @@ export class OptimalBinarySearchTree<T> extends BinarySearchTree<T> {
         n: number,
     ): number[][] {
         const costs = Matrix.createEmptyMatrixOfSize<number>(n + 2, n + 1);
-        const probabilities = Matrix.createEmptyMatrixOfSize<number>(n + 2, n + 1);
+        const probabilities = Matrix.createEmptyMatrixOfSize<number>(
+            n + 2,
+            n + 1,
+        );
         const roots = Matrix.createEmptyMatrixOfSize<number>(n + 1, n + 1);
         let j;
         let cost;
@@ -53,10 +64,13 @@ export class OptimalBinarySearchTree<T> extends BinarySearchTree<T> {
                 j = i + l - 1;
                 costs[i][j] = Infinity;
                 probabilities[i][j] =
-                    probabilities[i][j - 1] + nodeProbability[j] + dummyNodeProbability[j];
+                    probabilities[i][j - 1] +
+                    nodeProbability[j] +
+                    dummyNodeProbability[j];
 
                 for (let r = i; r <= j; r++) {
-                    cost = costs[i][r - 1] + costs[r + 1][j] + probabilities[i][j];
+                    cost =
+                        costs[i][r - 1] + costs[r + 1][j] + probabilities[i][j];
 
                     if (cost < costs[i][j]) {
                         // The cost of search is minimum.
@@ -89,10 +103,26 @@ export class OptimalBinarySearchTree<T> extends BinarySearchTree<T> {
         if (leftIndex > rightIndex) return undefined;
 
         const rootIndex = roots[leftIndex][rightIndex];
-        const node = new BinarySearchNode<T>(rootIndex, nodeValues[rootIndex], parent);
+        const node = new BinarySearchNode<T>(
+            rootIndex,
+            nodeValues[rootIndex],
+            parent,
+        );
 
-        node.left = this.buildTree(nodeValues, roots, leftIndex, rootIndex - 1, node);
-        node.right = this.buildTree(nodeValues, roots, rootIndex + 1, rightIndex, node);
+        node.left = this.buildTree(
+            nodeValues,
+            roots,
+            leftIndex,
+            rootIndex - 1,
+            node,
+        );
+        node.right = this.buildTree(
+            nodeValues,
+            roots,
+            rootIndex + 1,
+            rightIndex,
+            node,
+        );
 
         return node;
     }

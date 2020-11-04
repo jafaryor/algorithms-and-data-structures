@@ -89,14 +89,17 @@ function isValidMinPriorityQueue(queue: MinPriorityQueue<string>): boolean {
     let left: HeapNode<string> | undefined;
     let right: HeapNode<string> | undefined;
 
-    return nodes.reduce((isValid: boolean, parent: HeapNode<string>, index: number) => {
-        left = getLeftChild(index);
-        right = getRightChild(index);
+    return nodes.reduce(
+        (isValid: boolean, parent: HeapNode<string>, index: number) => {
+            left = getLeftChild(index);
+            right = getRightChild(index);
 
-        return (
-            isValid &&
-            (left ? parent.key < left.key : true) &&
-            (right ? parent.key < right.key : true)
-        );
-    }, true);
+            return (
+                isValid &&
+                (left ? parent.key < left.key : true) &&
+                (right ? parent.key < right.key : true)
+            );
+        },
+        true,
+    );
 }

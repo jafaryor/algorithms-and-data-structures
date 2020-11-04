@@ -183,7 +183,10 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
                 }
 
                 // Case 2: children of right sibling are black.
-                if (this.isBlackNode(sibling.left) && this.isBlackNode(sibling.right)) {
+                if (
+                    this.isBlackNode(sibling.left) &&
+                    this.isBlackNode(sibling.right)
+                ) {
                     this.paintRed(sibling);
                     node = node.parent!;
                 } else {
@@ -215,7 +218,10 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
                 }
 
                 // Case 2: children of left sibling are black.
-                if (this.isBlackNode(sibling.right) && this.isBlackNode(sibling.left)) {
+                if (
+                    this.isBlackNode(sibling.right) &&
+                    this.isBlackNode(sibling.left)
+                ) {
                     this.paintRed(sibling);
                     node = node.parent!;
                 } else {

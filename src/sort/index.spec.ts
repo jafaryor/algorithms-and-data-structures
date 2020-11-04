@@ -18,7 +18,8 @@ describe('SortingSpecs', () => {
     let array: number[];
     let sortedArray: number[];
     let skipAlgorithms: Function[];
-    const sortArray = (arr: number[]) => arr.sort((a: number, b: number) => a - b);
+    const sortArray = (arr: number[]) =>
+        arr.sort((a: number, b: number) => a - b);
     const sortingAlgorithms: Function[] = [
         bubbleSort,
         insertionSort,

@@ -33,7 +33,9 @@ export class RedBlackNode<T> extends BinarySearchNode<T> {
      * Return the sibling.
      */
     get sibling(): RedBlackNode<T> | undefined {
-        return this.parent?.right === this ? this.parent?.left : this.parent?.right;
+        return this.parent?.right === this
+            ? this.parent?.left
+            : this.parent?.right;
     }
 
     /**

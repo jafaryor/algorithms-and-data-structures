@@ -24,7 +24,9 @@ export function countSort(
 
     // if no max or min is provided, find them out
     if (!isNumber(min) || !isNumber(max)) {
-        const extremes = isNumber(digitPlace) ? {min: 0, max: 9} : findExtremes(array);
+        const extremes = isNumber(digitPlace)
+            ? {min: 0, max: 9}
+            : findExtremes(array);
 
         min = extremes.min;
         max = extremes.max;

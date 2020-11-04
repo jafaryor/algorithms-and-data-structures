@@ -69,7 +69,9 @@ describe('MaxPriorityQueue', () => {
  * Turns the array of numbers into array of heap nodes.
  */
 function turnIntoHeapNodes(nodes: number[]): Array<HeapNode<string>> {
-    return nodes.map((node: number) => new HeapNode<string>(node, node.toString()));
+    return nodes.map(
+        (node: number) => new HeapNode<string>(node, node.toString()),
+    );
 }
 
 /**
@@ -82,14 +84,17 @@ function isValidMaxPriorityQueue(queue: MaxPriorityQueue<string>): boolean {
     let left: HeapNode<string> | undefined;
     let right: HeapNode<string> | undefined;
 
-    return nodes.reduce((isValid: boolean, parent: HeapNode<string>, index: number) => {
-        left = getLeftChild(index);
-        right = getRightChild(index);
+    return nodes.reduce(
+        (isValid: boolean, parent: HeapNode<string>, index: number) => {
+            left = getLeftChild(index);
+            right = getRightChild(index);
 
-        return (
-            isValid &&
-            (left ? parent.key > left.key : true) &&
-            (right ? parent.key > right.key : true)
-        );
-    }, true);
+            return (
+                isValid &&
+                (left ? parent.key > left.key : true) &&
+                (right ? parent.key > right.key : true)
+            );
+        },
+        true,
+    );
 }

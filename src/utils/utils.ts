@@ -8,10 +8,17 @@ import {Extremes} from './types';
  * @param secondIndex
  */
 // tslint:disable-next-line: no-any
-export function swap(array: any[], firstIndex: number, secondIndex: number): void {
+export function swap(
+    array: any[],
+    firstIndex: number,
+    secondIndex: number,
+): void {
     if (firstIndex === secondIndex) return;
 
-    [array[firstIndex], array[secondIndex]] = [array[secondIndex], array[firstIndex]];
+    [array[firstIndex], array[secondIndex]] = [
+        array[secondIndex],
+        array[firstIndex],
+    ];
 }
 
 /**

@@ -51,7 +51,9 @@ export class BinarySearchTree<T> extends BinaryTree<T> {
      * Return the pointer to the node with the minimum key.
      * @complexity O(h)
      */
-    min(node: BinarySearchNode<T> | undefined = this.root): BinarySearchNode<T> | undefined {
+    min(
+        node: BinarySearchNode<T> | undefined = this.root,
+    ): BinarySearchNode<T> | undefined {
         let current = node;
 
         while (current && current.left) {
@@ -65,7 +67,9 @@ export class BinarySearchTree<T> extends BinaryTree<T> {
      * Return the pointer to the node with the maximum key.
      * @complexity O(h)
      */
-    max(node: BinarySearchNode<T> | undefined = this.root): BinarySearchNode<T> | undefined {
+    max(
+        node: BinarySearchNode<T> | undefined = this.root,
+    ): BinarySearchNode<T> | undefined {
         let current = node;
 
         while (current && current.right) {

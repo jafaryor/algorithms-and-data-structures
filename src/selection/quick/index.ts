@@ -86,7 +86,12 @@ export class QuickSelection {
      * @param right - right pointer index
      * @param pivotIndex - pivot index
      */
-    protected partition(array: number[], left: number, right: number, pivotIndex: number): number {
+    protected partition(
+        array: number[],
+        left: number,
+        right: number,
+        pivotIndex: number,
+    ): number {
         const pivotValue = array[pivotIndex];
 
         swap(array, pivotIndex, right); // Move pivot to end

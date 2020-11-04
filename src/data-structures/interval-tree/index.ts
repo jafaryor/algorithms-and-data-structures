@@ -62,7 +62,11 @@ export class IntervalTree<T> extends RedBlackTree<T> {
 
         super.delete(node);
 
-        for (let current = startNode; current != null; current = current.parent!) {
+        for (
+            let current = startNode;
+            current != null;
+            current = current.parent!
+        ) {
             this.calculateMax(current);
         }
     }
@@ -104,14 +108,20 @@ export class IntervalTree<T> extends RedBlackTree<T> {
      * Prints an order statistic node.
      */
     private printIntervalNode(node: IntervalNode<T>): string {
-        return `[${node.key} - ${node.high}](${node.isRed() ? 'R' : 'B'}, ${node.max})`;
+        return `[${node.key} - ${node.high}](${node.isRed() ? 'R' : 'B'}, ${
+            node.max
+        })`;
     }
 
     /**
      * Calculates the node's max value.
      */
     private calculateMax(node: IntervalNode<T>): void {
-        node.max = Math.max(node.high, this.getNodeMax(node.left), this.getNodeMax(node.right));
+        node.max = Math.max(
+            node.high,
+            this.getNodeMax(node.left),
+            this.getNodeMax(node.right),
+        );
     }
 
     /**

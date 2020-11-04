@@ -43,7 +43,13 @@ describe('Longest Common Subsequence Problem', () => {
         lcs = longestCommonSubsequence(input1, input2);
 
         expect(
-            printLongestCommonSubsequence(lcs, input1, input2, input1.length, input2.length),
+            printLongestCommonSubsequence(
+                lcs,
+                input1,
+                input2,
+                input1.length,
+                input2.length,
+            ),
         ).toEqual(lcsString);
     });
 });

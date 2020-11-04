@@ -168,7 +168,8 @@ export class SinglyLinkedList<T> {
         let output = '';
 
         this.traverse(
-            (node: SinglyLinkedListNode<T>) => (output += `${JSON.stringify(node.data)}, `),
+            (node: SinglyLinkedListNode<T>) =>
+                (output += `${JSON.stringify(node.data)}, `),
         );
 
         // tslint:disable-next-line

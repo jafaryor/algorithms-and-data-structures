@@ -16,7 +16,9 @@ describe('StackWithTwoQueuesSpec', () => {
     });
 
     describe('Stack Operations', () => {
-        const stack: StackWithTwoQueues<number> = new StackWithTwoQueues<number>();
+        const stack: StackWithTwoQueues<number> = new StackWithTwoQueues<
+            number
+        >();
 
         it('should push', () => {
             stack.push(10);

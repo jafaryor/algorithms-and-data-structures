@@ -55,7 +55,11 @@ function getMatrixDimensions(matrixSizes: MatrixSize[]): number[] {
     for (let i = 1; i < matrixSizes.length; i++) {
         // Checks if the matrixes that are multiplied, are compatible.
         if (matrixSizes[i - 1].columns !== matrixSizes[i].rows) {
-            throw new Error(`Matrices ${i - 1} and ${i} are incompatible for multiplication.`);
+            throw new Error(
+                `Matrices ${
+                    i - 1
+                } and ${i} are incompatible for multiplication.`,
+            );
         }
 
         // The amount of columns of previous matrix and
@@ -64,7 +68,8 @@ function getMatrixDimensions(matrixSizes: MatrixSize[]): number[] {
     }
 
     // The last dimension item is the amount of columns of An.
-    dimensions[matrixSizes.length] = matrixSizes[matrixSizes.length - 1].columns;
+    dimensions[matrixSizes.length] =
+        matrixSizes[matrixSizes.length - 1].columns;
 
     return dimensions;
 }
@@ -84,7 +89,9 @@ function getMatrixDimensions(matrixSizes: MatrixSize[]): number[] {
  * @spaceComplexity - O(n^2)
  * @see - images/matrix-chain-multiplication-complexity.png
  */
-export function matrixChainOrder(matrixSizes: MatrixSize[]): MatrixChainMultiplicationResult {
+export function matrixChainOrder(
+    matrixSizes: MatrixSize[],
+): MatrixChainMultiplicationResult {
     let j: number;
     let cost: number;
     const n = matrixSizes.length + 1;
@@ -150,7 +157,12 @@ export function recursiveMatrixChain(matrixSizes: MatrixSize[]): number[][] {
  * of the first type takes O(n) time plus the time spent in its recursive
  * calls. The total time, therefore, is O(n^3).
  */
-function lookupChain(dimensions: number[], costs: number[][], i: number, j: number): number {
+function lookupChain(
+    dimensions: number[],
+    costs: number[][],
+    i: number,
+    j: number,
+): number {
     let cost: number;
 
     // Returns previously computed value.
@@ -175,15 +187,19 @@ function lookupChain(dimensions: number[], costs: number[][], i: number, j: numb
  * Initial call should be with i = 1, j = n.
  * @complexity - O(n)
  */
-export function printOptimalParenthesis(positions: number[][], i: number, j: number): string {
+export function printOptimalParenthesis(
+    positions: number[][],
+    i: number,
+    j: number,
+): string {
     if (i === j) {
         return `A${i}`;
     } else {
-        return `(${printOptimalParenthesis(positions, i, positions[i][j])}${printOptimalParenthesis(
+        return `(${printOptimalParenthesis(
             positions,
-            positions[i][j] + 1,
-            j,
-        )})`;
+            i,
+            positions[i][j],
+        )}${printOptimalParenthesis(positions, positions[i][j] + 1, j)})`;
     }
 }
 
@@ -205,7 +221,12 @@ export function matrixChainMultiply(
         return Matrix.multiply(matrices[i], matrices[j]);
     } else {
         const a = matrixChainMultiply(matrices, positions, i, positions[i][j]);
-        const b = matrixChainMultiply(matrices, positions, positions[i][j] + 1, j);
+        const b = matrixChainMultiply(
+            matrices,
+            positions,
+            positions[i][j] + 1,
+            j,
+        );
 
         return Matrix.multiply(a, b);
     }

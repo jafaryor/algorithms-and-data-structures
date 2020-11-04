@@ -58,7 +58,11 @@ function findMaxCrossingSubArray(
  * finds maximum sub-array using divide-and-conquier method
  * @complexity - O(n logn)
  */
-function findMaxSubArray(array: number[], left: number, right: number): SubArray {
+function findMaxSubArray(
+    array: number[],
+    left: number,
+    right: number,
+): SubArray {
     if (left === right) {
         // base case - only one element
         return {left, right, sum: array[left]};
@@ -69,10 +73,16 @@ function findMaxSubArray(array: number[], left: number, right: number): SubArray
         const rightSubArr = findMaxSubArray(array, mid + 1, right);
         const crossSubArr = findMaxCrossingSubArray(array, left, mid, right);
 
-        if (leftSubArr.sum >= rightSubArr.sum && leftSubArr.sum >= crossSubArr.sum) {
+        if (
+            leftSubArr.sum >= rightSubArr.sum &&
+            leftSubArr.sum >= crossSubArr.sum
+        ) {
             // if left sub-array's sum is bigger than sum of other sub-arrays
             return leftSubArr;
-        } else if (rightSubArr.sum >= leftSubArr.sum && rightSubArr.sum >= crossSubArr.sum) {
+        } else if (
+            rightSubArr.sum >= leftSubArr.sum &&
+            rightSubArr.sum >= crossSubArr.sum
+        ) {
             // if right sub-array's sum is bigger than sum of other sub-arrays
             return rightSubArr;
         } else {

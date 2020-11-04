@@ -141,5 +141,7 @@ function isValidAvlTree<T>(node: AvlNode<T> | undefined): boolean {
     const left = isValidAvlTree(node.left);
     const right = isValidAvlTree(node.right);
 
-    return left && right && -1 <= node.balanceFactor && node.balanceFactor <= 1 ? true : false;
+    return left && right && -1 <= node.balanceFactor && node.balanceFactor <= 1
+        ? true
+        : false;
 }
