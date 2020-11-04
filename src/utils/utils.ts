@@ -7,8 +7,8 @@ import {Extremes} from './types';
  * @param firstIndex
  * @param secondIndex
  */
-// tslint:disable-next-line: no-any
 export function swap(
+    // tslint:disable-next-line: no-any
     array: any[],
     firstIndex: number,
     secondIndex: number,
@@ -30,7 +30,7 @@ export const randomFromRange = (min: number, max: number) =>
     Math.floor(Math.random() * (max - min + 1) + min);
 
 /**
- * randomizez the array items
+ * randomizes the array items
  * @complexity: O(n)
  * @param array
  */
