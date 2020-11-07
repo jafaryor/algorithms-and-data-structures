@@ -1,4 +1,4 @@
-import { BinaryNode } from '../../data-structures/binary-tree/node';
+import {BinaryNode} from '../../data-structures/binary-tree/node';
 import {Alphabet, buildHuffmanTree} from '../huffman-code';
 
 describe('Huffman Code', () => {
@@ -14,22 +14,27 @@ describe('Huffman Code', () => {
                 {
                     key: 45,
                     value: new BinaryNode<string>(45, 'a'),
-                }, {
+                },
+                {
                     key: 13,
                     value: new BinaryNode<string>(13, 'b'),
-                }, {
+                },
+                {
                     key: 12,
                     value: new BinaryNode<string>(12, 'c'),
-                }, {
+                },
+                {
                     key: 16,
                     value: new BinaryNode<string>(16, 'd'),
-                }, {
+                },
+                {
                     key: 9,
                     value: new BinaryNode<string>(9, 'e'),
-                }, {
+                },
+                {
                     key: 5,
                     value: new BinaryNode<string>(5, 'f'),
-                }
+                },
             ];
             root = buildHuffmanTree(alphabet)!;
         });
@@ -81,5 +86,4 @@ describe('Huffman Code', () => {
             expect([right.key, right.value]).toEqual([9, 'e']);
         });
     });
-
 });

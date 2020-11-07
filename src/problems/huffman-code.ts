@@ -59,7 +59,9 @@ export type Character = HeapNode<BinaryNode<string>>;
  * * [3 MinPriorityQueue operations (2*extractMin + 1*insert)]) =
  * = n + (n * 3lgn)
  */
-export function buildHuffmanTree(alphabet: Alphabet): BinaryNode<string> | undefined {
+export function buildHuffmanTree(
+    alphabet: Alphabet,
+): BinaryNode<string> | undefined {
     let node: BinaryNode<string>;
     let character: Character;
     let left: Character;
