@@ -458,6 +458,11 @@ A  dynamic-programming  algorithm  proceeds  bottom  up,  whereas  a  greedy  st
 ### Optimal substructure
 A problem exhibits __optimal substructure__ if an optimal solution to the  problem contains within it optimal solutions to subproblems. This property is a key ingredient of assessing the applicability of dynamic programming as well as greedy algorithms.
 
+
+## Amortized Analysis
+![amortized-analysis-example](./images/amortized-analysis-example.png)
+
+
 ---
 
 [Introduction to Algorithms by Thomas H. Cormen, Charles E. Leiserson, and Ronald L. Rivest](http://staff.ustc.edu.cn/~csli/graduate/algorithms/book6/toc.htm)

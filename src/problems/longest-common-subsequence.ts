@@ -10,19 +10,19 @@ import {Matrix} from '../data-structures/matrix';
  * which is also common to both X and Y, has length 4.
  *
  * In the longest-common-subsequence problem, we are given two sequences
- * X = <x_1, x_2, ..., x_m> and Y = <y_1, y_2, ..., y_n> and wish to find a maximum-length
- * common subsequence of X and Y.
+ * X = <x_1, x_2, ..., x_m> and Y = <y_1, y_2, ..., y_n> and wish to find a
+ * maximum-length common subsequence of X and Y.
  *
  * Theorem: Let Z = <z_1, z_2, ..., z_k> be any LCS of X and Y. Then:
  * 1. If x_m = y_n, then ́z_k = x_m = y_n and Z_(k-1) is an LCS of X_(m-1) and Y_(n-1)
  * 2. If x_m ≠ y_n, then ́z_k ≠ x_m implies that Z is an LCS of X_(m-1) and Y
  * 3. If x_m ≠ y_n, then ́z_k ≠ y_n implies that Z is an LCS of X and Y_(n-1)
  *
- * We should examine either one or two subproblems when finding an LCS
+ * We should examine either one or two sub-problems when finding an LCS
  * of X and Y.
  * If x_m = y_n, we must find an LCS of X_(m-1) and Y_(n-1).
  * Appending x_m = y_n to this LCS yields an LCS of X and Y.
- * If x_m ≠ y_n, then we must solve two subproblems:
+ * If x_m ≠ y_n, then we must solve two sub-problems:
  * 1. Finding an LCS of X_(m-1) and Y
  * 2. Finding an LCS of X and Y_(n-1)
  * Whichever of these two LCSs is longer is an LCS of X and Y.
