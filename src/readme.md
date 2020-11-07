@@ -315,7 +315,7 @@ The divide-and-conquer paradigm involves three steps at each level of the recurs
 
 When an algorithm contains a recursive call to itself, we can often describe its running time by a __recurrence equation__ or __recurrence__, which describes the overall running time
 
-A recurrence for the running time of a _divide-and-conquer algorithm_ falls out from the three steps of the basic paradigm. As before, we let `T(n)` be the running time on a problem of size `n`. If the problem size is small enough, say `n <= c` for some constant `c`, the straightforward solution takes constant time, which we write as `O(1)`. Suppose that our division of the problem yields `a` subproblems, each of which is `1/b` the size of the original. (For merge sort, both `a` and `b` are `2`, but we shall see many divide-and-conquer algorithms in which `a != b`) It takes time `T(n/b)` to solve one subproblem of size `n/b`, and so it takes time `aT(n/b)` to solve `a` of them. If we take `D(n)` time to divide the problem into subproblems and `C(n)` time to combine the solutions to the subproblems into the solution to the original problem, we get the recurrence.
+A recurrence for the running time of a _divide-and-conquer algorithm_ falls out from the three steps of the basic paradigm. As before, we let `T(n)` be the running time on a problem of size `n`. If the problem size is small enough, say `n <= c` for some constant `c`, the straightforward solution takes constant time, which we write as `O(1)`. Suppose that our division of the problem yields `a` sub-problems, each of which is `1/b` the size of the original. (For merge sort, both `a` and `b` are `2`, but we shall see many divide-and-conquer algorithms in which `a != b`) It takes time `T(n/b)` to solve one subproblem of size `n/b`, and so it takes time `aT(n/b)` to solve `a` of them. If we take `D(n)` time to divide the problem into subproblems and `C(n)` time to combine the solutions to the subproblems into the solution to the original problem, we get the recurrence.
 
 ![divide-and-conquer-recurrence](./images/divide-and-conquer-recurrence.png)
 
@@ -415,13 +415,12 @@ When we think about a dynamic-programming problem, we should understand the set 
 
 The size of the subproblem graph can help us determine the running time of the dynamic programming algorithm. Since we solve each subproblem just once, the running time is the sum of the times needed to solve each subproblem.
 
-See also:
+See also these problems:
 * Fibonacci Sequence (`problems/fibonacci.ts`)
 * Rod Cutting Problem (`problems/rod-cutting.ts`)
-* Matrix-chain multiplication (`problems/matrix-multiplication`)
-* Longest Common Subsequence (`problems/longest-common-subsequence`)
-* Longest Increasing Subsequence (`problems/longest-increasing-subsequence`)
-*  
+* Matrix-chain multiplication (`problems/matrix-multiplication.ts`)
+* Longest Common Subsequence (`problems/longest-common-subsequence.ts`)
+* Longest Increasing Subsequence (`problems/longest-increasing-subsequence.ts`)
 
 Following are the two main properties of a problem that suggest that the given problem can be solved using Dynamic programming:
 * __Overlapping Subproblem__
@@ -458,9 +457,63 @@ A  dynamic-programming  algorithm  proceeds  bottom  up,  whereas  a  greedy  st
 ### Optimal substructure
 A problem exhibits __optimal substructure__ if an optimal solution to the  problem contains within it optimal solutions to subproblems. This property is a key ingredient of assessing the applicability of dynamic programming as well as greedy algorithms.
 
+See also these problems:
+* Activity Selection Problem (`problems/activity-selection.ts`)
+* Huffman Code (`problems/huffman-code.ts`)
+
+    ![huffman-code-steps](./images/huffman-code-steps.png)
+
+    This is the each steps of the Hoffman algorithm.
+
 
 ## Amortized Analysis
-![amortized-analysis-example](./images/amortized-analysis-example.png)
+In an __amortized analysis__, we average the time required to perform a sequence of data-structure operations over all the operations performed. With amortized analysis, we can show that the average cost of an operation is small, if we average over a sequence of operations, even though a single operation within the sequence might be expensive.
+
+> #### Amortized analysis differs from average-case analysis in that prob-ability is not involved; an amortized analysis guarantees the average performance of each operation in the worst case.
+
+The most common techniques used in amortized analysis:
+* ### Aggregate Analysis
+
+    In aggregate analysis,  we show that for all `n`, a sequence of `n` operations  takes worst-case time `T(n)` in total. In the worst case, the average cost, or amortized cost, per operation is therefore `T(n)/n`. Note that this amortized cost applies to each operation,  even when there are several types of operations in the sequence.
+
+    #### Incrementing a binary counter (Example)
+    consider the problem of implementing a `k`-bit binary counter that counts upward from `0`. We use an array `A[0..k-1]` of bits, where `A.length = k`, as the counter. A binary number `x` that is stored in the counter has its lowest-order bit in `A[0]` and its highest-order bit in `A[k-1]`, so that `Σ[i=0 -> k-1](A[i] * 2^i)`. Initially, `x = 0`, and thus `A[i] = 0` for `i = 0, 1, ..., k-1`. To add `1` (modulo `2^k`) to the value in the counter, we use the following procedure.
+
+    ```typescript
+    function increment(A: number[]) {
+        let i = 0;
+
+        while (i < A.length && A[i] === 1) {
+            A[i] = 0;
+            i++;
+        }
+
+        if (i < A.length) {
+            A[i] = 1;
+        }
+    }
+    ```
+
+    A cursory analysis yields a bound that is correct but not tight. A single execution of `increment` takes time `θ(k)` in the worst case, in which array `A` contains all 1s. Thus, a sequence of `n` `increment` operations on an initially zero counter takes time `O(nk)` in the worst case.
+
+    We can tighten our analysis to yield a worst-case cost of `O(n)` for a sequence of `n` `increment` operations by observing that not all bits flip each time `increment` is called. As the table below shows, `A[0]` does flip each time `increment` is called. The next bit up, `A[1]`, flips only every other time:  a sequence of `n` `increment` operations on an initially zero counter causes `A[1]` to flip `⌊n/2⌋` times. Similarly,bit `A[2]` flips only every fourth time, or `⌊n/4⌋` times in a sequence of `n` `increment` operations.
+
+    ![binary-counter](./images/binary-counter.png)
+
+    In general, for `i = 0, 1, ..., k-1`, bit `A[i]` flips `⌊n/2^i⌋` times in a sequence  of `n` `increment` operations on an initially zero counter.   For `i ≥ k`, bit `A[i]` does not exist, and so it cannot flip. The  total number of flips in the sequence is thus
+    
+    `Σ[i=0 -> k-1](⌊n/2^i⌋) < n * Σ[i=0 -> ∞](1/2^i) = 2n`
+
+    by this equation. The worst-case time for a sequence of `n` `increment` operations on an initially zero counter is therefore `O(n)`. The average cost of each operation, and therefore the amortized cost per operation, is `O(n)/n = O(1)`.
+
+    #### One more example
+    ![amortized-analysis-example](./images/amortized-analysis-example.png)
+
+* ### Accounting Method
+* ### Potential Energy
+
+
+
 
 
 ---
