@@ -494,23 +494,71 @@ The most common techniques used in amortized analysis:
     }
     ```
 
-    A cursory analysis yields a bound that is correct but not tight. A single execution of `increment` takes time `θ(k)` in the worst case, in which array `A` contains all 1s. Thus, a sequence of `n` `increment` operations on an initially zero counter takes time `O(nk)` in the worst case.
+    A cursory analysis yields a bound that is correct but not tight. A single execution of `increment()` takes time `θ(k)` in the worst case, in which array `A` contains all 1s. Thus, a sequence of `n` `increment()` operations on an initially zero counter takes time `O(nk)` in the worst case.
 
-    We can tighten our analysis to yield a worst-case cost of `O(n)` for a sequence of `n` `increment` operations by observing that not all bits flip each time `increment` is called. As the table below shows, `A[0]` does flip each time `increment` is called. The next bit up, `A[1]`, flips only every other time:  a sequence of `n` `increment` operations on an initially zero counter causes `A[1]` to flip `⌊n/2⌋` times. Similarly,bit `A[2]` flips only every fourth time, or `⌊n/4⌋` times in a sequence of `n` `increment` operations.
+    We can tighten our analysis to yield a worst-case cost of `O(n)` for a sequence of `n` `increment()` operations by observing that not all bits flip each time `increment()` is called. As the table below shows, `A[0]` does flip each time `increment()` is called. The next bit up, `A[1]`, flips only every other time:  a sequence of `n` `increment()` operations on an initially zero counter causes `A[1]` to flip `⌊n/2⌋` times. Similarly,bit `A[2]` flips only every fourth time, or `⌊n/4⌋` times in a sequence of `n` `increment()` operations.
 
     ![binary-counter](./images/binary-counter.png)
 
-    In general, for `i = 0, 1, ..., k-1`, bit `A[i]` flips `⌊n/2^i⌋` times in a sequence  of `n` `increment` operations on an initially zero counter.   For `i ≥ k`, bit `A[i]` does not exist, and so it cannot flip. The  total number of flips in the sequence is thus
+    In general, for `i = 0, 1, ..., k-1`, bit `A[i]` flips `⌊n/2^i⌋` times in a sequence  of `n` `increment()` operations on an initially zero counter.   For `i ≥ k`, bit `A[i]` does not exist, and so it cannot flip. The  total number of flips in the sequence is thus
     
     `Σ[i=0 -> k-1](⌊n/2^i⌋) < n * Σ[i=0 -> ∞](1/2^i) = 2n`
 
-    by this equation. The worst-case time for a sequence of `n` `increment` operations on an initially zero counter is therefore `O(n)`. The average cost of each operation, and therefore the amortized cost per operation, is `O(n)/n = O(1)`.
+    by this equation. The worst-case time for a sequence of `n` `increment()` operations on an initially zero counter is therefore `O(n)`. The average cost of each operation, and therefore the amortized cost per operation, is `O(n)/n = O(1)`.
 
     #### One more example
     ![amortized-analysis-example](./images/amortized-analysis-example.png)
 
 * ### Accounting Method
-* ### Potential Energy
+
+    In the __accounting method__ of amortized analysis, we assign differing  charges to different operations, with some operations charged more or  less than they actually cost. We call the amount we charge an operation its __amortized cost__. When an operation’s amortized cost exceeds its actual cost, we assign the difference to specific objects in the data structure as __credit__. Credit can help pay for later operations whose amortized cost is less than their actual cost. Thus, we can view the amortized cost of an operation as being split between its actual cost and credit that is either deposited or used up.
+    
+    Different operations may have different amortized costs. This method differs from aggregate analysis,  in which all operations have the same amortized cost.
+
+    The total credit stored in the data structure is the difference between the total amortized cost and the total actual cost. The total credit associated with the data structure must be nonnegative at all times. If we ever were to allow the total credit to become negative,  then the total  amortized costs incurred at that time would be below the total actual costs incurred. Thus, we must take care that the total credit in the data structure never becomes negative.
+
+    #### Incrementing a binary counter (Example)
+    we analyze the `increment()` operation on a binary counter that starts at zero. As we observed earlier, the running time of this operation is proportional to the number of bits flipped, which we shall use as our cost for this example. Let us once again use a dollar bill to represent each unit of cost (the flipping of a bit in this example).
+
+    For the amortized analysis, let us charge an amortized cost of `2` dollars to set a bit to `1`. When a bit is set, we use `1` dollar (out of the `2` dollars charged) to pay for the actual setting of the bit, and we place the other dollar on the bit as credit to be used later when we flip the bit back to `0`. At any point in time, every `1` in the counter has a dollar of credit on it, and thus we can charge nothing to reset a bit to `0`; we just pay for the reset with the dollar bill on the bit.
+
+    Now we can determine the amortized cost of `increment()`. The cost of resetting the bits within the `while` loop is paid for by the dollars on the bits that are reset. The `increment()` procedure sets at most one bit, in line 6, and therefore the amortized cost of an `increment()` operation is at most `2` dollars. The number of 1s in the counter never becomes negative, and thus the amount of credit stays nonnegative at all times. Thus, for `n` `increment()` operations, the total amortized cost is `O(n)`, which bounds the total actual cost.
+
+* ### Potential Method
+
+    Instead of representing prepaid work as credit stored with specific objects in the data structure, the __potential method__ of amortized analysis represents the prepaid work as “potential energy,” or just “potential,”  which can be released to pay for future operations.
+    
+    > #### We associate the potential with the data structure as a whole rather than with specific objects within the data structure.
+
+    The potential method works as follows. We will perform `n` operations, starting with an initial data structure `D_0`. For each `i = 1, 2, ..., n`,we let `c_i` be the actual cost of the `i`-th operation and `D_i` be the data structure that results after applying the `i`-th operation to data structure `D_i-1`. A __potential function__ `Ф` maps each data structure `D_i` to a real number `Ф(D_i)`, which is the __potential__ associated with data structure `D_i`. The __amortized cost__ `C_i` of the `i`-th operation with respect to potential function `Ф` is defined by:
+
+    `C_i = c_i + Ф(D_i) - Ф(D_i-1)`
+
+    The amortized cost of each operation is therefore its actual cost plus the change in potential due to the operation. By above equation, the total amortized cost of the `n` operations is:
+
+    ![potential-method-formula](./images/potential-method-formula.png)
+
+    In practice, we do not always know how many operations might be performed. Therefore, if we require that `Ф(D_i) ≥ Ф(D_0)` for all `i`, then we guarantee, as in the accounting method, that we pay in advance. We usually just define `Ф(D_0)` to be `0` and then show that `Ф(D_i) ≥ 0` for all `i`.
+
+    #### Incrementing a binary counter (Example)
+    We again look at incrementing a binary counter. This time, we define the potential of the counter after the ith `increment()` operation to be `b_i`, the number of 1s in the counter after the `i`-th operation.
+
+    Let us compute the amortized cost of an `increment()` operation. Suppose that the `i`-th  `increment()` operation resets `t_i` bits. The actual cost of the operation is therefore at most `t_i + 1`, since in addition to resetting `t_i` bits, it sets at most one bit to 1. If `b_i > 0`, then the `i`-th operation resets all `k` bits, and so `b_i-1 = t_i = k`. If `b_i > 0`, then `b_i = b_i-1 - t_i + 1`. In either case, `b_i ≤ b_i-1 - t_i + 1`, and the potential difference is:
+
+    `Ф(D_i) - A(D_i-1) ≤ (b_i-1 - t_i + 1) - b_i-1 = 1 - t_i`
+
+    The amortized cost is therefore:
+
+    `C_i = c_i + Ф(D_i) - Ф(D_i-1) ≤ (t_i + 1) + (1 - t_i) = 2`
+
+    If the counter starts at zero, then `Ф(D_0) = 0`. Since `Ф(D_i) ≥ 0` for all `i`, the total amortized cost of a sequence of `n` `increment()` operations is an upper bound on the total actual cost, and so the worst-case cost of `n` `increment()` operations is `O(n)`.
+    
+    The potential method gives us an easy way to analyze the counter even when it does not start at zero. The counter starts with `b_0` 1s, and after `n` `increment()` operations it has `b_n` 1s, where `0 ≤ b_0, b_n ≤ k`. So:
+
+    ![potential-method-binary-counter](./images/potential-method-binary-counter.png)
+
+
+### Dynamic Tables
 
 
 
