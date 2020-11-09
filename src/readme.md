@@ -559,9 +559,128 @@ The most common techniques used in amortized analysis:
 
 
 ### Dynamic Tables
+We do not always know in advance how many objects some applications will store in a table.  We might allocate space for a table, only to find out later that it is not enough. We must then reallocate the table with a larger size and copy all objects stored in the original table over into the new, larger table. Similarly, if many objects have been deleted from the table, it may be worthwhile to reallocate the table with a smaller size.
+
+The details of the data-structuring method used to organize the table are unimportant; we might use a stack, a heap, or a hash table. We might also use an array or collection of arrays to implement object storage.
+
+We define the __load factor__ `α(T)` ̨of a nonempty table `T` to be the number of items stored in the table divided by the size (number of slots) of the table.
+
+`α(T) = T.num / T.size`
+
+Upon inserting an item into a full table, we can __expand__ the table by allocating a new table with more slots than the old table had. Because we always need the table to reside in contiguous memory, we must allocate a new array for the larger table and then copy items from the old table into the new table.
+
+A common heuristic allocates a new table with twice as many slots as the old one. If the only table operations are insertions, then the load factor of the table is always at least `1/2`, and thus the amount of wasted space never exceeds half the total space in the table.
+
+#### Aggregate Analysis
+Let us analyze a sequence of `n` `TABLE-INSERT()` operations on an initially empty table. What is the cost `c_i` of the `i`-th operation? If the current table has room for the new item (or if this is the first operation), then `c_i = 1`, since we need only perform the one __elementary insertion__. If the current table is full, however, and an expansion occurs, then `ci = i`: the cost is `1` for the elementary insertion plus `i - 1` for the items that we must copy from the old table to the new table. If we perform `n` operations,  the worst-case cost of an operation is `O(n)`, which leads to an upper bound of `O(n^2)` on the total running time for `n` operations.
+
+This bound is not tight, because we rarely expand the table in the course of `n` `TABLE-INSERT()` operations. Specifically, the `i`-th  operation  causes  an expansion only when `i - 1` is an exact power of `2`. The amortized cost of an operation is in fact `O(1)`, as we can show using aggregate analysis. The cost of the `i`-th operation is:
+
+![dynamic-table-insert-amortized-cost](./images/dynamic-table-insert-amortized-cost.png)
+
+because at most `n` operations cost1and the costs of the remaining operations forma geometric series. Since the total cost of `n` `TABLE-INSERT()` operations is bounded by `3n`, the amortized cost of a single operation is at most `3`.
+
+#### Potential Method
+We start by defining a potential function `Ф` that is `0` immediately after an expansion but builds to the table size by the time the table is full, so that we can pay for the next expansion by the potential. The function:
+
+`Ф(T) = 2 * T.num - T.size`
+
+is one possibility. Immediately after an expansion, we have `T.num = T.size/2`,and thus `Ф(T) = 0`, as desired. Immediately before an expansion, we  have `T.num = T.size`, and thus `Ф(T) = T.num`, as desired. The initial value of  the potential is `0`, and since the table is always at least half full, `T.num ≥ T.size/2`, which implies that `Ф(T)` is always nonnegative.
+
+To analyze the amortized cost of the `i`-th `TABLE-INSERT()` operation, we let `num_i` denote the number of items stored in the table after the `i`-th operation, `size_i` denote the total size of the table after the `i`-th operation, and `Ф_i` denote the potential after the `i`-th operation. Initially, we have `num_0 = 0`, `size_0 = 0`, and `Ф_0 = 0`.
+
+If the `i`-th `TABLE-INSERT()` operation does not trigger an expansion, then we have `size_i = size_i-1` and the amortized cost of the operation is:
+
+```
+C_i = c_i + Ф_i - Ф_i-1 =
+    = 1 + (2*num_i - size_i) - (2*num_i-1 - size_i-1) =
+    = 1 + (2*num_i - size_i) - (2(num_i - 1) - size_i) =
+    = 3
+```
+
+If the `i`-th operation does trigger an expansion, then we have `size_i = 2*size_i-1` and `size_i-1 = num_i-1 = num_i - 1`, which implies that `size_i = 2 * (num_i - 1)`. Thus, the amortized cost of the operation is
+
+```
+C_i = c_i + Ф_i - Ф_i-1 =
+    = num_i + (2*num_i - size_i) - (2*num_i-1 - size_i-1) =
+    = num_i + (2*num_i - 2*(num_i - 1)) - (2*(num_i - 1) - (num_i - 1)) =
+    = num_i + 2 - (num_i - 1) =
+    = 3
+```
+
+#### Table expansion and contraction
+To implement a `TABLE-DELETE` operation, it is simple enough to remove the specified item from the table. In order to limit the amount of wasted space, however,we might wish to __contract__ the table when the load factor becomes too small. Table contraction is analogous to table expansion: when the number of items in the table drops too low, we allocate a new, smaller table and then copy the items from the old table into the new one. We can then free the storage for the old table by return-ing it to the memory-management system.  Ideally, we would like to preserve two properties:
+
+1. The load factor of the dynamic table is bounded below by a positive constant.2. The amortized cost of a table operation is bounded above by a constant.
+
+You might think that we should double the table size upon inserting an item into a full table and halve the size when a deleting  an item would cause the table to become less than half full. This strategy would guarantee that the load factor of the table never drops below `1/2`, but unfortunately, it can cause the amortized cost of an operation to be quite large.
+
+Consider the following sequence of operations:
+
+`insert, delete, delete, insert, insert, delete, delete, insert, insert, ....`
+
+The first insertion causes the table to expand to size `n`. The two following deletions cause the table to contract back to size `n/2`. Two further insertions cause another expansion, and so forth. The cost of each expansion and contraction is `θ(n)`, and there are `θ(n)` of them. Thus, the total cost of the `n` operations is `θ(n)`, making the amortized cost of an operation `θ(n^2)`.
+
+The downside of this strategy is obvious: after expanding the table, we do not delete enough items to pay for a contraction. Likewise, after contracting the table, we do not insert enough items to pay for an expansion.
+
+We can improve upon this strategy by allowing the load factor of the table to drop below `1/2`. Specifically, we continue to double the table size upon inserting an item into a full table, but we halve the table size when deleting an item causes the table to become less than `1/4` full, rather than `1/2` full as before.
+
+We start  by  defining  a potential function `Ф` that is `0` immediately after an expansion or contraction and builds as the load factor increases to `1` or decreases to `1/4`. Let us denote the load factor of a nonempty table `T` by `α(T) = T.num / T.size`. Since for an empty table `T.num = T.size = 0` and `α(T) = 1`, we always have `T.num = α(T) * T.size`, whether the table is empty or not. We shall use as our potential function:
+
+![dynamic-table-potential-function](./images/dynamic-table-potential-function.png)
+
+Before proceeding with a precise analysis, we pause to observe some properties of the potential function. Notice that, when the load factor is:
+* `1/2`, the potential is `0`.
+* `1`, we have `T.size = T.num`, which implies `Ф(T) = T.num`, and thus the potential can pay for an expansion if an item is inserted.
+* `1/4`, we have `T.size = 4*T.num`, which implies `Ф(T) = T.num`, and thus the potential can pay for a contraction if an item is deleted.
+
+We start with the case in which the `i`-th operation is `TABLE-INSERT()`. Whether the table  expands or not, the amortized cost `C_i` of the operation is at most `3`. If `α_i-1 < 1/2`, the table cannot expand as a result of the operation, since the table expands only when `α_i-1 = 1`. If `α_i < 1/2` as well, then the amortized cost ofthe `i`-th operation is:
+
+```
+C_i = c_i + Ф_i - Ф_i-1 = 
+    = 1 + (size_i / 2 - num_i) - (size_i-1 / 2 - num_i-1)
+    = 1 + (size_i / 2 - num_i) - (size_i / 2 - (num_i - 1))
+    = 0
+```
+
+If `α_i-1 < 1/2` but `α ≥ 1/2`, then:
+
+```
+C_i = c_i + Ф_i - Ф_i-1 = 
+    = 1 + (2 * num_i - size_i) - (size_i-1 / 2 - num_i-1) = 
+    = 1 + (2 * (num_i-1 + 1) - size_i-1) - (size_i-1 / 2 - num_i-1) = 
+    = 3 * num_i-1 - 3/2 * size_i-1 + 3 =
+    = 3 * α_i-1 * size_i-1 - 3/2 * size_i-1 + 3 <
+    < 3/2 * size_i-1 - 3/2 * size_i-1 + 3 =
+    = 3
+```
+
+Thus, the amortized cost of a `TABLE-INSERT()` operation is at most `3`.
+
+We now turn to the case in which the `i`-th operation is `TABLE-DELETE()`. In this case, `num_i = num_i-1 - 1`. If `α_i-1 < 1/2`, then we must consider whether the operation causes the table to contract. If it does not, then `size_i = size_i-1` and the amortized cost of the operation is:
+
+```
+C_i = c_i + Ф_i - Ф_i-1 = 
+    = 1 + (size_i / 2 - num_i) - (size_i-1 / 2 - num_i-1) =
+    = 1 + (size_i / 2 - num_i) - (size_i / 2 - (num_i + 1)) =
+    = 2
+```
+
+If `α_i-1 < 1/2` and the `i`-th operation does trigger a contraction, then the actual cost of the operation is `c_i = num_i + 1`, since we delete one item and move `num_i` items. We have `size_i / 2 = size_i-1 / 4 = num_i-1 = num_i + 1`, and the amortized cost of the operation is
+
+```
+C_i = c_i + Ф_i - Ф_i-1 = 
+    = (num_i + 1) + (size_i / 2 - num_i) - (size_i-1 / 2 - num_i-1) =
+    = (num_i + 1) + ((num_i + 1) - num_i) - ((2 * num_i + 2) - (num_i + 1)) =
+    = 1
+```
+
+When the `i`-th operation is a `TABLE-DELETE()` and `α_i-1 ≥ 1/2`, the amortized cost is also bounded above by a constant.
+
+In summary, since the amortized cost of each operation is bounded above bya constant, the actual time for any sequence of `n` operations on a dynamic table is `O(n)`.
 
 
-
+## B-Tree
 
 
 ---
