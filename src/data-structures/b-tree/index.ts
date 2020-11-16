@@ -160,7 +160,7 @@ export class BTree<T> {
                 node.keys[i + 1] = node.keys[i];
                 i--;
             }
-            
+
             // Puts the key into node's keys list.
             node.keys[i + 1] = key;
             // Increase the keys list size by 1.

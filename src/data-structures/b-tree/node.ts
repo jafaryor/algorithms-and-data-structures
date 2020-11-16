@@ -21,13 +21,17 @@ export class BTreeNode<T> {
             this.turnToLeaf();
         } else {
             if (keys.length !== children.length + 1) {
-                throw new Error (`B-Tree Node: the amount of key (${keys.length} should be equal to amount of children (${children.length}) + 1.`);
+                throw new Error(
+                    `B-Tree Node: the amount of key (${keys.length} should be equal to amount of children (${children.length}) + 1.`,
+                );
             }
 
             const sortedKeys = keys.sort((a: number, b: number) => a - b);
 
             if (!_.isEqual(keys, sortedKeys)) {
-                throw new Error('B-Tree Node: the keys must be sorted in ascending order!');
+                throw new Error(
+                    'B-Tree Node: the keys must be sorted in ascending order!',
+                );
             }
         }
     }
@@ -44,7 +48,7 @@ export class BTreeNode<T> {
      */
     set size(keyCount: number) {
         if (keyCount >= this.keys.length) return;
-        
+
         this.keys = this.keys.slice(0, keyCount);
         this.children = this.children.slice(0, keyCount + 1);
     }
