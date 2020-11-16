@@ -680,9 +680,6 @@ When the `i`-th operation is a `TABLE-DELETE()` and `α_i-1 ≥ 1/2`, the amorti
 In summary, since the amortized cost of each operation is bounded above bya constant, the actual time for any sequence of `n` operations on a dynamic table is `O(n)`.
 
 
-## B-Tree
-
-
 ---
 
 [Introduction to Algorithms by Thomas H. Cormen, Charles E. Leiserson, and Ronald L. Rivest](http://staff.ustc.edu.cn/~csli/graduate/algorithms/book6/toc.htm)

@@ -71,10 +71,12 @@ export function buildHuffmanTree(
     const minPriorityQueue = new MinPriorityQueue(alphabet);
 
     for (let i = 1; i < n; i++) {
+        // Take two min priority nodes.
         left = minPriorityQueue.extractMin()!;
         right = minPriorityQueue.extractMin()!;
         frequency = left.key + right.key;
 
+        // Combine the extracted nodes into a new tree with the following root.
         node = new BinaryNode(
             frequency,
             frequency.toString(),
@@ -84,6 +86,7 @@ export function buildHuffmanTree(
         );
         character = new HeapNode<BinaryNode<string>>(frequency, node);
 
+        // Insert the tree into the queue.
         minPriorityQueue.insert(character);
     }
 
