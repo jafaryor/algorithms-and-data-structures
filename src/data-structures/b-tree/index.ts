@@ -36,6 +36,9 @@ export class BTree<T> {
      * @complexity - O(t * log_t(n)), where:
      * t - linear search in array of keys of length <= t
      * log_t(n) - height of the tree
+     * @note - If replace the linear search of key with binary search,
+     * then the complexity will be:
+     * (lg(t) * log_t(n)) = O(lg(t) * lg(n) / lg(t)) = O(lg n)
      */
     search(
         node: BTreeNode<T>,
@@ -87,9 +90,40 @@ export class BTree<T> {
      * Deletes the key "key" from the subtree rooted at "node".
      * @complexity O(t * h) = O(t * log_t(n))
      * @spaceComplexity O(h) = O(log_t(n))
+     * @note - must start from root.
      */
-    delete(key: number, node: BTreeNode<T> = this.root): void {
+    delete(key: number, node: BTreeNode<T>): void {
         // TODO: Implement delete procedure.
+    }
+
+    /**
+     * Finds the min key of the tree.
+     * @note - must start from root.
+     * @complexity - O(log_t(n))
+     */
+    min(node?: BTreeNode<T>): number | undefined {
+        if (!node) {
+            return;
+        } else if (node.isLeaf) {
+            return node.keys[0];
+        } else {
+            return this.min(node.children[0]);
+        }
+    }
+
+    /**
+     * Finds the max key of the tree.
+     * @note - must start from root.
+     * @complexity - O(log_t(n))
+     */
+    max(node?: BTreeNode<T>): number | undefined {
+        if (!node) {
+            return;
+        } else if (node.isLeaf) {
+            return node.keys[node.size - 1];
+        } else {
+            return this.max(node.children[node.size]);
+        }
     }
 
     /**

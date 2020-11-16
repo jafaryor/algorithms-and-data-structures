@@ -54,6 +54,12 @@ Example:
 
 ![b-tree-deletion-example](./images/b-tree-deletion-example.png)
 
+
+#### Min and Max
+Finding the minimum (maximum) in a B-tree is quite similar to finding a minimum in a binary search tree. We need to find the left most (right most) leaf for the given root, and return the first key.
+
+
+
 ---
 
 ### [Read More](https://www.programiz.com/dsa/b-tree)
