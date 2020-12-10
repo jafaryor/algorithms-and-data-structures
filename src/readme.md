@@ -330,7 +330,7 @@ In practice, we neglect certain technical details when we state and solve recurr
 
     without explicitly giving values for small `n`. The reason is that although changing the value of `T(1)` changes the exact solution to the recurrence, the solution typically doesn’t change by more than a constant factor, and so the order of growth is unchanged.
 
-## Solving recurrencies methods:
+## Solving recurrences methods:
 * __Substitution method__
 
     Algorithm:
@@ -634,7 +634,7 @@ Before proceeding with a precise analysis, we pause to observe some properties o
 * `1`, we have `T.size = T.num`, which implies `Ф(T) = T.num`, and thus the potential can pay for an expansion if an item is inserted.
 * `1/4`, we have `T.size = 4*T.num`, which implies `Ф(T) = T.num`, and thus the potential can pay for a contraction if an item is deleted.
 
-We start with the case in which the `i`-th operation is `TABLE-INSERT()`. Whether the table  expands or not, the amortized cost `C_i` of the operation is at most `3`. If `α_i-1 < 1/2`, the table cannot expand as a result of the operation, since the table expands only when `α_i-1 = 1`. If `α_i < 1/2` as well, then the amortized cost ofthe `i`-th operation is:
+We start with the case in which the `i`-th operation is `TABLE-INSERT()`. Whether the table  expands or not, the amortized cost `C_i` of the operation is at most `3`. If `α_i-1 < 1/2`, the table cannot expand as a result of the operation, since the table expands only when `α_i-1 = 1`. If `α_i < 1/2` as well, then the amortized cost of the `i`-th operation is:
 
 ```
 C_i = c_i + Ф_i - Ф_i-1 = 
