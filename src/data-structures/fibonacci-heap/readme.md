@@ -33,12 +33,12 @@ We set the potential function as `Ф(H) = t(H) + 2m(H)`, where:
 * `t(H)` - number of trees in the root list of `H`.
 * `m(H)` - number of marked nodes in `H`.
 
-The amortized analyses we shall perform assume that we know an upper bound `D(n)` the maximum degree of any node in an `n`-node Fibonacci heap. We won’t prove it, but when only the mergeable-heap operations are supported `D(n) ≤ `&lfloor;`log_φ(n)`&rfloor;, where `φ = (1 + Math.sqrt(5)) / 2`.
+The amortized analyses we shall perform assume that we know an upper bound `D(n)` the maximum degree of any node in an `n`-node Fibonacci heap. We won’t prove it, but when only the mergeable-heap operations are supported `D(n) ≤ ` &lfloor;`log_φ(n)`&rfloor;, where `φ = (1 + Math.sqrt(5)) / 2`.
 
 ### Insert and Union
 As in the `insert()` procedure, all roots remain roots. The change in potential is:
 ```
-Ф(H) - (Ф(H_1) + Ф(H_2)) = 
+Ф(H) - (Ф(H_1) + Ф(H_2)) =
     = (t(H) + 2m(H)) - ((t(H_1) + 2m(H_1)) + (t(H_2) + 2m(H_2)))
     = 0
 ```

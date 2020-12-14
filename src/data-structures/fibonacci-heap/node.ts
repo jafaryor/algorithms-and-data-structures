@@ -9,13 +9,18 @@ export class FibonacciNode<T> {
      * the node was made the child of another node.
      */
     mark = false;
-    left = this;
-    right = this;
+    left?: FibonacciNode<T>;
+    right?: FibonacciNode<T>;
 
     constructor(
         public key: number = Infinity,
         public value: T,
         public parent?: FibonacciNode<T>,
         public child?: FibonacciNode<T>,
-    ) {}
+        left?: FibonacciNode<T>,
+        right?: FibonacciNode<T>,
+    ) {
+        this.left = left || this;
+        this.right = right || this;
+    }
 }
