@@ -93,7 +93,7 @@ The `lg(lg(u))` is almost linear and increases very little while `u` changes not
 
 ![vEB-tree](./images/veb-tree.png)
 
-This figure shows a `vEB(16)` tree `V` holding the set `{2, 3, 4, 5, 7, 14, 15}`. Because the smallest element is 2, `V.min` equals 2, and even though `high(2)= 0`, the element 2 does not appear  in the `vEB(4)` tree pointed to by `V.cluster[0]`  notice that `V.cluster[0].min` equals 3, and so 2 is not in this vEB tree.  Similarly,  since `V.cluster[0].min` equals 3, and 2 and 3 are the only elements in `V.cluster[0]`, the `vEB(2)` clusters within `V.cluster[0]` are empty.
+This figure shows a `vEB(16)` tree `V` holding the set `{2, 3, 4, 5, 7, 14, 15}`. Because the smallest element is 2, `V.min` equals 2, and even though `high(2)= 0`, the element 2 does not appear  in the `vEB(4)` tree pointed to by `V.cluster[0]`  notice that `V.cluster[0].min` equals 3, and so 2 is not in this vEB tree.  Similarly,  since `V.cluster[0].min` equals 3, and 2 and 3 are the only elements in `V.cluster[0]`, the `vEB(2)` clusters within `V.cluster[0]` are empty.
 
 ### Time complexity
 Even  if  the  universe  size `u` is  an  odd  power  of `2`,  the  difference  in  the  sizes of the summary vEB tree and the clusters will not turn out to affect the asymptotic running times of the vEB-tree operations.
