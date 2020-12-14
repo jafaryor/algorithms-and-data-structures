@@ -1,5 +1,4 @@
-import { VEBNode } from "./node";
-
+import {VEBNode} from './node';
 
 /**
  * The van Emde Boas Tree.
@@ -13,11 +12,11 @@ export class VEBTree {
     upperSquareRoot: number;
     lowerSquareRoot: number;
 
-    constructor (universeSize: number) {
+    constructor(universeSize: number) {
         this.root = new VEBNode(universeSize);
 
-        this.upperSquareRoot = 2^(Math.ceil(Math.log2(this.root.size) / 2));
-        this.lowerSquareRoot = 2^(Math.floor(Math.log2(this.root.size) / 2));
+        this.upperSquareRoot = 2 ^ Math.ceil(Math.log2(this.root.size) / 2);
+        this.lowerSquareRoot = 2 ^ Math.floor(Math.log2(this.root.size) / 2);
     }
 
     /**
@@ -101,13 +100,19 @@ export class VEBTree {
             // is strictly less than the max attribute of its cluster.
             if (maxLow && this.low(key) < maxLow) {
                 // Search for a successor within "node"'s cluster.
-                const offset = this.successor(key, node.cluster![this.high(key)]);
+                const offset = this.successor(
+                    key,
+                    node.cluster![this.high(key)],
+                );
 
                 // Return the element of successor.
                 return this.index(this.high(key), offset!);
             } else {
                 // Number of the next nonempty cluster, using the summary information to find it.
-                const successorCluster = this.successor(this.high(key), node.summary);
+                const successorCluster = this.successor(
+                    this.high(key),
+                    node.summary,
+                );
 
                 if (successorCluster) {
                     // Take the first element within the cluster.
@@ -137,11 +142,17 @@ export class VEBTree {
             const minLow = this.min(node.cluster![this.high(key)]);
 
             if (minLow && this.low(key) > minLow) {
-                const offset = this.predecessor(this.low(key), node.cluster![this.high(key)]);
+                const offset = this.predecessor(
+                    this.low(key),
+                    node.cluster![this.high(key)],
+                );
 
                 return this.index(this.high(key), offset!);
             } else {
-                const predecessorCluster = this.predecessor(this.high(key), node.summary);
+                const predecessorCluster = this.predecessor(
+                    this.high(key),
+                    node.summary,
+                );
 
                 if (!predecessorCluster) {
                     // Checks if element's predecessor, if it exits,
@@ -177,7 +188,10 @@ export class VEBTree {
             if (node.size > 2) {
                 if (node.cluster![this.high(key)].isEmpty) {
                     this.insert(this.high(key), node.summary);
-                    this.emptyTreeInset(this.low(key), node.cluster![this.high(key)]);
+                    this.emptyTreeInset(
+                        this.low(key),
+                        node.cluster![this.high(key)],
+                    );
                 } else {
                     this.insert(this.low(key), node.cluster![this.high(key)]);
                     // Don't need to update the summary, since element's cluster
@@ -210,7 +224,7 @@ export class VEBTree {
             node.min = undefined;
             node.max = undefined;
         } else if (node.isLeaf) {
-            node.min = (key === 0) ? 1 : 0;
+            node.min = key === 0 ? 1 : 0;
             node.max = node.min;
         } else {
             if (key === node.min) {
@@ -218,7 +232,10 @@ export class VEBTree {
                 const firstCluster = this.min(node.summary)!;
 
                 // Sets element to the value of the lowest element in that cluster.
-                key = this.index(firstCluster, this.min(node.cluster![firstCluster])!);
+                key = this.index(
+                    firstCluster,
+                    this.min(node.cluster![firstCluster])!,
+                );
                 // Makes the element a new min.
                 node.min = key;
             }
@@ -241,7 +258,10 @@ export class VEBTree {
                         node.max = node.min;
                     } else {
                         // Sets max to the maximum element in the highest-numbered cluster.
-                        node.max = this.index(summaryMax, this.max(node.cluster![summaryMax])!);
+                        node.max = this.index(
+                            summaryMax,
+                            this.max(node.cluster![summaryMax])!,
+                        );
                     }
                 }
             } else if (key === node.max) {
@@ -249,7 +269,10 @@ export class VEBTree {
                 // We don't need to update the summary in this case.
 
                 // Updates the node's max.
-                node.max = this.index(this.high(key), this.max(node.cluster![this.high(key)])!);
+                node.max = this.index(
+                    this.high(key),
+                    this.max(node.cluster![this.high(key)])!,
+                );
             }
         }
     }

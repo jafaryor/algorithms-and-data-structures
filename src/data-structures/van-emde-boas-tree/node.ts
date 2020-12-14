@@ -47,4 +47,3 @@ export class VEBNode {
  * The number of bit is the smallest possible universe.
  */
 const MIN_UNIVERSE_SIZE = 2;
-
