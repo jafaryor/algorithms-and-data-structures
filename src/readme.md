@@ -148,7 +148,7 @@ Assume that `f(n)` and `g(n)` are asymptotically positive.
 * Transpose symmetry
     * `f(n) = O(g(n)) if and only if g(n) = Ω(f(n))`
     * `f(n) = o(g(n)) if and only if g(n) = ω(f(n))`
-    
+
 We say that `f(n)` is __asymptotically smaller__ than `g(n)` if `f(n) = o(g(n))`, and `f(n)` is __asymptotically larger__ than `g(n)` if `f(n) = ω(g(n))`.
 
 __Although any two real numbers can be compared, not all functions are asymptotically comparable. That is, for two functions `f(n)` and `g(n)`, it may be the case that neither `f(n) = O(g(n))` nor `f(n) = Ω(g(n))` holds.__ For example, we cannot compare the functions `n` and `n^(1 + sin n)` using asymptotic notation, since the value of the exponent in `n^(1 + sin n)` oscillates between `0` and `2`, taking on all values in between.
@@ -181,7 +181,7 @@ Which is the definition of `Θ(f(n)+g(n))` with `c1 = 1/2`, `c2 = 1`.
 * Floors and ceilings
 
     For any real number `x`, we denote the greatest integer less than or equal to `x` by __&lfloor;`x`&rfloor;__ (read _“the floor of `x`”_) and the least integer greater than or equal to `x` by __&lceil;`x`&rceil;__ (read _“the ceiling of x”_).
-    
+
     For all real `x`, `x - 1 <` &lfloor;`x`&rfloor; `≤ x ≤` &lceil;`x`&rceil; `< x + 1`
 
     For any integer `n`, &lfloor;`n/2`&rfloor; + &lceil;`n/2`&rceil; = `n`
@@ -229,7 +229,7 @@ Which is the definition of `Θ(f(n)+g(n))` with `c1 = 1/2`, `c2 = 1`.
     ![e-formula](./images/e-formula.png)
 
     For all real x, we have the inequality: `e^x ≥ 1 + x`, where equality holds only when `x = 0`.
-    
+
     When `|x| ≤ 1`, we have the approximation `1 + x ≤ e^x ≤ 1 + x + x^2`
 
     ![e-limit](./images/e-limit.png)
@@ -360,7 +360,7 @@ In practice, we neglect certain technical details when we state and solve recurr
     Example: `T(n) = 3T(`&lfloor;`n/4`&rfloor;`) + θ(n^2)`
     1. Get rid of &lfloor; for simplicity => `T(n) = 3T(n/4) + c*n^2` for `c > 0`
     2. For convenience, assume `n` is exact power of `4`
-    3. Build the tree: 
+    3. Build the tree:
 
         ![recursion-trees](./images/recursion-trees.jpg)
 
@@ -501,7 +501,7 @@ The most common techniques used in amortized analysis:
     ![binary-counter](./images/binary-counter.png)
 
     In general, for `i = 0, 1, ..., k-1`, bit `A[i]` flips `⌊n/2^i⌋` times in a sequence  of `n` `increment()` operations on an initially zero counter.   For `i ≥ k`, bit `A[i]` does not exist, and so it cannot flip. The  total number of flips in the sequence is thus
-    
+
     `Σ[i=0 -> k-1](⌊n/2^i⌋) < n * Σ[i=0 -> ∞](1/2^i) = 2n`
 
     by this equation. The worst-case time for a sequence of `n` `increment()` operations on an initially zero counter is therefore `O(n)`. The average cost of each operation, and therefore the amortized cost per operation, is `O(n)/n = O(1)`.
@@ -512,7 +512,7 @@ The most common techniques used in amortized analysis:
 * ### Accounting Method
 
     In the __accounting method__ of amortized analysis, we assign differing  charges to different operations, with some operations charged more or  less than they actually cost. We call the amount we charge an operation its __amortized cost__. When an operation’s amortized cost exceeds its actual cost, we assign the difference to specific objects in the data structure as __credit__. Credit can help pay for later operations whose amortized cost is less than their actual cost. Thus, we can view the amortized cost of an operation as being split between its actual cost and credit that is either deposited or used up.
-    
+
     Different operations may have different amortized costs. This method differs from aggregate analysis,  in which all operations have the same amortized cost.
 
     The total credit stored in the data structure is the difference between the total amortized cost and the total actual cost. The total credit associated with the data structure must be nonnegative at all times. If we ever were to allow the total credit to become negative,  then the total  amortized costs incurred at that time would be below the total actual costs incurred. Thus, we must take care that the total credit in the data structure never becomes negative.
@@ -527,7 +527,7 @@ The most common techniques used in amortized analysis:
 * ### Potential Method
 
     Instead of representing prepaid work as credit stored with specific objects in the data structure, the __potential method__ of amortized analysis represents the prepaid work as “potential energy,” or just “potential,”  which can be released to pay for future operations.
-    
+
     > #### We associate the potential with the data structure as a whole rather than with specific objects within the data structure.
 
     The potential method works as follows. We will perform `n` operations, starting with an initial data structure `D_0`. For each `i = 1, 2, ..., n`,we let `c_i` be the actual cost of the `i`-th operation and `D_i` be the data structure that results after applying the `i`-th operation to data structure `D_i-1`. A __potential function__ `Ф` maps each data structure `D_i` to a real number `Ф(D_i)`, which is the __potential__ associated with data structure `D_i`. The __amortized cost__ `C_i` of the `i`-th operation with respect to potential function `Ф` is defined by:
@@ -552,7 +552,7 @@ The most common techniques used in amortized analysis:
     `C_i = c_i + Ф(D_i) - Ф(D_i-1) ≤ (t_i + 1) + (1 - t_i) = 2`
 
     If the counter starts at zero, then `Ф(D_0) = 0`. Since `Ф(D_i) ≥ 0` for all `i`, the total amortized cost of a sequence of `n` `increment()` operations is an upper bound on the total actual cost, and so the worst-case cost of `n` `increment()` operations is `O(n)`.
-    
+
     The potential method gives us an easy way to analyze the counter even when it does not start at zero. The counter starts with `b_0` 1s, and after `n` `increment()` operations it has `b_n` 1s, where `0 ≤ b_0, b_n ≤ k`. So:
 
     ![potential-method-binary-counter](./images/potential-method-binary-counter.png)
@@ -637,7 +637,7 @@ Before proceeding with a precise analysis, we pause to observe some properties o
 We start with the case in which the `i`-th operation is `TABLE-INSERT()`. Whether the table  expands or not, the amortized cost `C_i` of the operation is at most `3`. If `α_i-1 < 1/2`, the table cannot expand as a result of the operation, since the table expands only when `α_i-1 = 1`. If `α_i < 1/2` as well, then the amortized cost of the `i`-th operation is:
 
 ```
-C_i = c_i + Ф_i - Ф_i-1 = 
+C_i = c_i + Ф_i - Ф_i-1 =
     = 1 + (size_i / 2 - num_i) - (size_i-1 / 2 - num_i-1)
     = 1 + (size_i / 2 - num_i) - (size_i / 2 - (num_i - 1))
     = 0
@@ -646,9 +646,9 @@ C_i = c_i + Ф_i - Ф_i-1 =
 If `α_i-1 < 1/2` but `α ≥ 1/2`, then:
 
 ```
-C_i = c_i + Ф_i - Ф_i-1 = 
-    = 1 + (2 * num_i - size_i) - (size_i-1 / 2 - num_i-1) = 
-    = 1 + (2 * (num_i-1 + 1) - size_i-1) - (size_i-1 / 2 - num_i-1) = 
+C_i = c_i + Ф_i - Ф_i-1 =
+    = 1 + (2 * num_i - size_i) - (size_i-1 / 2 - num_i-1) =
+    = 1 + (2 * (num_i-1 + 1) - size_i-1) - (size_i-1 / 2 - num_i-1) =
     = 3 * num_i-1 - 3/2 * size_i-1 + 3 =
     = 3 * α_i-1 * size_i-1 - 3/2 * size_i-1 + 3 <
     < 3/2 * size_i-1 - 3/2 * size_i-1 + 3 =
@@ -660,7 +660,7 @@ Thus, the amortized cost of a `TABLE-INSERT()` operation is at most `3`.
 We now turn to the case in which the `i`-th operation is `TABLE-DELETE()`. In this case, `num_i = num_i-1 - 1`. If `α_i-1 < 1/2`, then we must consider whether the operation causes the table to contract. If it does not, then `size_i = size_i-1` and the amortized cost of the operation is:
 
 ```
-C_i = c_i + Ф_i - Ф_i-1 = 
+C_i = c_i + Ф_i - Ф_i-1 =
     = 1 + (size_i / 2 - num_i) - (size_i-1 / 2 - num_i-1) =
     = 1 + (size_i / 2 - num_i) - (size_i / 2 - (num_i + 1)) =
     = 2
@@ -669,7 +669,7 @@ C_i = c_i + Ф_i - Ф_i-1 =
 If `α_i-1 < 1/2` and the `i`-th operation does trigger a contraction, then the actual cost of the operation is `c_i = num_i + 1`, since we delete one item and move `num_i` items. We have `size_i / 2 = size_i-1 / 4 = num_i-1 = num_i + 1`, and the amortized cost of the operation is
 
 ```
-C_i = c_i + Ф_i - Ф_i-1 = 
+C_i = c_i + Ф_i - Ф_i-1 =
     = (num_i + 1) + (size_i / 2 - num_i) - (size_i-1 / 2 - num_i-1) =
     = (num_i + 1) + ((num_i + 1) - num_i) - ((2 * num_i + 2) - (num_i + 1)) =
     = 1
@@ -682,6 +682,8 @@ In summary, since the amortized cost of each operation is bounded above bya cons
 
 ---
 
-[Introduction to Algorithms by Thomas H. Cormen, Charles E. Leiserson, and Ronald L. Rivest](http://staff.ustc.edu.cn/~csli/graduate/algorithms/book6/toc.htm)
+#### [Introduction to Algorithms by Thomas H. Cormen, Charles E. Leiserson, and Ronald L. Rivest](http://staff.ustc.edu.cn/~csli/graduate/algorithms/book6/toc.htm)
 
-[Solutions to Introduction to Algorithms Third Edition Book](https://walkccc.github.io/CLRS/)
+#### [Solutions to Introduction to Algorithms Third Edition Book](https://walkccc.github.io/CLRS/)
+
+#### [A useful YouTube Channel](https://www.youtube.com/channel/UCZCFT11CWBi3MHNlGf019nw/playlists)
