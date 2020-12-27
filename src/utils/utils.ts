@@ -190,3 +190,20 @@ export function replaceMethodInContext(
 export function createArrayAndFillWith<T>(size: number, value: T): T[] {
     return _.times(size, _.constant(value));
 }
+
+/**
+ * Creates an array whose values start from a specific number
+ * and increment by one in next element.
+ */
+export function createArrayWithIncrementingValues(
+    size: number,
+    startFrom: number,
+): number[] {
+    const result = [] as number[];
+
+    for (let i = 0; i < size; i++) {
+        result.push(startFrom + i);
+    }
+
+    return result;
+}

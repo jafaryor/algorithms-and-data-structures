@@ -13,6 +13,18 @@
 
 * __tail call__ is a subroutine call performed as the final action of a procedure. If a tail call might lead to the same subroutine being called again later in the call chain, the subroutine is said to be __tail-recursive__, which is a special case of recursion.
 
-* __Heuristic__ is a technique designed for solving a problem more quickly when classic methods are too slow, or for finding an approximate solution when classic methods fail to find any exact solution. The objective of a heuristic is to produce a solution in a reasonable time frame that is good enough for solving the problem at hand. This solution may not be the best of all the solutions to this problem, or it may simply approximate the exact solution. But it is still valuable because finding it does not require a prohibitively long time.
+* __Heuristic__ is any approach to problem solving or self-discovery that employs a practical method that is not guaranteed to be optimal, perfect, or rational, but is nevertheless sufficient for reaching an immediate, short-term goal or approximation. Where finding an optimal solution is impossible or impractical, heuristic methods can be used to speed up the process of finding a satisfactory solution.
 
 * __Greedy Algorithm__ is an algorithmic paradigm that follows the problem solving heuristic of making the locally optimal choice at each stage with the intent of finding a global optimum. In many problems, a greedy strategy does not usually produce an optimal solution, but nonetheless a greedy heuristic may yield locally optimal solutions that approximate a globally optimal solution in a reasonable amount of time.
+
+* Example of __polynomial expressions__:
+    * `5x^12 - 2x^6 + x^5 + 1` - polynomial of degree 12.
+    * `x^4 - x^3 + x^2 - x + 1` - polynomial of degree 4.
+    * `5x - 7` - polynomial of degree 1.
+
+* An algorithm is said to be of __polynomial time__ if its running time is upper bounded by a polynomial expression in the size of the input for the algorithm
+
+* In computational complexity theory, a problem is __NP-complete__ when:
+    * A nondeterministic Turing machine can solve it in polynomial-time.
+    * A deterministic Turing machine can solve it in large time complexity classes and can verify its solutions in polynomial time.
+    * It can be used to simulate any other problem with similar solvability.

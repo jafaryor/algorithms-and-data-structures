@@ -687,3 +687,5 @@ In summary, since the amortized cost of each operation is bounded above bya cons
 #### [Solutions to Introduction to Algorithms Third Edition Book](https://walkccc.github.io/CLRS/)
 
 #### [A useful YouTube Channel](https://www.youtube.com/channel/UCZCFT11CWBi3MHNlGf019nw/playlists)
+
+#### [Programiz DSA Course](https://www.programiz.com/dsa)

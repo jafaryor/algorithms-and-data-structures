@@ -1,4 +1,5 @@
-import {SinglyLinkedList, SinglyLinkedListNode} from '../singly-linked-list';
+import {SinglyLinkedList} from '../singly-linked-list';
+import {SinglyLinkedListNode} from '../singly-linked-list/node';
 import {randomFromRange, findClosestBiggerPrimeNumber} from '../../utils';
 
 /**

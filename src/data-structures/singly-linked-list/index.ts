@@ -1,12 +1,5 @@
 import {EqualFunction} from '../../utils';
-
-/**
- * Singly-Linked List Node Interface.
- */
-export interface SinglyLinkedListNode<T> {
-    data: T;
-    next: SinglyLinkedListNode<T> | null;
-}
+import {SinglyLinkedListNode} from './node';
 
 /**
  * Singly Linked List Data Structure.
@@ -150,7 +143,7 @@ export class SinglyLinkedList<T> {
      * @param fn
      */
     // tslint:disable-next-line: no-any
-    traverse(fn: Function): any {
+    forEach(fn: Function): any {
         for (let node = this.head; node !== null; node = node.next) {
             const result = fn(node);
 
@@ -167,7 +160,7 @@ export class SinglyLinkedList<T> {
     print(): void {
         let output = '';
 
-        this.traverse(
+        this.forEach(
             (node: SinglyLinkedListNode<T>) =>
                 (output += `${JSON.stringify(node.data)}, `),
         );
