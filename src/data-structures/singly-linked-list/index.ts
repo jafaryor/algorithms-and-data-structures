@@ -143,7 +143,7 @@ export class SinglyLinkedList<T> {
      * @param fn
      */
     // tslint:disable-next-line: no-any
-    forEach(fn: Function): any {
+    forEach(fn: (node: SinglyLinkedListNode<T>) => any): any {
         for (let node = this.head; node !== null; node = node.next) {
             const result = fn(node);
 
@@ -151,6 +151,20 @@ export class SinglyLinkedList<T> {
                 return result;
             }
         }
+    }
+
+    /**
+     * Converts to an array.
+     * @complexity O(n)
+     */
+    toArray(): T[] {
+        const array = [] as T[];
+
+        this.forEach((node: SinglyLinkedListNode<T>) => {
+            array.push(node.data);
+        });
+
+        return array;
     }
 
     /**

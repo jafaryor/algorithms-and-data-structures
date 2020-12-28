@@ -82,13 +82,37 @@ export class AdjacencyList {
         for (const u of this.vertices) {
             list[u.value] = [] as AdjacencyListNode[];
 
-            this.list[u.value].forEach((v: AdjacencyListNode) => {
-                // Insert "u" into a list corresponding to "v" vertex.
-                list[v.vertex.value].push(new AdjacencyListNode(u, v.weight));
-            });
+            this.list[u.value].forEach(
+                (v: SinglyLinkedListNode<AdjacencyListNode>) => {
+                    // Insert "u" into a list corresponding to "v" vertex.
+                    list[v.data.vertex.value].push(
+                        new AdjacencyListNode(u, v.data.weight),
+                    );
+                },
+            );
         }
 
         return list;
+    }
+
+    /**
+     * Converts to an array of strings.
+     * @complexity O(V + E)
+     */
+    toString(): string[] {
+        const array = [] as string[];
+        let line: string;
+
+        for (const [key, row] of Object.entries(this.list)) {
+            line = row
+                .toArray()
+                .map((node) => `${node.vertex.value} (${node.weight})`)
+                .join(' -> ');
+
+            array.push(`${key} -> ${line}`);
+        }
+
+        return array;
     }
 
     /**

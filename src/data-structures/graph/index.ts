@@ -4,7 +4,6 @@ import {AdjacencyMatrix} from './matrix';
 import {Vertex} from './vertex';
 import {Queue} from '../queue';
 import {Stack} from '../stack';
-import {SinglyLinkedList} from '../singly-linked-list';
 
 /**
  * The Graph.
@@ -128,8 +127,7 @@ export class Graph {
 
         stack.push(u);
 
-        this.time++;
-        u.paintGray(this.time);
+        u.paintGray(++this.time);
 
         while (!stack.isEmpty()) {
             u = stack.peek()!;
@@ -138,13 +136,11 @@ export class Graph {
             if (v == null) {
                 // u's adjacency list has been fully explored.
                 stack.pop();
-                this.time++;
-                u.paintBlack(this.time);
+                u.paintBlack(++this.time);
             } else {
                 // u's adjacency list hasn't been fully explored.
                 v.predecessor = u;
-                this.time++;
-                v.paintGray(this.time);
+                v.paintGray(++this.time);
                 stack.push(v);
             }
         }
@@ -293,8 +289,7 @@ export class Graph {
      */
     private depthFirstSearchVisit(u: Vertex): void {
         // White vertex has just been discovered.
-        this.time++;
-        u.paintGray(this.time);
+        u.paintGray(++this.time);
 
         // Explore edge (u,v).
         this.adjacencyList.list[u.value].forEach((v: AdjacencyListNode) => {
@@ -310,8 +305,7 @@ export class Graph {
             } */
         });
 
-        this.time++;
-        u.paintBlack(this.time);
+        u.paintBlack(++this.time);
     }
 
     /**
@@ -412,8 +406,7 @@ export class Graph {
      */
     private connectedComponentVisit(u: Vertex): void {
         // White vertex has just been discovered.
-        this.time++;
-        u.paintGray(this.time);
+        u.paintGray(++this.time);
 
         // Explore edge (u,v).
         this.adjacencyList.list[u.value].forEach((v: AdjacencyListNode) => {
@@ -424,7 +417,6 @@ export class Graph {
             }
         });
 
-        this.time++;
-        u.paintBlack(this.time);
+        u.paintBlack(++this.time);
     }
 }

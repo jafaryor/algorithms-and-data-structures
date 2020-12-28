@@ -1,4 +1,5 @@
 import {createArrayAndFillWith} from '../../utils';
+import {Matrix} from '../matrix';
 import {AdjacencyList, AdjacencyListNode} from './list';
 import {Vertex} from './vertex';
 
@@ -32,9 +33,7 @@ export class AdjacencyMatrix {
      * @complexity O(V^2)
      */
     toAdjacencyList(): AdjacencyList {
-        const list = {} as {
-            [vertex: string]: AdjacencyListNode[];
-        };
+        const list = {} as {[vertex: string]: AdjacencyListNode[]};
         /** The array representation of the final list. */
         let array: AdjacencyListNode[];
         /** The adjacency list key. The fist node in a list. */
@@ -47,7 +46,9 @@ export class AdjacencyMatrix {
             for (let j = 0; j < this.n; j++) {
                 if (this.matrix[i][j] == null) continue;
 
-                array.push(new AdjacencyListNode(vertex, this.matrix[i][j]!));
+                array.push(
+                    new AdjacencyListNode(this.vertices[j], this.matrix[i][j]!),
+                );
             }
 
             list[vertex.value] = array;
@@ -61,17 +62,18 @@ export class AdjacencyMatrix {
      * @complexity O(V * V)
      */
     underlyingUndirectedMatrix(): Array<Array<number | undefined>> {
-        const matrix = [] as Array<Array<number | undefined>>;
+        const matrix = Matrix.createMatrixAndFillWith(
+            this.n,
+            this.n,
+            undefined,
+        ) as Array<Array<number | undefined>>;
 
-        // Processes the right half of matrix (on the right side of matrix diagonal).
         for (let i = 0; i < this.n; i++) {
-            matrix.push(createArrayAndFillWith(this.n, undefined));
+            for (let j = 0; j < this.n; j++) {
+                if (this.matrix[i][j] == null) continue;
 
-            for (let j = i; j < this.n; j++) {
-                if (this.matrix[i][j]) {
-                    matrix[i][j] = 1;
-                    matrix[j][i] = 1;
-                }
+                matrix[i][j] = 1;
+                matrix[j][i] = 1;
             }
         }
 
