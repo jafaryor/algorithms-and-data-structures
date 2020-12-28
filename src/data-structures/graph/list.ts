@@ -81,7 +81,9 @@ export class AdjacencyList {
 
         for (const u of this.vertices) {
             list[u.value] = [] as AdjacencyListNode[];
+        }
 
+        for (const u of this.vertices) {
             this.list[u.value].forEach(
                 (v: SinglyLinkedListNode<AdjacencyListNode>) => {
                     // Insert "u" into a list corresponding to "v" vertex.
@@ -147,11 +149,36 @@ export class AdjacencyList {
      * @complexity O(V * V)
      */
     removeVertex(vertex: Vertex): void {
+        const index = this.findIndex(vertex);
+
+        if (!this.isValidIndex(index)) return;
+
+        // Removes a vertex.
+        this.vertices.splice(index!, 1);
+
+        // Removes all edges from the vertex.
         delete this.list[vertex.value];
 
+        // Removes all edges to the vertex.
         for (const row of Object.values(this.list)) {
             row.remove(new AdjacencyListNode(vertex));
         }
+    }
+
+    /**
+     * Finds index of a vertex.
+     * @complexity O(V)
+     */
+    private findIndex(u: Vertex): number | undefined {
+        return this.vertices.findIndex((v: Vertex) => v === u);
+    }
+
+    /**
+     * Checks if an index is valid for the current matrix.
+     * @complexity O(1)
+     */
+    private isValidIndex(index?: number): boolean {
+        return index != null && index >= 0 && index < this.n;
     }
 
     /**
@@ -173,6 +200,6 @@ export class AdjacencyListNode {
     constructor(
         public vertex: Vertex,
         /** The weight of edge (vertex.predecessor, vertex). */
-        public weight?: number,
+        public weight: number = 1,
     ) {}
 }

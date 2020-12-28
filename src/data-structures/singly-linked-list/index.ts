@@ -111,6 +111,7 @@ export class SinglyLinkedList<T> {
                     this.head = this.head.next;
                 } else if (current === this.tail) {
                     this.tail = previous;
+                    this.tail && (this.tail.next = null);
                 } else {
                     (previous as SinglyLinkedListNode<T>).next = current.next;
                 }

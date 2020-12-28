@@ -191,8 +191,11 @@ describe('AdjacencyMatrix', () => {
         });
 
         it('removeVertex', () => {
-            adjacencyMatrix.removeVertex(vertices[2]);
-            adjacencyMatrix.removeVertex(vertices[0]);
+            const u = vertices[2];
+            const v = vertices[0];
+
+            adjacencyMatrix.removeVertex(u);
+            adjacencyMatrix.removeVertex(v);
 
             expect(adjacencyMatrix.matrix).toEqual([
                 [undefined, undefined, 7, undefined],
