@@ -84,11 +84,11 @@ describe('Graph', () => {
                 graph.breadthFirstSearch(vertices[1]);
 
                 expect(graph.toString()).toEqual([
-                    "1 b [1] (Infinity/Infinity)",
-                    "2 b [0] (Infinity/Infinity)",
-                    "3 b [1] (Infinity/Infinity)",
-                    "4 b [1] (Infinity/Infinity)",
-                    "5 b [1] (Infinity/Infinity)",
+                    '1 b [1] (Infinity/Infinity)',
+                    '2 b [0] (Infinity/Infinity)',
+                    '3 b [1] (Infinity/Infinity)',
+                    '4 b [1] (Infinity/Infinity)',
+                    '5 b [1] (Infinity/Infinity)',
                 ]);
             });
 
@@ -96,11 +96,11 @@ describe('Graph', () => {
                 graph.breadthFirstSearch(vertices[2]);
 
                 expect(graph.toString()).toEqual([
-                    "1 b [2] (Infinity/Infinity)",
-                    "2 b [1] (Infinity/Infinity)",
-                    "3 b [0] (Infinity/Infinity)",
-                    "4 b [1] (Infinity/Infinity)",
-                    "5 b [2] (Infinity/Infinity)",
+                    '1 b [2] (Infinity/Infinity)',
+                    '2 b [1] (Infinity/Infinity)',
+                    '3 b [0] (Infinity/Infinity)',
+                    '4 b [1] (Infinity/Infinity)',
+                    '5 b [2] (Infinity/Infinity)',
                 ]);
             });
 
@@ -110,12 +110,12 @@ describe('Graph', () => {
                 graph.breadthFirstSearch(vertex);
 
                 expect(graph.toString()).toEqual([
-                    "1 w [Infinity] (Infinity/Infinity)",
-                    "2 w [Infinity] (Infinity/Infinity)",
-                    "3 w [Infinity] (Infinity/Infinity)",
-                    "4 w [Infinity] (Infinity/Infinity)",
-                    "5 w [Infinity] (Infinity/Infinity)",
-                    "6 g [0] (Infinity/Infinity)",
+                    '1 w [Infinity] (Infinity/Infinity)',
+                    '2 w [Infinity] (Infinity/Infinity)',
+                    '3 w [Infinity] (Infinity/Infinity)',
+                    '4 w [Infinity] (Infinity/Infinity)',
+                    '5 w [Infinity] (Infinity/Infinity)',
+                    '6 g [0] (Infinity/Infinity)',
                 ]);
             });
         });
@@ -125,12 +125,12 @@ describe('Graph', () => {
                 graph.depthFirstSearch();
 
                 expect(graph.toString()).toEqual([
-                    "1 b [Infinity] (1/10)",
-                    "2 b [Infinity] (2/9)",
-                    "3 b [Infinity] (3/8)",
-                    "4 b [Infinity] (4/7)",
-                    "5 b [Infinity] (5/6)",
-                    "6 b [Infinity] (11/12)",
+                    '1 b [Infinity] (1/10)',
+                    '2 b [Infinity] (2/9)',
+                    '3 b [Infinity] (3/8)',
+                    '4 b [Infinity] (4/7)',
+                    '5 b [Infinity] (5/6)',
+                    '6 b [Infinity] (11/12)',
                 ]);
             });
 
@@ -140,12 +140,12 @@ describe('Graph', () => {
                 graph.depthFirstSearch();
 
                 expect(graph.toString()).toEqual([
-                    "1 b [Infinity] (1/10)",
-                    "2 b [Infinity] (2/9)",
-                    "3 b [Infinity] (3/6)",
-                    "4 b [Infinity] (4/5)",
-                    "5 b [Infinity] (7/8)",
-                    "6 b [Infinity] (11/12)",
+                    '1 b [Infinity] (1/10)',
+                    '2 b [Infinity] (2/9)',
+                    '3 b [Infinity] (3/6)',
+                    '4 b [Infinity] (4/5)',
+                    '5 b [Infinity] (7/8)',
+                    '6 b [Infinity] (11/12)',
                 ]);
             });
 
@@ -155,41 +155,51 @@ describe('Graph', () => {
                 graph.depthFirstSearchVisitStack(vertices[5]);
 
                 expect(graph.toString()).toEqual([
-                    "1 b [Infinity] (4/7)",
-                    "2 b [Infinity] (3/10)",
-                    "3 b [Infinity] (2/11)",
-                    "4 b [Infinity] (8/9)",
-                    "5 b [Infinity] (5/6)",
-                    "6 b [Infinity] (1/12)",
+                    '1 b [Infinity] (4/7)',
+                    '2 b [Infinity] (3/10)',
+                    '3 b [Infinity] (2/11)',
+                    '4 b [Infinity] (8/9)',
+                    '5 b [Infinity] (5/6)',
+                    '6 b [Infinity] (1/12)',
                 ]);
             });
         });
 
         describe('topologicalSort', () => {
             it('case 01', () => {
-                expect(graph.topologicalSort().map(v => v.value))
-                    .toEqual(['1', '2', '5', '3', '6', '4']);
+                expect(graph.topologicalSort().map((v) => v.value)).toEqual([
+                    '1',
+                    '2',
+                    '5',
+                    '3',
+                    '6',
+                    '4',
+                ]);
 
                 expect(graph.toString()).toEqual([
-                    "1 b [Infinity] (1/12)",
-                    "2 b [Infinity] (2/11)",
-                    "3 b [Infinity] (3/8)",
-                    "4 b [Infinity] (4/5)",
-                    "5 b [Infinity] (9/10)",
-                    "6 b [Infinity] (6/7)",
+                    '1 b [Infinity] (1/12)',
+                    '2 b [Infinity] (2/11)',
+                    '3 b [Infinity] (3/8)',
+                    '4 b [Infinity] (4/5)',
+                    '5 b [Infinity] (9/10)',
+                    '6 b [Infinity] (6/7)',
                 ]);
             });
         });
 
         describe('stronglyConnectedComponents', () => {
             it('case 01', () => {
-                expect(graph.stronglyConnectedComponents().map(v => v.value)).toEqual(['1']);
+                expect(
+                    graph.stronglyConnectedComponents().map((v) => v.value),
+                ).toEqual(['1']);
             });
 
             it('case 02', () => {
                 graph.removeVertex(vertices[1]);
 
-                expect(graph.stronglyConnectedComponents().map(v => v.value)).toEqual(['3', '1']);
+                expect(
+                    graph.stronglyConnectedComponents().map((v) => v.value),
+                ).toEqual(['3', '1']);
             });
         });
 
@@ -233,12 +243,12 @@ describe('Graph', () => {
                 graph.breadthFirstSearch(vertices[0]);
 
                 expect(graph.toString()).toEqual([
-                    "1 b [0] (Infinity/Infinity)",
-                    "2 b [1] (Infinity/Infinity)",
-                    "3 w [Infinity] (Infinity/Infinity)",
-                    "4 b [1] (Infinity/Infinity)",
-                    "5 b [2] (Infinity/Infinity)",
-                    "6 w [Infinity] (Infinity/Infinity)",
+                    '1 b [0] (Infinity/Infinity)',
+                    '2 b [1] (Infinity/Infinity)',
+                    '3 w [Infinity] (Infinity/Infinity)',
+                    '4 b [1] (Infinity/Infinity)',
+                    '5 b [2] (Infinity/Infinity)',
+                    '6 w [Infinity] (Infinity/Infinity)',
                 ]);
             });
 
@@ -249,7 +259,7 @@ describe('Graph', () => {
             it('should be connected', () => {
                 expect(graph.isConnected()).toBe(true);
             });
-            
+
             it('should be disconnected', () => {
                 graph.removeEdge(vertices[2], vertices[4]);
 
@@ -265,12 +275,12 @@ describe('Graph', () => {
                 graph.breadthFirstSearch(vertices[2]);
 
                 expect(graph.toString()).toEqual([
-                    "1 w [Infinity] (Infinity/Infinity)",
-                    "2 b [2] (Infinity/Infinity)",
-                    "3 b [0] (Infinity/Infinity)",
-                    "4 b [4] (Infinity/Infinity)",
-                    "5 b [3] (Infinity/Infinity)",
-                    "6 b [1] (Infinity/Infinity)",
+                    '1 w [Infinity] (Infinity/Infinity)',
+                    '2 b [2] (Infinity/Infinity)',
+                    '3 b [0] (Infinity/Infinity)',
+                    '4 b [4] (Infinity/Infinity)',
+                    '5 b [3] (Infinity/Infinity)',
+                    '6 b [1] (Infinity/Infinity)',
                 ]);
             });
         });
@@ -280,12 +290,12 @@ describe('Graph', () => {
                 graph.depthFirstSearch();
 
                 expect(graph.toString()).toEqual([
-                    "1 b [Infinity] (1/8)",
-                    "2 b [Infinity] (2/7)",
-                    "3 b [Infinity] (9/12)",
-                    "4 b [Infinity] (4/5)",
-                    "5 b [Infinity] (3/6)",
-                    "6 b [Infinity] (10/11)",
+                    '1 b [Infinity] (1/8)',
+                    '2 b [Infinity] (2/7)',
+                    '3 b [Infinity] (9/12)',
+                    '4 b [Infinity] (4/5)',
+                    '5 b [Infinity] (3/6)',
+                    '6 b [Infinity] (10/11)',
                 ]);
             });
 
@@ -293,28 +303,34 @@ describe('Graph', () => {
                 graph.depthFirstSearchVisitStack(vertices[5]);
 
                 expect(graph.toString()).toEqual([
-                    "1 w [Infinity] (Infinity/Infinity)",
-                    "2 b [Infinity] (2/7)",
-                    "3 w [Infinity] (Infinity/Infinity)",
-                    "4 b [Infinity] (4/5)",
-                    "5 b [Infinity] (3/6)",
-                    "6 b [Infinity] (1/8)",
+                    '1 w [Infinity] (Infinity/Infinity)',
+                    '2 b [Infinity] (2/7)',
+                    '3 w [Infinity] (Infinity/Infinity)',
+                    '4 b [Infinity] (4/5)',
+                    '5 b [Infinity] (3/6)',
+                    '6 b [Infinity] (1/8)',
                 ]);
             });
         });
 
         describe('topologicalSort', () => {
             it('case 01', () => {
-                expect(graph.topologicalSort().map(v => v.value))
-                    .toEqual(['3', '6', '1', '2', '5', '4']);
+                expect(graph.topologicalSort().map((v) => v.value)).toEqual([
+                    '3',
+                    '6',
+                    '1',
+                    '2',
+                    '5',
+                    '4',
+                ]);
 
                 expect(graph.toString()).toEqual([
-                    "1 b [Infinity] (1/8)",
-                    "2 b [Infinity] (2/7)",
-                    "3 b [Infinity] (9/12)",
-                    "4 b [Infinity] (4/5)",
-                    "5 b [Infinity] (3/6)",
-                    "6 b [Infinity] (10/11)",
+                    '1 b [Infinity] (1/8)',
+                    '2 b [Infinity] (2/7)',
+                    '3 b [Infinity] (9/12)',
+                    '4 b [Infinity] (4/5)',
+                    '5 b [Infinity] (3/6)',
+                    '6 b [Infinity] (10/11)',
                 ]);
             });
         });
@@ -324,8 +340,9 @@ describe('Graph', () => {
                 graph.removeEdge(vertices[0], vertices[3]);
                 graph.addEdge(vertices[3], vertices[0], 5);
 
-                expect(graph.stronglyConnectedComponents().map(v => v.value))
-                    .toEqual(['3', '6', '1']);
+                expect(
+                    graph.stronglyConnectedComponents().map((v) => v.value),
+                ).toEqual(['3', '6', '1']);
                 expect(graph.adjacencyList.toString()).toEqual([
                     '1 -> 2 (3)',
                     '2 -> 5 (7)',
@@ -340,8 +357,9 @@ describe('Graph', () => {
                 graph.removeEdge(vertices[5], vertices[5]);
                 graph.addEdge(vertices[5], vertices[2], 9);
 
-                expect(graph.stronglyConnectedComponents().map(v => v.value))
-                    .toEqual(['3', '1']);
+                expect(
+                    graph.stronglyConnectedComponents().map((v) => v.value),
+                ).toEqual(['3', '1']);
                 expect(graph.adjacencyList.toString()).toEqual([
                     '1 -> 2 (3)',
                     '2 -> 5 (7)',

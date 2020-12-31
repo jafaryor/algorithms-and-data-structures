@@ -1,4 +1,7 @@
-import { getDirectedWeightedCyclicStub, getUndirectedUnweightedCyclicStub } from './index.spec';
+import {
+    getDirectedWeightedCyclicStub,
+    getUndirectedUnweightedCyclicStub,
+} from './index.spec';
 import {AdjacencyList, AdjacencyListNode} from './list';
 import {Vertex} from './vertex';
 

@@ -94,7 +94,9 @@ export class Vertex {
      * String representation of vertex.
      */
     toString(): string {
-        return `${this.value} ${this.color.charAt(0)} [${this.distance}] (${this.timestamps.grayed}/${this.timestamps.blacken})`;
+        return `${this.value} ${this.color.charAt(0)} [${this.distance}] (${
+            this.timestamps.grayed
+        }/${this.timestamps.blacken})`;
     }
 }
 
