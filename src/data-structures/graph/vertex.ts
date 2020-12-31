@@ -12,9 +12,9 @@ export class Vertex {
     predecessor?: Vertex;
     /** The integer timestamp for recording vertex states. */
     timestamps: {
-        // The integer timestamp records when the vertex was grayed.
+        // The integer records timestamp when the vertex becomes grayed.
         grayed: number;
-        // The integer timestamp records when the vertex was blacken.
+        // The integer records timestamp when the vertex becomes blacken.
         blacken: number;
     } = {
         // The default value for timestamps are Infinity.
@@ -49,6 +49,8 @@ export class Vertex {
         this.color = VertexColor.WHITE;
         this.distance = Infinity;
         this.predecessor = undefined;
+        this.timestamps.grayed = Infinity;
+        this.timestamps.blacken = Infinity;
     }
 
     /**
@@ -86,6 +88,13 @@ export class Vertex {
     paintBlack(timestamp: number = Infinity): void {
         this.color = VertexColor.BLACK;
         this.timestamps.blacken = timestamp;
+    }
+
+    /**
+     * String representation of vertex.
+     */
+    toString(): string {
+        return `${this.value} ${this.color.charAt(0)} [${this.distance}] (${this.timestamps.grayed}/${this.timestamps.blacken})`;
     }
 }
 

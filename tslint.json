@@ -72,7 +72,7 @@
     "no-use-before-declare": true,
     "no-var-keyword": true,
     "object-literal-shorthand": true,
-    "only-arrow-functions": [true, "allow-declarations", "allow-named-functions"],
+    "only-arrow-functions": [false, "allow-declarations", "allow-named-functions"],
     "prefer-const": [true, {"destructuring": "all"}],
     "radix": true,
     "semicolon": [true, "always", "ignore-bound-class-methods"],

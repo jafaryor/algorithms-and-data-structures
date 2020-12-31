@@ -1,62 +1,31 @@
-import {createArrayWithIncrementingValues} from '../../utils';
+import { getDirectedWeightedCyclicStub, getUndirectedUnweightedCyclicStub } from './index.spec';
 import {AdjacencyList, AdjacencyListNode} from './list';
 import {Vertex} from './vertex';
 
 describe('AdjacencyList', () => {
-    let array: {[vertex: string]: AdjacencyListNode[]};
+    let list: {[vertex: string]: AdjacencyListNode[]};
     let adjacencyList: AdjacencyList;
     let vertices: Vertex[];
 
     describe('Undirected, Unweighted, Cyclic', () => {
+        const stub = getUndirectedUnweightedCyclicStub();
+
         beforeAll(() => {
-            vertices = createArrayWithIncrementingValues(5, 1).map(
-                (k) => new Vertex(k.toString()),
-            );
-            array = {
-                '1': [
-                    {vertex: vertices[1], weight: 1},
-                    {vertex: vertices[4], weight: 1},
-                ],
-                '2': [
-                    {vertex: vertices[0], weight: 1},
-                    {vertex: vertices[2], weight: 1},
-                    {vertex: vertices[3], weight: 1},
-                    {vertex: vertices[4], weight: 1},
-                ],
-                '3': [
-                    {vertex: vertices[1], weight: 1},
-                    {vertex: vertices[3], weight: 1},
-                ],
-                '4': [
-                    {vertex: vertices[1], weight: 1},
-                    {vertex: vertices[2], weight: 1},
-                    {vertex: vertices[4], weight: 1},
-                ],
-                '5': [
-                    {vertex: vertices[0], weight: 1},
-                    {vertex: vertices[1], weight: 1},
-                    {vertex: vertices[3], weight: 1},
-                ],
-            };
-            adjacencyList = new AdjacencyList(array, vertices);
+            vertices = stub.vertices;
+            list = stub.list;
+            adjacencyList = new AdjacencyList(list, vertices);
         });
 
         it('toAdjacencyMatrix', () => {
             const adjacencyMatrix = adjacencyList.toAdjacencyMatrix();
 
-            expect(adjacencyMatrix.matrix).toEqual([
-                [undefined, 1, undefined, undefined, 1],
-                [1, undefined, 1, 1, 1],
-                [undefined, 1, undefined, 1, undefined],
-                [undefined, 1, 1, undefined, 1],
-                [1, 1, undefined, 1, undefined],
-            ]);
+            expect(adjacencyMatrix.matrix).toEqual(stub.matrix);
         });
 
         it('transpose', () => {
             const transposed = adjacencyList.transpose();
 
-            expect(transposed).toEqual(array);
+            expect(transposed).toEqual(list);
         });
 
         it('addEdge', () => {
@@ -122,38 +91,18 @@ describe('AdjacencyList', () => {
     });
 
     describe('Directed, Weighted, Cyclic', () => {
+        const stub = getDirectedWeightedCyclicStub();
+
         beforeAll(() => {
-            vertices = createArrayWithIncrementingValues(6, 1).map(
-                (k) => new Vertex(k.toString()),
-            );
-            array = {
-                '1': [
-                    {vertex: vertices[1], weight: 3},
-                    {vertex: vertices[3], weight: 5},
-                ],
-                '2': [{vertex: vertices[4], weight: 7}],
-                '3': [
-                    {vertex: vertices[4], weight: 8},
-                    {vertex: vertices[5], weight: 9},
-                ],
-                '4': [{vertex: vertices[1], weight: 6}],
-                '5': [{vertex: vertices[3], weight: 9}],
-                '6': [{vertex: vertices[5], weight: 0}],
-            };
-            adjacencyList = new AdjacencyList(array, vertices);
+            vertices = stub.vertices;
+            list = stub.list;
+            adjacencyList = new AdjacencyList(list, vertices);
         });
 
         it('toAdjacencyMatrix', () => {
             const adjacencyMatrix = adjacencyList.toAdjacencyMatrix();
 
-            expect(adjacencyMatrix.matrix).toEqual([
-                [undefined, 3, undefined, 5, undefined, undefined],
-                [undefined, undefined, undefined, undefined, 7, undefined],
-                [undefined, undefined, undefined, undefined, 8, 9],
-                [undefined, 6, undefined, undefined, undefined, undefined],
-                [undefined, undefined, undefined, 9, undefined, undefined],
-                [undefined, undefined, undefined, undefined, undefined, 0],
-            ]);
+            expect(adjacencyMatrix.matrix).toEqual(stub.matrix);
         });
 
         it('transpose', () => {

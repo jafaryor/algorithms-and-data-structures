@@ -142,6 +142,7 @@ export class AdjacencyList {
      */
     addVertex(vertex: Vertex): void {
         this.list[vertex.value] = new SinglyLinkedList<AdjacencyListNode>();
+        this.n++;
     }
 
     /**
@@ -163,6 +164,8 @@ export class AdjacencyList {
         for (const row of Object.values(this.list)) {
             row.remove(new AdjacencyListNode(vertex));
         }
+
+        this.n--;
     }
 
     /**

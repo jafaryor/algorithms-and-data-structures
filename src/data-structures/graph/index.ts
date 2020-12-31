@@ -89,7 +89,7 @@ export class Graph {
     /**
      * Adds a new edge (u, v, weight).
      */
-    addEdge(u: Vertex, v: Vertex, weight: number): void {
+    addEdge(u: Vertex, v: Vertex, weight: number = 1): void {
         this.adjacencyMatrix.addEdge(u, v, weight);
         this.adjacencyList.addEdge(u, v, weight);
     }
@@ -109,11 +109,13 @@ export class Graph {
         // No duplicate vertices is allowed.
         if (this.vertices.includes(vertex)) return;
 
-        this.vertices.push(vertex);
         this.n++;
 
         this.adjacencyMatrix.addVertex(vertex);
         this.adjacencyList.addVertex(vertex);
+
+        // Removes the last vertex as the vertex was added twice.
+        this.vertices.slice(this.n + 1, 1);
     }
 
     /**
@@ -124,11 +126,11 @@ export class Graph {
 
         if (!this.isValidIndex(index)) return;
 
-        // Removes a vertex.
-        this.vertices.splice(index!, 1);
         this.n--;
 
         this.adjacencyMatrix.removeVertex(vertex);
+        // Insert back the vertex for the correct work of algorithm.
+        this.vertices.push(vertex);
         this.adjacencyList.removeVertex(vertex);
     }
 
@@ -154,7 +156,8 @@ export class Graph {
             this.adjacencyList.list[u.value].forEach(
                 (v: SinglyLinkedListNode<AdjacencyListNode>) => {
                     if (v.data.vertex.isWhite) {
-                        v.data.vertex.markAsDiscovered(u.distance, u);
+                        v.data.vertex.distance = u.distance + 1;
+                        v.data.vertex.markAsDiscovered(u.distance + 1, u);
                         queue.enqueue(v.data.vertex);
                     }
 
@@ -319,6 +322,7 @@ export class Graph {
     /**
      * Kosaraju's Algorithm.
      * Finds a set of strongly connected components and returns their roots.
+     * @note The graph should be directed.
      * @complexity O(V + E)
      */
     stronglyConnectedComponents(): Vertex[] {
@@ -352,12 +356,13 @@ export class Graph {
      * Graph transpose is equivalent of AdjacencyMatrix Transpose,
      *       but transposing a matrix a O(V*V) operation.
      * @note The transposed graph references the same vertex objects.
+     * @note The graph should be directed.
      * @complexity O(V + E)
      */
     transpose(): Graph {
         const list = this.adjacencyList.transpose();
 
-        return new Graph({list, vertices: this.vertices});
+        return new Graph({list, vertices: [...this.vertices]});
     }
 
     /********************************************************************************
@@ -372,13 +377,13 @@ export class Graph {
     connectedComponents(): number {
         this.prepareVerticesForDFS();
         this.time = 0;
-        this.connectedComponent = 1;
+        this.connectedComponent = 0;
 
         for (const vertex of this.vertices) {
             if (vertex.isGray || vertex.isBlack) continue;
 
-            vertex.connectedComponent = this.connectedComponent;
             this.connectedComponent++;
+            vertex.connectedComponent = this.connectedComponent;
             // The "vertex" is WHITE.
             this.connectedComponentVisit(vertex);
         }
@@ -414,6 +419,7 @@ export class Graph {
     /**
      * Checks if the graph has a cycle.
      * Need to check if there a back edge during DFS.
+     * @note Always true for undirected graphs.
      * @complexity O(V + E)
      */
     isCyclic(): boolean {
@@ -445,7 +451,8 @@ export class Graph {
                 if (v.data.vertex.isWhite && !hasCycle) {
                     v.data.vertex.predecessor = u;
                     hasCycle = this.isCyclicVisit(v.data.vertex);
-                } else {
+                } else if (v.data.vertex.isGray) {
+                    // Back-edge is found.
                     hasCycle = true;
                 }
             },
@@ -542,5 +549,12 @@ export class Graph {
      */
     private isValidIndex(index?: number): boolean {
         return index != null && index >= 0 && index < this.n;
+    }
+
+    /**
+     * String representation of vertices.
+     */
+    toString(): string[] {
+        return this.vertices.map((vertex: Vertex) => vertex.toString());
     }
 }
