@@ -522,6 +522,137 @@ export class Graph {
     }
 
     /********************************************************************************
+     * EULERIAN PATH
+     ********************************************************************************/
+    
+    /**
+     * Checks if graph has an Euler Circuit (Eulerian).
+     * @note Graph should be undirected.
+     * @complexity O(V + E)
+     */
+    isEulerian(): boolean {
+        const connectedComponents = this.connectedComponents();
+        const zeroDegreeVertices = this.zeroDegreeVertices();
+        // Note that odd count can never be 1 for undirected graph.
+        const oddDegreeVertices = this.oddDegreeVertices();
+        // Don't count zero degree vertices.
+        const isConnected = (connectedComponents - zeroDegreeVertices) === 1;
+
+        if (!isConnected) return false;
+        else if (oddDegreeVertices === 0) return true;
+
+        return false;
+    }
+
+    /**
+     * Checks if graph has an Euler path (Semi-Eulerian).
+     * @note Graph should be undirected.
+     * @complexity O(V + E)
+     */
+    isSemiEulerian(): boolean {
+        const connectedComponents = this.connectedComponents();
+        const zeroDegreeVertices = this.zeroDegreeVertices();
+        // Note that odd count can never be 1 for undirected graph.
+        const oddDegreeVertices = this.oddDegreeVertices();
+        // Don't count zero degree vertices.
+        const isConnected = (connectedComponents - zeroDegreeVertices) === 1;
+
+        if (!isConnected) return false;
+        else if (oddDegreeVertices === 2) return true;
+
+        return false;
+    }
+
+    /**
+     * Checks if graph has an Euler Circuit (Eulerian).
+     * @note Graph should be directed.
+     * @complexity O(V + E + V*V)
+     */
+    isEuleranCyce(): boolean {
+        const scc = this.stronglyConnectedComponents().length;
+        const zeroDegreeVertices = this.zeroDegreeVertices();
+        const isStronglyConnected = (scc - zeroDegreeVertices) === 1;
+        
+        // Check if all non-zero degree vertices are strongly connected.
+        if (!isStronglyConnected) return false;
+
+        // Check if in degree and out degree of every vertex is same.
+        // TODO: Store "inDegree" and "outDegree" within a vertex to decrease complexity.
+        for (const vertex of this.vertices) {
+            if (this.inDegree(vertex) !== this.outDegree(vertex)) return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Returns the number of zero degree vertices.
+     * @complexity O(V)
+     */
+    zeroDegreeVertices(): number {
+        let k = 0;
+
+        for (const u of this.vertices) {
+            // Skips the full lists.
+            if (!this.adjacencyList.list[u.value].isEmpty()) continue;
+
+            k++;
+        }
+
+        return k;
+    }
+
+    /**
+     * Returns the number of odd degree vertices.
+     * @complexity O(V)
+     */
+    oddDegreeVertices(): number {
+        let k = 0;
+
+        for (const u of this.vertices) {
+            // Skips the even degree vertices.
+            if (this.adjacencyList.list[u.value].length % 2 === 0) continue;
+
+            k++;
+        }
+
+        return k;
+    }
+
+    /**
+     * Returns the number of even degree vertices.
+     * @complexity O(V)
+     */
+    evenDegreeVertices(): number {
+        let k = 0;
+
+        for (const u of this.vertices) {
+            // Skips the odd degree vertices.
+            if (this.adjacencyList.list[u.value].length % 2 !== 0) continue;
+
+            k++;
+        }
+
+        return k;
+    }
+
+    /**
+     * Returns the number of In-Degree Vertices.
+     * @complexity O(V)
+     */
+    inDegree(vertex: Vertex): number {
+        return this.adjacencyMatrix.inDegree(vertex);
+    }
+
+    /**
+     * Returns the number of Out-Degree Vertices.
+     * @complexity O(V)
+     */
+    outDegree(vertex: Vertex): number {
+        return this.adjacencyMatrix.outDegree(vertex);
+    }
+
+    /********************************************************************************
      * OTHERS
      ********************************************************************************/
 
