@@ -524,7 +524,7 @@ export class Graph {
     /********************************************************************************
      * EULERIAN PATH
      ********************************************************************************/
-    
+
     /**
      * Checks if graph has an Euler Circuit (Eulerian).
      * @note Graph should be undirected.
@@ -536,7 +536,7 @@ export class Graph {
         // Note that odd count can never be 1 for undirected graph.
         const oddDegreeVertices = this.oddDegreeVertices();
         // Don't count zero degree vertices.
-        const isConnected = (connectedComponents - zeroDegreeVertices) === 1;
+        const isConnected = connectedComponents - zeroDegreeVertices === 1;
 
         if (!isConnected) return false;
         else if (oddDegreeVertices === 0) return true;
@@ -555,7 +555,7 @@ export class Graph {
         // Note that odd count can never be 1 for undirected graph.
         const oddDegreeVertices = this.oddDegreeVertices();
         // Don't count zero degree vertices.
-        const isConnected = (connectedComponents - zeroDegreeVertices) === 1;
+        const isConnected = connectedComponents - zeroDegreeVertices === 1;
 
         if (!isConnected) return false;
         else if (oddDegreeVertices === 2) return true;
@@ -571,8 +571,8 @@ export class Graph {
     isEuleranCyce(): boolean {
         const scc = this.stronglyConnectedComponents().length;
         const zeroDegreeVertices = this.zeroDegreeVertices();
-        const isStronglyConnected = (scc - zeroDegreeVertices) === 1;
-        
+        const isStronglyConnected = scc - zeroDegreeVertices === 1;
+
         // Check if all non-zero degree vertices are strongly connected.
         if (!isStronglyConnected) return false;
 
