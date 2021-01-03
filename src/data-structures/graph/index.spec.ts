@@ -8,8 +8,6 @@ describe('Graph', () => {
     let vertices: Vertex[];
     let matrix: Array<Array<number | undefined>>;
     let list: {[vertex: string]: AdjacencyListNode[]};
-    // let adjacencyMatrix: AdjacencyMatrix;
-    // let adjacencyList: AdjacencyList;
 
     describe('constructor', () => {
         const undirectedUnweightedCyclicStub = getUndirectedUnweightedCyclicStub();
@@ -383,6 +381,144 @@ describe('Graph', () => {
             it('should be cyclic', () => {
                 expect(graph.isCyclic()).toBe(true);
             });
+        });
+    });
+
+    describe('Minimum Spanning Tree', () => {
+        beforeAll(() => {
+            matrix = [
+                [
+                    undefined,
+                    4,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    8,
+                    undefined,
+                ],
+                [
+                    4,
+                    undefined,
+                    8,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    11,
+                    undefined,
+                ],
+                [
+                    undefined,
+                    8,
+                    undefined,
+                    7,
+                    undefined,
+                    4,
+                    undefined,
+                    undefined,
+                    2,
+                ],
+                [
+                    undefined,
+                    undefined,
+                    7,
+                    undefined,
+                    9,
+                    14,
+                    undefined,
+                    undefined,
+                    undefined,
+                ],
+                [
+                    undefined,
+                    undefined,
+                    undefined,
+                    9,
+                    undefined,
+                    10,
+                    undefined,
+                    undefined,
+                    undefined,
+                ],
+                [
+                    undefined,
+                    undefined,
+                    4,
+                    14,
+                    10,
+                    undefined,
+                    2,
+                    undefined,
+                    undefined,
+                ],
+                [
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    2,
+                    undefined,
+                    1,
+                    6,
+                ],
+                [
+                    8,
+                    11,
+                    undefined,
+                    undefined,
+                    undefined,
+                    undefined,
+                    1,
+                    undefined,
+                    7,
+                ],
+                [
+                    undefined,
+                    undefined,
+                    2,
+                    undefined,
+                    undefined,
+                    undefined,
+                    6,
+                    7,
+                    undefined,
+                ],
+            ];
+            graph = new Graph({matrix});
+            vertices = graph.vertices;
+        });
+
+        it('case 01', () => {
+            const expected = [
+                ['7', '8', 1],
+                ['3', '9', 2],
+                ['6', '7', 2],
+                ['1', '2', 4],
+                ['3', '6', 4],
+                ['3', '4', 7],
+                ['1', '8', 8],
+                ['4', '5', 9],
+            ];
+            const received = graph
+                .minimumSpanningTree()
+                .map((edge) => [edge.u.value, edge.v.value, edge.weight]);
+
+            expect(received).toEqual(expected);
+        });
+
+        it('case 01 total mst weight', () => {
+            const received = graph
+                .minimumSpanningTree()
+                .reduce((weight, edge) => {
+                    weight += edge.weight;
+
+                    return weight;
+                }, 0);
+
+            expect(received).toEqual(37);
         });
     });
 });

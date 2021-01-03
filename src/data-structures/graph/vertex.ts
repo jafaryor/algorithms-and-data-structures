@@ -24,7 +24,7 @@ export class Vertex {
     /** The number of connected component where the vertex belongs to. */
     connectedComponent?: number;
 
-    constructor(public value: string, public weight: number = 0) {}
+    constructor(public value: string) {}
 
     /**
      * Marks a node as a discovered.
@@ -98,6 +98,17 @@ export class Vertex {
             this.timestamps.grayed
         }/${this.timestamps.blacken})`;
     }
+}
+
+/**
+ * The Graph's weighted edge (u, v).
+ */
+export class Edge {
+    constructor(
+        public u: Vertex,
+        public v: Vertex,
+        public weight: number = 1,
+    ) {}
 }
 
 /**

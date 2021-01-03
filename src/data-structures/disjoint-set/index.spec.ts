@@ -1,9 +1,8 @@
-import {DisjointSet} from '.';
+import {connectedComponents} from '.';
 import {DisjointSetNode} from './node';
 
 describe('DisjointSet', () => {
-    let disjointSet: DisjointSet<string>;
-    let connectedComponents: Array<DisjointSetNode<string>>;
+    let components: Array<DisjointSetNode<string>>;
     const vertices = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j'];
     const edges = [
         [0, 1], // (a, b)
@@ -16,56 +15,54 @@ describe('DisjointSet', () => {
     ];
 
     beforeAll(() => {
-        disjointSet = new DisjointSet<string>();
-
-        connectedComponents = disjointSet.connectedComponents(vertices, edges);
+        components = connectedComponents<string>(vertices, edges);
     });
 
     describe('first connected component', () => {
         it('"a" should be connected to "b"', () => {
-            expect(connectedComponents[0].toSting()).toEqual('a -> b');
+            expect(components[0].toSting()).toEqual('a -> b');
         });
 
         it('"b" should be a root', () => {
-            expect(connectedComponents[1].toSting()).toEqual('b');
+            expect(components[1].toSting()).toEqual('b');
         });
 
         it('"c" should be connected to "b"', () => {
-            expect(connectedComponents[2].toSting()).toEqual('c -> b');
+            expect(components[2].toSting()).toEqual('c -> b');
         });
 
         it('"d" should be connected to "b"', () => {
-            expect(connectedComponents[3].toSting()).toEqual('d -> b');
+            expect(components[3].toSting()).toEqual('d -> b');
         });
     });
 
     describe('second connected component', () => {
         it('"e" should be connected to "f"', () => {
-            expect(connectedComponents[4].toSting()).toEqual('e -> f');
+            expect(components[4].toSting()).toEqual('e -> f');
         });
 
         it('"f" should be a root', () => {
-            expect(connectedComponents[5].toSting()).toEqual('f');
+            expect(components[5].toSting()).toEqual('f');
         });
 
         it('"g" should be connected to "f"', () => {
-            expect(connectedComponents[6].toSting()).toEqual('g -> f');
+            expect(components[6].toSting()).toEqual('g -> f');
         });
     });
 
     describe('third connected component', () => {
         it('"h" should be connected to "i"', () => {
-            expect(connectedComponents[7].toSting()).toEqual('h -> i');
+            expect(components[7].toSting()).toEqual('h -> i');
         });
 
         it('"i" should be a root', () => {
-            expect(connectedComponents[8].toSting()).toEqual('i');
+            expect(components[8].toSting()).toEqual('i');
         });
     });
 
     describe('fourth connected component', () => {
         it('"j" should be a root', () => {
-            expect(connectedComponents[9].toSting()).toEqual('j');
+            expect(components[9].toSting()).toEqual('j');
         });
     });
 });

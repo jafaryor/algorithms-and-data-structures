@@ -1,10 +1,12 @@
 import {createArrayWithIncrementingValues} from '../../utils';
 import {AdjacencyList, AdjacencyListNode} from './list';
 import {AdjacencyMatrix} from './matrix';
-import {Vertex} from './vertex';
+import {Edge, Vertex} from './vertex';
 import {Queue} from '../queue';
 import {Stack} from '../stack';
 import {SinglyLinkedListNode} from '../singly-linked-list/node';
+import {DisjointSet} from '../disjoint-set';
+import {DisjointSetNode} from '../disjoint-set/node';
 
 /**
  * The Graph.
@@ -21,6 +23,8 @@ export class Graph {
     private n: number;
     /** The graph's vertices. */
     vertices: Vertex[];
+    /** The graph's edges. */
+    edges: Edge[];
     /** Te Adjacency List Representation. */
     adjacencyList: AdjacencyList;
     /** The Adjacency Matrix Representation. */
@@ -49,6 +53,25 @@ export class Graph {
         } else if (data.list && data.vertices) {
             this.initByList(data.list, data.vertices);
         }
+
+        this.edges = this.getEdges();
+    }
+
+    /**
+     * Returns the graph's edges.
+     * @complexity O(V + E)
+     */
+    getEdges(): Edge[] {
+        return this.vertices.reduce((edges: Edge[], u: Vertex) => {
+            // Skips the full lists.
+            this.adjacencyList.list[u.value].forEach(
+                (node: SinglyLinkedListNode<AdjacencyListNode>) => {
+                    edges.push(new Edge(u, node.data.vertex, node.data.weight));
+                },
+            );
+
+            return edges;
+        }, [] as Edge[]);
     }
 
     /**
@@ -90,6 +113,7 @@ export class Graph {
      * Adds a new edge (u, v, weight).
      */
     addEdge(u: Vertex, v: Vertex, weight: number = 1): void {
+        this.edges.push(new Edge(u, v, weight));
         this.adjacencyMatrix.addEdge(u, v, weight);
         this.adjacencyList.addEdge(u, v, weight);
     }
@@ -98,6 +122,13 @@ export class Graph {
      * Removes existing edge (u, v).
      */
     removeEdge(u: Vertex, v: Vertex): void {
+        const index = this.edges.findIndex((edge: Edge) => {
+            if (edge.u === u && edge.v === v) return true;
+            else return false;
+        });
+
+        index >= 0 && this.edges.slice(index, 1);
+
         this.adjacencyMatrix.removeEdge(u, v);
         this.adjacencyList.removeEdge(u, v);
     }
@@ -520,6 +551,52 @@ export class Graph {
 
         return new Graph({matrix: undirectedAdjacencyMatrix});
     }
+
+    /********************************************************************************
+     * MINIMUM SPANNING TREE
+     ********************************************************************************/
+
+    /**
+     * Kruskal's algorithm for finding a minimum spanning tree.
+     * Returns the minimum spanning tree as a set of edges.
+     * @complexity O(E * lgV)
+     */
+    minimumSpanningTree(): Edge[] {
+        let u: DisjointSetNode<Vertex>;
+        let v: DisjointSetNode<Vertex>;
+        // Makes every vertex a separate set.
+        const disjointSet = new DisjointSet<Vertex>(this.vertices);
+        // Array of edges sorted in non-decreasing order.
+        const sortedEdges = [...this.edges].sort(
+            (e1: Edge, e2: Edge) => e1.weight - e2.weight,
+        );
+
+        // Examines edges in order of weight, from lowest to highest.
+        return sortedEdges.reduce((minSpanningTree: Edge[], edge: Edge) => {
+            u = disjointSet.findByValue(edge.u)!;
+            v = disjointSet.findByValue(edge.v)!;
+
+            // Checks, for each edge (u, v), whether the end points
+            // u and v belong to the same tree.
+            // If they do, then the edge (u, v) cannot be added
+            // to the forest without creating a cycle,
+            // and the edge is discarded.
+            if (!disjointSet.sameComponent(u, v)) {
+                minSpanningTree.push(edge);
+                disjointSet.union(u, v);
+            }
+
+            return minSpanningTree;
+        }, [] as Edge[]);
+    }
+
+    /**
+     * Prim's algorithm for finding a minimum spanning tree.
+     * @complexity O(E + V*lgV)
+     */
+    // primMinimumSpanningTree(): Vertex {
+
+    // }
 
     /********************************************************************************
      * EULERIAN PATH

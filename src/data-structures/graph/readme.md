@@ -246,6 +246,61 @@ Fleury’s Algorithm for printing Eulerian trail or cycle in an _undirected grap
 Hamiltonian Path in an undirected graph is a path that visits each vertex exactly once. A Hamiltonian cycle (or Hamiltonian circuit) is a Hamiltonian Path such that there is an edge (in the graph) from the last vertex to the first vertex of the Hamiltonian Path.
 
 
+## Minimum Spanning Tree
+Assume that we have a connected,  undirected  graph `G = (V, E)` with a weight function `w: E -> R`, where `R` is the set of real numbers.
+
+__Spanning Tree__ `T` of _connected and undirected graph_ `G = (V, E)` is _acyclic and connected tree_ that connects all of the vertices and `T ⊆ E`.
+
+__Minimum Spanning Tree__ is a spanning tree whose total weight `w(T)` of all edges is minimized.
+
+![minimum-spanning-tree](./images/minimum-spanning-tree.png)
+
+A __cut__ `(S, V-S)` of an undirected graph `G = (V, E)` is a partition of `V`.
+
+We say that an edge `(u, v) ∈ E` __crosses__ the cut `(S, V-S)` if one of its endpoints is in `S` and the other is in `V-S`.
+
+We say that a cut __respects__ a set `A` of edges if no edge in `A` crosses the cut.
+
+An edge is a __light edge__ crossing a cut if its weight is the minimum of any edge crossing the cut.
+
+![graph-cut](./images/graph-cut.png)
+
+`A` is a subset of some minimum spanning tree. An edge `(u,v)` that we can add to `A` without violating this invariant, in the sense that `A U {(u, v)}` is also a subset of a minimum spanning tree is called __safe edge__.
+
+A minimum spanning tree has `V – 1` edges where `V` is the number of vertices in the given graph.
+
+#### Theorem
+Let `G = (V, E)` be a connected, undirected graph with a real-valued weight function `w` defined on `E`. Let `A` be a subset of `E` that is included in some minimum spanning tree for `G`, let `(S, V-S)` be any cut of `G` that respects `A`, and let `(u, v)` be a light edge crossing `(S, V-S)`. Then, edge `(u, v)` is safe for `A`.
+
+### Kruskal’s Algorithm
+The set `A` is a forest whose vertices are all those of the given graph.
+
+The safe edge added to `A` is always a least-weight edge in the graph that connects two distinct components.
+
+Kruskal’s algorithm finds a safe edge to add to the growing forest by finding, of all the edges that connect any two trees in the forest, an edge `(u, v)` of least weight. So, it is a greedy algorithm.
+
+Below are the steps for finding MST using Kruskal’s algorithm
+1. Sort all the edges in non-decreasing order of their weight. 
+2. Pick the smallest edge. Check if it forms a cycle with the spanning tree formed so far. If cycle is not formed, include this edge. Else, discard it. 
+3. Repeat step #2 until there are `V-1` edges in the spanning tree.
+
+#### Complexity Analysis
+The time to sort the edges is `O(E lgE)`.
+
+`findSet()` and `union()` operations on the disjoint-set forest performs `O(E)` times.  Along with the `|V|` `makeSet()` operations, these take a total of `O((V + E) * ⍺(V))` time, where `⍺` is the very slowly growing function.
+
+Because we assume that `G` is connected, we have `|E| ≥ |V| - 1`, and so the disjoint-set operations take `O((V + E) * ⍺(V)) ≤ O(2E * ⍺(V)) ≤ O(E * ⍺(V))` time.
+
+Moreover, since `⍺(|V|) = O(lg V) = O(lg E)`, the total running time of Kruskal’s algorithm is `O(E * lgE)`.
+
+Observing that `|E| < |V|^2`, we have `lg|E| = O(lgV)`, and so we can restate the running time of Kruskal’s algorithm as `O(E * lgV)`.
+
+Note: `disjointSet.findByValue()` is considered to have complexity of `O(1)`.
+
+![minimum-spanning-tree-example](./images/minimum-spanning-tree-example.png)
+
+
+
 
 
 
