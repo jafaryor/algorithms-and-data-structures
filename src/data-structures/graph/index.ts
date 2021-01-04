@@ -7,6 +7,8 @@ import {Stack} from '../stack';
 import {SinglyLinkedListNode} from '../singly-linked-list/node';
 import {DisjointSet} from '../disjoint-set';
 import {DisjointSetNode} from '../disjoint-set/node';
+import {MinPriorityQueue} from '../priority-queue';
+import {HeapNode} from '../heap/node';
 
 /**
  * The Graph.
@@ -559,6 +561,7 @@ export class Graph {
     /**
      * Kruskal's algorithm for finding a minimum spanning tree.
      * Returns the minimum spanning tree as a set of edges.
+     * @note Graph must be connected and undirected.
      * @complexity O(E * lgV)
      */
     minimumSpanningTree(): Edge[] {
@@ -592,11 +595,66 @@ export class Graph {
 
     /**
      * Prim's algorithm for finding a minimum spanning tree.
+     * @param root - the root of future MST. The algorithm starts from the root.
+     * @note Graph must be connected and undirected.
      * @complexity O(E + V*lgV)
      */
-    // primMinimumSpanningTree(): Vertex {
+    primMinimumSpanningTree(root: Vertex): Edge[] {
+        const minimumSpanningTree = [] as Edge[];
+        let u: HeapNode<Vertex>;
+        let v: HeapNode<Vertex> | undefined;
+        // The index of v in the array of heap nodes of Min Priority Queue.
+        let vIndex: number | undefined;
+        // Weight of (u, v) edge.
+        let weight: number;
+        // Min Priority Queue is used to keep track of edges crossing the cut.
+        // extractMin() returns the lightest edge crossing the cut.
+        const minPriorityQueue = new MinPriorityQueue<Vertex>(
+            this.vertices.map((vertex: Vertex) => {
+                vertex.predecessor = undefined;
 
-    // }
+                if (vertex === root) {
+                    // Root has the highest priority.
+                    return new HeapNode<Vertex>(0, root);
+                } else {
+                    // All other nodes are low priority.
+                    return new HeapNode<Vertex>(Infinity, vertex);
+                }
+            }),
+        );
+
+        while (!minPriorityQueue.isEmpty()) {
+            u = minPriorityQueue.extractMin()!;
+
+            this.adjacencyList.list[u.value.value].forEach(
+                (vertex: SinglyLinkedListNode<AdjacencyListNode>) => {
+                    weight = vertex.data.weight;
+                    vIndex = minPriorityQueue.findIndex(vertex.data.vertex);
+                    v =
+                        vIndex == null
+                            ? undefined
+                            : minPriorityQueue.getHeapNodes()[vIndex];
+
+                    // v.key is the weight of a light (v, v.predecessor)
+                    // connecting v to some vertex already placed into
+                    // the minimum spanning tree.
+                    if (v && weight < v.key) {
+                        v.value.predecessor = u.value;
+                        minPriorityQueue.increasePriority(vIndex!, weight);
+                    }
+                },
+            );
+
+            // Root doesn't have predecessor.
+            if (u.value.predecessor) {
+                minimumSpanningTree.push(
+                    new Edge(u.value.predecessor, u.value),
+                );
+            }
+        }
+
+        return minimumSpanningTree;
+    }
 
     /********************************************************************************
      * EULERIAN PATH

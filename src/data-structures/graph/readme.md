@@ -297,7 +297,44 @@ Observing that `|E| < |V|^2`, we have `lg|E| = O(lgV)`, and so we can restate th
 
 Note: `disjointSet.findByValue()` is considered to have complexity of `O(1)`.
 
-![minimum-spanning-tree-example](./images/minimum-spanning-tree-example.png)
+![kruskal-algorithm-example.png](./images/kruskal-algorithm-example.png)
+
+### Prim's algorithm
+Prim’s algorithm operates much like Dijkstra’s algorithm for finding shortest paths in a graph
+
+Prim’s algorithm has the property that the edges in the set `A` always form  a single  tree.
+
+Like Kruskal’s algorithm, Prim’s algorithm is also a Greedy algorithm. It starts with an empty spanning tree. The idea is to maintain two sets of vertices. The first set contains the vertices already included in the MST, the other set contains the vertices not yet included. At every step, it considers all the edges that connect the two sets, and picks the minimum weight edge from these edges. After picking the edge, it moves the other endpoint of the edge to the set containing MST.
+
+So, at every step of Prim’s algorithm, we find a cut, pick the minimum weight edge from the cut and include this vertex to MST Set.
+
+![prim-algorithm-example](./images/prim-algorithm-example.png)
+
+Watch this [video](https://www.youtube.com/watch?v=eB61LXLZVqs&t=202s) to find out how the algorithm works.
+
+#### Complexity Analysis
+We can use the `buildMinHeap()` procedure to perform lines `O(V)` time. The body of the `while` loop executes `|V|` times, and since each `extractMin()` operation takes `O(lgV)` time, the total time for all calls to `extractMin()` is `O(V * lgV)`.
+
+The `forEach()` loop executes `O(E)` times altogether, since the sum of the lengths of all adjacency lists is `2|E|`.
+
+Within the `forEach()` loop, we can implement the test for membership in `Q` in in constant time by keeping a bit for each vertex that tells whether or not it is in `Q`, and updating the bit when the vertex is removed from `Q`.
+
+`increasePriority()` operation on the min-heap, which a binary min-heap supports in `O(lgV)` time.  Thus, the total time for Prim’s algorithm is `O(V* lgV + E * lgV) = O(E * lgV)`, which is asymptotically the same as for our implementation of Kruskal’s algorithm.
+
+#### Improvement
+We can improve the asymptotic running time of Prim’s algorithm by using Fibonacci heaps. A Fibonacci heap holds `|V|` elements, an `extractMin()` operation  takes `O(lgV)` amortized time and a `decreaseKey()` operation takes `O(1)` amortized time. Therefore, if we use a Fibonacci heap to implement the min-priority queue, the running time of Prim’s algorithm improves to `O(E + V*lgV)`.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

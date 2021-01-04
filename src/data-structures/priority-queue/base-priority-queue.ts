@@ -32,6 +32,22 @@ export abstract class PriorityQueue<T> {
     }
 
     /**
+     * Finds node's index by its value.
+     * @complexity O(n)
+     */
+    findIndex(value: T): number | undefined {
+        return this.heap.findIndex(value);
+    }
+
+    /**
+     * Checks if a node with the certain value exists.
+     * @complexity O(n)
+     */
+    includes(value: T): boolean {
+        return this.heap.includes(value);
+    }
+
+    /**
      * Prints the priority queue.
      */
     print(): void {

@@ -89,6 +89,30 @@ export abstract class BinaryHeap<T> {
     }
 
     /**
+     * Finds node's index by its value.
+     * @complexity O(n)
+     */
+    findIndex(value: T): number | undefined {
+        for (let i = 0; i < this.nodes.length; i++) {
+            if (this.nodes[i].value === value) return i;
+        }
+
+        return;
+    }
+
+    /**
+     * Checks if a node with the certain value exists.
+     * @complexity O(n)
+     */
+    includes(value: T): boolean {
+        for (const node of this.nodes) {
+            if (node.value === value) return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Swaps two nodes.
      */
     protected swap(firstIndex: number, secondIndex: number): void {

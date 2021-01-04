@@ -491,7 +491,7 @@ describe('Graph', () => {
             vertices = graph.vertices;
         });
 
-        it('case 01', () => {
+        it("Kruskal's MST", () => {
             const expected = [
                 ['7', '8', 1],
                 ['3', '9', 2],
@@ -509,7 +509,7 @@ describe('Graph', () => {
             expect(received).toEqual(expected);
         });
 
-        it('case 01 total mst weight', () => {
+        it("Kruskal's MST weight", () => {
             const received = graph
                 .minimumSpanningTree()
                 .reduce((weight, edge) => {
@@ -519,6 +519,24 @@ describe('Graph', () => {
                 }, 0);
 
             expect(received).toEqual(37);
+        });
+
+        it("Prim's algorithm", () => {
+            const expected = [
+                ['1', '2', 1],
+                ['1', '8', 1],
+                ['8', '7', 1],
+                ['7', '6', 1],
+                ['6', '3', 1],
+                ['3', '9', 1],
+                ['3', '4', 1],
+                ['4', '5', 1],
+            ];
+            const received = graph
+                .primMinimumSpanningTree(vertices[0])
+                .map((edge) => [edge.u.value, edge.v.value, edge.weight]);
+
+            expect(received).toEqual(expected);
         });
     });
 });
