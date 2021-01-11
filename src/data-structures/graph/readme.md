@@ -325,15 +325,72 @@ Within the `forEach()` loop, we can implement the test for membership in `Q` in 
 We can improve the asymptotic running time of Prim’s algorithm by using Fibonacci heaps. A Fibonacci heap holds `|V|` elements, an `extractMin()` operation  takes `O(lgV)` amortized time and a `decreaseKey()` operation takes `O(1)` amortized time. Therefore, if we use a Fibonacci heap to implement the min-priority queue, the running time of Prim’s algorithm improves to `O(E + V*lgV)`.
 
 
+## Single-Source Shortest Paths
+In a __shortest-paths problem__,  we are given a _weighted_, _directed_  graph `G = (V, E)`, with weight function `w: E -> R` mapping  edges to real-valued weights. The weight `w(p)` of path `p = <v0, v1, ... v_k>` is the sum of the weights of its constituent edges.
 
+![shortest-path-definition](./images/shortest-path-definition.png)
 
+Edge  weights  can  represent  metrics  other  than  distances,  such  as  time,  cost,penalties,  loss,  or any other  quantity  that accumulates  linearly  along  a path and that we would want to minimize.
 
+> The breadth-first-search  algorithm is a shortest-paths algorithm that works on unweighted graphs.
 
+given a graph `G = (V, E)`, we want to find a shortest path from a given source vertex `s ∈ V` to each vertex `v ∈ V`.  The algorithm  for the single-source  problem can solve many other problems, including the following variants:
+* __Single-destination shortest-paths problem__: Find a shortest path to a given _destination_ vertex `t` from each vertex `v`. By reversing the direction of each edge in the graph, we can reduce this problem to a single-source problem.
+* __Single-pair shortest-path problem__: Find a shortest  path from `u` to `v` for  given vertices `u` and `v`. If we solve the single-source problem with source vertex `u`, we solve this problem also.  Moreover, all known algorithms for this problem have  the  same  worst-case  asymptotic  running  time  as  the  best  single-source algorithms.
+* All-pairs shortest-paths problem:Find a shortest path from `u` to `v` for every pair of vertices `u` and `v`.  Although we can solve this problem by running a single-source algorithm once from each vertex, we usually can solve it faster.
 
+#### Optimal substructure of a shortest path
+Shortest-paths  algorithms  typically  rely  on  the  property  that  a  shortest  path  between  two vertices  contains  other  shortest  paths  within it.
 
+#### Negative-weight edges
+Some  instances  of  the  single-source  shortest-paths  problem  may  include  edges whose  weights  are  negative.    If  the  graph contains  no  negative-weight cycles reachable  from the source `s`,  then for  all `v ∈ V`,  the shortest-path weight `ẟ(s, v)` remains well defined, even if it has a negative value.  If the graph contains a negative-weight cycle reachable from `s`, however, shortest-path weights are  not  well  defined.   No  path  from `s` to  a  vertex  on  the  cycle  can  be  a  shortest path we can always find a path with lower weight by following the proposed “shortest” path and then traversing the negative-weight cycle one more time. If there is a negative-weight cycle on some path from `s` to `v`, we define `ẟ(s, v) = -∞`.
 
+![negative-weight-cycle](./images/negative-weight-cycle.png)
 
+Shortest path  cannot  contain  a negative-weight  cycle. Nor can it contain a positive-weight  cycle,  since removing the cycle from the path produces a path with the same source and destination vertices and a lower path weight.
 
+#### Representing shortest paths
+We maintain for each vertex `v ∈ V` a predecessor `v.p` that is either another vertex or `null`.The shortest-paths algorithms in this chapter set the `p` attributes so that the chain of predecessors originating at a vertex `v` runs backwards along a shortest path from `s` to `v`.
+
+A __shortest-paths tree__ is like the breadth-first tree, but it contains shortest paths from the source defined in terms of edge weights instead of numbers of edges.  To be precise, let `G = (V, E)` be a weighted, directed graph with weight function `w: E -> R`, and assume that `G` contains no negative-weight cycles  reachable  from  the  source  vertex `s ∈ V`,  so  that  shortest  paths  are  well defined.  A __shortest-paths tree__ rooted at `s` is a directed subgraph `G' = (V', E')`, where `V' ⊆ V` and `E' ⊆ E`, such that
+1. `V'` is the set of vertices reachable from `s` in `G`
+2. `G'` forms a rooted tree with root `s`
+3. For all `v ∈ V'`, the unique simple path from `s` to `v` in `G'` is a shortest path from `s` to `v` in `G`.
+
+![shortest-path-tree](./images/shortest-path-tree.png)
+
+> Shortest paths are not necessarily unique, and neither are shortest-paths trees.
+
+#### Relaxation
+For each vertex `v ∈ V`, we maintain an attribute `v.d`, which is an upper bound on the weight of a shortest path from source `s` to `v`. We call  `v.d` a __shortest-path estimate__.
+
+The process of relaxing an edge `(u, v)` consists of testing whether we can improve  the  shortest  path  to `v` found  so far  by going  through `u` and,  if  so,  updating `v.d` and `v.p`.  A relaxation step may decrease the value of the shortest-path estimate `v.d` and update `v`’s predecessor  attribute `v.p`.
+
+### The Bellman-Ford Algorithm
+TheBellman-Ford algorithm solves the single-source  shortest-paths  problem in the general case in which edge weights may be negative.  Given a weighted,  directed graph `G = (V, E)` with sources and weight function `w: E -> R`,theBellman-Ford algorithm returns a boolean value indicating whether or not there isa negative-weight  cycle that is reachable  from the source.  If there is such a cy-cle, the algorithm indicates that no solution exists.  If there is no such cycle, the algorithm produces the shortest paths and their weights.
+
+Example:
+
+![bellman-ford-example](./images/bellman-ford-example.png)
+
+#### Lemma
+Let `G = (V, E)` be a weighted, directed graph with source `s` and weight  function `w: E -> R`, and assume that `G` contains no negative-weight cycles that are reachable from `s`. Then, after the `|V| - 1` iterations of the for loop of `bellmanFordShortestPath()`, we have `v.d = ẟ(s, v)` for all vertices `v` that are reachable from `s`.
+
+#### Theorem 24.4 (Correctness of the Bellman-Ford algorithm)
+Let `bellmanFordShortestPath()` be  run  on  a  weighted,  directed  graph `G = (V, E)` with source `s` and weight function `w: E -> R`. If `G` contains no negative-weight cycles that are reachable from `s`, then the algorithm returns `true`, we have `v.d = ẟ(s, v)` for all vertices `v ∈ V`, and the predecessor  subgraph `G_p` is a shortest-paths tree rooted at `s`. If `G` does contain a negative-weight cycle reachable from `s`, then the algorithm returns `false`.
+
+### Single-source shortest paths in directed acyclic graphs
+By  relaxing  the  edges  of  a  weighted  __dag__  (directed  acyclic  graph) `G = (V, E)` according to a topological sort of its vertices, we can compute shortest paths from a single source in `θ(V + E)` time. Shortest paths are always well defined in a dag, since even if there are negative-weight edges, no negative-weight cycles can exist.
+
+The algorithm starts by topologically sorting the dag to im-pose a linear ordering on the vertices.  If the dag contains a path from vertex `u` to vertex `v`, then `u` precedes `v` in the topological sort. We make just one pass over the vertices in the topologically sorted order. As we process each vertex, we relax each edge that leaves the vertex.
+
+![dag-shortest-path-example](./images/dag-shortest-path-example.png)
+
+An interesting application of this algorithm arises in determining critical paths in _PERT chart_ analysis.  Edges represent jobs to be performed, and edge weights represent the times required to perform particular jobs.  If edge `(u, v)` enters vertex `v` and edge `(v, x)` leaves `v`, then job `(u, v)` must be performed before job `(v, x)`. A path through this dag represents a sequence of jobs that must be performed in a particular order.  A __critical path__ is a longest path through the dag, corresponding to the longest time to perform any sequence of jobs.  Thus, the weight of a critical path provides a lower bound on the total time to perform all the jobs.  We can find a critical path by either:
+* Negating the edge weights and running `dagShortestPath()`, or
+* Running  `dagShortestPath()`, with the modification that we replace `∞` by `-∞` before the `for` loop starts and  `>` by `<` in the `relax()` procedure.
+
+### Dijkstra’s algorithm
 
 
 

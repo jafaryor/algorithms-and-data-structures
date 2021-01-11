@@ -174,13 +174,17 @@ export class Graph {
     /**
      * The Breadth First Search.
      * Returns the reference to root of a built Breadth First Tree.
+     * @note Finds a shortest path from root to all vertices
+     *       if the graph is unweighted.
      * @complexity O(V + E)
      */
     breadthFirstSearch(root: Vertex): Vertex {
         const queue = new Queue<Vertex>();
         let u: Vertex;
 
-        this.prepareVerticesForBFS(root);
+        this.resetVertices();
+        // We start searching from root. so mark root as discovered.
+        root.markAsDiscovered();
         queue.enqueue(root);
 
         while (!queue.isEmpty()) {
@@ -202,20 +206,6 @@ export class Graph {
         return root;
     }
 
-    /**
-     * Sets a proper initial state for each vertex before BFS.
-     * @complexity O(V)
-     */
-    private prepareVerticesForBFS(root: Vertex): void {
-        // Unmark all vertices before searching.
-        for (const vertex of this.vertices) {
-            vertex.unmark();
-        }
-
-        // We start searching from root. so mark root as discovered.
-        root.markAsDiscovered();
-    }
-
     /********************************************************************************
      * DEPTH FIRST SEARCH
      ********************************************************************************/
@@ -228,7 +218,7 @@ export class Graph {
     depthFirstSearch(): Vertex[] {
         const roots = [] as Vertex[];
 
-        this.prepareVerticesForDFS();
+        this.resetVertices();
         this.time = 0;
 
         for (const vertex of this.vertices) {
@@ -244,17 +234,6 @@ export class Graph {
         }
 
         return roots;
-    }
-
-    /**
-     * Sets a proper initial state for each vertex before DFS.
-     * @complexity O(V)
-     */
-    private prepareVerticesForDFS(): void {
-        // Unmark all vertices before searching.
-        for (const vertex of this.vertices) {
-            vertex.unmark();
-        }
     }
 
     /**
@@ -291,7 +270,7 @@ export class Graph {
         const stack = new Stack<Vertex>();
         let v: Vertex | undefined;
 
-        this.prepareVerticesForDFS();
+        this.resetVertices();
         this.time = 0;
 
         stack.push(u);
@@ -408,7 +387,7 @@ export class Graph {
      * @complexity O(E + V)
      */
     connectedComponents(): number {
-        this.prepareVerticesForDFS();
+        this.resetVertices();
         this.time = 0;
         this.connectedComponent = 0;
 
@@ -456,7 +435,7 @@ export class Graph {
      * @complexity O(V + E)
      */
     isCyclic(): boolean {
-        this.prepareVerticesForDFS();
+        this.resetVertices();
 
         for (const vertex of this.vertices) {
             if (vertex.isGray || vertex.isBlack) continue;
@@ -657,6 +636,110 @@ export class Graph {
     }
 
     /********************************************************************************
+     * SHORTEST PATH
+     ********************************************************************************/
+
+    /**
+     * Bellman Ford Algorithm for calculating shortest path from a root.
+     * Returns true, if the graph contains no negative-weight cycles.
+     * @assumes the graph has negative weight edges.
+     * @note Greedy Algorithm.
+     * @complexity O(V * E)
+     */
+    bellmanFordShortestPath(root: Vertex): boolean {
+        let result: boolean;
+        this.resetVertices();
+        // We start searching from root. so mark root as discovered.
+        root.markAsDiscovered();
+
+        // Relaxes each edge |V| - 1 times.
+        // Why? Because the shortest path has at most |V| - 1 edges.
+        for (let i = 0; i < this.vertices.length - 1; i++) {
+            for (const u of this.vertices) {
+                this.adjacencyList.list[u.value].forEach(
+                    (v: SinglyLinkedListNode<AdjacencyListNode>) => {
+                        this.relax(u, v.data.vertex, v.data.weight);
+                    },
+                );
+            }
+        }
+
+        // Checks the graph for a negative-weight cycles.
+        for (const u of this.vertices) {
+            result = this.adjacencyList.list[u.value].forEach(
+                (v: SinglyLinkedListNode<AdjacencyListNode>) => {
+                    if (v.data.vertex.distance < u.distance + v.data.weight) {
+                        // A shorter path is discovered, which is possible
+                        // only if graph contains a negative-weight cycles.
+                        return false;
+                    } else {
+                        return undefined;
+                    }
+                },
+            );
+
+            // If a negative-weight cycles were detected, terminate.
+            if (result === false) return false;
+        }
+
+        // No negative-weight cycles were detected.
+        return true;
+    }
+
+    /**
+     * Calculates a shortest paths in directed acyclic graphs from a root.
+     * @complexity O(V + E)
+     */
+    dagShortestPath(root: Vertex): void {
+        const topologicallySortedVertices = this.topologicalSort();
+
+        this.resetVertices();
+        // We start searching from root. so mark root as discovered.
+        root.markAsDiscovered();
+
+        for (const u of topologicallySortedVertices) {
+            this.adjacencyList.list[u.value].forEach(
+                (v: SinglyLinkedListNode<AdjacencyListNode>) => {
+                    this.relax(u, v.data.vertex, v.data.weight);
+                },
+            );
+        }
+    }
+
+    /**
+     * @assumes the graph might have edges with negative weight.
+     * @note Dynamic Programming Algorithm.
+     */
+    floydWarshallShortestPath(root: Vertex): void {
+        this.resetVertices();
+        // We start searching from root. so mark root as discovered.
+        root.markAsDiscovered();
+    }
+
+    /**
+     * @assumes the graph has no edge with negative weight.
+     * @note Greedy Algorithm.
+     */
+    dijkstraShortestPath(root: Vertex): void {
+        this.resetVertices();
+        // We start searching from root. so mark root as discovered.
+        root.markAsDiscovered();
+    }
+
+    /**
+     * Performs a relation on edge (u, v).
+     * @complexity O(1)
+     */
+    private relax(u: Vertex, v: Vertex, weight: number): void {
+        // Checks if the edge (u, v) gives a shorter path.
+        if (v.distance > u.distance + weight) {
+            // Edge (u, v) is shorter than previously discovered path.
+            v.distance = u.distance + weight;
+            v.predecessor = u;
+        }
+    }
+
+    /********************************************************************************
      * EULERIAN PATH
      ********************************************************************************/
 
@@ -790,6 +873,17 @@ export class Graph {
     /********************************************************************************
      * OTHERS
      ********************************************************************************/
+
+    /**
+     * Sets a proper initial state for each vertex.
+     * @complexity O(V)
+     */
+    private resetVertices(): void {
+        // Unmark all vertices before searching.
+        for (const vertex of this.vertices) {
+            vertex.unmark();
+        }
+    }
 
     /**
      * Return the array of ['1', '2', '3', ... 'n'] which will be used a default vertex values.
