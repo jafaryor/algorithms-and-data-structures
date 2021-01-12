@@ -1,4 +1,4 @@
-## Tetmins:
+## Terminology:
 * __online algorithm__ - is one that can process its input piece-by-piece in a serial fashion, i.e., in the order that the input is fed to the algorithm, without having the entire input available from the start.
 
 * __in-place algorithm__ - is an algorithm which transforms input using no auxiliary data structure. The input is usually overwritten by the output as the algorithm executes. In-place algorithm updates input sequence only through replacement or swapping of elements.

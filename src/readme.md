@@ -680,6 +680,52 @@ When the `i`-th operation is a `TABLE-DELETE()` and `α_i-1 ≥ 1/2`, the amorti
 In summary, since the amortized cost of each operation is bounded above bya constant, the actual time for any sequence of `n` operations on a dynamic table is `O(n)`.
 
 
+## Linear Programming
+In the general linear-programming problem, we are given an `m x n` matrix `A`,an `m`-vector `b`, and an `n`-vector `c`. We wish to find a vector `x` of `n` elements that maximizes the objective function `∑[i = 1 -> n](c_i * x_i)` subject to the `m` constraints given by `Ax ≤ b`.
+
+Sometimes we don’t really care about the objective function; we just wish to find any __feasible solution__, that is, any vector `x` that satisfies `Ax ≤ b`, or to determine that no feasible solution exists. We shall focus on one such __feasibility problem__.
+
+### Systems of difference constraints
+In a system of difference constraints, each row of the linear-programming matrix `A` contains one `1` and one `-1`, and all other entries of `A`are `0`.  Thus, the constraints given by `Ax ≤ b` are a set of `m` difference constraints involving `n` unknowns, in which each constraint is a simple linear inequality of the form `x_j - x_i ≤ b_k`, where `1 ≤ i`, `j ≤ n`, `i ≠ j`, and `1 ≤ k ≤ m`.
+
+![system-of-difference-constraints](./images/system-of-difference-constraints.png)
+
+#### Lemma
+Let `x = (x1, x2, ..., x_n)` be a solution to a system `Ax ≤ b` of  difference  constraints, and let `d` be any constant.  Then `x + d = (x1 + d, x2 + d, ..., x_n + d)` is a solution to `Ax ≤ b` as well.
+
+### Constraint graphs
+We  can  interpret  systems  of  difference  constraints  from  a  graph-theoretic  point of  view.   In  a  system `Ax ≤ b` of  difference  constraints,  we  view  the `m x n` linear-programming  matrix `A` as the transpose of an incidence matrix for a graph with `n` vertices and `m` edges.  Each vertex `v_i` in the graph, for `i = 1, 2, ..., n`, corresponds to one of the `n` unknown variables `x_i`. Each directed edge in the graph corresponds  to one of the min equalities  involving  two unknowns.
+
+More formally, given a system `Ax ≤ b` of difference constraints, the corresponding __constraint graph__ is a weighted, directed graph `G = (V, E)`,where `V = {v0, v1, ..., v_n}` and `E = {(v_i, v_j): x_j - x_i ≤ b_k is a constraint} ⋃ {(v0, v1), (v0, v2), (v0, v3), ..., (v0, v_n)}`.
+
+![constraint-graph](./images/constraint-graph.png)
+
+The constraint graph contains the additional vertex `v0`, as we shall see shortly, to guarantee that the graph has some vertex which can reach all other vertices. Thus, the vertex set `V` consists of a vertex `v_i` for each unknown `x_i`, plus an additional vertex `v0`.  The edge set `E` contains  an edge for each difference  constraint,  plus an edge `(v0, v_i)` for each unknown `x_i`.If `x_j - x_i ≤ b` is a difference constraint, then the weight of edge `(v_i), v_j)` is `w(v_i, v_j) = b_k`. The weight of each edge leaving `v0` is `0`.
+
+#### Theorem
+Given a system `Ax ≤ b` of difference constraints, let `G = (V, E)` be the corresponding constraint graph. If `G` contains no negative-weight cycles, then
+
+`x = (ẟ(v0, v1), ẟ(v0, v2), ẟ(v0, v3), ..., ẟ(v0, v_n))`, where `ẟ(u, v)` is a shortest path between vertices `u` and `v` in the graph `G`.
+
+is a feasible solution for the system. If `G` contains a negative-weight cycle, then there is no feasible solution for the system.
+
+#### Solving systems of difference constraints
+The above theorem  tells  us  that  we  can  use  the  __Bellman-Ford  algorithm__  to  solve  a system  of  difference  constraints.    Because  the  constraint  graph  contains  edges from the source vertex `v0` to all other vertices,  any negative-weight  cycle in the constraint  graph  is  reachable  from `v0`. If  the  Bellman-Ford  algorithm  returns `true`,  then  the  shortest-path  weights  give  a feasible  solution  to  the  system.
+
+In the constraint graph above, for example,  the shortest-path  weights provide the feasible solution `x = (-5, -3, 0, -1, -4)`, and by above Lemma, `x = (d - 5, d - 3, d, d - 1, d - 4)` is also a feasible solution for any constant `d`.
+
+If the Bellman-Ford algorithm returns `false`, there is no feasible solution to the system of difference constraints.
+
+A system of difference constraints with `m` constraints on `n` unknowns produces a graph with `n + 1` vertices and `n + m` edges. Thus, using  the  Bellman-Ford algorithm, we can solve the system in `O((n + 1)(n + m)) = O(n*m + n^2)` time.s
+
+
+
+
+
+
+
+
+
 ---
 
 #### [Introduction to Algorithms by Thomas H. Cormen, Charles E. Leiserson, and Ronald L. Rivest](http://staff.ustc.edu.cn/~csli/graduate/algorithms/book6/toc.htm)

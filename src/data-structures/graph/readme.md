@@ -30,6 +30,18 @@ Because the adjacency-list representation provides a compact way to represent __
 We may prefer an adjacency-matrix representation,  however, when the graph is __dense__ — `|E|` is close to `|V|^2` — or when we need to be able to tell quickly if there is an edge connecting two given vertices.
 
 
+### Incidence matrix
+In graph theory, a vertex is __incident__ to an edge if the vertex is one of the two vertices the edge connects.
+
+__Incidence matrix__ is that (0, 1)-matrix which represents the graph such that with the help of that matrix we can draw a graph.
+
+The __incidence matrix__ of a directed graph `G = (V, E)` with no self-loops is a `|V| x |E|` matrix `B = (b_ij)` such that:
+
+`b_ij =`
+* `-1, if j leaves vertex i`
+* `1, if edge j enters vertex i`
+* `0, otherwise`
+
 ## Search
 Searching a graph means systematically following the edges of the graph so as to visit  the vertices  of the graph.
 
@@ -365,6 +377,9 @@ A __shortest-paths tree__ is like the breadth-first tree, but it contains shorte
 For each vertex `v ∈ V`, we maintain an attribute `v.d`, which is an upper bound on the weight of a shortest path from source `s` to `v`. We call  `v.d` a __shortest-path estimate__.
 
 The process of relaxing an edge `(u, v)` consists of testing whether we can improve  the  shortest  path  to `v` found  so far  by going  through `u` and,  if  so,  updating `v.d` and `v.p`.  A relaxation step may decrease the value of the shortest-path estimate `v.d` and update `v`’s predecessor  attribute `v.p`.
+
+#### Properties of shortest paths and relaxation
+![shortest-path-properties](./images/shortest-path-properties.png)
 
 ### The Bellman-Ford Algorithm
 TheBellman-Ford algorithm solves the single-source  shortest-paths  problem in the general case in which edge weights may be negative.  Given a weighted,  directed graph `G = (V, E)` with sources and weight function `w: E -> R`,theBellman-Ford algorithm returns a boolean value indicating whether or not there isa negative-weight  cycle that is reachable  from the source.  If there is such a cy-cle, the algorithm indicates that no solution exists.  If there is no such cycle, the algorithm produces the shortest paths and their weights.
