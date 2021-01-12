@@ -391,6 +391,30 @@ An interesting application of this algorithm arises in determining critical path
 * Running  `dagShortestPath()`, with the modification that we replace `∞` by `-∞` before the `for` loop starts and  `>` by `<` in the `relax()` procedure.
 
 ### Dijkstra’s algorithm
+Dijkstra’s  algorithm  maintains  a  set `S` of  vertices  whose  final  shortest-path weights from the source `s` have already been determined.  The algorithm repeatedly selects the vertex `u ∈ V - S` with the minimum shortest-path estimate, adds `u` to `S`, and relaxes all edges leaving `u`.
+
+![dijkstra-example](./images/dijkstra-example.png)
+
+Because Dijkstra’s algorithm always chooses the “lightest” or “closest” vertex in `V - S` to add to set `S`, we say that it uses a greedy strategy.
+
+#### Complexity Analysis
+Each `extractMin()` operation then takes time `O(lgV)`.  As before, there are `|V|` such operations. The time to build the binary min-heap is `O(V)`. Each `increasePriority()` operation takes time `O(lgV)`, and there are still at most `|E|` such operations. The total running time is therefore `O((V + E) * lgV)`, which is `O(E * lgV)` if all vertices are reachable from the source.
+
+`O(V) + O(E) + O(V*lgV) + O(E*lgV) = `
+    `= O((1 + V) * lgV) + O((1 + E) * lgV) = `
+    `= O(V * lgV) + O(E * lgV) = `
+    `= O((V + E) * lgV)`
+
+#### Improvement
+We can in fact achieve a running time of `O(E + V * lgV)` by implementing the min-priority queue with a Fibonacci Heap.
+
+The amortized cost of each of the `|V|` `extractMin()` operations is `O(lgV)`, and each `decreaseKey()` call, of which there are at most `|E|`, takes only `O(1)` amortized time.  Historically,  the development  of Fibonacci heaps was motivated by the observation that Dijkstra’s algorithm typically makes many more `increasePriority()` calls than `extractMin()` calls.
+
+#### Notice
+Dijkstra’s algorithm resembles both breadth-first search and Prim’s algorithm for computing minimum spanning trees.  It is like breadth-first search in that set `S` corresponds to the set of black vertices in a breadth-first search; just as vertices in `S` have their final shortest-path weights, so do black vertices in a breadth-first search have their correct breadth-first distances.Dijkstra’s  algorithm  is like  Prim’s algorithm  in  that  both  algorithms  use a min-priority queue to find the “lightest” vertex outside a given set (the set `S` in Dijkstra’s algorithm and the tree being grown in Prim’s algorithm), add this vertex into the set, and adjust the weights of the remaining vertices outside the set accordingly.
+
+
+
 
 
 

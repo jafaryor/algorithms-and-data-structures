@@ -588,18 +588,8 @@ export class Graph {
         let weight: number;
         // Min Priority Queue is used to keep track of edges crossing the cut.
         // extractMin() returns the lightest edge crossing the cut.
-        const minPriorityQueue = new MinPriorityQueue<Vertex>(
-            this.vertices.map((vertex: Vertex) => {
-                vertex.predecessor = undefined;
-
-                if (vertex === root) {
-                    // Root has the highest priority.
-                    return new HeapNode<Vertex>(0, root);
-                } else {
-                    // All other nodes are low priority.
-                    return new HeapNode<Vertex>(Infinity, vertex);
-                }
-            }),
+        const minPriorityQueue = this.getMinPriorityQueueWithResetVertices(
+            root,
         );
 
         while (!minPriorityQueue.isEmpty()) {
@@ -640,10 +630,9 @@ export class Graph {
      ********************************************************************************/
 
     /**
-     * Bellman Ford Algorithm for calculating shortest path from a root.
+     * Bellman Ford Algorithm for calculating shortest path from a single source.
      * Returns true, if the graph contains no negative-weight cycles.
      * @assumes the graph has negative weight edges.
-     * @note Greedy Algorithm.
      * @complexity O(V * E)
      */
     bellmanFordShortestPath(root: Vertex): boolean {
@@ -687,7 +676,8 @@ export class Graph {
     }
 
     /**
-     * Calculates a shortest paths in directed acyclic graphs from a root.
+     * Calculates a shortest paths in directed acyclic graphs from a single source.
+     * @assumes the graph is acyclic and has a negative weight edges.
      * @complexity O(V + E)
      */
     dagShortestPath(root: Vertex): void {
@@ -697,6 +687,7 @@ export class Graph {
         // We start searching from root. so mark root as discovered.
         root.markAsDiscovered();
 
+        // Relaxes all vertices in topological order.
         for (const u of topologicallySortedVertices) {
             this.adjacencyList.list[u.value].forEach(
                 (v: SinglyLinkedListNode<AdjacencyListNode>) => {
@@ -704,6 +695,55 @@ export class Graph {
                 },
             );
         }
+    }
+
+    /**
+     * Dijkstra Algorithm for calculating shortest path from a single source.
+     * @assumes the graph has no edge with negative weight.
+     * @complexity O((V + E) * lgV)
+     */
+    dijkstraShortestPath(root: Vertex): Vertex[] {
+        let u: HeapNode<Vertex>;
+        let v: HeapNode<Vertex> | undefined;
+        // The index of v in the array of heap nodes of Min Priority Queue.
+        let vIndex: number | undefined;
+        // Weight of (u, v) edge.
+        let weight: number;
+        // The shortest path.
+        const path = [] as Vertex[];
+        // Min Priority Queue is used to keep track of edges crossing the cut.
+        // extractMin() returns the lightest edge crossing the cut.
+        const minPriorityQueue = this.getMinPriorityQueueWithResetVertices(
+            root,
+        );
+
+        while (!minPriorityQueue.isEmpty()) {
+            u = minPriorityQueue.extractMin()!;
+            path.push(u.value);
+
+            this.adjacencyList.list[u.value.value].forEach(
+                (vertex: SinglyLinkedListNode<AdjacencyListNode>) => {
+                    weight = vertex.data.weight;
+                    vIndex = minPriorityQueue.findIndex(vertex.data.vertex);
+                    v =
+                        vIndex == null
+                            ? undefined
+                            : minPriorityQueue.getHeapNodes()[vIndex];
+
+                    // v.key is the weight of a shortest path from root to v.
+                    // Relaxes each edge adjacent to u.
+                    if (v && v.key > u.key + weight) {
+                        v.value.predecessor = u.value;
+                        minPriorityQueue.increasePriority(
+                            vIndex!,
+                            u.key + weight,
+                        );
+                    }
+                },
+            );
+        }
+
+        return path;
     }
 
     /**
@@ -717,17 +757,7 @@ export class Graph {
     }
 
     /**
-     * @assumes the graph has no edge with negative weight.
-     * @note Greedy Algorithm.
-     */
-    dijkstraShortestPath(root: Vertex): void {
-        this.resetVertices();
-        // We start searching from root. so mark root as discovered.
-        root.markAsDiscovered();
-    }
-
-    /**
-     * Performs a relation on edge (u, v).
+     * Performs a relaxation on edge (u, v).
      * @complexity O(1)
      */
     private relax(u: Vertex, v: Vertex, weight: number): void {
@@ -883,6 +913,29 @@ export class Graph {
         for (const vertex of this.vertices) {
             vertex.unmark();
         }
+    }
+
+    /**
+     * Returns the Min Priority Queue with all vertices reset
+     * and root marked as discovered.
+     * @complexity O(V)
+     */
+    getMinPriorityQueueWithResetVertices(
+        root: Vertex,
+    ): MinPriorityQueue<Vertex> {
+        return new MinPriorityQueue<Vertex>(
+            this.vertices.map((vertex: Vertex) => {
+                vertex.predecessor = undefined;
+
+                if (vertex === root) {
+                    // Root has the highest priority.
+                    return new HeapNode<Vertex>(0, root);
+                } else {
+                    // All other nodes are low priority.
+                    return new HeapNode<Vertex>(Infinity, vertex);
+                }
+            }),
+        );
     }
 
     /**
