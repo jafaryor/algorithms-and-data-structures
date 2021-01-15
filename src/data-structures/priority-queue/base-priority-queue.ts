@@ -50,7 +50,7 @@ export abstract class PriorityQueue<T> {
     /**
      * Prints the priority queue.
      */
-    print(): void {
-        this.heap.print();
+    print(): string {
+        return this.heap.print();
     }
 }

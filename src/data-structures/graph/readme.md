@@ -388,6 +388,8 @@ Example:
 
 ![bellman-ford-example](./images/bellman-ford-example.png)
 
+
+
 #### Lemma
 Let `G = (V, E)` be a weighted, directed graph with source `s` and weight  function `w: E -> R`, and assume that `G` contains no negative-weight cycles that are reachable from `s`. Then, after the `|V| - 1` iterations of the for loop of `bellmanFordShortestPath()`, we have `v.d = ẟ(s, v)` for all vertices `v` that are reachable from `s`.
 
@@ -397,7 +399,7 @@ Let `bellmanFordShortestPath()` be  run  on  a  weighted,  directed  graph `G = 
 ### Single-source shortest paths in directed acyclic graphs
 By  relaxing  the  edges  of  a  weighted  __dag__  (directed  acyclic  graph) `G = (V, E)` according to a topological sort of its vertices, we can compute shortest paths from a single source in `θ(V + E)` time. Shortest paths are always well defined in a dag, since even if there are negative-weight edges, no negative-weight cycles can exist.
 
-The algorithm starts by topologically sorting the dag to im-pose a linear ordering on the vertices.  If the dag contains a path from vertex `u` to vertex `v`, then `u` precedes `v` in the topological sort. We make just one pass over the vertices in the topologically sorted order. As we process each vertex, we relax each edge that leaves the vertex.
+The algorithm starts by topologically sorting the dag to impose a linear ordering on the vertices.  If the dag contains a path from vertex `u` to vertex `v`, then `u` precedes `v` in the topological sort. We make just one pass over the vertices in the topologically sorted order. As we process each vertex, we relax each edge that leaves the vertex.
 
 ![dag-shortest-path-example](./images/dag-shortest-path-example.png)
 

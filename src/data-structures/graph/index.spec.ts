@@ -539,6 +539,77 @@ describe('Graph', () => {
             expect(received).toEqual(expected);
         });
     });
+
+    describe('Single Source Shortest Path', () => {
+        describe('Bellman-Ford', () => {
+            beforeAll(() => {
+                matrix = [
+                    [undefined, 6, 7, undefined, undefined],
+                    [undefined, undefined, 8, -4, 5],
+                    [undefined, undefined, undefined, 9, -3],
+                    [2, undefined, undefined, undefined, 7],
+                    [undefined, -2, undefined, undefined, undefined],
+                ];
+                graph = new Graph({matrix});
+                vertices = graph.vertices;
+            });
+
+            it('shortest path tree', () => {
+                expect(graph.bellmanFordShortestPath(vertices[0])).toBe(true);
+
+                expect(vertices[0].predecessor).toBeUndefined();
+                expect(vertices[1].predecessor).toBe(vertices[4]);
+                expect(vertices[2].predecessor).toBe(vertices[0]);
+                expect(vertices[3].predecessor).toBe(vertices[1]);
+                expect(vertices[4].predecessor).toBe(vertices[2]);
+            });
+
+            it('shortest path weights', () => {
+                expect(graph.bellmanFordShortestPath(vertices[0])).toBe(true);
+
+                expect(vertices[0].distance).toEqual(0);
+                expect(vertices[1].distance).toEqual(2);
+                expect(vertices[2].distance).toEqual(7);
+                expect(vertices[3].distance).toEqual(-2);
+                expect(vertices[4].distance).toEqual(4);
+            });
+
+            it('should return false due to negative-weight cycle', () => {
+                graph.removeEdge(vertices[4], vertices[1]);
+                graph.addEdge(vertices[4], vertices[1], -7);
+
+                expect(graph.bellmanFordShortestPath(vertices[0])).toBe(false);
+            });
+        });
+
+        describe('Dijkstra', () => {
+            beforeAll(() => {
+                matrix = [
+                    [undefined, 10, 5, undefined, undefined],
+                    [undefined, undefined, 2, 1, undefined],
+                    [undefined, 3, undefined, 9, 2],
+                    [undefined, undefined, undefined, undefined, 4],
+                    [7, undefined, undefined, 6, undefined],
+                ];
+                graph = new Graph({matrix});
+                vertices = graph.vertices;
+            });
+
+            it('shortest path tree', () => {
+                const path = graph
+                    .dijkstraShortestPath(vertices[0])
+                    .map((vertex) => vertex.value);
+
+                expect(path).toEqual(['1', '3', '5', '2', '4']);
+
+                expect(vertices[0].predecessor).toBeUndefined();
+                expect(vertices[1].predecessor).toBe(vertices[2]);
+                expect(vertices[2].predecessor).toBe(vertices[0]);
+                expect(vertices[3].predecessor).toBe(vertices[1]);
+                expect(vertices[4].predecessor).toBe(vertices[2]);
+            });
+        });
+    });
 });
 
 /**

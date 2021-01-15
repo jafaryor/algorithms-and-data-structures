@@ -314,6 +314,7 @@ export class Graph {
      * Topological Sort.
      * It arranges vertices an a way that
      * all edges are directed from left to right.
+     * @assumes the graph is acyclic.
      * @complexity O(V + E)
      */
     topologicalSort(): Vertex[] {
@@ -626,7 +627,41 @@ export class Graph {
     }
 
     /********************************************************************************
-     * SHORTEST PATH
+     * PATHS NUMBER
+     ********************************************************************************/
+
+    /**
+     * Returns the number of all possible paths in the graph.
+     * @note "distance" prop is used to count the number
+     *        of paths whose start point is at a vertex.
+     * @assumes the graph is acyclic.
+     * @complexity O()
+     */
+    paths(): number {
+        const topologicallySortedVertices = this.topologicalSort();
+
+        // Resets the "distance" attribute.
+        for (const vertex of this.vertices) {
+            vertex.distance = 0;
+        }
+
+        for (const u of topologicallySortedVertices) {
+            this.adjacencyList.list[u.value].forEach(
+                (v: SinglyLinkedListNode<AdjacencyListNode>) => {
+                    v.data.vertex.distance += u.distance + 1;
+                },
+            );
+        }
+
+        // Returns the sum of all "distance" attributes.
+        return this.vertices.reduce(
+            (sum: number, vertex: Vertex) => sum + vertex.distance,
+            0,
+        );
+    }
+
+    /********************************************************************************
+     * SINGLE-SOURCE SHORTEST PATH
      ********************************************************************************/
 
     /**
@@ -637,6 +672,7 @@ export class Graph {
      */
     bellmanFordShortestPath(root: Vertex): boolean {
         let result: boolean;
+
         this.resetVertices();
         // We start searching from root. so mark root as discovered.
         root.markAsDiscovered();
@@ -657,7 +693,7 @@ export class Graph {
         for (const u of this.vertices) {
             result = this.adjacencyList.list[u.value].forEach(
                 (v: SinglyLinkedListNode<AdjacencyListNode>) => {
-                    if (v.data.vertex.distance < u.distance + v.data.weight) {
+                    if (v.data.vertex.distance > u.distance + v.data.weight) {
                         // A shorter path is discovered, which is possible
                         // only if graph contains a negative-weight cycles.
                         return false;
@@ -710,7 +746,7 @@ export class Graph {
         // Weight of (u, v) edge.
         let weight: number;
         // The shortest path.
-        const path = [] as Vertex[];
+        const shortestPath = [] as Vertex[];
         // Min Priority Queue is used to keep track of edges crossing the cut.
         // extractMin() returns the lightest edge crossing the cut.
         const minPriorityQueue = this.getMinPriorityQueueWithResetVertices(
@@ -719,7 +755,7 @@ export class Graph {
 
         while (!minPriorityQueue.isEmpty()) {
             u = minPriorityQueue.extractMin()!;
-            path.push(u.value);
+            shortestPath.push(u.value);
 
             this.adjacencyList.list[u.value.value].forEach(
                 (vertex: SinglyLinkedListNode<AdjacencyListNode>) => {
@@ -743,17 +779,7 @@ export class Graph {
             );
         }
 
-        return path;
-    }
-
-    /**
-     * @assumes the graph might have edges with negative weight.
-     * @note Dynamic Programming Algorithm.
-     */
-    floydWarshallShortestPath(root: Vertex): void {
-        this.resetVertices();
-        // We start searching from root. so mark root as discovered.
-        root.markAsDiscovered();
+        return shortestPath;
     }
 
     /**
@@ -920,7 +946,7 @@ export class Graph {
      * and root marked as discovered.
      * @complexity O(V)
      */
-    getMinPriorityQueueWithResetVertices(
+    private getMinPriorityQueueWithResetVertices(
         root: Vertex,
     ): MinPriorityQueue<Vertex> {
         return new MinPriorityQueue<Vertex>(
