@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import {createArrayWithIncrementingValues} from '../../utils';
 import {AdjacencyList, AdjacencyListNode} from './list';
 import {AdjacencyMatrix} from './matrix';
@@ -635,7 +636,7 @@ export class Graph {
      * @note "distance" prop is used to count the number
      *        of paths whose start point is at a vertex.
      * @assumes the graph is acyclic.
-     * @complexity O()
+     * @complexity O(V + E)
      */
     paths(): number {
         const topologicallySortedVertices = this.topologicalSort();
@@ -661,7 +662,7 @@ export class Graph {
     }
 
     /********************************************************************************
-     * SINGLE-SOURCE SHORTEST PATH
+     * SINGLE-SOURCE SHORTEST PATHS
      ********************************************************************************/
 
     /**
@@ -690,6 +691,8 @@ export class Graph {
         }
 
         // Checks the graph for a negative-weight cycles.
+        // By going through the edges one more time. If a shorter path
+        // is discovered, then graph contains a negative-weight cycle.
         for (const u of this.vertices) {
             result = this.adjacencyList.list[u.value].forEach(
                 (v: SinglyLinkedListNode<AdjacencyListNode>) => {
@@ -769,7 +772,7 @@ export class Graph {
                     // v.key is the weight of a shortest path from root to v.
                     // Relaxes each edge adjacent to u.
                     if (v && v.key > u.key + weight) {
-                        v.value.predecessor = u.value;
+                        this.relax(u.value, v.value, weight);
                         minPriorityQueue.increasePriority(
                             vIndex!,
                             u.key + weight,
@@ -793,6 +796,123 @@ export class Graph {
             v.distance = u.distance + weight;
             v.predecessor = u;
         }
+    }
+
+    /********************************************************************************
+     * ALL-PAIR SHORTEST PATHS
+     ********************************************************************************/
+
+    /**
+     * The Floyd-Warshall algorithm for finding the all-pair shortest paths.
+     * @assumes the graph is an any type and AdjacencyMatrix[i][i] = 0 for all 0 ≤ i < n.
+     * @complexity O(V^3)
+     * @spaceComplexity O(V^2)
+     */
+    floydWarshallShortestPaths(): {
+        weights: number[][];
+        predecessors: Array<Array<number | undefined>>;
+    } {
+        // W - Shortest Path Weights Matrix.
+        const w = [] as number[][];
+        // P - Predecessor Matrix.
+        const p = [] as Array<Array<number | undefined>>;
+
+        // Deep cloning of the Adjacency Matrix.
+        for (let i = 0; i < this.n; i++) {
+            w.push([]);
+            p.push([]);
+
+            for (let j = 0; j < this.n; j++) {
+                // Convert "undefined" into Infinity in W,
+                // for correct work of the algorithm.
+                if (this.adjacencyMatrix.matrix[i][j] == null) {
+                    w[i].push(Infinity);
+                    p[i].push(undefined);
+                } else {
+                    w[i].push(this.adjacencyMatrix.matrix[i][j]!);
+                    p[i].push(j);
+                }
+            }
+        }
+
+        /**
+         * Main Part:
+         * In each iteration of k, the matrix W will calculate a
+         * shortest path from i to j using k intermediate vertices.
+         * By the time k = n, all vertices will be included into a path.
+         */
+        // k - the amount of vertices involved into path.
+        for (let k = 0; k < this.n; k++) {
+            // i - starting vertex.
+            for (let i = 0; i < this.n; i++) {
+                // j - finishing vertex.
+                for (let j = 0; j < this.n; j++) {
+                    // Relaxation.
+                    if (w[i][k] + w[k][j] < w[i][j]) {
+                        w[i][j] = w[i][k] + w[k][j];
+                        p[i][j] = p[i][k];
+                    }
+                }
+            }
+        }
+
+        // Checks the graph for a negative-weight cycles.
+        // By running the algorithm one more time. If a shorter path
+        // is discovered, then graph contains a negative-weight cycle.
+        for (let k = 0; k < this.n; k++) {
+            // i - starting vertex.
+            for (let i = 0; i < this.n; i++) {
+                // j - finishing vertex.
+                for (let j = 0; j < this.n; j++) {
+                    // Relaxation.
+                    if (w[i][k] + w[k][j] < w[i][j]) {
+                        // -∞ edges are either part of or
+                        // reach into a negative-weight cycle.
+                        w[i][j] = -Infinity;
+                        p[i][j] = -1;
+                    }
+                }
+            }
+        }
+
+        return {
+            weights: w,
+            predecessors: p,
+        };
+    }
+
+    /**
+     * Reconstructs the shortest path between vertices i and j.
+     * @note Returns "undefined" is path is affected by a negative-weight cycle.
+     * @param weights - Shortest Path Weights Matrix from Floyd-Warshall Algorithm.
+     * @param predecessors - Predecessor Matrix from Floyd-Warshall Algorithm.
+     * @complexity O(E)
+     */
+    shortestPath(
+        i: number,
+        j: number,
+        weights: number[][],
+        predecessors: Array<Array<number | undefined>>,
+    ): number[] | undefined {
+        let k: number;
+        const path = [] as number[];
+
+        // Checks if a path between i and j vertices exists.
+        if (weights[i][j] === Infinity) return path;
+
+        // Goes through all vertices in the shortest path between i and j.
+        for (k = i; k !== j; k = predecessors[k][j]!) {
+            // Path contains a negative-weight cycle.
+            if (k === -1) return undefined;
+
+            path.push(k);
+        }
+
+        // Check and include the last vertex (j).
+        if (predecessors[k][j] === -1) return undefined;
+        path.push(j);
+
+        return path;
     }
 
     /********************************************************************************
@@ -949,16 +1069,24 @@ export class Graph {
     private getMinPriorityQueueWithResetVertices(
         root: Vertex,
     ): MinPriorityQueue<Vertex> {
+        let node: HeapNode<Vertex>;
+
         return new MinPriorityQueue<Vertex>(
             this.vertices.map((vertex: Vertex) => {
                 vertex.predecessor = undefined;
 
                 if (vertex === root) {
                     // Root has the highest priority.
-                    return new HeapNode<Vertex>(0, root);
+                    node = new HeapNode<Vertex>(0, root);
+                    node.value.distance = 0;
+
+                    return node;
                 } else {
                     // All other nodes are low priority.
-                    return new HeapNode<Vertex>(Infinity, vertex);
+                    node = new HeapNode<Vertex>(Infinity, vertex);
+                    node.value.distance = Infinity;
+
+                    return node;
                 }
             }),
         );

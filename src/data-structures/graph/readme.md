@@ -430,14 +430,66 @@ The amortized cost of each of the `|V|` `extractMin()` operations is `O(lgV)`, a
 #### Notice
 Dijkstra’s algorithm resembles both breadth-first search and Prim’s algorithm for computing minimum spanning trees.  It is like breadth-first search in that set `S` corresponds to the set of black vertices in a breadth-first search; just as vertices in `S` have their final shortest-path weights, so do black vertices in a breadth-first search have their correct breadth-first distances.Dijkstra’s  algorithm  is like  Prim’s algorithm  in  that  both  algorithms  use a min-priority queue to find the “lightest” vertex outside a given set (the set `S` in Dijkstra’s algorithm and the tree being grown in Prim’s algorithm), add this vertex into the set, and adjust the weights of the remaining vertices outside the set accordingly.
 
+### Summary
+| Graph | Algorithm | Complexity | Sparse Graph | Dense Tree |
+| - | - | -| - | - |
+| Unweighted | BFS | `O(V + E)` | `O(V)` | `O(V^2)` |
+| Non-negative edges | Dijkstra | `O(V*lgV + E)` | `O(V * lgV)` | `O(V^2)` |
+| General | Bellman-Ford | `O(V * E)` | `O(V^2)` | `O(V^3)` |
+| DAG | Topological Sort + 1 round of Bellman-Ford | `O(V + E)` | `O(V)` | `O(V^2)` |
+
+Where:
+* __Sparse Graph__ is a graph where the number of edges is an order of number of vertices: `E = θ(V)`
+* __Dense Tree__ is a graph where the number of edges is the quadratic order of number of vertices: `E = θ(V^2)`
 
 
+## All-Pair Shortest Paths
+we consider the problem of finding shortest paths between all pairs of vertices in a graph. This problem might arise in making a table of distances between all pairs of cities for a road atlas. We are given a weighted, directed graph `G = (V, E)` with a weight function `w: E -> R` that maps edges to real-valued  weights. We wish to find, for every pair of vertices `u, v ∈ V`, a shortest (least-weight) path from `u` to `v`, where the weight of a path is the sum of the weights of its constituent edges.
 
+We  can  solve  an  all-pairs  shortest-paths  problem  by  running  a  single-source shortest-paths  algorithm `|V|` times,  once  for  each  vertex  as  the  source.
 
+We allow negative-weight edges, but we assume for the time being that the inputgraph contains no negative-weight cycles.
 
+The tabular  output  of  the  all-pairs  shortest-paths  algorithms here is an `n x n` matrix `D = (d_ij)`, where entry `d_ij` contains the weight of a shortest path from vertex `i` to vertex `j`. That is, if we let `ẟ(i, j)` denote the shortest-path weight from vertex `i` to vertex `j`,  then `d_ij = ẟ(i, j)`.
 
+To solve the all-pairs shortest-paths problem on an input adjacency matrix, we need to compute not only the shortest-path weights but also a __predecessor matrix__ `P = (p_ij)`, where `p_ij` is `mull` if either `i ≠ j` or  there  is  no  path  from `i` to `j`, and otherwise `p_ij` is the predecessor of `j` on some shortest path from `i`. Use `predecessorMatrixToString(i, j)` to print the shortest paths from vertex `i` to vertex `j`.
 
+### The Floyd-Warshall algorithm
+The Floyd-Warshall algorithm is a dynamic-programming algorithm, runs in `θ(V^3)` time.
 
+#### [Watch this YouTube video](https://www.youtube.com/watch?v=4NQ3HnhyNfQ)
+
+Tha idea is to gradually build routes between nodes `i` and `j` to find the optimal path. One by one pick all vertices and updates all shortest paths which include the picked vertex as an intermediate vertex in the shortest path. When we pick vertex number `k` as an intermediate vertex, we already have considered vertices `{0, 1, 2, ..., k-1}` as intermediate vertices. For every pair `(i, j)` of the source and destination vertices respectively, there are two possible cases.
+1) `k` is not an intermediate vertex in shortest path from `i` to `j`. We keep the value of `d[i][j]` as it is.
+2) `k` is an intermediate vertex in shortest path from `i` to `j`. We update the value of `d[i][j]` as `d[i][k]` + `d[k][j]` if `d[i][j] > d[i][k] + d[k][j]`.
+
+![floyd-warshall-example](./images/floyd-warshall-example.png)
+
+Below is the solution from Floyd-Warshall algorithm of above graph.
+
+![floyd-warshall-solution](./images/floyd-warshall-solution.png)
+
+Why do we require that `w_ii = 0` for all `1 ≤ i ≤ n`?
+
+This is consistent with the fact that the shortest path from a vertex to itself is the empty path of weight 0. If there were another path of weight less than 00 then it must be a negative-weight cycle, since it starts and ends at `v_i`.
+
+### Transitive closure of a graph
+Given a directed graph, find out if a vertex `j` is reachable from another vertex `i` for all vertex pairs `(i, j)` in the given graph. Here reachable mean that there is a path from vertex `i` to `j`. The reach-ability matrix is called the transitive closure of a graph.
+
+![transitive-closure](./images/transitive-closure.png)
+
+Transitive closure of above graphs is:
+
+```
+1 1 1 1
+1 1 1 1
+1 1 1 1
+0 0 0 1
+```
+
+One way to compute the transitive closure of a graph in `θ(V^3)` time is to assign a weight of `1` to each edge of `E` and run the Floyd-Warshall algorithm. If there is a path from vertex `i` to vertex `j`, we get `d_ij < n`. Otherwise, we get `d_ij = ∞`.
+
+The other way is to determine the vertices reachable from a particular vertex in `O(V + E)` time using any basic graph searching algorithm (DFS or BFS). Thus we can compute the transitive closure in `O(V*E + V^2)` time by searching the graph with each vertex as the source. If `|V| = O(E)`, we're done as `V * E` is now the dominating term in the running time bound. If not, we preprocess the graph and mark all degree-0 vertices in `O(V + E)` time. The rows representing these vertices in the transitive closure are all 0s, which means that the algorithm remains correct if we ignore these vertices when searching. After preprocessing, `|V| = O(E)` as `|E| ≥ |V|/2`. Therefore searching can be done in `O(VE)` time.
 
 ---
 
@@ -446,3 +498,12 @@ Dijkstra’s algorithm resembles both breadth-first search and Prim’s algorith
 #### [Even more algorithms for Graphs](https://www.geeksforgeeks.org/graph-data-structure-and-algorithms/)
 
 #### [Kosaraju's Algorithm: Strongly Connected Components](https://www.youtube.com/watch?v=5wFyZJ8yH9Q)
+
+#### [MIT Minimum Spanning Tree](https://www.youtube.com/watch?v=tKwnms5iRBU)
+
+#### [MIT Single Source Shortest Paths](https://www.youtube.com/watch?v=OQ5jsbhAv_M)
+
+#### [MIT Single-Source Shortest Paths Problem](https://www.youtube.com/watch?v=Aa2sqUhIn-E)
+
+#### [MIT All Pairs Shortest Paths](https://www.youtube.com/watch?v=NzgFUwOaoIw)
+

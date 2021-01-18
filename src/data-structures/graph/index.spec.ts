@@ -540,7 +540,7 @@ describe('Graph', () => {
         });
     });
 
-    describe('Single Source Shortest Path', () => {
+    describe('Single Source Shortest Paths', () => {
         describe('Bellman-Ford', () => {
             beforeAll(() => {
                 matrix = [
@@ -607,6 +607,87 @@ describe('Graph', () => {
                 expect(vertices[2].predecessor).toBe(vertices[0]);
                 expect(vertices[3].predecessor).toBe(vertices[1]);
                 expect(vertices[4].predecessor).toBe(vertices[2]);
+            });
+
+            it('shortest path weights', () => {
+                const path = graph
+                    .dijkstraShortestPath(vertices[0])
+                    .map((vertex) => vertex.value);
+
+                expect(path).toEqual(['1', '3', '5', '2', '4']);
+
+                expect(vertices[0].distance).toEqual(0);
+                expect(vertices[1].distance).toEqual(8);
+                expect(vertices[2].distance).toEqual(5);
+                expect(vertices[3].distance).toEqual(9);
+                expect(vertices[4].distance).toEqual(7);
+            });
+        });
+    });
+
+    describe('All-Pairs Shortest Paths', () => {
+        describe('Bellman-Ford', () => {
+            let weights: number[][];
+            let predecessors: Array<Array<number | undefined>>;
+
+            beforeAll(() => {
+                matrix = [
+                    [0, 3, 8, undefined, -4],
+                    [undefined, 0, undefined, 1, 7],
+                    [undefined, 4, 0, undefined, undefined],
+                    [2, undefined, -5, 0, undefined],
+                    [undefined, undefined, undefined, 6, 0],
+                ];
+                graph = new Graph({matrix});
+                vertices = graph.vertices;
+
+                const path = graph.floydWarshallShortestPaths();
+
+                weights = path.weights;
+                predecessors = path.predecessors;
+            });
+
+            it('shortest paths weight matrix', () => {
+                expect(weights).toEqual([
+                    [0, 1, -3, 2, -4],
+                    [3, 0, -4, 1, -1],
+                    [7, 4, 0, 5, 3],
+                    [2, -1, -5, 0, -2],
+                    [8, 5, 1, 6, 0],
+                ]);
+            });
+
+            it('predecessor matrix', () => {
+                expect(predecessors).toEqual([
+                    // [undefined, 3, 4, 5, 1],
+                    // [4, undefined, 4, 2, 1],
+                    // [4, 3, undefined, 2, 1],
+                    // [4, 3, 4, undefined, 1],
+                    // [4, 3, 4, 5, undefined],
+                    [0, 4, 4, 4, 4],
+                    [3, 1, 3, 3, 3],
+                    [1, 1, 2, 1, 1],
+                    [0, 2, 2, 3, 0],
+                    [3, 3, 3, 3, 4],
+                ]);
+            });
+
+            it('shortest path from 1 to 4', () => {
+                expect(
+                    graph.shortestPath(0, 3, weights, predecessors),
+                ).toEqual([0, 4, 3]);
+            });
+
+            it('shortest path from 3 to 4', () => {
+                expect(
+                    graph.shortestPath(2, 3, weights, predecessors),
+                ).toEqual([2, 1, 3]);
+            });
+
+            it('shortest path from 1 to 5', () => {
+                expect(
+                    graph.shortestPath(0, 4, weights, predecessors),
+                ).toEqual([0, 4]);
             });
         });
     });
