@@ -459,6 +459,8 @@ The Floyd-Warshall algorithm is a dynamic-programming algorithm, runs in `θ(V^3
 
 #### [Watch this YouTube video](https://www.youtube.com/watch?v=4NQ3HnhyNfQ)
 
+#### [And take a look at this lecture notes](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-design-and-analysis-of-algorithms-spring-2015/lecture-notes/MIT6_046JS15_lec11.pdf)
+
 Tha idea is to gradually build routes between nodes `i` and `j` to find the optimal path. One by one pick all vertices and updates all shortest paths which include the picked vertex as an intermediate vertex in the shortest path. When we pick vertex number `k` as an intermediate vertex, we already have considered vertices `{0, 1, 2, ..., k-1}` as intermediate vertices. For every pair `(i, j)` of the source and destination vertices respectively, there are two possible cases.
 1) `k` is not an intermediate vertex in shortest path from `i` to `j`. We keep the value of `d[i][j]` as it is.
 2) `k` is an intermediate vertex in shortest path from `i` to `j`. We update the value of `d[i][j]` as `d[i][k]` + `d[k][j]` if `d[i][j] > d[i][k] + d[k][j]`.
@@ -490,6 +492,53 @@ Transitive closure of above graphs is:
 One way to compute the transitive closure of a graph in `θ(V^3)` time is to assign a weight of `1` to each edge of `E` and run the Floyd-Warshall algorithm. If there is a path from vertex `i` to vertex `j`, we get `d_ij < n`. Otherwise, we get `d_ij = ∞`.
 
 The other way is to determine the vertices reachable from a particular vertex in `O(V + E)` time using any basic graph searching algorithm (DFS or BFS). Thus we can compute the transitive closure in `O(V*E + V^2)` time by searching the graph with each vertex as the source. If `|V| = O(E)`, we're done as `V * E` is now the dominating term in the running time bound. If not, we preprocess the graph and mark all degree-0 vertices in `O(V + E)` time. The rows representing these vertices in the transitive closure are all 0s, which means that the algorithm remains correct if we ignore these vertices when searching. After preprocessing, `|V| = O(E)` as `|E| ≥ |V|/2`. Therefore searching can be done in `O(VE)` time.
+
+### Johnson's algorithm for Sparse Graphs
+Johnson’s  algorithm  finds shortest  paths  between all pairs. For sparse graphs, it is asymptotically faster than either repeated squaring of matrices or the Floyd-Warshall algorithm.
+
+Johnson’s algorithm uses the technique of __reweighting__, which works as follows:
+* If all edge weights `w` in a graph are nonnegative, we can find shortest paths between all pairs of vertices by running Dijkstra’s algorithm once from each vertex; with the Fibonacci-heap min-priority queue, the running time of this all-pairs algorithm is `O(V^2 * lgV + V*E)`.
+* If graph has negative-weight edges but no negative-weight cycles, we simply compute a new set of nonnegative edge weights that allows us to use the same method. The new set of edge weights `ω` must satisfy two important properties:
+
+    1. For all pairs of vertices `u, v ∈ V`, a path `p` is a shortest path from `u` to `v` using weight function `w` if and only if `p` is also a shortest path from `u` to `v` using weight function `ω`.
+
+    2. For all edges `(u, v) ∈ E`, the new weight `ω(u, v)` is nonnegative.
+
+We can preprocess `G` to determine the new weight function `ω` in `O(V * E)` time.
+
+#### Lemma 25.1 (Reweighting does not change shortest paths)
+Given a weighted, directed graph `G` with weight function `w: E -> R`,let `h: V -> R` be any function mapping vertices to real numbers. For each edge `(u, v) ∈ E`, define:
+
+`ω(u, v) = w(u, v) + h(u) - h(v)`
+
+Let `p = <v_0, v_1, ..., v_k>` be any path from vertex `v_0` to vertex `v_k`.Then `p` is a shortest path from `v_0` to `v_k` with weight function `w` if and only if it is a shortest path with weight function `ω`. That is, `w(p) = δ(v_0, v_k)` if and only if `ω(p) = Δ(v_0, v_k)`. Furthermore, `G` has a negative-weight cycle using weight function `w` if and only if `G` has a negative-weight cycle using weight function `ω`.
+
+Johnson’s algorithm to compute all-pairs shortest paths uses the Bellman-Ford algorithm and Dijkstra’s algorithm as subroutines.
+
+The algorithm steps:
+1. Let the given graph be `G`. Add a new vertex s to the graph, add edges from new vertex to all vertices of `G`. Let the modified graph be `G’`.
+2.  Run Bellman-Ford algorithm on `G’` with `s` as source. Let the distances calculated by Bellman-Ford be `h[0], h[1], .. h[V-1]`. If we find a negative weight cycle, then return. Note that the negative weight cycle cannot be created by new vertex `s` as there is no edge to `s` and the weight of all edges leaving `s` is `0`.
+3. Reweight the edges of original graph. For each edge `(u, v)`, assign the new weight as “original weight + `h[u]` – `h[v]`”.
+4. Remove the added vertex `s` and run Dijkstra’s algorithm for every vertex.
+
+The algorithm returns the usual `|V| x |V|` matrix `D = (d_ij)`, where `d_ij = δ(i, j)` or it reports that the  input  graph  contains  a  negative-weight  cycle.
+
+![floyd-warshall-example](./images/floyd-warshall-example.png)
+
+Below is the solution from Johnson's algorithm of above graph.
+
+![johnson-example](./images/johnson-example.png)
+
+If we implement the min-priority queue in Dijkstra’s algorithm by a Fibonacci heap, Johnson’s algorithm runs in `O(V^2 * lgV + V*E)` time. The simpler binary min-heap implementation yields a running time of `O(V*E * lgV)`, which is still asymptotically faster than the Floyd-Warshall algorithm if the graph is sparse.
+
+
+
+
+
+
+
+
+
 
 ---
 

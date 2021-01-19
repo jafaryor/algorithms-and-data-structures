@@ -626,21 +626,23 @@ describe('Graph', () => {
     });
 
     describe('All-Pairs Shortest Paths', () => {
-        describe('Bellman-Ford', () => {
+        beforeAll(() => {
+            matrix = [
+                [0, 3, 8, undefined, -4],
+                [undefined, 0, undefined, 1, 7],
+                [undefined, 4, 0, undefined, undefined],
+                [2, undefined, -5, 0, undefined],
+                [undefined, undefined, undefined, 6, 0],
+            ];
+            graph = new Graph({matrix});
+            vertices = graph.vertices;
+        });
+
+        describe('Floyd-Warshall', () => {
             let weights: number[][];
             let predecessors: Array<Array<number | undefined>>;
 
             beforeAll(() => {
-                matrix = [
-                    [0, 3, 8, undefined, -4],
-                    [undefined, 0, undefined, 1, 7],
-                    [undefined, 4, 0, undefined, undefined],
-                    [2, undefined, -5, 0, undefined],
-                    [undefined, undefined, undefined, 6, 0],
-                ];
-                graph = new Graph({matrix});
-                vertices = graph.vertices;
-
                 const path = graph.floydWarshallShortestPaths();
 
                 weights = path.weights;
@@ -688,6 +690,34 @@ describe('Graph', () => {
                 expect(
                     graph.shortestPath(0, 4, weights, predecessors),
                 ).toEqual([0, 4]);
+            });
+        });
+
+        describe("Johnson's algorithm", () => {
+            let weights: number[][];
+
+            beforeAll(() => {
+                weights = graph.johnsonShortestPaths()!;
+            });
+
+            it('shortest paths weight matrix', () => {
+                expect(weights).toEqual([
+                    [0, 1, -3, 2, -4],
+                    [3, 0, -4, 1, -1],
+                    [7, 4, 0, 5, 3],
+                    [2, -1, -5, 0, -2],
+                    [8, 5, 1, 6, 0],
+                ]);
+            });
+
+            it('should restore edges weights', () => {
+                expect(graph.adjacencyList.toString()).toEqual([
+                    '1 -> 1 (0) -> 2 (3) -> 3 (8) -> 5 (-4)',
+                    '2 -> 2 (0) -> 4 (1) -> 5 (7)',
+                    '3 -> 2 (4) -> 3 (0)',
+                    '4 -> 1 (2) -> 3 (-5) -> 4 (0)',
+                    '5 -> 4 (6) -> 5 (0)',
+                ]);
             });
         });
     });

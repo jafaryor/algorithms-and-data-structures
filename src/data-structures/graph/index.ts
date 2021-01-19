@@ -1,5 +1,8 @@
 import * as _ from 'lodash';
-import {createArrayWithIncrementingValues} from '../../utils';
+import {
+    createArrayAndFillWith,
+    createArrayWithIncrementingValues,
+} from '../../utils';
 import {AdjacencyList, AdjacencyListNode} from './list';
 import {AdjacencyMatrix} from './matrix';
 import {Edge, Vertex} from './vertex';
@@ -20,6 +23,7 @@ import {HeapNode} from '../heap/node';
  *      Unweighted
  *      Cyclic
  *      Acyclic
+ * @note Doesn't support duplicate vertices.
  */
 export class Graph {
     /** The number of vertices. */
@@ -913,6 +917,103 @@ export class Graph {
         path.push(j);
 
         return path;
+    }
+
+    /**
+     * The Johnson's algorithm for finding the all-pair shortest paths.
+     * @assumes the graph is an any type and AdjacencyMatrix[i][i] = 0 for all 0 ≤ i < n.
+     * @note DON'T USE 's' AS A VERTEX VALUE.
+     * @complexity O(V*lgV * (E + V))
+     * @spaceComplexity O(V + V*2)
+     */
+    johnsonShortestPaths(): number[][] | undefined {
+        let u: Vertex;
+        let v: Vertex;
+        const reweightedGraph = this.getReweightedGraph();
+        // The vertex which points all other vertices.
+        const s = reweightedGraph.vertices[this.n];
+        // h function for each vertex.
+        const h = {} as {[key: string]: number};
+        // Shortest path weights matrix.
+        const d = [] as number[][];
+
+        // Computes the shortest path weights from s for reweighted graph.
+        if (!reweightedGraph.bellmanFordShortestPath(s)) {
+            // A negative-weight cycle was detected.
+            // Consequently, there in no solution.
+            return;
+        } else {
+            for (const v of reweightedGraph.vertices) {
+                // h(v) = δ(s, v) for all v ∈ V.
+                h[v.value] = v.distance;
+            }
+
+            // Assigns new weight values (ω), to have non-negative edge weights.
+            // It is done to apply Dijkstra Algorithm later.
+            for (const u of this.vertices) {
+                this.adjacencyList.list[u.value].forEach(
+                    (v: SinglyLinkedListNode<AdjacencyListNode>) => {
+                        v.data.weight =
+                            v.data.weight + h[u.value] - h[v.data.vertex.value];
+                    },
+                );
+            }
+
+            // Now we have a graph with no negative weight edges.
+            for (let i = 0; i < this.n; i++) {
+                u = this.vertices[i];
+                d.push([]);
+                // Computes the shortest path weights with
+                // new edge weights ω computed above to produce Δ.
+                this.dijkstraShortestPath(u);
+
+                for (let j = 0; j < this.n; j++) {
+                    v = this.vertices[j];
+                    // Populate the shortest path weights matrix.
+                    d[i].push(v.distance + h[v.value] - h[u.value]);
+                }
+            }
+
+            // Restores the original edge weights.
+            for (const u of this.vertices) {
+                this.adjacencyList.list[u.value].forEach(
+                    (v: SinglyLinkedListNode<AdjacencyListNode>) => {
+                        v.data.weight =
+                            v.data.weight - h[u.value] + h[v.data.vertex.value];
+                    },
+                );
+            }
+
+            return d;
+        }
+    }
+
+    /**
+     * Returns a reweighted graph used by Johnson's Algorithm.
+     * Adds a vertex s, which points to all vertices of graph.
+     * All edges leaving s have a zero weight.
+     * @complexity O(V)
+     */
+    private getReweightedGraph(): Graph {
+        const n = this.n + 1;
+        const vertexValues = [] as string[];
+        const matrix = [] as Array<Array<number | undefined>>;
+
+        for (let i = 0; i < this.n; i++) {
+            // Clones the vertices.
+            vertexValues.push(this.vertices[i].value);
+            // Clones each row.
+            matrix.push([...this.adjacencyMatrix.matrix[i]]);
+            // Adds a column for vertex s.
+            matrix[i].length = n;
+        }
+
+        // Adds a new vertex s.
+        vertexValues.push('s');
+        // Adds a new vertex s and adds 0 weight edges from s to all vertices.
+        matrix.push(createArrayAndFillWith(n, 0));
+
+        return new Graph({matrix, vertexValues});
     }
 
     /********************************************************************************
