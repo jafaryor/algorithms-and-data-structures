@@ -27,7 +27,7 @@ import {HeapNode} from '../heap/node';
  */
 export class Graph {
     /** The number of vertices. */
-    private n: number;
+    protected n: number;
     /** The graph's vertices. */
     vertices: Vertex[];
     /** The graph's edges. */

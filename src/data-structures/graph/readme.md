@@ -531,15 +531,6 @@ Below is the solution from Johnson's algorithm of above graph.
 
 If we implement the min-priority queue in Dijkstra’s algorithm by a Fibonacci heap, Johnson’s algorithm runs in `O(V^2 * lgV + V*E)` time. The simpler binary min-heap implementation yields a running time of `O(V*E * lgV)`, which is still asymptotically faster than the Floyd-Warshall algorithm if the graph is sparse.
 
-
-
-
-
-
-
-
-
-
 ---
 
 #### [Read More](https://www.programiz.com/dsa/graph)
