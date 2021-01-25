@@ -7,7 +7,7 @@ If `(u, v) ∉ E`, then for convenience we define `c(u, v) = 0`, and we disallow
 
 We distinguish two vertices in a flow network: a __source__ `s` and a __sink__ `t`. For convenience, we assume that each vertex lies on some path from the source to the sink. That is, for each vertex `v ∈ V`,the flow network contains a paths `s ↝ v ↝ t`.  The graph is therefore connected and, since each vertex other than `s` has at least one entering edge, `|E| ≥ |V| - 1`.
 
-Let `G = (V, E)` be a flow network with a capacity function `c`. Let `s` be the source of the network, and let `t` be the sink. A __flow__ in `G` is a real-valued function `f: V x V -> R` that satisfies the following two properties:
+Let `G = (V, E)` be a flow network with a capacity function `c`. Let `s` be the source of the network, and let `t` be the sink. A __flow__ in `G` is a real-valued function `f: V x V -> ℝ` that satisfies the following two properties:
 
 1. __Capacity constraints__: For all `u, v ∈ V`, we require `0 ≤ f(u, v) ≤ c(u, v)`.
 
@@ -139,20 +139,73 @@ In practice, the maximum-flow problem often arises with integral capacities.  If
 
 Let us assume that we keep a data structure cor-responding to a directed graph `G' = (V, E')`, where `E] = {(u, v): (u, v) ∈ E or (v, u) ∈ E}`. Edges in the network `G` are also edges in `G'`, and therefore we can easily maintain capacities and flows in this data structure.  Given a flow `f` on `G`, the edges in the residual network `G_f` consist  of all edges `(u, v)` of `G'` such that `c_f(u, v) > 0`. The time to find a path ina residual network is therefore `O(V + E') = O(E)` if we use either depth-first search or breadth-first search.  Each iteration of the while loop thus takes `O(E)` time, as does the initialization step, making the total running time of the algorithm is `O(E|f*|)`.
 
+![ford-fulkerson-worst-case](./images/ford-fulkerson-worst-case.png)
+
 When the capacities are integral and the optimal flow value `|f*|` is small, the running time of the Ford-Fulkerson algorithm is good.
 
 
 ## The Edmonds-Karp algorithm
+We  can  improve  the  bound  on  FORD-FULKERSON by  finding  the  augmenting path `p` a _breadth-first search_.   That is,  we choose the augmenting path as a shortest path from `s` to `t` in the residual network, where each edge has unit  distance  (weight). We call  the Ford-Fulkerson  method  so implemented  the __Edmonds-Karp algorithm__.
+
+We say that an edge `(u, v)` in a residual network `G_f` is __critical__ on an augmenting path `p` if the residual capacity of `p` is the residual capacity of `(u, v)`, that is, if `c_f(p) = c_f(u, v)`. After we have augmented flow along an augmenting path, any critical edge on the path disappears from the residual network.  Moreover, at least one edge on any augmenting path must be critical.
+
+#### Theorem
+If the Edmonds-Karp algorithm is run on a flow network `G = (V, E)` with source `s` and sink `t`, then the total number of flow augmentations performed by the algorithm is `O(V * E)`.
 
 
+## Maximum Bipartite Matching
+Given an undirected graph `G = (V, E)`, a __matching__ is a subset of edges `M ⊆ E` such  that  for all vertices `v ∈ V`,  at  most  one  edge of `M` is incident  on `v`. We say  that a vertex `v ∈ V` is __matched__ by the matching `M` if  some edge  in `M` is incident on `v`; otherwise, `v` is __unmatched__. A __maximum matching__ is a matching of maximum _cardinality_,  that is,  a matching `M` such that  for any matching `M'`, we have `|M| ≥ |M'|`.
+
+__Bipartite Graph__ is graphs  in  which  the vertex  set  can  be partitioned into `V = L ∪ R`, where `L` and `R` are  disjoint  and  all  edges  in `E` go between `L` and `R`.
+
+The  problem  of  finding  a  maximum  matching  in  a  bipartite  graph  has  many practical applications. As an example, we might consider matching a set `L` of machines with a set `R` of tasks to be performed simultaneously.
+
+We can use the Ford-Fulkerson method to find a maximum matching in an undirected bipartite graph `G = (V, E)` in time polynomial in `|V|` and `|E|`. The trick is to construct a flow network in which flows correspond to matchings, as shown below.
+
+![bipartite-graph](./images/bipartite-graph.png)
+
+We define the __corresponding flow network__ `G = (V, E)` for the bipartite graph `G` as follows. We let the source `s` and sink `t` be new vertices not in `V`,and we let `V' = V ∪ {s, t}`. If the vertex partition of `G` is `V = L ∪ R`, the directed edges of `G'` are the edges of `E`, directed from `L` to `R`, along with `|V|` new directed edges:
+
+`E' = {(s, u): u ∈ L} ∪ {(u, v): (u, v) u ∈ E} ∪ {(v, t): v ∈ R}`
+
+To complete the construction,  we assign unit capacity to each edge in `E'`.Since each vertex in `V` has at least one incident edge, `|E| ≥ |V| / 2`. Thus, `|E| ≤ |E'| = |E| + |V| ≤ 3|E|`, and so `|E'| = θ(E)`.
 
 
+## Push-relabel algorithms
+Push-Relabel approach is the more efficient than Ford-Fulkerson algorithm. In this post, Goldberg’s “generic” maximum-flow algorithm is discussed that runs in `O(E V^2)` time. This time complexity is better than `O(V * E^2)` which is time complexity of Edmond-Karp algorithm (a BFS based implementation of Ford-Fulkerson).
+
+Push-relabel methods also efficiently solve other flow problems, such as the minimum-cost flow problem.
+
+Read more about the algorithm [here](https://www.geeksforgeeks.org/push-relabel-algorithm-set-1-introduction-and-illustration/)
 
 
+## The relabel-to-front algorithm
+The __relabel-to-front algorithm__ is used to find the maximum flow in the network. The relabel-to-front algorithm is more efficient than the generic push-relabel method.
 
+The relabel-to-front algorithm's running time is `O(V^3)`, which is asymptotically at least as good as `O(E * V^2)`, and even better for dense networks.
 
-
+Read more about the algorithm [here](https://www.geeksforgeeks.org/relabel-to-front-algorithm/)
 
 ---
 
-#### [Watch the video from MIT](https://www.youtube.com/watch?v=VYZGlgzr_As)
+#### [Incremental Improvement: Max Flow, Min Cut (from MIT)](https://www.youtube.com/watch?v=VYZGlgzr_As)
+
+#### [Incremental Improvement: Matching (from MIT)](https://www.youtube.com/watch?v=8C_T4iTzPCU)
+
+#### [Max Flow Ford Fulkerson | Network Flow | Graph Theory](https://www.youtube.com/watch?v=LdOnanfc5TM)
+
+#### [Max Flow Ford Fulkerson | Source Code](https://www.youtube.com/watch?v=Xu8jjJnwvxE)
+
+#### [Capacity Scaling | Network Flow | Graph Theory](https://www.youtube.com/watch?v=1ewLrXUz4kk)
+
+#### [Edmonds Karp Algorithm | Network Flow | Graph Theory](https://www.youtube.com/watch?v=RppuJYwlcI8)
+
+#### [Unweighted Bipartite Matching | Network Flow | Graph Theory](https://www.youtube.com/watch?v=GhjwOiJ4SqU)
+
+#### [Bipartite Matching | Elementary Math problem | Network Flow | Graph Theory](https://www.youtube.com/watch?v=zrGnYstL4ss)
+
+#### [Bipartite Matching | Mice and Owls problem | Network Flow | Graph Theory](https://www.youtube.com/watch?v=ar6x7dHfGHA)
+
+#### [Dinic's Algorithm | Network Flow | Graph Theory](https://www.youtube.com/watch?v=M6cm8UeeziI)
+
+#### [Dinic's Algorithm | Network Flow | Source Code](https://www.youtube.com/watch?v=_SdF4KK_dyM)

@@ -10,7 +10,7 @@ The __adjacency-list representation__ of  a  graph `G = (V, E)` consists  of  an
 
 If `G` is a directed graph, the sum of the lengths of all the adjacency lists is `|E|`, since an edge of the form `(u, v)` is represented by having `v` appear in `Adj[u]`. If `G` is an undirected graph, the sum of the lengths of all the adjacency lists is `2|E|`, since if `(u, v)` is an undirected edge, then `u` appears in `v`’s adjacency list and vice versa. For both directed and undirected graphs, the adjacency-list representation has the desirable property that the amount of memory it requires is `θ(V + E)`.
 
-We can readily adapt adjacency lists to represent __weighted graphs__, that is, graphs for which each edge has an associated __weight__, typically given by a __weight function__ `w: E -> R`. For example, let `G = (V, E)` be a weighted  graph  with weight function `w`.   We  simply  store  the  weight `w(u ,v)` of  the  edge `(u, v) ∈ E` with vertex `v` in `u`’s adjacency list.
+We can readily adapt adjacency lists to represent __weighted graphs__, that is, graphs for which each edge has an associated __weight__, typically given by a __weight function__ `w: E -> ℝ`. For example, let `G = (V, E)` be a weighted  graph  with weight function `w`.   We  simply  store  the  weight `w(u ,v)` of  the  edge `(u, v) ∈ E` with vertex `v` in `u`’s adjacency list.
 
 A potential disadvantage of the adjacency-list representation is that it provides no quicker way to determine whether a given edge `(u, v)` is present in the graph than to search for `v` in the adjacency list `Adj[u]`.  An adjacency-matrix representation of the graph remedies this disadvantage, but at the cost of using asymptotically more memory.
 
@@ -259,7 +259,7 @@ Hamiltonian Path in an undirected graph is a path that visits each vertex exactl
 
 
 ## Minimum Spanning Tree
-Assume that we have a connected,  undirected  graph `G = (V, E)` with a weight function `w: E -> R`, where `R` is the set of real numbers.
+Assume that we have a connected,  undirected  graph `G = (V, E)` with a weight function `w: E -> ℝ`, where `R` is the set of real numbers.
 
 __Spanning Tree__ `T` of _connected and undirected graph_ `G = (V, E)` is _acyclic and connected tree_ that connects all of the vertices and `T ⊆ E`.
 
@@ -338,7 +338,7 @@ We can improve the asymptotic running time of Prim’s algorithm by using Fibona
 
 
 ## Single-Source Shortest Paths
-In a __shortest-paths problem__,  we are given a _weighted_, _directed_  graph `G = (V, E)`, with weight function `w: E -> R` mapping  edges to real-valued weights. The weight `w(p)` of path `p = <v0, v1, ... v_k>` is the sum of the weights of its constituent edges.
+In a __shortest-paths problem__,  we are given a _weighted_, _directed_  graph `G = (V, E)`, with weight function `w: E -> ℝ` mapping  edges to real-valued weights. The weight `w(p)` of path `p = <v0, v1, ... v_k>` is the sum of the weights of its constituent edges.
 
 ![shortest-path-definition](./images/shortest-path-definition.png)
 
@@ -364,7 +364,7 @@ Shortest path  cannot  contain  a negative-weight  cycle. Nor can it contain a p
 #### Representing shortest paths
 We maintain for each vertex `v ∈ V` a predecessor `v.p` that is either another vertex or `null`.The shortest-paths algorithms in this chapter set the `p` attributes so that the chain of predecessors originating at a vertex `v` runs backwards along a shortest path from `s` to `v`.
 
-A __shortest-paths tree__ is like the breadth-first tree, but it contains shortest paths from the source defined in terms of edge weights instead of numbers of edges.  To be precise, let `G = (V, E)` be a weighted, directed graph with weight function `w: E -> R`, and assume that `G` contains no negative-weight cycles  reachable  from  the  source  vertex `s ∈ V`,  so  that  shortest  paths  are  well defined.  A __shortest-paths tree__ rooted at `s` is a directed subgraph `G' = (V', E')`, where `V' ⊆ V` and `E' ⊆ E`, such that
+A __shortest-paths tree__ is like the breadth-first tree, but it contains shortest paths from the source defined in terms of edge weights instead of numbers of edges.  To be precise, let `G = (V, E)` be a weighted, directed graph with weight function `w: E -> ℝ`, and assume that `G` contains no negative-weight cycles  reachable  from  the  source  vertex `s ∈ V`,  so  that  shortest  paths  are  well defined.  A __shortest-paths tree__ rooted at `s` is a directed subgraph `G' = (V', E')`, where `V' ⊆ V` and `E' ⊆ E`, such that
 1. `V'` is the set of vertices reachable from `s` in `G`
 2. `G'` forms a rooted tree with root `s`
 3. For all `v ∈ V'`, the unique simple path from `s` to `v` in `G'` is a shortest path from `s` to `v` in `G`.
@@ -382,7 +382,7 @@ The process of relaxing an edge `(u, v)` consists of testing whether we can impr
 ![shortest-path-properties](./images/shortest-path-properties.png)
 
 ### The Bellman-Ford Algorithm
-TheBellman-Ford algorithm solves the single-source  shortest-paths  problem in the general case in which edge weights may be negative.  Given a weighted,  directed graph `G = (V, E)` with sources and weight function `w: E -> R`,theBellman-Ford algorithm returns a boolean value indicating whether or not there isa negative-weight  cycle that is reachable  from the source.  If there is such a cy-cle, the algorithm indicates that no solution exists.  If there is no such cycle, the algorithm produces the shortest paths and their weights.
+TheBellman-Ford algorithm solves the single-source  shortest-paths  problem in the general case in which edge weights may be negative.  Given a weighted,  directed graph `G = (V, E)` with sources and weight function `w: E -> ℝ`,theBellman-Ford algorithm returns a boolean value indicating whether or not there isa negative-weight  cycle that is reachable  from the source.  If there is such a cy-cle, the algorithm indicates that no solution exists.  If there is no such cycle, the algorithm produces the shortest paths and their weights.
 
 Example:
 
@@ -391,10 +391,10 @@ Example:
 
 
 #### Lemma
-Let `G = (V, E)` be a weighted, directed graph with source `s` and weight  function `w: E -> R`, and assume that `G` contains no negative-weight cycles that are reachable from `s`. Then, after the `|V| - 1` iterations of the for loop of `bellmanFordShortestPath()`, we have `v.d = ẟ(s, v)` for all vertices `v` that are reachable from `s`.
+Let `G = (V, E)` be a weighted, directed graph with source `s` and weight  function `w: E -> ℝ`, and assume that `G` contains no negative-weight cycles that are reachable from `s`. Then, after the `|V| - 1` iterations of the for loop of `bellmanFordShortestPath()`, we have `v.d = ẟ(s, v)` for all vertices `v` that are reachable from `s`.
 
 #### Theorem 24.4 (Correctness of the Bellman-Ford algorithm)
-Let `bellmanFordShortestPath()` be  run  on  a  weighted,  directed  graph `G = (V, E)` with source `s` and weight function `w: E -> R`. If `G` contains no negative-weight cycles that are reachable from `s`, then the algorithm returns `true`, we have `v.d = ẟ(s, v)` for all vertices `v ∈ V`, and the predecessor  subgraph `G_p` is a shortest-paths tree rooted at `s`. If `G` does contain a negative-weight cycle reachable from `s`, then the algorithm returns `false`.
+Let `bellmanFordShortestPath()` be  run  on  a  weighted,  directed  graph `G = (V, E)` with source `s` and weight function `w: E -> ℝ`. If `G` contains no negative-weight cycles that are reachable from `s`, then the algorithm returns `true`, we have `v.d = ẟ(s, v)` for all vertices `v ∈ V`, and the predecessor  subgraph `G_p` is a shortest-paths tree rooted at `s`. If `G` does contain a negative-weight cycle reachable from `s`, then the algorithm returns `false`.
 
 ### Single-source shortest paths in directed acyclic graphs
 By  relaxing  the  edges  of  a  weighted  __dag__  (directed  acyclic  graph) `G = (V, E)` according to a topological sort of its vertices, we can compute shortest paths from a single source in `θ(V + E)` time. Shortest paths are always well defined in a dag, since even if there are negative-weight edges, no negative-weight cycles can exist.
@@ -444,7 +444,7 @@ Where:
 
 
 ## All-Pair Shortest Paths
-we consider the problem of finding shortest paths between all pairs of vertices in a graph. This problem might arise in making a table of distances between all pairs of cities for a road atlas. We are given a weighted, directed graph `G = (V, E)` with a weight function `w: E -> R` that maps edges to real-valued  weights. We wish to find, for every pair of vertices `u, v ∈ V`, a shortest (least-weight) path from `u` to `v`, where the weight of a path is the sum of the weights of its constituent edges.
+we consider the problem of finding shortest paths between all pairs of vertices in a graph. This problem might arise in making a table of distances between all pairs of cities for a road atlas. We are given a weighted, directed graph `G = (V, E)` with a weight function `w: E -> ℝ` that maps edges to real-valued  weights. We wish to find, for every pair of vertices `u, v ∈ V`, a shortest (least-weight) path from `u` to `v`, where the weight of a path is the sum of the weights of its constituent edges.
 
 We  can  solve  an  all-pairs  shortest-paths  problem  by  running  a  single-source shortest-paths  algorithm `|V|` times,  once  for  each  vertex  as  the  source.
 
@@ -507,7 +507,7 @@ Johnson’s algorithm uses the technique of __reweighting__, which works as foll
 We can preprocess `G` to determine the new weight function `ω` in `O(V * E)` time.
 
 #### Lemma 25.1 (Reweighting does not change shortest paths)
-Given a weighted, directed graph `G` with weight function `w: E -> R`,let `h: V -> R` be any function mapping vertices to real numbers. For each edge `(u, v) ∈ E`, define:
+Given a weighted, directed graph `G` with weight function `w: E -> ℝ`,let `h: V -> ℝ` be any function mapping vertices to real numbers. For each edge `(u, v) ∈ E`, define:
 
 `ω(u, v) = w(u, v) + h(u) - h(v)`
 
