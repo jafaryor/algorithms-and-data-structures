@@ -126,6 +126,8 @@ The running time of insertion sort therefore belongs to both `Ω(n)` and `O(n^2)
 
 > __Theorem__: `f(n) = θ(g(n))` if and only if `f(n) = O(g(n))` and `f(n) = Ω(g(n))`.
 
+#### [Asymptotic Notations - Simplified](https://www.youtube.com/watch?v=ddsP7NecEBk)
+
 ## Asymptotic notation in equations and inequalities
 When asymptotic notation appears in a formula (`2n^2 + 3n + 1 = 2n^2 + θ(n)`), we interpret it as standing for some anonymous function that we do not care to name.
 
@@ -732,6 +734,12 @@ A system of difference constraints with `m` constraints on `n` unknowns produces
 
 #### [Solutions to Introduction to Algorithms Third Edition Book](https://walkccc.github.io/CLRS/)
 
-#### [A useful YouTube Channel](https://www.youtube.com/channel/UCZCFT11CWBi3MHNlGf019nw/playlists)
+#### [MIT Open Courseware: Introduction to Algorithms](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-introduction-to-algorithms-sma-5503-fall-2005/)
+
+#### [MIT Open Courseware: Design and Analysis of Algorithms](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-design-and-analysis-of-algorithms-spring-2015/)
+
+#### [MIT Open Courseware: Introduction to Algorithms](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-006-introduction-to-algorithms-fall-2011/)
+
+#### [MIT Open Courseware: Advanced Algorithms](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-854j-advanced-algorithms-fall-2008/)
 
 #### [Programiz DSA Course](https://www.programiz.com/dsa)

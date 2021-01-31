@@ -1,9 +1,248 @@
 import * as _ from 'lodash';
+import {
+    createArrayAndFillWith,
+    createArrayWithIncrementingValues,
+    round,
+    swap,
+} from '../../utils';
 
 /**
  * The 2D Matrix.
  */
 export class Matrix {
+    /**
+     * Solves the system of equations Ax = b using LUP decomposition method.
+     * PA = LU
+     * @param L - lower-triangle matrix.
+     * @param U - upper-triangle matrix.
+     * @param P - permutation matrix.
+     * @complexity O(n^2)
+     */
+    static lupSolve(
+        L: number[][],
+        U: number[][],
+        P: number[][],
+        b: number[],
+    ): number[] {
+        let sum: number;
+        const n = L.length;
+        const x = new Array(n);
+        const y = new Array(n);
+        const p = Matrix.permutationToCompact(P);
+
+        // Forward Substitution.
+        for (let i = 0; i < n; i++) {
+            sum = 0;
+
+            for (let j = 0; j < i; j++) {
+                sum += L[i][j] * y[j];
+            }
+
+            y[i] = b[p[i]] - sum;
+        }
+
+        // Back Substitution.
+        for (let i = n - 1; i >= 0; i--) {
+            sum = 0;
+
+            for (let j = i + 1; j < n; j++) {
+                sum += U[i][j] * x[j];
+            }
+
+            x[i] = round((y[i] - sum) / U[i][i]);
+        }
+
+        return x;
+    }
+
+    /**
+     * Computes an LU decomposition of a matrix using Gaussian Elimination method.
+     * @complexity O(n^3)
+     */
+    static luDecomposition(
+        A: number[][],
+    ): {
+        L: number[][];
+        U: number[][];
+    } {
+        const n = A.length;
+        const L = [] as number[][];
+        const U = [] as number[][];
+
+        // Initialize L and U matrices.
+        for (let i = 0; i < n; i++) {
+            L.push(new Array(n));
+            U.push(new Array(n));
+
+            for (let j = 0; j < n; j++) {
+                if (i < j) {
+                    // Above diagonal.
+                    // Init L with 0s above the main diagonal.
+                    L[i][j] = 0;
+                } else if (i > j) {
+                    // Below diagonal.
+                    // Init U with 0s below the main diagonal.
+                    U[i][j] = 0;
+                }
+            }
+
+            // Init L with 1s on the main diagonal.
+            L[i][i] = 1;
+        }
+
+        for (let k = 0; k < n; k++) {
+            // Pivot.
+            U[k][k] = round(A[k][k]);
+
+            for (let i = k + 1; i < n; i++) {
+                L[i][k] = round(A[i][k] / U[k][k]);
+                U[k][i] = round(A[k][i]);
+            }
+
+            for (let i = k + 1; i < n; i++) {
+                for (let j = k + 1; j < n; j++) {
+                    A[i][j] = A[i][j] - L[i][k] * U[k][j];
+                }
+            }
+        }
+
+        return {L, U};
+    }
+
+    /**
+     * Computes an LUP decomposition of a matrix using Gaussian Elimination method.
+     * @complexity O(n^3)
+     */
+    static lupDecomposition(
+        A: number[][],
+    ): {
+        L: number[][];
+        U: number[][];
+        P: number[][];
+    } {
+        // Pivot.
+        let pivot: number;
+        let pivotRow: number;
+        const n = A.length;
+        const L = [] as number[][];
+        const U = [] as number[][];
+        let P = [] as number[][];
+        const pi = createArrayWithIncrementingValues(n, 0);
+
+        // Computes the LUP decomposition using Gaussian Elimination.
+        for (let k = 0; k < n; k++) {
+            pivot = 0;
+
+            for (let i = k; i < n; i++) {
+                // Determines an element with largest absolute value.
+                if (Math.abs(A[i][k]) > pivot) {
+                    pivot = Math.abs(A[i][k]);
+                    pivotRow = i;
+                }
+            }
+
+            if (pivot === 0) {
+                throw new Error('The matrix is singular!');
+            }
+
+            swap(pi, k, pivotRow!);
+
+            // Swaps the rows k and pivotRow in matrix A.
+            for (let i = 0; i < n; i++) {
+                Matrix.swap(A, k, i, pivotRow!, i);
+            }
+
+            // Now pivot is A[k][k].
+            for (let i = k + 1; i < n; i++) {
+                A[i][k] = A[i][k] / A[k][k];
+
+                for (let j = k + 1; j < n; j++) {
+                    A[i][j] = A[i][j] - A[i][k] * A[k][j];
+                }
+            }
+        }
+
+        P = this.compactToPermutation(pi);
+
+        // Fetches L and U from modified A.
+        for (let i = 0; i < n; i++) {
+            L.push(new Array(n));
+            U.push(new Array(n));
+
+            for (let j = 0; j < n; j++) {
+                if (i < j) {
+                    // Above diagonal.
+                    // Init L with 0s above the main diagonal.
+                    L[i][j] = 0;
+                    U[i][j] = round(A[i][j]);
+                } else if (i > j) {
+                    // Below diagonal.
+                    // Init U with 0s below the main diagonal.
+                    U[i][j] = 0;
+                    L[i][j] = round(A[i][j]);
+                }
+            }
+
+            // Main diagonal of L consists of 1s.
+            L[i][i] = 1;
+            U[i][i] = round(A[i][i]);
+        }
+
+        return {L, U, P};
+    }
+
+    /**
+     * Inverts a matrix.
+     * @complexity O(n^3)
+     */
+    // invert(matrix: number[][]): number[][] {
+    // }
+
+    /**
+     * Converts a permutation matrix P to a compact form pi,
+     * such that pi[i] indicated that P[i][p[i]] = 1.
+     * @complexity O(n)
+     */
+    static permutationToCompact(P: number[][]): number[] {
+        return P.reduce((pi: number[], row: number[], i: number) => {
+            pi[i] = row.findIndex((el) => el === 1);
+
+            return pi;
+        }, []);
+    }
+
+    /**
+     * Converts a compact representation pi of permutation matrix P to P,
+     * such that pi[i] indicated that P[i][p[i]] = 1.
+     * @complexity O(n)
+     */
+    static compactToPermutation(pi: number[]): number[][] {
+        const n = pi.length;
+
+        return pi.reduce((P: number[][], pi_i: number, i: number) => {
+            P[i] = createArrayAndFillWith(n, 0);
+            P[i][pi_i] = 1;
+
+            return P;
+        }, []);
+    }
+
+    /**
+     * Swaps the [i][j] and [k][l] elements of matrix.
+     */
+    static swap(
+        matrix: number[][],
+        i: number,
+        j: number,
+        k: number,
+        l: number,
+    ): void {
+        const temp = matrix[i][j];
+
+        matrix[i][j] = matrix[k][l];
+        matrix[k][l] = temp;
+    }
+
     /**
      * Increases the order of squared matrix by adding zero row and zero column
      * in order to make its order even (for Divide and Conquer

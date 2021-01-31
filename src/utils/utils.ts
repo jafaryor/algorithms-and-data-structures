@@ -207,3 +207,10 @@ export function createArrayWithIncrementingValues(
 
     return result;
 }
+
+/**
+ * Rounds a real number.
+ */
+export function round(n: number): number {
+    return Math.round(n * 100 + Number.EPSILON) / 100;
+}

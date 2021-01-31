@@ -25,6 +25,8 @@ Typically, a flow network will not have any edges into the source, and the flow 
 
 In the __maximum-flow problem__, we are given a flow network `G` with source `s` and sink `t`, and we wish to find a flow of maximum value.
 
+> The maximum-flow problem is related to optimization methods.
+
 #### Example
 
 ![flow-network](./images/flow-network.png)
@@ -196,9 +198,9 @@ Read more about the algorithm [here](https://www.geeksforgeeks.org/relabel-to-fr
 
 #### [Max Flow Ford Fulkerson | Source Code](https://www.youtube.com/watch?v=Xu8jjJnwvxE)
 
-#### [Capacity Scaling | Network Flow | Graph Theory](https://www.youtube.com/watch?v=1ewLrXUz4kk)
-
 #### [Edmonds Karp Algorithm | Network Flow | Graph Theory](https://www.youtube.com/watch?v=RppuJYwlcI8)
+
+#### [Capacity Scaling | Network Flow | Graph Theory](https://www.youtube.com/watch?v=1ewLrXUz4kk)
 
 #### [Unweighted Bipartite Matching | Network Flow | Graph Theory](https://www.youtube.com/watch?v=GhjwOiJ4SqU)
 
