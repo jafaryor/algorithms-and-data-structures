@@ -1,4 +1,5 @@
 import * as _ from 'lodash';
+import {cloneDeep} from 'lodash';
 import {
     createArrayAndFillWith,
     createArrayWithIncrementingValues,
@@ -69,6 +70,8 @@ export class Matrix {
         const L = [] as number[][];
         const U = [] as number[][];
 
+        A = cloneDeep(A);
+
         // Initialize L and U matrices.
         for (let i = 0; i < n; i++) {
             L.push(new Array(n));
@@ -129,6 +132,8 @@ export class Matrix {
         let P = [] as number[][];
         const pi = createArrayWithIncrementingValues(n, 0);
 
+        A = cloneDeep(A);
+
         // Computes the LUP decomposition using Gaussian Elimination.
         for (let k = 0; k < n; k++) {
             pivot = 0;
@@ -162,7 +167,7 @@ export class Matrix {
             }
         }
 
-        P = this.compactToPermutation(pi);
+        P = Matrix.compactToPermutation(pi);
 
         // Fetches L and U from modified A.
         for (let i = 0; i < n; i++) {
@@ -192,11 +197,87 @@ export class Matrix {
     }
 
     /**
-     * Inverts a matrix.
+     * Inverts a matrix using LUP decomposition.
+     * A * A^(-1) = I.
      * @complexity O(n^3)
      */
-    // invert(matrix: number[][]): number[][] {
-    // }
+    static invert(matrix: number[][]): number[][] {
+        let e: number[];
+        const n = matrix.length;
+        const I = Matrix.identity(n);
+        const inverted = [] as number[][];
+
+        // Compute LUP once, as the A remains unchanged.
+        const lup = Matrix.lupDecomposition(matrix);
+        const L = lup.L;
+        const U = lup.U;
+        const P = lup.P;
+
+        /**
+         * In each iteration we solve system of equations A * X[i] = I[i],
+         * where:
+         * X[i] - i-th column of inverted matrix.
+         * I[i] - i-th column of identity matrix.
+         */
+        for (let i = 0; i < n; i++) {
+            e = Matrix.column(I, i);
+
+            inverted[i] = Matrix.lupSolve(L, U, P, e);
+        }
+
+        // Transposes, as the inverted matrix was build
+        // row by row instead of column by column.
+        return Matrix.transpose(inverted);
+    }
+
+    /**
+     * Transposes a matrix.
+     * Flips a matrix over its main diagonal.
+     * @complexity O(N^2)
+     */
+    static transpose(matrix: number[][]): number[][] {
+        const n = matrix.length;
+        const transposed = [] as number[][];
+
+        for (let i = 0; i < n; i++) {
+            transposed.push(new Array(n));
+
+            for (let j = 0; j < n; j++) {
+                transposed[i][j] = matrix[j][i];
+            }
+        }
+
+        return transposed;
+    }
+
+    /**
+     * Returns an identity matrix of size n x n.
+     * @complexity O(n^2)
+     */
+    static identity(order: number): number[][] {
+        const I = [] as number[][];
+
+        for (let i = 0; i < order; i++) {
+            I.push(createArrayAndFillWith(order, 0));
+            I[i][i] = 1;
+        }
+
+        return I;
+    }
+
+    /**
+     * Return a column of a matrix as an array.
+     * @complexity O(n)
+     */
+    static column(matrix: number[][], j: number): number[] {
+        const column = [];
+
+        for (let i = 0; i < matrix.length; i++) {
+            column.push(matrix[i][j]);
+        }
+
+        return column;
+    }
 
     /**
      * Converts a permutation matrix P to a compact form pi,

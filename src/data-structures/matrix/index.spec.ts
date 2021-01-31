@@ -10,14 +10,16 @@ describe('Matrix', () => {
         let P: number[][];
 
         describe('Case 01', () => {
-            beforeEach(() => {
+            beforeAll(() => {
                 A = [
                     [1, 2, 0],
                     [3, 4, 4],
                     [5, 6, 3],
                 ];
                 b = [3, 7, 8];
+            });
 
+            beforeEach(() => {
                 const lup = Matrix.lupDecomposition(A);
 
                 L = lup.L;
@@ -54,10 +56,18 @@ describe('Matrix', () => {
             it('x', () => {
                 expect(x).toEqual([-1.4, 2.2, 0.6]);
             });
+
+            it('inverse', () => {
+                expect(Matrix.invert(A)).toEqual([
+                    [-1.2, -0.6, 0.8],
+                    [1.1, 0.3, -0.4],
+                    [-0.2, 0.4, -0.2],
+                ]);
+            });
         });
 
         describe('Case 02', () => {
-            beforeEach(() => {
+            beforeAll(() => {
                 A = [
                     [2, 0, 2, 0.6],
                     [3, 3, 4, -2],
@@ -65,7 +75,9 @@ describe('Matrix', () => {
                     [-1, -2, 3.4, -1],
                 ];
                 b = [12.6, 27, 45, -4.2];
+            });
 
+            beforeEach(() => {
                 const lup = Matrix.lupDecomposition(A);
 
                 L = lup.L;
@@ -108,14 +120,16 @@ describe('Matrix', () => {
         });
 
         describe('Case 03', () => {
-            beforeEach(() => {
+            beforeAll(() => {
                 A = [
                     [2, 3, 1, 5],
                     [6, 13, 5, 19],
                     [2, 19, 10, 23],
                     [4, 10, 11, 31],
                 ];
+            });
 
+            beforeEach(() => {
                 const lu = Matrix.luDecomposition(A);
 
                 L = lu.L;
@@ -137,6 +151,15 @@ describe('Matrix', () => {
                     [0, 4, 2, 4],
                     [0, 0, 1, 2],
                     [0, 0, 0, 3],
+                ]);
+            });
+
+            it('Transposed', () => {
+                expect(Matrix.transpose(A)).toEqual([
+                    [2, 6, 2, 4],
+                    [3, 13, 19, 10],
+                    [1, 5, 10, 11],
+                    [5, 19, 23, 31],
                 ]);
             });
         });
