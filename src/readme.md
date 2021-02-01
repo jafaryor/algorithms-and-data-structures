@@ -720,14 +720,6 @@ If the Bellman-Ford algorithm returns `false`, there is no feasible solution to 
 
 A system of difference constraints with `m` constraints on `n` unknowns produces a graph with `n + 1` vertices and `n + m` edges. Thus, using  the  Bellman-Ford algorithm, we can solve the system in `O((n + 1)(n + m)) = O(n*m + n^2)` time.s
 
-
-
-
-
-
-
-
-
 ---
 
 #### [Introduction to Algorithms by Thomas H. Cormen, Charles E. Leiserson, and Ronald L. Rivest](http://staff.ustc.edu.cn/~csli/graduate/algorithms/book6/toc.htm)

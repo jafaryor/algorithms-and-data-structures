@@ -1,5 +1,4 @@
-import * as _ from 'lodash';
-import {cloneDeep} from 'lodash';
+import {cloneDeep, constant, times} from 'lodash';
 import {
     createArrayAndFillWith,
     createArrayWithIncrementingValues,
@@ -198,7 +197,7 @@ export class Matrix {
 
     /**
      * Inverts a matrix using LUP decomposition.
-     * A * A^(-1) = I.
+     * A * A^(-1) = I = A^(-1) * A
      * @complexity O(n^3)
      */
     static invert(matrix: number[][]): number[][] {
@@ -606,7 +605,7 @@ export class Matrix {
         const matrix = new Array<T[]>(rows);
 
         for (let i = 0; i < rows; i++) {
-            matrix[i] = _.times(columns, _.constant(value));
+            matrix[i] = times(columns, constant(value));
         }
 
         return matrix;
