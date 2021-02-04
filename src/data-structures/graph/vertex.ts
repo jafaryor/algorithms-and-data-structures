@@ -3,13 +3,13 @@
  * Can be used as non-weighted graph if "weight" is equal to undefined or 1.
  * Can be both directed and undirected vertex.
  */
-export class Vertex {
+export class Vertex<T = string> {
     /** Vertex color based on search state. */
     color = VertexColor.WHITE;
     /** Shortest path distance from root. */
     distance = Infinity;
     /** Parent of vertex in a Breadth First Tree. */
-    predecessor?: Vertex;
+    predecessor?: Vertex<T>;
     /** The integer timestamp for recording vertex states. */
     timestamps: {
         // The integer records timestamp when the vertex becomes grayed.
@@ -24,12 +24,17 @@ export class Vertex {
     /** The number of connected component where the vertex belongs to. */
     connectedComponent?: number;
 
-    constructor(public value: string) {}
+    constructor(
+        /** @note The value should be unique. */
+        public value: string,
+        /** A satellite data. */
+        public data?: T,
+    ) {}
 
     /**
      * Marks a node as a discovered.
      */
-    markAsDiscovered(distance: number = 0, predecessor?: Vertex): void {
+    markAsDiscovered(distance: number = 0, predecessor?: Vertex<T>): void {
         this.color = VertexColor.GRAY;
         this.distance = distance;
         this.predecessor = predecessor;
@@ -103,10 +108,10 @@ export class Vertex {
 /**
  * The Graph's weighted edge (u, v).
  */
-export class Edge {
+export class Edge<T = string> {
     constructor(
-        public u: Vertex,
-        public v: Vertex,
+        public u: Vertex<T>,
+        public v: Vertex<T>,
         public weight: number = 1,
     ) {}
 }

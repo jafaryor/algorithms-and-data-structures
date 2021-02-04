@@ -25,17 +25,17 @@ import {HeapNode} from '../heap/node';
  *      Acyclic
  * @note Doesn't support duplicate vertices.
  */
-export class Graph {
+export class Graph<T = string> {
     /** The number of vertices. */
     protected n: number;
     /** The graph's vertices. */
-    vertices: Vertex[];
+    vertices: Array<Vertex<T>>;
     /** The graph's edges. */
-    edges: Edge[];
+    edges: Array<Edge<T>>;
     /** Te Adjacency List Representation. */
-    adjacencyList: AdjacencyList;
+    adjacencyList: AdjacencyList<T>;
     /** The Adjacency Matrix Representation. */
-    adjacencyMatrix: AdjacencyMatrix;
+    adjacencyMatrix: AdjacencyMatrix<T>;
     /** The timestamp attribute for DFS. */
     private time = 0;
     /** The number of connected components of the graph. */
@@ -51,9 +51,9 @@ export class Graph {
         // The value of each vertex.
         vertexValues?: string[];
         // Required if initialize by Adjacency List.
-        list?: {[vertex: string]: AdjacencyListNode[]};
+        list?: {[vertex: string]: Array<AdjacencyListNode<T>>};
         // The list of vertex objects which were used in list above.
-        vertices?: Vertex[];
+        vertices?: Array<Vertex<T>>;
     }) {
         if (data.matrix) {
             this.initByMatrix(data.matrix, data.vertexValues);
@@ -68,23 +68,23 @@ export class Graph {
      * Returns the graph's edges.
      * @complexity O(V + E)
      */
-    getEdges(): Edge[] {
-        return this.vertices.reduce((edges: Edge[], u: Vertex) => {
+    getEdges(): Array<Edge<T>> {
+        return this.vertices.reduce((edges: Array<Edge<T>>, u: Vertex<T>) => {
             // Skips the full lists.
             this.adjacencyList.list[u.value].forEach(
-                (node: SinglyLinkedListNode<AdjacencyListNode>) => {
+                (node: SinglyLinkedListNode<AdjacencyListNode<T>>) => {
                     edges.push(new Edge(u, node.data.vertex, node.data.weight));
                 },
             );
 
             return edges;
-        }, [] as Edge[]);
+        }, [] as Array<Edge<T>>);
     }
 
     /**
      * Initializes the graph by adjacency matrix.
      */
-    private initByMatrix(
+    protected initByMatrix(
         matrix: Array<Array<number | undefined>>,
         vertexValues?: string[],
     ): void {
@@ -101,9 +101,9 @@ export class Graph {
     /**
      * Initializes the graph by adjacency list.
      */
-    private initByList(
-        list: {[vertex: string]: AdjacencyListNode[]},
-        vertices: Vertex[],
+    protected initByList(
+        list: {[vertex: string]: Array<AdjacencyListNode<T>>},
+        vertices: Array<Vertex<T>>,
     ): void {
         this.vertices = vertices;
         this.n = this.vertices.length;
@@ -119,7 +119,7 @@ export class Graph {
     /**
      * Adds a new edge (u, v, weight).
      */
-    addEdge(u: Vertex, v: Vertex, weight: number = 1): void {
+    addEdge(u: Vertex<T>, v: Vertex<T>, weight: number = 1): void {
         this.edges.push(new Edge(u, v, weight));
         this.adjacencyMatrix.addEdge(u, v, weight);
         this.adjacencyList.addEdge(u, v, weight);
@@ -128,8 +128,8 @@ export class Graph {
     /**
      * Removes existing edge (u, v).
      */
-    removeEdge(u: Vertex, v: Vertex): void {
-        const index = this.edges.findIndex((edge: Edge) => {
+    removeEdge(u: Vertex<T>, v: Vertex<T>): void {
+        const index = this.edges.findIndex((edge: Edge<T>) => {
             if (edge.u === u && edge.v === v) return true;
             else return false;
         });
@@ -143,7 +143,7 @@ export class Graph {
     /**
      * Adds a new vertex.
      */
-    addVertex(vertex: Vertex): void {
+    addVertex(vertex: Vertex<T>): void {
         // No duplicate vertices is allowed.
         if (this.vertices.includes(vertex)) return;
 
@@ -159,7 +159,7 @@ export class Graph {
     /**
      * Removes an existing vertex.
      */
-    removeVertex(vertex: Vertex): void {
+    removeVertex(vertex: Vertex<T>): void {
         const index = this.findIndex(vertex);
 
         if (!this.isValidIndex(index)) return;
@@ -183,9 +183,9 @@ export class Graph {
      *       if the graph is unweighted.
      * @complexity O(V + E)
      */
-    breadthFirstSearch(root: Vertex): Vertex {
-        const queue = new Queue<Vertex>();
-        let u: Vertex;
+    breadthFirstSearch(root: Vertex<T>): Vertex<T> {
+        const queue = new Queue<Vertex<T>>();
+        let u: Vertex<T>;
 
         this.resetVertices();
         // We start searching from root. so mark root as discovered.
@@ -196,7 +196,7 @@ export class Graph {
             u = queue.dequeue()!;
 
             this.adjacencyList.list[u.value].forEach(
-                (v: SinglyLinkedListNode<AdjacencyListNode>) => {
+                (v: SinglyLinkedListNode<AdjacencyListNode<T>>) => {
                     if (v.data.vertex.isWhite) {
                         v.data.vertex.distance = u.distance + 1;
                         v.data.vertex.markAsDiscovered(u.distance + 1, u);
@@ -220,8 +220,8 @@ export class Graph {
      * Returns the reference to roots of a built Depth First Trees.
      * @complexity O(V + E)
      */
-    depthFirstSearch(): Vertex[] {
-        const roots = [] as Vertex[];
+    depthFirstSearch(): Array<Vertex<T>> {
+        const roots = [] as Array<Vertex<T>>;
 
         this.resetVertices();
         this.time = 0;
@@ -244,13 +244,13 @@ export class Graph {
     /**
      * DFS vertex visit procedure.
      */
-    private depthFirstSearchVisit(u: Vertex): void {
+    protected depthFirstSearchVisit(u: Vertex<T>): void {
         // White vertex has just been discovered.
         u.paintGray(++this.time);
 
         // Explore edge (u,v).
         this.adjacencyList.list[u.value].forEach(
-            (v: SinglyLinkedListNode<AdjacencyListNode>) => {
+            (v: SinglyLinkedListNode<AdjacencyListNode<T>>) => {
                 if (v.data.vertex.isWhite) {
                     v.data.vertex.predecessor = u;
                     this.depthFirstSearchVisit(v.data.vertex);
@@ -271,9 +271,9 @@ export class Graph {
      * DFS procedure for a single vertex using STACK to eliminate recursion.
      * @complexity O(V + E)
      */
-    depthFirstSearchVisitStack(u: Vertex): void {
-        const stack = new Stack<Vertex>();
-        let v: Vertex | undefined;
+    depthFirstSearchVisitStack(u: Vertex<T>): void {
+        const stack = new Stack<Vertex<T>>();
+        let v: Vertex<T> | undefined;
 
         this.resetVertices();
         this.time = 0;
@@ -302,9 +302,9 @@ export class Graph {
     /**
      * Return the first WHITE descendant vertex.
      */
-    private firstWhiteNeighbor(u: Vertex): Vertex | undefined {
+    protected firstWhiteNeighbor(u: Vertex<T>): Vertex<T> | undefined {
         return this.adjacencyList.list[u.value].forEach(
-            (v: SinglyLinkedListNode<AdjacencyListNode>) => {
+            (v: SinglyLinkedListNode<AdjacencyListNode<T>>) => {
                 if (v.data.vertex.isWhite) return v.data.vertex;
                 else return undefined;
             },
@@ -322,13 +322,13 @@ export class Graph {
      * @assumes the graph is acyclic.
      * @complexity O(V + E)
      */
-    topologicalSort(): Vertex[] {
+    topologicalSort(): Array<Vertex<T>> {
         this.depthFirstSearch();
 
         // Vertices sorted, with its vertices arranged from left to right
         // in order of decreasing visited/blackened time.
         return [...this.vertices].sort(
-            (u: Vertex, v: Vertex) =>
+            (u: Vertex<T>, v: Vertex<T>) =>
                 v.timestamps.blacken - u.timestamps.blacken,
         );
     }
@@ -343,7 +343,7 @@ export class Graph {
      * @note The graph should be directed.
      * @complexity O(V + E)
      */
-    stronglyConnectedComponents(): Vertex[] {
+    stronglyConnectedComponents(): Array<Vertex<T>> {
         // To calculate the timestamps.
         this.depthFirstSearch();
 
@@ -355,7 +355,7 @@ export class Graph {
         transposedGraph.vertices
             // Sort vertices in decreasing visited time. Like in topological sort.
             .sort(
-                (u: Vertex, v: Vertex) =>
+                (u: Vertex<T>, v: Vertex<T>) =>
                     v.timestamps.blacken - u.timestamps.blacken,
             );
         /**
@@ -377,7 +377,7 @@ export class Graph {
      * @note The graph should be directed.
      * @complexity O(V + E)
      */
-    transpose(): Graph {
+    transpose(): Graph<T> {
         const list = this.adjacencyList.transpose();
 
         return new Graph({list, vertices: [...this.vertices]});
@@ -412,13 +412,13 @@ export class Graph {
     /**
      * connectedComponents() helper function.
      */
-    private connectedComponentVisit(u: Vertex): void {
+    protected connectedComponentVisit(u: Vertex<T>): void {
         // White vertex has just been discovered.
         u.paintGray(++this.time);
 
         // Explore edge (u,v).
         this.adjacencyList.list[u.value].forEach(
-            (v: SinglyLinkedListNode<AdjacencyListNode>) => {
+            (v: SinglyLinkedListNode<AdjacencyListNode<T>>) => {
                 if (v.data.vertex.isWhite) {
                     v.data.vertex.predecessor = u;
                     v.data.vertex.connectedComponent = u.connectedComponent;
@@ -457,7 +457,7 @@ export class Graph {
      * isCyclic() helper function.
      * Checks if there is a cycle along the way of DFS.
      */
-    private isCyclicVisit(u: Vertex): boolean {
+    protected isCyclicVisit(u: Vertex<T>): boolean {
         let hasCycle = false;
 
         // White vertex has just been discovered.
@@ -465,7 +465,7 @@ export class Graph {
 
         // Explore edge (u,v).
         this.adjacencyList.list[u.value].forEach(
-            (v: SinglyLinkedListNode<AdjacencyListNode>) => {
+            (v: SinglyLinkedListNode<AdjacencyListNode<T>>) => {
                 if (v.data.vertex.isWhite && !hasCycle) {
                     v.data.vertex.predecessor = u;
                     hasCycle = this.isCyclicVisit(v.data.vertex);
@@ -496,7 +496,7 @@ export class Graph {
      * Checks if two graphs are equal.
      * @complexity O(V * V)
      */
-    private isEqualTo(graph: Graph): boolean {
+    protected isEqualTo(graph: Graph<T>): boolean {
         if (this.vertices.length !== graph.vertices.length) return false;
 
         for (let i = 0; i < this.n; i++) {
@@ -533,7 +533,7 @@ export class Graph {
      * Returns the underlying undirected and unweighted graph of directed graph.
      * @complexity O(V * V)
      */
-    underlyingUndirectedGraph(): Graph {
+    underlyingUndirectedGraph(): Graph<T> {
         const undirectedAdjacencyMatrix = this.adjacencyMatrix.underlyingUndirectedMatrix();
 
         return new Graph({matrix: undirectedAdjacencyMatrix});
@@ -549,33 +549,36 @@ export class Graph {
      * @note Graph must be connected and undirected.
      * @complexity O(E * lgV)
      */
-    minimumSpanningTree(): Edge[] {
-        let u: DisjointSetNode<Vertex>;
-        let v: DisjointSetNode<Vertex>;
+    minimumSpanningTree(): Array<Edge<T>> {
+        let u: DisjointSetNode<Vertex<T>>;
+        let v: DisjointSetNode<Vertex<T>>;
         // Makes every vertex a separate set.
-        const disjointSet = new DisjointSet<Vertex>(this.vertices);
+        const disjointSet = new DisjointSet<Vertex<T>>(this.vertices);
         // Array of edges sorted in non-decreasing order.
         const sortedEdges = [...this.edges].sort(
-            (e1: Edge, e2: Edge) => e1.weight - e2.weight,
+            (e1: Edge<T>, e2: Edge<T>) => e1.weight - e2.weight,
         );
 
         // Examines edges in order of weight, from lowest to highest.
-        return sortedEdges.reduce((minSpanningTree: Edge[], edge: Edge) => {
-            u = disjointSet.findByValue(edge.u)!;
-            v = disjointSet.findByValue(edge.v)!;
+        return sortedEdges.reduce(
+            (minSpanningTree: Array<Edge<T>>, edge: Edge<T>) => {
+                u = disjointSet.findByValue(edge.u)!;
+                v = disjointSet.findByValue(edge.v)!;
 
-            // Checks, for each edge (u, v), whether the end points
-            // u and v belong to the same tree.
-            // If they do, then the edge (u, v) cannot be added
-            // to the forest without creating a cycle,
-            // and the edge is discarded.
-            if (!disjointSet.sameComponent(u, v)) {
-                minSpanningTree.push(edge);
-                disjointSet.union(u, v);
-            }
+                // Checks, for each edge (u, v), whether the end points
+                // u and v belong to the same tree.
+                // If they do, then the edge (u, v) cannot be added
+                // to the forest without creating a cycle,
+                // and the edge is discarded.
+                if (!disjointSet.sameComponent(u, v)) {
+                    minSpanningTree.push(edge);
+                    disjointSet.union(u, v);
+                }
 
-            return minSpanningTree;
-        }, [] as Edge[]);
+                return minSpanningTree;
+            },
+            [] as Array<Edge<T>>,
+        );
     }
 
     /**
@@ -584,10 +587,10 @@ export class Graph {
      * @note Graph must be connected and undirected.
      * @complexity O(E + V*lgV)
      */
-    primMinimumSpanningTree(root: Vertex): Edge[] {
-        const minimumSpanningTree = [] as Edge[];
-        let u: HeapNode<Vertex>;
-        let v: HeapNode<Vertex> | undefined;
+    primMinimumSpanningTree(root: Vertex<T>): Array<Edge<T>> {
+        const minimumSpanningTree = [] as Array<Edge<T>>;
+        let u: HeapNode<Vertex<T>>;
+        let v: HeapNode<Vertex<T>> | undefined;
         // The index of v in the array of heap nodes of Min Priority Queue.
         let vIndex: number | undefined;
         // Weight of (u, v) edge.
@@ -602,7 +605,7 @@ export class Graph {
             u = minPriorityQueue.extractMin()!;
 
             this.adjacencyList.list[u.value.value].forEach(
-                (vertex: SinglyLinkedListNode<AdjacencyListNode>) => {
+                (vertex: SinglyLinkedListNode<AdjacencyListNode<T>>) => {
                     weight = vertex.data.weight;
                     vIndex = minPriorityQueue.findIndex(vertex.data.vertex);
                     v =
@@ -652,7 +655,7 @@ export class Graph {
 
         for (const u of topologicallySortedVertices) {
             this.adjacencyList.list[u.value].forEach(
-                (v: SinglyLinkedListNode<AdjacencyListNode>) => {
+                (v: SinglyLinkedListNode<AdjacencyListNode<T>>) => {
                     v.data.vertex.distance += u.distance + 1;
                 },
             );
@@ -660,7 +663,7 @@ export class Graph {
 
         // Returns the sum of all "distance" attributes.
         return this.vertices.reduce(
-            (sum: number, vertex: Vertex) => sum + vertex.distance,
+            (sum: number, vertex: Vertex<T>) => sum + vertex.distance,
             0,
         );
     }
@@ -675,7 +678,7 @@ export class Graph {
      * @assumes the graph has negative weight edges.
      * @complexity O(V * E)
      */
-    bellmanFordShortestPath(root: Vertex): boolean {
+    bellmanFordShortestPath(root: Vertex<T>): boolean {
         let result: boolean;
 
         this.resetVertices();
@@ -687,7 +690,7 @@ export class Graph {
         for (let i = 0; i < this.vertices.length - 1; i++) {
             for (const u of this.vertices) {
                 this.adjacencyList.list[u.value].forEach(
-                    (v: SinglyLinkedListNode<AdjacencyListNode>) => {
+                    (v: SinglyLinkedListNode<AdjacencyListNode<T>>) => {
                         this.relax(u, v.data.vertex, v.data.weight);
                     },
                 );
@@ -699,7 +702,7 @@ export class Graph {
         // is discovered, then graph contains a negative-weight cycle.
         for (const u of this.vertices) {
             result = this.adjacencyList.list[u.value].forEach(
-                (v: SinglyLinkedListNode<AdjacencyListNode>) => {
+                (v: SinglyLinkedListNode<AdjacencyListNode<T>>) => {
                     if (v.data.vertex.distance > u.distance + v.data.weight) {
                         // A shorter path is discovered, which is possible
                         // only if graph contains a negative-weight cycles.
@@ -723,7 +726,7 @@ export class Graph {
      * @assumes the graph is acyclic and has a negative weight edges.
      * @complexity O(V + E)
      */
-    dagShortestPath(root: Vertex): void {
+    dagShortestPath(root: Vertex<T>): void {
         const topologicallySortedVertices = this.topologicalSort();
 
         this.resetVertices();
@@ -733,7 +736,7 @@ export class Graph {
         // Relaxes all vertices in topological order.
         for (const u of topologicallySortedVertices) {
             this.adjacencyList.list[u.value].forEach(
-                (v: SinglyLinkedListNode<AdjacencyListNode>) => {
+                (v: SinglyLinkedListNode<AdjacencyListNode<T>>) => {
                     this.relax(u, v.data.vertex, v.data.weight);
                 },
             );
@@ -745,15 +748,15 @@ export class Graph {
      * @assumes the graph has no edge with negative weight.
      * @complexity O((V + E) * lgV)
      */
-    dijkstraShortestPath(root: Vertex): Vertex[] {
-        let u: HeapNode<Vertex>;
-        let v: HeapNode<Vertex> | undefined;
+    dijkstraShortestPath(root: Vertex<T>): Array<Vertex<T>> {
+        let u: HeapNode<Vertex<T>>;
+        let v: HeapNode<Vertex<T>> | undefined;
         // The index of v in the array of heap nodes of Min Priority Queue.
         let vIndex: number | undefined;
         // Weight of (u, v) edge.
         let weight: number;
         // The shortest path.
-        const shortestPath = [] as Vertex[];
+        const shortestPath = [] as Array<Vertex<T>>;
         // Min Priority Queue is used to keep track of edges crossing the cut.
         // extractMin() returns the lightest edge crossing the cut.
         const minPriorityQueue = this.getMinPriorityQueueWithResetVertices(
@@ -765,7 +768,7 @@ export class Graph {
             shortestPath.push(u.value);
 
             this.adjacencyList.list[u.value.value].forEach(
-                (vertex: SinglyLinkedListNode<AdjacencyListNode>) => {
+                (vertex: SinglyLinkedListNode<AdjacencyListNode<T>>) => {
                     weight = vertex.data.weight;
                     vIndex = minPriorityQueue.findIndex(vertex.data.vertex);
                     v =
@@ -793,7 +796,7 @@ export class Graph {
      * Performs a relaxation on edge (u, v).
      * @complexity O(1)
      */
-    private relax(u: Vertex, v: Vertex, weight: number): void {
+    protected relax(u: Vertex<T>, v: Vertex<T>, weight: number): void {
         // Checks if the edge (u, v) gives a shorter path.
         if (v.distance > u.distance + weight) {
             // Edge (u, v) is shorter than previously discovered path.
@@ -927,8 +930,8 @@ export class Graph {
      * @spaceComplexity O(V + V*2)
      */
     johnsonShortestPaths(): number[][] | undefined {
-        let u: Vertex;
-        let v: Vertex;
+        let u: Vertex<T>;
+        let v: Vertex<T>;
         const reweightedGraph = this.getReweightedGraph();
         // The vertex which points all other vertices.
         const s = reweightedGraph.vertices[this.n];
@@ -952,7 +955,7 @@ export class Graph {
             // It is done to apply Dijkstra Algorithm later.
             for (const u of this.vertices) {
                 this.adjacencyList.list[u.value].forEach(
-                    (v: SinglyLinkedListNode<AdjacencyListNode>) => {
+                    (v: SinglyLinkedListNode<AdjacencyListNode<T>>) => {
                         v.data.weight =
                             v.data.weight + h[u.value] - h[v.data.vertex.value];
                     },
@@ -977,7 +980,7 @@ export class Graph {
             // Restores the original edge weights.
             for (const u of this.vertices) {
                 this.adjacencyList.list[u.value].forEach(
-                    (v: SinglyLinkedListNode<AdjacencyListNode>) => {
+                    (v: SinglyLinkedListNode<AdjacencyListNode<T>>) => {
                         v.data.weight =
                             v.data.weight - h[u.value] + h[v.data.vertex.value];
                     },
@@ -994,7 +997,7 @@ export class Graph {
      * All edges leaving s have a zero weight.
      * @complexity O(V)
      */
-    private getReweightedGraph(): Graph {
+    protected getReweightedGraph(): Graph<T> {
         const n = this.n + 1;
         const vertexValues = [] as string[];
         const matrix = [] as Array<Array<number | undefined>>;
@@ -1135,7 +1138,7 @@ export class Graph {
      * Returns the number of In-Degree Vertices.
      * @complexity O(V)
      */
-    inDegree(vertex: Vertex): number {
+    inDegree(vertex: Vertex<T>): number {
         return this.adjacencyMatrix.inDegree(vertex);
     }
 
@@ -1143,7 +1146,7 @@ export class Graph {
      * Returns the number of Out-Degree Vertices.
      * @complexity O(V)
      */
-    outDegree(vertex: Vertex): number {
+    outDegree(vertex: Vertex<T>): number {
         return this.adjacencyMatrix.outDegree(vertex);
     }
 
@@ -1155,7 +1158,7 @@ export class Graph {
      * Sets a proper initial state for each vertex.
      * @complexity O(V)
      */
-    private resetVertices(): void {
+    protected resetVertices(): void {
         // Unmark all vertices before searching.
         for (const vertex of this.vertices) {
             vertex.unmark();
@@ -1167,24 +1170,24 @@ export class Graph {
      * and root marked as discovered.
      * @complexity O(V)
      */
-    private getMinPriorityQueueWithResetVertices(
-        root: Vertex,
-    ): MinPriorityQueue<Vertex> {
-        let node: HeapNode<Vertex>;
+    protected getMinPriorityQueueWithResetVertices(
+        root: Vertex<T>,
+    ): MinPriorityQueue<Vertex<T>> {
+        let node: HeapNode<Vertex<T>>;
 
-        return new MinPriorityQueue<Vertex>(
-            this.vertices.map((vertex: Vertex) => {
+        return new MinPriorityQueue<Vertex<T>>(
+            this.vertices.map((vertex: Vertex<T>) => {
                 vertex.predecessor = undefined;
 
                 if (vertex === root) {
                     // Root has the highest priority.
-                    node = new HeapNode<Vertex>(0, root);
+                    node = new HeapNode<Vertex<T>>(0, root);
                     node.value.distance = 0;
 
                     return node;
                 } else {
                     // All other nodes are low priority.
-                    node = new HeapNode<Vertex>(Infinity, vertex);
+                    node = new HeapNode<Vertex<T>>(Infinity, vertex);
                     node.value.distance = Infinity;
 
                     return node;
@@ -1197,7 +1200,7 @@ export class Graph {
      * Return the array of ['1', '2', '3', ... 'n'] which will be used a default vertex values.
      * @complexity O(n)
      */
-    private getDefaultVertexValues(): string[] {
+    protected getDefaultVertexValues(): string[] {
         return createArrayWithIncrementingValues(this.n, 1).map((k) =>
             k.toString(),
         );
@@ -1207,15 +1210,15 @@ export class Graph {
      * Finds index of a vertex.
      * @complexity O(V)
      */
-    private findIndex(u: Vertex): number | undefined {
-        return this.vertices.findIndex((v: Vertex) => v === u);
+    protected findIndex(u: Vertex<T>): number | undefined {
+        return this.vertices.findIndex((v: Vertex<T>) => v === u);
     }
 
     /**
      * Checks if an index is valid for the current matrix.
      * @complexity O(1)
      */
-    private isValidIndex(index?: number): boolean {
+    protected isValidIndex(index?: number): boolean {
         return index != null && index >= 0 && index < this.n;
     }
 
@@ -1223,6 +1226,6 @@ export class Graph {
      * String representation of vertices.
      */
     toString(): string[] {
-        return this.vertices.map((vertex: Vertex) => vertex.toString());
+        return this.vertices.map((vertex: Vertex<T>) => vertex.toString());
     }
 }

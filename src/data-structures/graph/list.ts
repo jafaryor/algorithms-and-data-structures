@@ -17,11 +17,11 @@ import {Vertex} from './vertex';
  * Notice: There is only one set of vertices and all nodes reference them.
  *         No operation can create a duplicate vertex.
  */
-export class AdjacencyList {
+export class AdjacencyList<T = string> {
     /** The number of vertices. */
     private n: number;
     /** The adjacency list. */
-    list: {[vertex: string]: SinglyLinkedList<AdjacencyListNode>};
+    list: {[vertex: string]: SinglyLinkedList<AdjacencyListNode<T>>};
 
     constructor(
         /**
@@ -30,14 +30,14 @@ export class AdjacencyList {
          * Each dictionary key is parent of each list item corresponding to a key.
          * Each list a reference t a unique vertex. No vertex duplication.
          */
-        array: {[vertex: string]: AdjacencyListNode[]},
-        public vertices: Vertex[],
+        array: {[vertex: string]: Array<AdjacencyListNode<T>>},
+        public vertices: Array<Vertex<T>>,
     ) {
         this.n = Object.keys(array).length;
         this.list = {};
 
         for (const [key, row] of Object.entries(array)) {
-            this.list[key] = new SinglyLinkedList<AdjacencyListNode>(
+            this.list[key] = new SinglyLinkedList<AdjacencyListNode<T>>(
                 row,
                 this.areVerticesEqual,
             );
@@ -48,10 +48,10 @@ export class AdjacencyList {
      * Converts to Adjacency Matrix Graph Representation.
      * @complexity O(V * V)
      */
-    toAdjacencyMatrix(): AdjacencyMatrix {
+    toAdjacencyMatrix(): AdjacencyMatrix<T> {
         const matrix = [] as Array<Array<number | undefined>>;
         const vertexValues = Object.keys(this.list);
-        let list: SinglyLinkedList<AdjacencyListNode>;
+        let list: SinglyLinkedList<AdjacencyListNode<T>>;
         let row: Array<number | undefined>;
         let index: number;
 
@@ -59,7 +59,7 @@ export class AdjacencyList {
             list = this.list[value];
             row = createArrayAndFillWith(this.n, undefined);
 
-            list.forEach((node: SinglyLinkedListNode<AdjacencyListNode>) => {
+            list.forEach((node: SinglyLinkedListNode<AdjacencyListNode<T>>) => {
                 index = vertexValues.findIndex(
                     (key) => key === node.data.vertex.value,
                 );
@@ -76,16 +76,16 @@ export class AdjacencyList {
      * Returns the transposed list.
      * @complexity O(V + E)
      */
-    transpose(): {[vertex: string]: AdjacencyListNode[]} {
-        const list = {} as {[vertex: string]: AdjacencyListNode[]};
+    transpose(): {[vertex: string]: Array<AdjacencyListNode<T>>} {
+        const list = {} as {[vertex: string]: Array<AdjacencyListNode<T>>};
 
         for (const u of this.vertices) {
-            list[u.value] = [] as AdjacencyListNode[];
+            list[u.value] = [] as Array<AdjacencyListNode<T>>;
         }
 
         for (const u of this.vertices) {
             this.list[u.value].forEach(
-                (v: SinglyLinkedListNode<AdjacencyListNode>) => {
+                (v: SinglyLinkedListNode<AdjacencyListNode<T>>) => {
                     // Insert "u" into a list corresponding to "v" vertex.
                     list[v.data.vertex.value].push(
                         new AdjacencyListNode(u, v.data.weight),
@@ -121,7 +121,7 @@ export class AdjacencyList {
      * Adds an edge (u, v).
      * @complexity O(1)
      */
-    addEdge(u: Vertex, v: Vertex, weight: number = 1): void {
+    addEdge(u: Vertex<T>, v: Vertex<T>, weight: number = 1): void {
         this.list[u.value].insert({
             vertex: v,
             weight,
@@ -132,7 +132,7 @@ export class AdjacencyList {
      * Removes an edge (u, v).
      * @complexity O(V)
      */
-    removeEdge(u: Vertex, v: Vertex): void {
+    removeEdge(u: Vertex<T>, v: Vertex<T>): void {
         this.list[u.value].remove(new AdjacencyListNode(v));
     }
 
@@ -140,8 +140,8 @@ export class AdjacencyList {
      * Adds a vertex.
      * @complexity O(1)
      */
-    addVertex(vertex: Vertex): void {
-        this.list[vertex.value] = new SinglyLinkedList<AdjacencyListNode>();
+    addVertex(vertex: Vertex<T>): void {
+        this.list[vertex.value] = new SinglyLinkedList<AdjacencyListNode<T>>();
         this.n++;
     }
 
@@ -149,7 +149,7 @@ export class AdjacencyList {
      * Removes a vertex.
      * @complexity O(V * V)
      */
-    removeVertex(vertex: Vertex): void {
+    removeVertex(vertex: Vertex<T>): void {
         const index = this.findIndex(vertex);
 
         if (!this.isValidIndex(index)) return;
@@ -172,8 +172,8 @@ export class AdjacencyList {
      * Finds index of a vertex.
      * @complexity O(V)
      */
-    private findIndex(u: Vertex): number | undefined {
-        return this.vertices.findIndex((v: Vertex) => v === u);
+    private findIndex(u: Vertex<T>): number | undefined {
+        return this.vertices.findIndex((v: Vertex<T>) => v === u);
     }
 
     /**
@@ -189,8 +189,8 @@ export class AdjacencyList {
      * @complexity O(1)
      */
     private areVerticesEqual(
-        u: AdjacencyListNode,
-        v: AdjacencyListNode,
+        u: AdjacencyListNode<T>,
+        v: AdjacencyListNode<T>,
     ): boolean {
         return u.vertex.value === v.vertex.value;
     }
@@ -199,9 +199,9 @@ export class AdjacencyList {
 /**
  * The Adjacency List Node.
  */
-export class AdjacencyListNode {
+export class AdjacencyListNode<T = string> {
     constructor(
-        public vertex: Vertex,
+        public vertex: Vertex<T>,
         /** The weight of edge (vertex.predecessor, vertex). */
         public weight: number = 1,
     ) {}

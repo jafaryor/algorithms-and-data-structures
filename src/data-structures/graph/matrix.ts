@@ -17,13 +17,13 @@ import {Vertex} from './vertex';
  * ]
  * vertexValues: [a, b, c, d, e]
  */
-export class AdjacencyMatrix {
+export class AdjacencyMatrix<T = string> {
     /** The matrix order. The number of vertices. */
     private n: number;
 
     constructor(
         public matrix: Array<Array<number | undefined>>,
-        public vertices: Vertex[],
+        public vertices: Array<Vertex<T>>,
     ) {
         this.n = matrix.length;
     }
@@ -32,12 +32,12 @@ export class AdjacencyMatrix {
      * Converts to Adjacency List Graph Representation.
      * @complexity O(V^2)
      */
-    toAdjacencyList(): AdjacencyList {
-        const list = {} as {[vertex: string]: AdjacencyListNode[]};
+    toAdjacencyList(): AdjacencyList<T> {
+        const list = {} as {[vertex: string]: Array<AdjacencyListNode<T>>};
         /** The array representation of the final list. */
-        let array: AdjacencyListNode[];
+        let array: Array<AdjacencyListNode<T>>;
         /** The adjacency list key. The fist node in a list. */
-        let vertex: Vertex;
+        let vertex: Vertex<T>;
 
         for (let i = 0; i < this.n; i++) {
             vertex = this.vertices[i];
@@ -84,7 +84,7 @@ export class AdjacencyMatrix {
      * Adds a (u, v) edge.
      * @complexity O(V)
      */
-    addEdge(u: Vertex, v: Vertex, weight: number = 1): void {
+    addEdge(u: Vertex<T>, v: Vertex<T>, weight: number = 1): void {
         this.setWeight(u, v, weight);
     }
 
@@ -92,7 +92,7 @@ export class AdjacencyMatrix {
      * Removes a (u, v) edge.
      * @complexity O(V)
      */
-    removeEdge(u: Vertex, v: Vertex): void {
+    removeEdge(u: Vertex<T>, v: Vertex<T>): void {
         this.setWeight(u, v);
     }
 
@@ -100,7 +100,7 @@ export class AdjacencyMatrix {
      * Add a vertex.
      * @complexity O(V)
      */
-    addVertex(vertex: Vertex): void {
+    addVertex(vertex: Vertex<T>): void {
         this.vertices.push(vertex);
 
         // Add a column.
@@ -121,7 +121,7 @@ export class AdjacencyMatrix {
      * Removes a vertex.
      * @complexity O(V * V)
      */
-    removeVertex(vertex: Vertex): void {
+    removeVertex(vertex: Vertex<T>): void {
         const index = this.findIndex(vertex);
 
         if (!this.isValidIndex(index)) return;
@@ -144,7 +144,7 @@ export class AdjacencyMatrix {
      * Returns the number of In-Degree Vertices.
      * @complexity O(V)
      */
-    inDegree(vertex: Vertex): number {
+    inDegree(vertex: Vertex<T>): number {
         let k = 0;
         const j = this.findIndex(vertex)!;
 
@@ -159,7 +159,7 @@ export class AdjacencyMatrix {
      * Returns the number of Out-Degree Vertices.
      * @complexity O(V)
      */
-    outDegree(vertex: Vertex): number {
+    outDegree(vertex: Vertex<T>): number {
         let k = 0;
         const i = this.findIndex(vertex)!;
 
@@ -174,7 +174,7 @@ export class AdjacencyMatrix {
      * Sets a weight to (u, v).
      * @complexity O(V)
      */
-    private setWeight(u: Vertex, v: Vertex, weight?: number): void {
+    private setWeight(u: Vertex<T>, v: Vertex<T>, weight?: number): void {
         const uIndex = this.findIndex(u);
         const vIndex = this.findIndex(v);
 
@@ -187,8 +187,8 @@ export class AdjacencyMatrix {
      * Finds index of a vertex.
      * @complexity O(V)
      */
-    private findIndex(u: Vertex): number | undefined {
-        return this.vertices.findIndex((v: Vertex) => v === u);
+    private findIndex(u: Vertex<T>): number | undefined {
+        return this.vertices.findIndex((v: Vertex<T>) => v === u);
     }
 
     /**

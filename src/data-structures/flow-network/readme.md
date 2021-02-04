@@ -151,8 +151,12 @@ We  can  improve  the  bound  on  FORD-FULKERSON by  finding  the  augmenting pa
 
 We say that an edge `(u, v)` in a residual network `G_f` is __critical__ on an augmenting path `p` if the residual capacity of `p` is the residual capacity of `(u, v)`, that is, if `c_f(p) = c_f(u, v)`. After we have augmented flow along an augmenting path, any critical edge on the path disappears from the residual network.  Moreover, at least one edge on any augmenting path must be critical.
 
+Why not DFS? Using a DFS can lead to zigzagging through the flow graph to find the sink which can cause longer augmenting paths. Longer paths are generally undesirable because the longer the path, the higher the chance for a small bottleneck value which results in a longer runtime. BFS on the other hand always gives a shortest path in terms of number of edges. That is why using BFS is a great approach to avoid the DFS worse case and reduce the length of augmented path.
+
 #### Theorem
 If the Edmonds-Karp algorithm is run on a flow network `G = (V, E)` with source `s` and sink `t`, then the total number of flow augmentations performed by the algorithm is `O(V * E)`.
+
+Because we can implement each iteration of `fordFulkersonMaxFlow()` in `O(E)` time when we find the augmenting path by breadth-first search, the total running time of the Edmonds-Karp algorithm is `O(V * E^2)`.
 
 
 ## Maximum Bipartite Matching

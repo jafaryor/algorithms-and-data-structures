@@ -1,12 +1,13 @@
 import {Graph} from '../graph';
 import {AdjacencyListNode} from '../graph/list';
 import {Vertex} from '../graph/vertex';
+import {ResidualGraph} from './residual-graph';
 
 /**
- * The Flow data structure.
+ * The Flow Network data structure.
  * A Directed, Weighted (with non-negative edge weights), Connected graph.
  */
-export class Flow extends Graph {
+export class FlowNetwork extends Graph {
     /** The flow's source. */
     private source: Vertex;
     /** The flow's sink. */
@@ -23,18 +24,18 @@ export class Flow extends Graph {
             // The list of vertex objects which were used in list above.
             vertices?: Vertex[];
         },
-        source: Vertex,
-        sink: Vertex,
+        sourceIndex: number,
+        sinkIndex: number,
     ) {
         super(data);
 
-        this.source = source;
-        this.sink = sink;
+        this.source = this.vertices[sourceIndex];
+        this.sink = this.vertices[sinkIndex];
     }
 
     /**
      * The Ford Fulkerson's Algorithm for finding a Max Flow.
-     * @note uses FDS to find a path in residual network.
+     * @note uses DFS to find a path in residual network.
      * @complexity O(E * |f*|), where f* is a maximum flow in the network.
      */
     fordFulkersonMaxFlow() {
@@ -67,5 +68,38 @@ export class Flow extends Graph {
             // When no augmenting paths exist, the flow f is a maximum flow.
         }
         */
+    }
+
+    /**
+     * The Edmonds Karp's Algorithm for finding a Max Flow.
+     * @note uses BFS to find a path in residual network.
+     * @complexity O(V * E^2)
+     */
+    edmondsKarpMaxFlow(): {maxFlow: number; maxFlowPath: string[]} {
+        let maxFlow = 0;
+        let pathResidualCapacity: number;
+        // Creates a new residual graph similar to the current flow network.
+        // Note that the initial flow in the residual graph is 0.
+        const residualGraph = new ResidualGraph(
+            {
+                matrix: this.adjacencyMatrix.matrix,
+                vertexValues: this.vertices.map((vertex) => vertex.value),
+            },
+            this.vertices.findIndex((vertex) => vertex === this.source),
+            this.vertices.findIndex((vertex) => vertex === this.sink),
+        );
+
+        // Repeatedly finds the shortest augmenting path
+        // (in terms of number of edges) from s to t.
+        // BFS ensures that the shortest path from s to t is found in every iteration.
+        while (residualGraph.bfs()) {
+            pathResidualCapacity = residualGraph.findPathResidualCapacity();
+
+            maxFlow += pathResidualCapacity;
+
+            residualGraph.augmentPath(pathResidualCapacity);
+        }
+
+        return {maxFlow, maxFlowPath: residualGraph.flow.toString()};
     }
 }
