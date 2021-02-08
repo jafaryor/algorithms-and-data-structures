@@ -584,7 +584,7 @@ export class Matrix {
     /**
      * Creates an empty matrix of size i x j.
      */
-    static createEmptyMatrixOfSize<T>(i: number, j: number): T[][] {
+    static createEmptyMatrixOfSize<T = number>(i: number, j: number): T[][] {
         const matrix = new Array<T[]>(i);
 
         for (let k = 0; k < i; k++) {
@@ -597,7 +597,7 @@ export class Matrix {
     /**
      * Creates and array of sze "size" and fills it with "value".
      */
-    static createMatrixAndFillWith<T>(
+    static createMatrixAndFillWith<T = number>(
         rows: number,
         columns: number,
         value: T,

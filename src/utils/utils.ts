@@ -187,7 +187,10 @@ export function replaceMethodInContext(
 /**
  * Creates and array of sze "size" and fills it with "value".
  */
-export function createArrayAndFillWith<T>(size: number, value: T): T[] {
+export function createArrayAndFillWith<T = number>(
+    size: number,
+    value: T,
+): T[] {
     return _.times(size, _.constant(value));
 }
 
