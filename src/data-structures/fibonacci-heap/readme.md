@@ -1,3 +1,24 @@
+## Fibonacci Numbers
+We define the __Fibonacci numbers__ by the following recurrence:
+* `F`<sub>`0`</sub>` = 0`
+* `F`<sub>`1`</sub>` = 1`
+* `F`<sub>`i`</sub>` = F`<sub>`i-1`</sub>` + F`<sub>`i-2`</sub> for `i ≤ 2`
+
+Thus,  each Fibonacci  number  is the sum of the two previous  ones,  yielding  the sequence:
+
+`0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, ...`
+
+Fibonacci numbers are related to the __golden ratio `φ`__ and to its conjugate `φ'`, which are the two roots of the equation: `x^2 = x + 1` and are given by the following formulas:
+
+`φ = (1 + √5)/2 = 1.61803...`
+
+`φ' = (1 - √5)/2 = -0.61803...`
+
+Specifically, we have:
+
+`F`<sub>`i`</sub>` = (φ`<sup>`i`</sup>` - φ'`<sup>`i`</sup>`)/√5`
+
+
 ## Fibonacci Heap
 The Fibonacci heap data structure serves a dual purpose.  First, it supports a set of operations that constitutes what is known as a _mergeable heap_.  Second, several Fibonacci-heap operations run in constant amortized time.
 
