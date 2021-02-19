@@ -1,5 +1,5 @@
 /**
- * Finds a Greatest Common Divisor (GCD) of two numbers.
+ * Finds the Greatest Common Divisor (GCD) of two numbers.
  * @complexity O(lg b)
  */
 export function euclid(a: number, b: number): number {
@@ -11,7 +11,24 @@ export function euclid(a: number, b: number): number {
 }
 
 /**
+ * Finds the Greatest Common Divisor (GCD) of two numbers in iterative manner.
+ * @complexity O(lg b)
+ */
+export function euclidIterative(a: number, b: number): number {
+    let temp: number;
+
+    while (b !== 0) {
+        temp = a;
+        a = b;
+        b = temp % b;
+    }
+
+    return a;
+}
+
+/**
  * Extended Euclidean algorithm, which return gcd(a, b) = ax + by.
+ * @note the "a: and "b" must be non-negative numbers.
  * @complexity O(lg b) since the number of recursive is equals
  *              to number of recursive calls of euclid() function.
  */
@@ -34,4 +51,12 @@ export function gcd(
             y: d.x - Math.floor(a / b) * d.y,
         };
     }
+}
+
+/**
+ * Finds the Least Common Multiple of two numbers.
+ * @note the "a" and "b" must be non-zero numbers.
+ */
+export function lcm(a: number, b: number): number {
+    return Math.abs(a * b) / euclidIterative(a, b);
 }

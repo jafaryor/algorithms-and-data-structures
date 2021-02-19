@@ -212,7 +212,7 @@ export function createArrayWithIncrementingValues(
 }
 
 /**
- * Rounds a real number.
+ * Rounds a real number 2 digits after ".".
  */
 export function round(n: number): number {
     return Math.round(n * 100 + Number.EPSILON) / 100;

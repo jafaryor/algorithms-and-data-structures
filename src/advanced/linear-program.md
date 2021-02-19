@@ -371,3 +371,7 @@ If `L` is infeasible, `simplex()` throws `“infeasible!”` exception . If `L` 
 
 ### Some simplex example
 ![simplex-example](./images/simplex-example.jpg)
+
+---
+
+#### [Watch this lecture](https://www.youtube.com/watch?v=WwMz2fJwUCg)

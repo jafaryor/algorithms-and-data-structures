@@ -111,3 +111,7 @@ Some of the important applications of the FFT include:
 * Fast Chebyshev approximation
 * Solving difference equations
 * Computation of isotopic distributions.
+
+---
+
+#### [Watch this lecture](https://www.youtube.com/watch?v=iTMn0Kt18tg)

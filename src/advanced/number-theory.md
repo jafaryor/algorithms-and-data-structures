@@ -132,6 +132,19 @@ Since `F`<sub>`k`</sub> is approximately `φ`<sup>`k`</sup>` / √5`, where `φ`
 
 Therefore, if we call `euclid()` on two `β`-bit numbers,  then it performs `O(β)` arithmetic operations  and `O(β^3)` bit operations (assuming that multiplication and division of `β`-bit numbers take `O(β^2)` bit operations).
 
+
+### Least Common Multiple (LCM)
+Let `lcm(a, b)` to be the __least common multiple__ of the integers `a` and `b`, that is, the smallest nonnegative integer that is a multiple of `a` and `b`.
+
+Since division of integers by zero is undefined, this definition has meaning only if `a` and `b` are both different from zero.
+
+A multiple of a number is the product of that number and an integer. For example, `10` is a multiple of `5` because `5 × 2 = 10`, so `10` is divisible by `5` and `2`. Because `10` is the smallest positive integer that is divisible by both `5` and `2`, it is the least common multiple of `5` and `2`. By the same principle, `10` is the least common multiple of `−5` and `−2` as well.
+
+We can calculate lcm if we know gcd using the following formula:
+
+`lcm(a, b) = |a * b| / gcd(a, b)`
+
+
 ### Application
 The number-theoretic algorithms are user in the following cases:
 * Solving modular linear equations: `a * x ≡ b (mod n)`
@@ -143,3 +156,7 @@ The number-theoretic algorithms are user in the following cases:
 
 * Primality testing (check if a number is a prime number)
 * Integer factorization (decompose into a product of primes)
+
+---
+
+#### [Read More about LCM](https://en.wikipedia.org/wiki/Least_common_multiple)

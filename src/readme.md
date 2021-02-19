@@ -695,4 +695,6 @@ In summary, since the amortized cost of each operation is bounded above bya cons
 
 #### [MIT Open Courseware: Advanced Algorithms](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-854j-advanced-algorithms-fall-2008/)
 
+#### [MIT Open Courseware: Advanced Data Structures](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-851-advanced-data-structures-spring-2012/)
+
 #### [Programiz DSA Course](https://www.programiz.com/dsa)

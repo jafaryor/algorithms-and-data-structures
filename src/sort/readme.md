@@ -1,5 +1,4 @@
 # Sorting Algorithms
-
 Sorting algorithm is an algorithm that puts elements of a list in a certain order.
 
 Sorting algorithms are often classified by:
