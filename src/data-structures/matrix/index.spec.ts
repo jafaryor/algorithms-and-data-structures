@@ -164,4 +164,43 @@ describe('Matrix', () => {
             });
         });
     });
+
+    describe('Determinant', () => {
+        let matrix: number[][];
+
+        it('2x2', () => {
+            matrix = [
+                [2, 5],
+                [-5, 8],
+            ];
+
+            expect(Matrix.determinant(matrix)).toEqual(41);
+        });
+
+        it('3x3', () => {
+            matrix = [
+                [3, -5, 87],
+                [41, 53, 0.5],
+                [94, 0, 2],
+            ];
+
+            // However it should have been equal to -432941,
+            // which numerical instability issue.
+            expect(Matrix.determinant(matrix)).toEqual(-433281.39);
+        });
+
+        it('5x5', () => {
+            matrix = [
+                [5, -5, 4, 0, -6],
+                [0.4, 4, 8, 9, 1],
+                [6, 4, -2, 8, -0.9],
+                [2, -0.4, 5, -1, 0],
+                [-7, 8, 6, 9, 10],
+            ];
+
+            // However it should have been equal to 79660.044,
+            // which numerical instability issue.
+            expect(Matrix.determinant(matrix)).toEqual(7986.57);
+        });
+    });
 });

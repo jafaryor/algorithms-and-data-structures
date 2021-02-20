@@ -109,3 +109,7 @@ Suppose that we have an LUP decomposition of a matrix `A` in the form of three m
 We can think of the equation `AX = I` which defines the matrix `X`, the inverse of `A`, as a set of `n` distinct equations of the form `Ax = b`. To be precise, let `X`<sub>`i`</sub> denote the `i`th column of `X`, and recall that the unit vector `e`<sub>`i`</sub> is the `i`th column of `I`. We can then solve the above equation for `X` by using the LUP decomposition for `A` to solve each equation `AX`<sub>`i`</sub>` = e`<sub>`i`</sub>.
 
 Separately for `X`<sub>`i`</sub>. Once we have the LUP decomposition, we can compute each of the `n` columns `X`<sub>`i`</sub> in time `θ(n^2)`, and so we can compute `X` from the LUP decomposition of `A` in time `θ(n^3)`. Since we can determine the LUP decomposition of `A` in time `θ(n^3)`, we can compute the inverse `A`<sup>`-1`</sup> of a matrix `A` in time `θ(n^3)`.
+
+
+## Determinant
+![determinant](./images/determinant.png)

@@ -65,7 +65,7 @@ This algorithm avoids computing the transition function `δ` altogether, and its
 
 The prefix  function `π` for  a pattern  encapsulates  knowledge  about  how  the  pattern matches against shifts of itself.  We can take advantage of this information to avoid testing useless shifts in the naive pattern-matching  algorithm  and to avoid precomputing the full transition function `δ` for a string-matching automaton.
 
-Given a pattern `P[1...m]`, the prefix function for the pattern `P` is the function `π: {1, 2, ..., m} -> {0, 1, ..., m-1}` such that:
+Given a pattern `P[1...m]`, the __prefix function__ for the pattern `P` is the function `π: {1, 2, ..., m} -> {0, 1, ..., m-1}` such that:
 
 `π[q] = max{k: k < q and P_k ⊐ P_q}`
 
@@ -107,6 +107,3 @@ The total running time of each algorithm is the sum of the preprocessing and mat
 ---
 
 #### [Watch this lecture](https://www.youtube.com/watch?v=NinWEPPrkDQ)
-
-
-⅀   ∑   ⊏   ⊐   ∈   ≤   Ɛ   ≡   δ   ⊆   σ   π

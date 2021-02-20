@@ -324,6 +324,36 @@ export class Matrix {
     }
 
     /**
+     * Calculates the determinant of a matrix.
+     * Determinant represents the matrix in term of a real number.
+     * @assumes the matrix is squared.
+     * @note numerically instable, which means the result is not accurate.
+     * @complexity O(n^3 + n)
+     */
+    static determinant(matrix: number[][]): number {
+        const n = matrix.length;
+        const m = matrix[0].length;
+
+        if (n !== m) {
+            throw new Error('Matrix must be squared!');
+        }
+
+        if (n === 2) {
+            return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+        } else {
+            const decomposition = Matrix.luDecomposition(matrix);
+            let determinant = 1;
+
+            for (let i = 0; i < n; i++) {
+                determinant *= decomposition.L[i][i];
+                determinant *= decomposition.U[i][i];
+            }
+
+            return round(determinant);
+        }
+    }
+
+    /**
      * Increases the order of squared matrix by adding zero row and zero column
      * in order to make its order even (for Divide and Conquer
      * and Strassen algorithms) and returns new matrix.
