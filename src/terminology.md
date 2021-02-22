@@ -23,8 +23,3 @@
     * `5x - 7` - polynomial of degree 1.
 
 * An algorithm is said to be of __polynomial time__ if its running time is upper bounded by a polynomial expression in the size of the input for the algorithm
-
-* In computational complexity theory, a problem is __NP-complete__ when:
-    * A nondeterministic Turing machine can solve it in polynomial-time.
-    * A deterministic Turing machine can solve it in large time complexity classes and can verify its solutions in polynomial time.
-    * It can be used to simulate any other problem with similar solvability.
