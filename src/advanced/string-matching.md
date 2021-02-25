@@ -106,4 +106,4 @@ The total running time of each algorithm is the sum of the preprocessing and mat
 
 ---
 
-#### [Watch this lecture](https://www.youtube.com/watch?v=NinWEPPrkDQ)
+#### [MIT: String Matching](https://www.youtube.com/watch?v=NinWEPPrkDQ)

@@ -114,4 +114,4 @@ Some of the important applications of the FFT include:
 
 ---
 
-#### [Watch this lecture](https://www.youtube.com/watch?v=iTMn0Kt18tg)
+#### [MIT: FFT](https://www.youtube.com/watch?v=iTMn0Kt18tg)

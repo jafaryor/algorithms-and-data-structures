@@ -613,9 +613,9 @@ export class Graph<T = string> {
                             ? undefined
                             : minPriorityQueue.getHeapNodes()[vIndex];
 
-                    // v.key is the weight of a light (v, v.predecessor)
+                    // v.key is the weight of a light edge (v, v.predecessor)
                     // connecting v to some vertex already placed into
-                    // the minimum spanning tree.
+                    // the minimum spanning tree (u).
                     if (v && weight < v.key) {
                         v.value.predecessor = u.value;
                         minPriorityQueue.increasePriority(vIndex!, weight);

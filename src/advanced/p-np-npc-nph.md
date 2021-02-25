@@ -145,7 +145,7 @@ Some more NP-Complete problems:
     
     The clique problem is the optimization problem of finding a clique of maximum size in `G`. As a decision problem, we ask simply whether a clique of a given size `k` exists in the graph.
 
-10. __The vertex-cover problem__ - A __vertex cover__ of an undirected graph `G = (V, E)` is a subset `V' ⊆ V` such that if `(u, v) ∈ E`, then `u ∈ V'` or `v ∈ V'` (or both).  That is, each vertex “covers” its incident edges (two edges are _incident_ if they share a common vertex), and a vertex cover for `G` is a set of vertices that covers all the edges in `E`. The size of a vertex cover is the number of vertices in it.
+10. __The vertex-cover problem__ - A __vertex cover__ of an undirected graph `G = (V, E)` is a subset `V' ⊆ V` such that if `(u, v) ∈ E`, then `u ∈ V'` or `v ∈ V'` (or both).  That is, each vertex “covers” its incident edges (two edges are _incident_ if they share a common vertex), and a vertex cover for `G` is a set of vertices that covers all the edges in `E`. The __size__ of a vertex cover is the number of vertices in it.
 
     The vertex-cover problem is to find a vertex cover of minimum size in a given graph. Restating  this  optimization  problem  as  a  decision  problem,  we  wish  to determine whether a graph has a vertex cover of a given size `k`.
 

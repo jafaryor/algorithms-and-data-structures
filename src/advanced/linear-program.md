@@ -374,4 +374,4 @@ If `L` is infeasible, `simplex()` throws `“infeasible!”` exception . If `L` 
 
 ---
 
-#### [Watch this lecture](https://www.youtube.com/watch?v=WwMz2fJwUCg)
+#### [MIT: LP, reductions, Simplex](https://www.youtube.com/watch?v=WwMz2fJwUCg)

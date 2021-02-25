@@ -217,3 +217,12 @@ export function createArrayWithIncrementingValues(
 export function round(n: number): number {
     return Math.round(n * 100 + Number.EPSILON) / 100;
 }
+
+/**
+ * Returns a random element from an array.
+ */
+export function randomFromArray<T>(array: T[]): T {
+    const randomIndex = randomFromRange(0, array.length - 1);
+
+    return array[randomIndex];
+}
