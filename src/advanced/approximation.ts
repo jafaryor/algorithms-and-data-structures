@@ -1,6 +1,6 @@
-import { Graph } from "../data-structures/graph";
-import { Edge, Vertex } from "../data-structures/graph/vertex";
-import { randomFromArray } from "../utils";
+import {Graph} from '../data-structures/graph';
+import {Edge, Vertex} from '../data-structures/graph/vertex';
+import {randomFromArray} from '../utils';
 
 // ======================================================================
 // The Vertex-Cover Problem
@@ -34,7 +34,7 @@ export function approxVertexCover(graph: Graph): Edge[] {
  */
 function removeIncidentEdgesOn(vertex: Vertex, edges: Edge[]): Edge[] {
     const result = [] as Edge[];
-    
+
     for (const edge of edges) {
         if (edge.u === vertex || edge.v === vertex) continue;
 
@@ -68,7 +68,10 @@ export function approxTourFrom(root: Vertex, graph: Graph): Edge[] {
  * The approximation greedy algorithm for the Set-Covering Problem
  * @complexity O(|set| * |family|)
  */
-export function approxSetCover<T>(set: Set<T>, family: Set<Set<T>>): Set<Set<T>> {
+export function approxSetCover<T>(
+    set: Set<T>,
+    family: Set<Set<T>>,
+): Set<Set<T>> {
     /** The set of remaining uncovered elements. */
     const uncovered = new Set<T>(set);
     const cover = new Set<Set<T>>();
