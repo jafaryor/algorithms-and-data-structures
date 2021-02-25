@@ -84,6 +84,7 @@ export function approxSetCover<T>(
         // as many uncovered elements as possible.
         family.forEach((subset: Set<T>) => {
             if (subset.size > maxSize && !cover.has(subset)) {
+                maxSize = subset.size;
                 maxSubset = subset;
             }
         });
