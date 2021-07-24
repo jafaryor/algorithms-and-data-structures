@@ -30,16 +30,16 @@ export const randomFromRange = (min: number, max: number) =>
     Math.floor(Math.random() * (max - min + 1) + min);
 
 /**
- * randomizes the array items
+ * Randomizes the array in place.
+ * This function computes a uniform random permutation of the array elements.
  * @complexity: O(n)
- * @param array
  */
 // tslint:disable-next-line: no-any
 export function shuffle(array: any[]): any[] {
-    const randomIndex = () => randomFromRange(0, array.length - 1);
+    const n = array.length;
 
-    for (let i = 0; i < array.length; ++i) {
-        swap(array, i, randomIndex());
+    for (let i = 0; i < n; i++) {
+        swap(array, i, randomFromRange(i, n - 1));
     }
 
     return array;

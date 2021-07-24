@@ -300,6 +300,19 @@ Which is the definition of `Θ(f(n)+g(n))` with `c1 = 1/2`, `c2 = 1`.
     * `F_i = (φ^i - Φ^i)/sqrt(5)`
     * `F_i =` &lfloor;`φ^i/sqrt(5) + 1/2`&rfloor;
 
+## Probabilistic analysis
+__Probabilistic analysis__ is the use of probability in analysis of problems. Most commonly, we use probabilistic analysis to analyze the running time of an algorithm.
+
+In order to perform a probabilistic analysis, we must use knowledge of, or make assumptions about, the distribution of the inputs.Then we analyze our algorithm, computing an average-case running time, where we take the average over the distribution of the possible inputs.  Thus we are, in effect, averaging the running time over all possible inputs.  When reporting such a running time, we will refer to it as the __average-case running time__.
+
+More generally, we call an algorithm randomized if its behavior is determined not only by its input but also by values produced by a random-number generator.
+
+When analyzing the running time of a randomized algorithm, we take the expectation of the running time over the distribution of values returned by the random number generator.  We distinguish these algorithms from those in which the input is random by referring to the running time of a randomized algorithm as an __expected running time__.  In general, we discuss the average-case running time when the probability distribution is over the inputs to the algorithm, and we discuss the expected running time when the algorithm itself makes random choices.
+
+A __uniform random permutation__ is one in which each of the n! possible permutations are equally likely.
+
+__Lemma__: Procedure `shuffe` from `./utils/utils.ts` computes a uniform random permutation.
+
 
 # Designing Algorithms
 ## Incremental Approach
