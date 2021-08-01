@@ -10,7 +10,7 @@ export function lsd(strings: string[], w: number): string[] {
     // Extended ASCII alphabet size.
     const r = 256;
     // 256 length space buffer.
-    let auxiliary: string[] = [];
+    const auxiliary: string[] = [];
     // Holds the frequency counts.
     let count: number[];
 
