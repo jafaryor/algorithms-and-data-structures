@@ -3,6 +3,8 @@ import {createArrayAndFillWith} from '../utils';
 /**
  * The Least Significant Digit string sort.
  * Sorts the strings on leading "w" characters.
+ * @complexity O(7wn + 3wr)
+ * @spaceComplexity O(n + r)
  */
 export function lsd(strings: string[], w: number): string[] {
     // Number of all strings.
