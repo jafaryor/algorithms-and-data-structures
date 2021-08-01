@@ -1,4 +1,4 @@
-import { createArrayAndFillWith } from "../utils";
+import {createArrayAndFillWith} from '../utils';
 
 /**
  * The Least Significant Digit string sort.
@@ -19,23 +19,23 @@ export function lsd(strings: string[], w: number): string[] {
         count = createArrayAndFillWith(r, 0);
 
         // Count the number of times each character appears in the strings.
-        for ( let i = 0; i < n; i++ ) {
+        for (let i = 0; i < n; i++) {
             // charCodeAt() returns the ASCII code of the character.
             count[strings[i].charCodeAt(d) + 1]++;
         }
 
         // Transform count into indices.
-        for (let i = 0; i < r; i++ ) {
+        for (let i = 0; i < r; i++) {
             count[i + 1] += count[i];
         }
 
         // Distribute to the auxiliary array.
-        for (let i = 0; i < n; i++ ) {
+        for (let i = 0; i < n; i++) {
             auxiliary[count[strings[i].charCodeAt(d)]++] = strings[i];
         }
 
         // Copy back to original array of strings.
-        for (let i = 0; i < n; i++ ) {
+        for (let i = 0; i < n; i++) {
             strings[i] = auxiliary[i];
         }
     }

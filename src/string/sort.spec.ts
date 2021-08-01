@@ -1,4 +1,4 @@
-import { lsd } from "./sort";
+import {lsd} from './sort';
 
 describe('String Sort', () => {
     let strings: string[];
@@ -39,4 +39,3 @@ describe('String Sort', () => {
         expect(lsd(strings, 7)).toEqual(sorted);
     });
 });
-
