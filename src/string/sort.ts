@@ -147,7 +147,9 @@ export class StringSort {
             for (
                 let j = i;
                 j > low &&
-                strings[j].substring(d).localeCompare(strings[j - 1].substring(d)) < 0;
+                strings[j]
+                    .substring(d)
+                    .localeCompare(strings[j - 1].substring(d)) < 0;
                 j--
             ) {
                 swap(strings, j, j - 1);
