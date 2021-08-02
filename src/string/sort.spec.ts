@@ -1,6 +1,7 @@
-import {lsd} from './sort';
+import {StringSort} from './sort';
 
 describe('String Sort', () => {
+    const stringSorter = new StringSort();
     let strings: string[];
     let sorted: string[];
 
@@ -36,6 +37,43 @@ describe('String Sort', () => {
             '4PGC938',
         ];
 
-        expect(lsd(strings, 7)).toEqual(sorted);
+        expect(stringSorter.lsd(strings, 7)).toEqual(sorted);
+    });
+
+    it('MSD', () => {
+        strings = [
+            'she',
+            'sells',
+            'seashells',
+            'by',
+            'the',
+            'sea',
+            'shore',
+            'the',
+            'shells',
+            'she',
+            'sells',
+            'are',
+            'surely',
+            'seashells',
+        ];
+        sorted = [
+            'are',
+            'by',
+            'sea',
+            'seashells',
+            'seashells',
+            'sells',
+            'sells',
+            'she',
+            'she',
+            'shells',
+            'shore',
+            'surely',
+            'the',
+            'the',
+        ];
+
+        expect(stringSorter.msd(strings)).toEqual(sorted);
     });
 });
