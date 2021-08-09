@@ -76,4 +76,8 @@ describe('String Sort', () => {
 
         expect(stringSorter.msd(strings)).toEqual(sorted);
     });
+
+    it('3-way String Quicksort', () => {
+        expect(stringSorter.quick3way(strings)).toEqual(sorted);
+    });
 });

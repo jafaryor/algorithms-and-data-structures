@@ -19,7 +19,7 @@ export class StringSort {
      * proceeding from right to left.
      * @note for extended ASCII characters only.
      * @complexity O(7wn + 3wr) = O(wn)
-     * @spaceComplexity O(n + r
+     * @spaceComplexity O(n + r) = O(n)
      */
     lsd(strings: string[], w: number): string[] {
         // Number of all strings.
@@ -123,6 +123,73 @@ export class StringSort {
                 d + 1,
             );
         }
+
+        return strings;
+    }
+
+    /**
+     * 3-way string quicksort.
+     * To sort an array of strings, we 3-way partition them on their
+     * first character, then (recursively) sort the three resulting
+     * subarrays: the strings whose first character is less than the
+     * partitioning character, the strings whose first character is
+     * equal to the partitioning character (excluding their first
+     * character in the sort), and the strings whose first character
+     * is greater than the partitioning character.
+     * @complexity O(wn), where w - average string length.
+     * @spaceComplexity O(w + log(n))
+     */
+    quick3way(strings: string[]): string[] {
+        return this.quick3wayHelper(strings, 0, strings.length - 1, 0);
+    }
+
+    /**
+     * 3-way string quicksort helper.
+     */
+    private quick3wayHelper(
+        strings: string[],
+        low: number,
+        high: number,
+        d: number,
+    ): string[] {
+        if (high <= low) return strings;
+
+        // Take the d-th char of string[low] string as a pivot.
+        const pivot = this.charAt(strings[low], d);
+        let i = low + 1;
+        let k = low;
+        let l = high;
+
+        // Partition the strings into three subarrays:
+        // The strings whose first character is less than the pivot,
+        // the strings whose first character is equal to the pivot,
+        // and the strings whose first character is greater than the pivot.
+        while (i <= l) {
+            // If the pivot is less than the string, move it to the left.
+            if (this.charAt(strings[i], d) < pivot) {
+                swap(strings, k++, i++);
+            }
+
+            // If the pivot is greater than the string, move it to the right.
+            else if (this.charAt(strings[i], d) > pivot) {
+                swap(strings, i, l--);
+            }
+
+            // If the pivot is equal to the string, do nothing
+            else {
+                i++;
+            }
+        }
+
+        // The partition looks like this:
+        // strings[low ... k-1] < pivot = strings[k ... l] > strings[l+1 ... high]
+
+        // Sort the first subarrays.
+        this.quick3wayHelper(strings, low, k - 1, d);
+        // Sort the second subarrays.
+        if (pivot >= 0) this.quick3wayHelper(strings, k, l, d + 1);
+        // Sort the third subarrays.
+        this.quick3wayHelper(strings, l + 1, high, d);
 
         return strings;
     }

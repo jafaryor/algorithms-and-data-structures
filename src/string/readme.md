@@ -17,35 +17,55 @@ We consider two fundamental different approaches to string sorting:
 
 2. The  second  approach  examines  the  characters  in  the  keys  in  a  left-to-right  order, working with the most significant character first.  These methods are generally referred to  as  __most-significant-digit__  (__MSD__)  string  sorts—we  will  consider  two  such  methods in this section.
 
-   MSD string sorts are attractive because they can get a sorting job done without necessarily examining all of the input characters.  MSD string sorts are similar to quicksort, because they partition the array to be sorted into independent pieces such that  the  sort  is  completed  by  recursively  applying  the  same  method  to  the  subarrays. The  difference  is  that  MSD  string  sorts  use  just  the  first  character  of  the  sort  key  to do  the  partitioning,  while  quicksort  uses  comparisons  that  could  involve  examining the whole key.
+   * __MSD__ 
 
-   The strings are not necessarily same length.
-   
-   We  use  key-indexed  counting  to  sort  the  strings  according  to their first character, then (recursively) sort the subarrays corresponding to each character (excluding the first character, which we know to be the same for  each  string  in  each  subarray).
+        MSD string sorts are attractive because they can get a sorting job done without necessarily examining all of the input characters.  MSD string sorts are similar to quicksort, because they partition the array to be sorted into independent pieces such that  the  sort  is  completed  by  recursively  applying  the  same  method  to  the  subarrays. The  difference  is  that  MSD  string  sorts  use  just  the  first  character  of  the  sort  key  to do  the  partitioning,  while  quicksort  uses  comparisons  that  could  involve  examining the whole key.
 
-   > __MSD string sort stably sorts various-length strings.__
+        The strings are not necessarily same length.
 
-   Pitfalls:
-   * Small subarrays
+        We  use  key-indexed  counting  to  sort  the  strings  according  to their first character, then (recursively) sort the subarrays corresponding to each character (excluding the first character, which we know to be the same for  each  string  in  each  subarray).
 
-        Using Insertion sort for small subarrays in MSD is MUST. Mainly due to high memory consumption ("count" array). Especially for large alphabets.
+        > __MSD string sort stably sorts various-length strings.__
 
-   * Equal strings
+        Pitfalls:
+        * Small subarrays
 
-        MSD can  be  relatively  slow  for  subarrays  containing  large numbers  of  equal  keys.  If  a  substring  occurs  sufficiently often  that  the  cutoff  for  small  subarrays  does  not  ap-ply,  then  a  recursive  call  is  needed  for  every  character in  all  of  the  equal  keys. Thus,  the  worst  case  for  MSD  string  sorting  is  when  all keys are equal.
+            Using Insertion sort for small subarrays in MSD is MUST. Mainly due to high memory consumption ("count" array). Especially for large alphabets.
 
-    * Extra space
+        * Equal strings
 
-        To do the partitioning, MSD uses two auxiliary arrays: the temporary  array for distributing keys (auxiliary[]) and the array that holds the counts that are trans-formed into partition indices (count[]).  The aux[] array is of size N and can be created outside the recursive sort() method. This extra space can be eliminated by sacrificing stability, but it is often not a major concern in practical applications of MSD string sort. Space for the count[] array, on the other hand, can be an important issue (because it cannot be created outside the recursive helper method).
+            MSD can  be  relatively  slow  for  subarrays  containing  large numbers  of  equal  keys.  If  a  substring  occurs  sufficiently often  that  the  cutoff  for  small  subarrays  does  not  ap-ply,  then  a  recursive  call  is  needed  for  every  character in  all  of  the  equal  keys. Thus,  the  worst  case  for  MSD  string  sorting  is  when  all keys are equal.
 
-    > __To sort `N` random strings from an `R`-character alphabet, MSD string sort examines about `N * log`<sub>`R`</sub>`N` characters, on average.__
+        * Extra space
 
-    > __The running time of MSD in the worst case is linear.__
+            To do the partitioning, MSD uses two auxiliary arrays: the temporary  array for distributing keys (`auxiliary[]`) and the array that holds the counts that are trans-formed into partition indices (`count[]`).  The `auxiliary[]` array is of size `N` and can be created outside the recursive `sort()` method. This extra space can be eliminated by sacrificing stability, but it is often not a major concern in practical applications of MSD string sort. Space for the `count[]` array, on the other hand, can be an important issue (because it cannot be created outside the recursive helper method).
 
-   The first method that we consider creates a partition for each character value; the second always creates three partitions, for sort keys whose first character is less than, equal to, or greater than the partitioning key’s first character.
+            > __To sort `N` random strings from an `R`-character alphabet, MSD string sort examines about `N * log`<sub>`R`</sub>`N` characters, on average.__
+
+            > __The running time of MSD in the worst case is linear.__
+
+   * __3-way String Quicksort__
+
+        To sort an array of strings, we 3-way partition them on their first character, then (recursively) sort the three resulting subarrays: the strings whose first character is less than the partitioning character, the strings whose first character is equal to the partitioning character (excluding their first character in the sort), and the strings whose first character is greater than the partitioning character.
+
+        Three-way string quicksort divides the array into only three parts, so it involves more data movement than MSD string sort when the number of nonempty partitions is large because it has to do  a  series  of  3-way  partitions to get the effect of the multiway partition. On  the  other  hand, MSD   string   sort   can   create large numbers of (empty) sub-arrays,   whereas   3-way   string quicksort always has just three. Thus,  3-way  string  quicksort adapts  well  to  handling  equal keys,  keys  with  long  common prefixes,   keys  that  fall  into  a small range, and small arrays—all    situations    where    MSD string sort runs slowly.
+
+        lso, like quicksort, 3-way string quicksort does not use extra space (other than the implicit stack to  support  recursion),  which  is  an  important  advantage  over  MSD  string  sort,  which requires space for both frequency counts and an auxiliary array.  
+
+
+        It is worthwhile to consider various standard improvements to the implementation
+        1. Use insertion sort for small subarrays
+        2. As with any quicksort, it is generally worthwhile to shuffle the array beforehand or to use a random paritioning item by swapping the first item with a ran-dom one. The primary reason to do so is to protect against worst-case performance in the case that the array is already sorted or nearly sorted.
+
+        > To sort an array of `N` random strings, 3-way string quicksort uses `~2N * lnN` character compares, on the average.
+
+        Researchers  have studied  this  algorithm  in  depth  and  have  proved  that  no  algorithm  can  beat  3-way string quicksort (measured by number of character compares) by more than a constant factor,  under  very  general  assumptions.  To  appreciate  its  versatility,  note  that  3-way string quicksort has no direct dependencies on the size of the alphabet.
+
 
 The number of characters in the alphabet is an important parameter when analyzing  string  sorts.  Though  we  focus  on  extended ASCII  strings (`R  = 256`),  we  will  also consider strings taken from much smaller alphabets (such as genomic sequences) and from much larger alphabets (such as the `65,536` - character Unicode alphabet that is an international standard for encoding natural languages).
 
+## String Sorting Algorithms Comparison
+![string-sort-algo-comparison](./images/string-sort-algo-comparison.png)
 
 ---
 
