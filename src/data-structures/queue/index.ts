@@ -54,4 +54,11 @@ export class Queue<T> {
         // tslint-disable-next-line
         console.log('[', this.queue.join(' '), ']');
     }
+
+    /**
+     * Returns a clone of the queue.
+     */
+    toArray(): T[] {
+        return [...this.queue];
+    }
 }
