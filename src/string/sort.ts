@@ -1,7 +1,7 @@
 import {createArrayAndFillWith, swap} from '../utils';
 
 /**
- * String Sort algorithms.
+ * String sorting algorithms.
  */
 export class StringSort {
     // Extended ASCII alphabet size.

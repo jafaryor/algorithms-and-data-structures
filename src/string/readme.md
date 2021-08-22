@@ -64,9 +64,55 @@ We consider two fundamental different approaches to string sorting:
 
 The number of characters in the alphabet is an important parameter when analyzing  string  sorts.  Though  we  focus  on  extended ASCII  strings (`R  = 256`),  we  will  also consider strings taken from much smaller alphabets (such as genomic sequences) and from much larger alphabets (such as the `65,536` - character Unicode alphabet that is an international standard for encoding natural languages).
 
-## String Sorting Algorithms Comparison
+### String Sorting Algorithms Comparison
 ![string-sort-algo-comparison](./images/string-sort-algo-comparison.png)
+
+
+## Substring Search
+__Substring search__: given a text string of length `N` and a pattern string of length `M`, find  an  occurrence  of  the  pattern  within  the  text.
+
+While searching a pattern in a string, we compare each string's character against pattern. If a match is detected we move to the next character in patter. But when we reach a mismatch, the next compare will be against the first character of pattern. It means we start again. It is called backtracking.
+
+Its worst-case running time is proportional to `M * N`.
+
+### Knuth-Morris-Pratt substring search
+The Knuth-Morris-Pratt (KMP) algorithm is an algorithm that is used to search for a substring (`W`), in a given string (`S`), in `O(m+n)` time (where `m` and `n` are the lengths of `W` and `S`).
+
+The key idea used to achieve this time complexity is to minimize the amount of backtracking when a character of `W` does not match with that of `S`. This can only be done if we know two things:
+1. Whether or not a proper prefix of `W` occurs more than once in `S` ​after at least one character has been correctly found; if it does, it can be skipped when resuming the process of matching after a mismatch.
+2. Length of the proper prefix.
+
+Before starting the actual algorithm, a one-dimensional array is initialized with the number of characters that can be skipped after a mismatch. `lps[i]` represents the number of characters that can be skipped when `W[i+1]` does not match with a character in `S`.
+
+__`lsp`__ stands for longest proper prefix which is also suffix.
+
+When a mismatch occurs, all the previous characters match correctly; ​this implies that if a prefix of `W` occurred in this set of matching characters, then that prefix is also a suffix of `W`.
+
+In other words, `lps[i]` will represent the length of the longest proper prefix of `W`, which is also a proper suffix of `W` (considering `W` till the `i`th index only).
+
+For the word `ACA` we have the following proper prefixes: ` `, `A`, `AC`, and the suffixes: ` `, `A`, `CA`, `ACA`. Thus, the longest proper prefix that is equal to the suffix is `A`.
+
+![lps](./images/lps.gif)
+
+#### Theorem
+Knuth-Morris-Pratt substring search accesses no more than `m + n` characters to search for a pattern of length `m` in a text of length `n`.
+
+Proof: `computeLPS()` runs in `O(m)` + `knuthMorrisPratt()` runs in `O(n)` time.
+
+
+### Boyer-Moore substring search
+
+
+
+
+
+
 
 ---
 
 #### [Video Lectures](https://youtube.com/playlist?list=PLsy0Ac_lM3PjZuZpsYJbF8AOZ-iq8qNid)
+
+#### [Knuth-Morris-Pratt KMP String Matching Algorithm](https://www.youtube.com/watch?v=V5-7GzOfADQ)
+
+#### [Read More about Knuth-Morris-Pratt Algorithms](https://towardsdatascience.com/pattern-search-with-the-knuth-morris-pratt-kmp-algorithm-8562407dba5b)
+
