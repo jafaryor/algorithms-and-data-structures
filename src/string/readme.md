@@ -101,7 +101,25 @@ Proof: `computeLPS()` runs in `O(m)` + `knuthMorrisPratt()` runs in `O(n)` time.
 
 
 ### Boyer-Moore substring search
+When  backup  in  the  text  string  is  not  a  prob-lem, we can develop a significantly faster substring-searching method by scanning the   pattern from right to left when trying to match it against the text.
 
+The figure below shows a search for the pattern `NEEDLE` in the text `FINDINAHAYSTACKNEEDLE`.
+
+![boyer-moore-example](./images/boyer-moore-example.png)
+
+Proceeding from right to left to match the pattern, we first compare the rightmost `E` in the pattern with the `N` (the character at position 5) in the text. Since `N` appears in the pattern, we slide the pattern five positions to the right to line up the `N` in the text with the (rightmost) `N` in the pattern. Then we compare the rightmost `E` in the pattern with the `S` (the character at position 10) in the text. This is also a mismatch, but `S` does not appear in the pattern, so we can slide the pattern six positions to the right.We match the rightmost `E` in the pattern against the `E` at position 16 in the text, then find a mis-match and discover the `N` at position 15 and slide to the right five positions, as at the beginning. Finally, we verify, moving from right to left starting at position 20, that the pattern is in the text. This method brings us to the match position at a cost of only four character compares (and six more to verify the match)!
+
+To implement the mismatched character heuristic, we use an array `right[]` that gives, for each character in the alphabet, the index of  its __rightmost  occurrence__  in  the  pattern  (or `-1` if the character is not in the pattern). This value tells us precisely how far to skip if that character appears in the text and causes a mismatch during the string search.
+
+![boyer-moore-right-table](./images/boyer-moore-right-table.png)
+
+#### Theorem
+On typical inputs, substring search with the Boyer-Moore mismatched character heuristic uses `~N/M` character compares to search for a pattern of length `M` in a text of length `N`.
+
+> However running time in the worst case is O(N * M).
+
+
+### Rabin-Karp fingerprint search
 
 
 
@@ -115,4 +133,3 @@ Proof: `computeLPS()` runs in `O(m)` + `knuthMorrisPratt()` runs in `O(n)` time.
 #### [Knuth-Morris-Pratt KMP String Matching Algorithm](https://www.youtube.com/watch?v=V5-7GzOfADQ)
 
 #### [Read More about Knuth-Morris-Pratt Algorithms](https://towardsdatascience.com/pattern-search-with-the-knuth-morris-pratt-kmp-algorithm-8562407dba5b)
-
