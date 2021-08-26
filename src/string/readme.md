@@ -167,20 +167,7 @@ As a rule,
 Using this hashing function lowers the probability of collisions. Therefore, we can achieve the expected complexity of Rabin-Karp in most cases. However, the algorithm would still be slow when there are many matches, regardless of the hashing function.
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+## Regular Expressions
 
 
 ---
