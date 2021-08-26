@@ -5,6 +5,11 @@
  *      - m is the length of the pattern.
  */
 export class StringSearcher {
+    // The modulo value: a big prime number.
+    private readonly q = 1000000007;
+    // R is an alphabet size.
+    private readonly R = 256;
+
     /**
      * Knuth-Morris-Pratt algorithm.
      * Searches a pattern in a string.
@@ -153,5 +158,74 @@ export class StringSearcher {
         }
 
         return rightOccurrences;
+    }
+
+    /**
+     * Rabin-Karp algorithm.
+     * @note works only for extended ASCII characters.
+     * @complexity O(n * m)
+     */
+    rabinKarp(pattern: string, text: string): number[] {
+        const n = text.length;
+        const m = pattern.length;
+
+        // Pattern always should be longer than the text.
+        if (n < m) return [];
+
+        // The hash value of the pattern.
+        const patternHash = this.hash(pattern);
+        // The hash value of the text.
+        let textHash = this.hash(text.substr(0, m));
+        const rM = this.calculateRadixPowers(pattern);
+        // The first index of substrings that mach with the search.
+        const matchIndices: number[] = [];
+
+        for (let i = m; i < n; i++) {
+            // Calculates the hash value of the text's substring from i-m to i.
+            textHash =
+                (textHash + this.q - ((rM * text.charCodeAt(i - m)) % this.q)) %
+                this.q;
+            textHash = (textHash * this.R + text.charCodeAt(i)) % this.q;
+
+            if (textHash === patternHash) {
+                // The hash values match.
+                // Check if the pattern is a substring of the text.
+                if (text.substr(i - m + 1, m) === pattern) {
+                    // The pattern is a substring of the text.
+                    // The pattern is found.
+                    matchIndices.push(i - m + 1);
+                }
+            }
+        }
+
+        return matchIndices;
+    }
+
+    /**
+     * Calculates the value of R^(m-1) % q.
+     * @complexity O(m)
+     */
+    private calculateRadixPowers(pattern: string): number {
+        let rM = 1;
+
+        for (let i = 1; i < pattern.length; i++) {
+            rM = (rM * this.R) % this.q;
+        }
+
+        return rM;
+    }
+
+    /**
+     * Calculates the hash value of the given text.
+     * @complexity O(m)
+     */
+    private hash(text: string): number {
+        let prefix = 0;
+
+        for (let i = 0; i < text.length; i++) {
+            prefix = (prefix * this.R + text.charCodeAt(i)) % this.q;
+        }
+
+        return prefix;
     }
 }

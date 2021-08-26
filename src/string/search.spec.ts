@@ -48,4 +48,24 @@ describe('StringSearcher', () => {
             ).toEqual([4, 12]);
         });
     });
+
+    describe('Rabin-Karp Algorithm', () => {
+        it('case 01', () => {
+            expect(
+                stringSearcher.rabinKarp('NEEDLE', 'FINDINAHAYSTACKNEEDLE'),
+            ).toEqual([15]);
+        });
+
+        it('case 02', () => {
+            expect(
+                stringSearcher.rabinKarp('AACAA', 'AABRAACADABRAACAADABRA'),
+            ).toEqual([12]);
+        });
+
+        it('case 02', () => {
+            expect(
+                stringSearcher.rabinKarp('AACA', 'AABRAACADABRAACAADABRA'),
+            ).toEqual([4, 12]);
+        });
+    });
 });

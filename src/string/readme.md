@@ -120,6 +120,63 @@ On typical inputs, substring search with the Boyer-Moore mismatched character he
 
 
 ### Rabin-Karp fingerprint search
+The method developed by M.O. Rabin and R.A. Karp is a completely different approach to substring search that is based on hashing. We compute a hash function for the pattern and then look for a match by using the same hash function for each possible `M`-character substring of the text. If we find a text substring with the same hash value as the pattern, we can check for a match.
+
+A  straightforward  implementation  based on  this  description  would  be  much  slower  than  a  brute-force  search  (since  computing a hash function that involves every character is likely to be much more expensive than just comparing characters), but Rabin and Karp showed that it is easy to compute hash functions for M-character substrings in constant time (after some preprocessing), which leads to a linear-time substring search in practical situations.
+
+we need a function `H` (called a hashing function), which takes a string s and maps it to an integer `H(s) = x`. From now on, we’ll call `x` the hash value of `s`.
+
+Perhaps one of the simplest hashing functions we can use is the sum of ASCII codes of the letters in the string. For simplicity, we’ll use `int(x)` to denote the ASCII code of `x`.
+
+`H(s[0..n-1]) = int(s[0]) + int(s[1]) + ... + int(s[n-1])`
+
+> When two distinct strings have the same hash value, is called a __collision__.
+
+As a rule, the fewer collisions a hashing function causes, the better it is. Our hashing function has lots of collisions since it doesn’t take into account the order and position of letters. 
+
+If we use a good hashing function, the expected complexity would become `O(n + k * t)`, where `t` is the number of matches. The reason behind this is that a good hashing function would rarely cause collisions. Therefore, we’d rarely need to compare two substrings when there is no match.
+
+Furthermore, if we only want to check if the pattern exists or not, the complexity would become `O(n+k)`, because we can break after the first occurrence.
+
+We’ll try to represent strings as numbers in base `R`, where `R` is the size of extended ASCII alphabet. In general, a string `s` with length `n` would have the following hash value:
+
+`int(s[0]) * R`<sup>`n-1`</sup>` + int(s[1]) * R`<sup>`n-2`</sup>` + ... + int(s[n-2]) * R + int(s[n-1])`
+
+Since we’re representing the string in a valid number system, hash values for distinct strings will be distinct. However, the hash values would become huge when representing a long string. Therefore, it would be inefficient to compute and store them.
+
+Instead, we’ll calculate the hash value modulo `q`, where `q` is a large prime (usually around `10`<sup>`9`</sup>). The larger the prime is, the fewer collisions it would cause.
+
+![rabin-karp-hash-formula](./images/rabin-karp-hash-formula.svg)
+
+Notice that we have:
+
+`prefix[i] = prefix[i-1] * R + int(s[i])`.
+
+This will allow us to calculate the prefix array in linear time.
+
+Also, we’d need to calculate an array `Pow` that stores the different powers of the prime `R`.
+
+However, we still need to find a way to calculate the hash value of any substring in constant time. As an example, let’s say we want to calculate the value of `H(s[2...4])`. The result should be `int(s[2]) * R^2 + int(s[3]) * R + int(s[4])`. This value is available in `prefix[4]`, but we need to remove the terms corresponding to `s[0]` and `s[1]`. These two terms are available in `prefix[1]`. However, when moving from `prefix[1]` to `prefix[4]`, they were multiplied `4 - 1 = 3` times by `R`. To remove them, we need to multiply `prefix[1]` by `R^3` and then subtract it from `prefix[4]`. Therefore, `H(s[2...4]) = prefix[4] - prefix[1] * R`<sup>`4-1`</sup>.
+
+As a rule,
+
+`H(s[L...R]) = prefix[R] - prefix[L-1] * R`<sup>`R-L+1`</sup>.
+
+> The complexity of the precalculation is `O(n)`, where `n` is the length of the string. Also, the complexity of the hashing function is `O(1)`.
+
+Using this hashing function lowers the probability of collisions. Therefore, we can achieve the expected complexity of Rabin-Karp in most cases. However, the algorithm would still be slow when there are many matches, regardless of the hashing function.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -133,3 +190,5 @@ On typical inputs, substring search with the Boyer-Moore mismatched character he
 #### [Knuth-Morris-Pratt KMP String Matching Algorithm](https://www.youtube.com/watch?v=V5-7GzOfADQ)
 
 #### [Read More about Knuth-Morris-Pratt Algorithms](https://towardsdatascience.com/pattern-search-with-the-knuth-morris-pratt-kmp-algorithm-8562407dba5b)
+
+#### [Rabin-Karp String Matching Algorithm](https://www.youtube.com/watch?v=qQ8vS2btsxI)
