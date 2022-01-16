@@ -59,9 +59,7 @@ export class Matrix {
      * Computes an LU decomposition of a matrix using Gaussian Elimination method.
      * @complexity O(n^3)
      */
-    static luDecomposition(
-        A: number[][],
-    ): {
+    static luDecomposition(A: number[][]): {
         L: number[][];
         U: number[][];
     } {
@@ -115,9 +113,7 @@ export class Matrix {
      * Computes an LUP decomposition of a matrix using Gaussian Elimination method.
      * @complexity O(n^3)
      */
-    static lupDecomposition(
-        A: number[][],
-    ): {
+    static lupDecomposition(A: number[][]): {
         L: number[][];
         U: number[][];
         P: number[][];

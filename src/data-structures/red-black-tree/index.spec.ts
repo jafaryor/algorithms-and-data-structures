@@ -256,7 +256,7 @@ export function isValidRedBlackTree<T>(tree: RedBlackTree<T>): boolean {
     const root = tree.getRoot() as RedBlackNode<T>;
 
     return (
-        isValidBinarySearchTree &&
+        isValidBinarySearchTree(root) &&
         isRootBlack(tree) &&
         isRedHasBlackChildren(tree, root) &&
         areAllLeafHasEqualBlackHeight(tree)

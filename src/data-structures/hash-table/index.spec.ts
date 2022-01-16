@@ -13,7 +13,7 @@ describe('HashTable', () => {
 
         expect(table.size).toEqual(1);
         expect(table.search(10)).toEqual(
-            jasmine.objectContaining({data: {key: 10, value: 100}}),
+            expect.objectContaining({data: {key: 10, value: 100}}),
         );
     });
 

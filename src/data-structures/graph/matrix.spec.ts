@@ -26,7 +26,8 @@ describe('AdjacencyMatrix', () => {
         });
 
         it('underlyingUndirectedMatrix', () => {
-            const underlyingMatrix = adjacencyMatrix.underlyingUndirectedMatrix();
+            const underlyingMatrix =
+                adjacencyMatrix.underlyingUndirectedMatrix();
 
             expect(underlyingMatrix).toEqual(matrix);
         });
@@ -116,7 +117,8 @@ describe('AdjacencyMatrix', () => {
         });
 
         it('underlyingUndirectedMatrix', () => {
-            const underlyingMatrix = adjacencyMatrix.underlyingUndirectedMatrix();
+            const underlyingMatrix =
+                adjacencyMatrix.underlyingUndirectedMatrix();
 
             expect(underlyingMatrix).toEqual([
                 [undefined, 1, undefined, 1, undefined, undefined],

@@ -47,6 +47,8 @@ export function evaluateArithmeticExpression(expression: string): number {
                 case 'sqrt':
                     value = Math.sqrt(value);
                     break;
+                default:
+                    break;
             }
 
             values.push(value);

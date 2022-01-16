@@ -16,9 +16,8 @@ describe('QueueWithTwoStacksSpec', () => {
     });
 
     describe('Queue Operations', () => {
-        const queue: QueueWithTwoStacks<number> = new QueueWithTwoStacks<
-            number
-        >();
+        const queue: QueueWithTwoStacks<number> =
+            new QueueWithTwoStacks<number>();
 
         it('should enqueue', () => {
             queue.enqueue(10);

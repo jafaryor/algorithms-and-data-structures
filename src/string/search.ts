@@ -144,9 +144,9 @@ export class StringSearcher {
      *       then its value is -1.
      * @complexity O(m)
      */
-    private computeRightmostOccurrences(
-        pattern: string,
-    ): {[char: string]: number} {
+    private computeRightmostOccurrences(pattern: string): {
+        [char: string]: number;
+    } {
         const m = pattern.length;
         const rightOccurrences: {[char: string]: number} = {};
 

@@ -10,7 +10,8 @@ describe('Graph', () => {
     let list: {[vertex: string]: AdjacencyListNode[]};
 
     describe('constructor', () => {
-        const undirectedUnweightedCyclicStub = getUndirectedUnweightedCyclicStub();
+        const undirectedUnweightedCyclicStub =
+            getUndirectedUnweightedCyclicStub();
         const directedWeightedCyclicStub = getDirectedWeightedCyclicStub();
 
         describe('initByMatrix', () => {
@@ -675,21 +676,21 @@ describe('Graph', () => {
             });
 
             it('shortest path from 1 to 4', () => {
-                expect(
-                    graph.shortestPath(0, 3, weights, predecessors),
-                ).toEqual([0, 4, 3]);
+                expect(graph.shortestPath(0, 3, weights, predecessors)).toEqual(
+                    [0, 4, 3],
+                );
             });
 
             it('shortest path from 3 to 4', () => {
-                expect(
-                    graph.shortestPath(2, 3, weights, predecessors),
-                ).toEqual([2, 1, 3]);
+                expect(graph.shortestPath(2, 3, weights, predecessors)).toEqual(
+                    [2, 1, 3],
+                );
             });
 
             it('shortest path from 1 to 5', () => {
-                expect(
-                    graph.shortestPath(0, 4, weights, predecessors),
-                ).toEqual([0, 4]);
+                expect(graph.shortestPath(0, 4, weights, predecessors)).toEqual(
+                    [0, 4],
+                );
             });
         });
 

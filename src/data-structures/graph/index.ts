@@ -534,7 +534,8 @@ export class Graph<T = string> {
      * @complexity O(V * V)
      */
     underlyingUndirectedGraph(): Graph<T> {
-        const undirectedAdjacencyMatrix = this.adjacencyMatrix.underlyingUndirectedMatrix();
+        const undirectedAdjacencyMatrix =
+            this.adjacencyMatrix.underlyingUndirectedMatrix();
 
         return new Graph({matrix: undirectedAdjacencyMatrix});
     }
@@ -597,9 +598,8 @@ export class Graph<T = string> {
         let weight: number;
         // Min Priority Queue is used to keep track of edges crossing the cut.
         // extractMin() returns the lightest edge crossing the cut.
-        const minPriorityQueue = this.getMinPriorityQueueWithResetVertices(
-            root,
-        );
+        const minPriorityQueue =
+            this.getMinPriorityQueueWithResetVertices(root);
 
         while (!minPriorityQueue.isEmpty()) {
             u = minPriorityQueue.extractMin()!;
@@ -759,9 +759,8 @@ export class Graph<T = string> {
         const shortestPath = [] as Array<Vertex<T>>;
         // Min Priority Queue is used to keep track of edges crossing the cut.
         // extractMin() returns the lightest edge crossing the cut.
-        const minPriorityQueue = this.getMinPriorityQueueWithResetVertices(
-            root,
-        );
+        const minPriorityQueue =
+            this.getMinPriorityQueueWithResetVertices(root);
 
         while (!minPriorityQueue.isEmpty()) {
             u = minPriorityQueue.extractMin()!;
