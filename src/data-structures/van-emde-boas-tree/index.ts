@@ -21,7 +21,7 @@ export class VEBTree {
 
     /**
      * The cluster number where the key is located.
-     * @complexity O(1)
+     * @timeO(1)
      */
     high(key: number): number {
         return Math.floor(key / this.upperSquareRoot);
@@ -29,7 +29,7 @@ export class VEBTree {
 
     /**
      * The key's position inside the cluster.
-     * @complexity O(1)
+     * @timeO(1)
      */
     low(key: number): number {
         return key % this.lowerSquareRoot;
@@ -38,7 +38,7 @@ export class VEBTree {
     /**
      * Returns the key/index from the array of bits.
      * It essentially gives a value using its coordinates.
-     * @complexity O(1)
+     * @timeO(1)
      */
     index(high: number, low: number): number {
         return high * this.lowerSquareRoot + low;
@@ -46,7 +46,7 @@ export class VEBTree {
 
     /**
      * Return the min element of tree.
-     * @complexity O(1)
+     * @timeO(1)
      */
     min(node: VEBNode = this.root): number | undefined {
         return node.min;
@@ -54,7 +54,7 @@ export class VEBTree {
 
     /**
      * Return the max element of tree.
-     * @complexity O(1)
+     * @timeO(1)
      */
     max(node: VEBNode = this.root): number | undefined {
         return node.max;
@@ -62,7 +62,7 @@ export class VEBTree {
 
     /**
      * Checks whether a key is in the set.
-     * @complexity O(lg lg u)
+     * @timeO(lg lg u)
      */
     member(key: number, node: VEBNode = this.root): boolean {
         // Checks if key is within the subtree.
@@ -80,7 +80,7 @@ export class VEBTree {
 
     /**
      * Returns the smallest element that is greater than element.
-     * @complexity O(lg lg u)
+     * @timeO(lg lg u)
      */
     successor(key: number, node: VEBNode = this.root): number | undefined {
         if (node.isLeaf) {
@@ -130,7 +130,7 @@ export class VEBTree {
 
     /**
      * Returns the largest element that is smaller than element.
-     * @complexity O(lg lg u)
+     * @timeO(lg lg u)
      */
     predecessor(key: number, node: VEBNode = this.root): number | undefined {
         if (node.isEmpty) {
@@ -170,7 +170,7 @@ export class VEBTree {
 
     /**
      * Insert an element into a tree.
-     * @complexity O(lg lg u)
+     * @timeO(lg lg u)
      */
     insert(key: number, node: VEBNode = this.root): void {
         if (node.isEmpty) {
@@ -208,7 +208,7 @@ export class VEBTree {
 
     /**
      * Inserts an element into an empty tree.
-     * @complexity O(1)
+     * @timeO(1)
      */
     private emptyTreeInset(key: number, node: VEBNode): void {
         node.min = key;

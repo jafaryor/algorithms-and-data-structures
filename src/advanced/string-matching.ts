@@ -6,7 +6,7 @@
  * The naive string-matching algorithm for finding all valid shifts of P in T.
  * @param T - text
  * @param P - pattern
- * @complexity O((n - m + 1) * m)
+ * @timeO((n - m + 1) * m)
  */
 export function naiveStringMatching(T: string, P: string): number[] {
     const n = T.length;
@@ -33,7 +33,7 @@ export function naiveStringMatching(T: string, P: string): number[] {
  * @param d - size of alphabet
  * @param q - any prime number to avoid big numbers
  * @note all characters are interpreted as radix-10 digits.
- * @complexity O((n - m + 1) * m)
+ * @timeO((n - m + 1) * m)
  */
 export function rabinKarpMatcher(
     T: string,
@@ -123,7 +123,7 @@ function rabinKarpPreprocess(
  * @param T - text
  * @param P - pattern
  * @param alphabet (∑) - alphabet
- * @complexity O(n)
+ * @timeO(n)
  */
 export function finiteAutomatonMatcher(
     T: string,
@@ -152,7 +152,7 @@ export function finiteAutomatonMatcher(
  * Creates a transition table from Pattern and Alphabet.
  * @param P - pattern
  * @param alphabet (∑) - alphabet
- * @complexity O(m^3 * |∑|)
+ * @timeO(m^3 * |∑|)
  */
 function computeTransitionFunction(
     P: string,
@@ -197,7 +197,7 @@ function computeTransitionFunction(
  * The Knuth-Morris-Pratt Algorithm for finding pattern occurrences in a text.
  * @param T - text
  * @param P - pattern
- * @complexity O(n + m) = O(n)
+ * @timeO(n + m) = O(n)
  */
 export function knuthMorrisPrattMatcher(T: string, P: string): number[] {
     const n = T.length;
@@ -240,7 +240,7 @@ export function knuthMorrisPrattMatcher(T: string, P: string): number[] {
  *      because the suffix of sub-pattern is equal to prefix of pattern.
  *      Example: "cabcad" has the following prefix function [0,0,0,1,2,0].
  * @param P - pattern
- * @complexity O(2m) = O(m)
+ * @timeO(2m) = O(m)
  */
 function computePrefixFunction(P: string): number[] {
     const m = P.length;
@@ -277,7 +277,7 @@ function computePrefixFunction(P: string): number[] {
 
 /**
  * Checks if "b" is a suffix of "a".
- * @complexity (|b|)
+ * @time(|b|)
  */
 export function isSuffixOf(a: string, b: string): boolean {
     return a.endsWith(b);
@@ -285,7 +285,7 @@ export function isSuffixOf(a: string, b: string): boolean {
 
 /**
  * Checks if "b" is a prefix of "a".
- * @complexity (|b|)
+ * @time(|b|)
  */
 export function isPrefixOf(a: string, b: string): boolean {
     return a.startsWith(b);

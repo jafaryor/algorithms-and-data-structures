@@ -17,7 +17,7 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
 
     /**
      * Iterative insert.
-     * @complexity O(lg n)
+     * @timeO(lg n)
      */
     insert(node: RedBlackNode<T>) {
         super.insert(node);
@@ -30,7 +30,7 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
     /**
      * Removes the node from the tree.
      * The idea is the same as in the BinaryTree.
-     * @complexity O(lg n) -> [because of the "successor" method]
+     * @timeO(lg n) -> [because of the "successor" method]
      */
     delete(node: RedBlackNode<T>): void {
         let originalColor = node.color;
@@ -88,7 +88,7 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
     /**
      * Restores the reb-black tree properties after insertion.
      * It also balances the tree.
-     * @complexity O(lg n)
+     * @timeO(lg n)
      */
     private insertFixup(newNode: RedBlackNode<T>): void {
         let node = newNode!;
@@ -160,7 +160,7 @@ export class RedBlackTree<T> extends BinarySearchTree<T> {
     /**
      * Restores the reb-black tree properties after deletion.
      * It also balances the tree.
-     * @complexity O(lg n)
+     * @timeO(lg n)
      */
     private deleteFixup(startNode: RedBlackNode<T>): void {
         let node = startNode;

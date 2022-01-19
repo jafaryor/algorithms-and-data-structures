@@ -32,8 +32,8 @@ export const defaultRodPriceTable = [0, 1, 5, 8, 9, 10, 17, 17, 20, 24, 30];
 /**
  * Takes as input an array of prices and an integer "length",
  * and it returns the maximum revenue possible for a rod of length.
- * @complexity - O(2^n)
- * @spaceComplexity - O(1)
+ * @time- O(2^n)
+ * @space- O(1)
  */
 export function cutRod(
     length: number,
@@ -85,8 +85,8 @@ export function cutRod(
  * if not, the procedure computes the value in the usual manner.
  * We say that the recursive procedure has been memoized;
  * it “remembers” what results it has computed previously.
- * @complexity - O(n^2)
- * @spaceComplexity - O(n)
+ * @time- O(n^2)
+ * @space- O(n)
  */
 export function memoizedCutRod(
     length: number,
@@ -104,7 +104,7 @@ export function memoizedCutRod(
 
 /**
  * memoizedCutRod helper function.
- * @complexity - O(n^2)
+ * @time- O(n^2)
  */
 function memoizedCutRodHelper(
     length: number,
@@ -155,8 +155,8 @@ function memoizedCutRodHelper(
  * Basically it solves all the problems for the rod of length < "length",
  * and then use the result of previously solved sub-problems
  * to solve the problem.
- * @complexity - O(n^2)
- * @spaceComplexity - O(n)
+ * @time- O(n^2)
+ * @space- O(n)
  */
 export function bottomUpCutRod(
     length: number,

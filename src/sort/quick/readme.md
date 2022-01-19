@@ -1,4 +1,18 @@
 ## Quick Sort
+Quicksort is a comparison-based algorithm that uses divide-and-conquer to sort an array in-place.
+
+Quicksort  is  popular  because  it  is  not  difficult  to implement, works well for a variety of different kinds of input data, and is substantially faster than any other sorting method in typical applications. The quicksort algorithm’s desirable  features  are  that  it  is  in-place (uses only a small auxiliary stack) and that it requires time proportional to `N log N` on the average to sort an array of length `N`.
+
+Furthermore,  quicksort  has  a  shorter  inner  loop  than  most  other  sorting  algorithms, which means that it is fast in practice as well as in theory. Its primary drawback is that it is fragile in the sense that some care is involved in the implementation to be sure to avoid bad performance.
+
+Here is the three-step divide-and-conquer process for sorting a typical subarray `A[p..r]`:
+* __Divide:__ Partition `A[p..r]`, into two (possibly empty) subarrays `A[p..q−1]` and `A[q+1..r]`, such that each element in the first subarray `A[p..q−1]` is `≤ A[q]` and `A[q]` is `≤` each element in the second subarray `A[q+1..r]`.
+* __Conquer:__ Sort the two subarrays `A[p..q-1]` and `A[q+1..r]` by recursive calls to quicksort.
+* __Combine:__ Because the subarrays are already sorted, no work is needed to combine them: the entire array `A[p..r]` is now sorted.
+
+![partitioning-trace](./images/partitioning-trace.png)
+
+> Most quicksort implementations are not stable, though stable implementations do exist.
 
 |  | Worst | Average | Best |
 |:--|:-:|:-:|---|
@@ -6,15 +20,6 @@
 | __Space Complexity__ | `O(n)` | `θ(logn)` | `Ω(logn)` |
 | __Stable__ | No |
 | __In Place__ | Yes |
-
-Quicksort is a comparison-based algorithm that uses divide-and-conquer to sort an array.
-
-Here is the three-step divide-and-conquer process for sorting a typical subarray `A[p..r]`:
-* __Divide:__ Partition `A[p..r]`, into two (possibly empty) subarrays `A[p..q−1]` and `A[q+1..r]`, such that each element in the first subarray `A[p..q−1]` is `≤ A[q]` and `A[q]` is `≤` each element in the second subarray `A[q+1..r]`.
-* __Conquer:__ Sort the two subarrays `A[p..q-1]` and `A[q+1..r]` by recursive calls to quicksort.
-* __Combine:__ Because the subarrays are already sorted, no work is needed to combine them: the entire array `A[p..r]` is now sorted.
-
-> Most quicksort implementations are not stable, though stable implementations do exist.
 
 ### Complexity
 * __Worst-case running time__
@@ -81,7 +86,7 @@ If, in each level of recursion, the split induced by `RANDOMIZED-PARTITION` puts
 The `QUICKSORT` and `RANDOMIZED-QUICKSORT` procedures differ only in how they select pivot elements. 
 
 ### Usage
-Quicksort is sensitive to the data provided. Without usage of random pivots, it uses O(n^2) time for sorting a full sorted array. But by swapping random unsorted elements with the first element, and sorting afterwards, the algorithm becomes less sensitive to data would otherwise cause worst-case behavior (e.g. already sorted arrays).
+Quicksort is sensitive to the data provided. Without usage of random pivots, it uses `O(n^2)` time for sorting a full sorted array. But by swapping random unsorted elements with the first element, and sorting afterwards, the algorithm becomes less sensitive to data would otherwise cause worst-case behavior (e.g. already sorted arrays).
 
 > __Heapsort or Merge sort, it has a very low constant factor to its execution speed, which generally gives it a speed advantage when working with lots of random data.__
 
@@ -90,9 +95,46 @@ In practice:
 * Quicksort is typically over twice as fast as merge sort.
 * Quicksort behaves well even with caching and virtual memory.
 
-### Further Improvements
-* switch to _insertion sort_ for tiny arrays.
-* __Median-of-three partitioning__.
+### Improvements
+* Switch to _insertion sort_ for tiny arrays
+
+    The optimum value of the cutoff `M` is system-dependent, but any value between __5__ and __15__ is likely to work well in most situations.
+
+* __Median-of-three partitioning__
+
+    A second easy way to improve the performance of quicksort is to use the median of a small sample of items taken from the subarray as the partitioning item. Doing so will give a slightly better partition, but at the cost of computing the median. It turns out that most of the  available improvement comes from choosing a sample of size `3` and then partitioning on the middle item.
+    
+    As a bonus, we can use the sample items as _sentinels_ at the ends of the array and remove both array bounds tests in `partition()`.
+
+* Entropy-optimal sorting
+
+    > __Entropy__ is defined as a lack of order or predictability.
+
+    Arrays with large numbers of duplicate keys arise frequently in applications. In such situations, the quicksort implementation  that we have considered has acceptable performance, but it can be substantially improved.
+
+One  straightforward  idea  is  to  partition  the  array  into     three  parts,  one  each  for items  with  keys  smaller  than,  equal  to,  and  larger  than  the  partitioning  item’s  key.
+
+See function `threeWaySort()` for more implementation details.
+
+![3-way-partition](./images/3-way-partition.png)
+
+Though this code was developed not long after quicksort, it fell out of favor  because  it  uses  many  more  exchanges than the standard 2-way partitioning method for  the  common  case  when  the  number  of duplicate keys in the array is not high.
+
+![3-way-partition-trace](./images/3-way-partition-trace.png)
+
+3-way partitioning makes quicksort asymptotically faster than mergesort   and other methods in practical situations involving large numbers of equal keys. Mergesort  is  linearithmic  for  a  randomly  ordered  array  that  has  only  a constant number of distinct key values, but quicksort with 3-way partitioning is linear for such an array.
+
+Given `N` keys with `k` distinct key values, for each `i` from `1` to `k` define `f_i` to be frequency of occurrence of the `i` th key value and `p_i` to be `f_i / N`, the probability that the `i` th key value is found when a random entry of the array is sampled. The __Shannon Entropy__ of the keys is defined as:
+
+`H = - (p_1*lg(p_1) + p_2*lg(p_2) + ... + p_k*lg(p_k))`
+
+#### Theorem. No compare-based sorting algorithm can guarantee to sort `N` items  with fewer than `NH - N` compares, where `H` is the Shannon entropy, defined from the frequencies of key values.
+
+#### Theorem. Quicksort with 3-way partitioning uses `~ (2*ln2)*N*H` compares to sort `N` items, where `H` is the Shannon entropy, defined from the frequencies of key values.
+
+> Note that `H = lgN` when the keys are all distinct (all the probabilities are `1/N`)
+
+The  worst  case for  3-way  partitioning  happens  when  the  keys  are  distinct;  when  duplicate  keys  are present, it can do much better than mergesort. More important, these two properties together imply that quicksort with 3-way partitioning is entropy-optimal,  in  the  sense that the average number of compares used by the best possible compare-based sorting algorithm and the average number of compares used by 3-way quicksort are within a constant factor of one another, for any given distribution of input key values.
 
 ---
 

@@ -30,7 +30,7 @@ export class AdjacencyMatrix<T = string> {
 
     /**
      * Converts to Adjacency List Graph Representation.
-     * @complexity O(V^2)
+     * @timeO(V^2)
      */
     toAdjacencyList(): AdjacencyList<T> {
         const list = {} as {[vertex: string]: Array<AdjacencyListNode<T>>};
@@ -59,7 +59,7 @@ export class AdjacencyMatrix<T = string> {
 
     /**
      * Returns an undirected, unweighted matrix.
-     * @complexity O(V * V)
+     * @timeO(V * V)
      */
     underlyingUndirectedMatrix(): Array<Array<number | undefined>> {
         const matrix = Matrix.createMatrixAndFillWith(
@@ -82,7 +82,7 @@ export class AdjacencyMatrix<T = string> {
 
     /**
      * Adds a (u, v) edge.
-     * @complexity O(V)
+     * @timeO(V)
      */
     addEdge(u: Vertex<T>, v: Vertex<T>, weight: number = 1): void {
         this.setWeight(u, v, weight);
@@ -90,7 +90,7 @@ export class AdjacencyMatrix<T = string> {
 
     /**
      * Removes a (u, v) edge.
-     * @complexity O(V)
+     * @timeO(V)
      */
     removeEdge(u: Vertex<T>, v: Vertex<T>): void {
         this.setWeight(u, v);
@@ -98,7 +98,7 @@ export class AdjacencyMatrix<T = string> {
 
     /**
      * Add a vertex.
-     * @complexity O(V)
+     * @timeO(V)
      */
     addVertex(vertex: Vertex<T>): void {
         this.vertices.push(vertex);
@@ -119,7 +119,7 @@ export class AdjacencyMatrix<T = string> {
 
     /**
      * Removes a vertex.
-     * @complexity O(V * V)
+     * @timeO(V * V)
      */
     removeVertex(vertex: Vertex<T>): void {
         const index = this.findIndex(vertex);
@@ -142,7 +142,7 @@ export class AdjacencyMatrix<T = string> {
 
     /**
      * Returns the number of In-Degree Vertices.
-     * @complexity O(V)
+     * @timeO(V)
      */
     inDegree(vertex: Vertex<T>): number {
         let k = 0;
@@ -157,7 +157,7 @@ export class AdjacencyMatrix<T = string> {
 
     /**
      * Returns the number of Out-Degree Vertices.
-     * @complexity O(V)
+     * @timeO(V)
      */
     outDegree(vertex: Vertex<T>): number {
         let k = 0;
@@ -172,7 +172,7 @@ export class AdjacencyMatrix<T = string> {
 
     /**
      * Sets a weight to (u, v).
-     * @complexity O(V)
+     * @timeO(V)
      */
     private setWeight(u: Vertex<T>, v: Vertex<T>, weight?: number): void {
         const uIndex = this.findIndex(u);
@@ -185,7 +185,7 @@ export class AdjacencyMatrix<T = string> {
 
     /**
      * Finds index of a vertex.
-     * @complexity O(V)
+     * @timeO(V)
      */
     private findIndex(u: Vertex<T>): number | undefined {
         return this.vertices.findIndex((v: Vertex<T>) => v === u);
@@ -193,7 +193,7 @@ export class AdjacencyMatrix<T = string> {
 
     /**
      * Checks if an index is valid for the current matrix.
-     * @complexity O(1)
+     * @timeO(1)
      */
     private isValidIndex(index?: number): boolean {
         return index != null && index >= 0 && index < this.n;

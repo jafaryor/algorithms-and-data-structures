@@ -14,7 +14,7 @@ export class MinHeap<T> extends BinaryHeap<T> {
      * Moves last node to its proper place
      * (as much higher as it is possible),
      * as max node should be at the root.
-     * @complexity O(h) = O(lg n)
+     * @timeO(h) = O(lg n)
      */
     heapifyUp(index: number = this.size - 1): void {
         for (
@@ -29,7 +29,7 @@ export class MinHeap<T> extends BinaryHeap<T> {
     /**
      * Moves small root node to its proper place,
      * so we will have max node at the root.
-     * @complexity O(h) = O(lg n)
+     * @timeO(h) = O(lg n)
      */
     heapifyDown(index: number = 0): void {
         let i: number = index;
@@ -60,7 +60,7 @@ export class MinHeap<T> extends BinaryHeap<T> {
     /**
      * Increase the key of a node.
      * Which means the node should get closer to the root (min).
-     * @complexity O(lg n)
+     * @timeO(lg n)
      */
     increaseKey(index: number, newKey: number): void {
         const node = this.nodes[index];
@@ -76,7 +76,7 @@ export class MinHeap<T> extends BinaryHeap<T> {
     /**
      * Decrease the key of a node.
      * Which means the node should get farther from the root (min).
-     * @complexity O(lg n)
+     * @timeO(lg n)
      */
     decreaseKey(index: number, newKey: number): void {
         const node = this.nodes[index];

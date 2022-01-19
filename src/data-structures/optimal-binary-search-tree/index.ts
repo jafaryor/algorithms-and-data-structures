@@ -35,7 +35,7 @@ export class OptimalBinarySearchTree<T> extends BinarySearchTree<T> {
      * @param nodeProbability - probability of a tree node.
      * @param dummyNodeProbability - probability of a dummy node.
      * @param n - node amount.
-     * @complexity O(n^3) since its for loops are nested three deep
+     * @timeO(n^3) since its for loops are nested three deep
      * and each loop index takes on at most n values.
      */
     private findOptimalStructure(
@@ -88,7 +88,7 @@ export class OptimalBinarySearchTree<T> extends BinarySearchTree<T> {
      * Builds the tree from calculated structure.
      * @param nodeValues - ascending SORTED node values.
      * @param roots - root indexes (output from "findOptimalStructure()")
-     * @complexity O(n) - In the worst case the tree will look like a list,
+     * @timeO(n) - In the worst case the tree will look like a list,
      * T(n) = T(1) + T(n-1) + 1 = 2T(1) + T(n-2) + 2 = ... = kT(1) + T(n-k) + k
      * On the last step: n-k = 1 and T(1) = 1 => n-k = 1 => k = n-1
      * T(n) = (n-1)T(1) + T(1) + n - 1 = 2n - 1 = O(n)

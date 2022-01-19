@@ -11,8 +11,8 @@ import {createArrayAndFillWith} from '../utils';
 /**
  * Finds the length of the Longest Increasing Subsequence
  * using Dynamic Programming.
- * @complexity - O(n^2) - arithmetic progression.
- * @spaceComplexity - O(n)
+ * @time- O(n^2) - arithmetic progression.
+ * @space- O(n)
  * @see - /images/longest-increasing-subsequence.jpg
  * @see - https://www.geeksforgeeks.org/longest-increasing-subsequence-dp-3/
  */
@@ -53,7 +53,7 @@ export function longestIncreasingSubsequenceDP(sequence: number[]): number {
  * Note: At any instance during our construction of active lists,
  * the following condition is maintained. “End element of smaller list
  * is smaller than end elements of larger lists”.
- * @complexity - O(n lgn)
+ * @time- O(n lgn)
  */
 export function longestIncreasingSubsequence(sequence: number[]): number {
     const tailTable: number[] = new Array<number>(sequence.length);
@@ -83,7 +83,7 @@ export function longestIncreasingSubsequence(sequence: number[]): number {
 /**
  * Binary Search.
  * Note: Works only for ascending sorted arrays.
- * @complexity - O(lg n)
+ * @time- O(lg n)
  */
 function binarySearch(
     sequence: number[],

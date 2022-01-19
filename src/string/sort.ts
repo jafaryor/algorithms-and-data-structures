@@ -18,8 +18,8 @@ export class StringSort {
      * we do w key-indexed counting sorts: one for each character position,
      * proceeding from right to left.
      * @note for extended ASCII characters only.
-     * @complexity O(7wn + 3wr) = O(wn)
-     * @spaceComplexity O(n + r) = O(n)
+     * @timeO(7wn + 3wr) = O(wn)
+     * @spaceO(n + r) = O(n)
      */
     lsd(strings: string[], w: number): string[] {
         // Number of all strings.
@@ -64,8 +64,8 @@ export class StringSort {
      * using key-indexed counting, then (recursively) sort the subarrays
      * corresponding to each first-character value.
      * @note for extended ASCII characters only.
-     * @complexity O(7wn + 3wr) = O(wn), where w - average string length.
-     * @spaceComplexity O(r * length_of_longest_string + n)
+     * @timeO(7wn + 3wr) = O(wn), where w - average string length.
+     * @spaceO(r * length_of_longest_string + n)
      */
     msd(strings: string[]): string[] {
         this.auxiliary = [];
@@ -136,8 +136,8 @@ export class StringSort {
      * equal to the partitioning character (excluding their first
      * character in the sort), and the strings whose first character
      * is greater than the partitioning character.
-     * @complexity O(wn), where w - average string length.
-     * @spaceComplexity O(w + log(n))
+     * @timeO(wn), where w - average string length.
+     * @spaceO(w + log(n))
      */
     quick3way(strings: string[]): string[] {
         return this.quick3wayHelper(strings, 0, strings.length - 1, 0);

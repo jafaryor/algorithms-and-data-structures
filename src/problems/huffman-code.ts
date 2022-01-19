@@ -53,7 +53,7 @@ export type Character = HeapNode<BinaryNode<string>>;
 
 /**
  * Builds the tree corresponding to the optimal code in bottom-up manner.
- * @complexity O(n lgn) :
+ * @timeO(n lgn) :
  * [n actions to build MinPriorityQueue] +
  * + ([n iterations of "for" loop] *
  * * [3 MinPriorityQueue operations (2*extractMin + 1*insert)]) =

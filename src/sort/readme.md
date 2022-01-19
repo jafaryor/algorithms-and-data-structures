@@ -1,6 +1,13 @@
 # Sorting Algorithms
 Sorting algorithm is an algorithm that puts elements of a list in a certain order.
 
+An __inversion__ is a pair of entries that are out of order in the array. For instance, `E X A M P L E` has 11 inversions: `E-A`, `X-A`, `X-M`, `X-P`, `X-L`, `X-E`, `M-L`, `M-E`, `P-L`, `P-E`, and `L-E`.
+
+If the number of inversions in an array is less than a constant multiple of the array size, we say that the array is __partially sorted__. Typical examples of partially sorted arrays are the following:
+* An array where each entry is not far from its final position.
+* A small array appended to a large sorted array.
+* An array with only a few entries that are not in place.
+
 Sorting algorithms are often classified by:
 * __Computational complexity__ (worst, average and best behavior) in terms of the size of the list (`n`). Comparison-based sorting algorithms need at least `Ω(n log n)` comparisons for most inputs.
 * __Computational complexity__ of swaps (for "in-place" algorithms).
@@ -27,9 +34,20 @@ Control, data movement, and all other aspects of the algorithm are ignored. Each
 
 ![sorting-decision-tree](./images/sorting-decision-tree.png)
 
-### Lemma: Any binary tree of height `h` has `≤ 2^h` leaves.
+### Lemma: Any binary tree of height `h` has `≤ 2`<sup>`h`</sup> leaves.
 
-### Theorem: Any comparison sort algorithm requires `Ω(n lgn)` comparisons in the worst case.
+### Theorem: No compare-based sorting algorithm can guarantee to sort `N` items with fewer than `lg(N!) ~ N lgN` compares.
+
+Proof:
+The first key observation in the proof is that the decision tree must have at least `N!` leaves because  there  are `N!` different permutations of `N` distinct keys. If there are fewer than `N!`  leaves,  then  some  permutation  is  missing  from  the  leaves,  and  the  algorithm would fail for that permutation.
+
+The number of internal nodes on a path from the root to a leaf in the tree is the number of compares used by the algorithm for some input. We are interested in the length of the longest such path in the tree (known as the tree height) since it measures the worst-case number of compares used by the algorithm. According to above lemma, a binary tree of height `h` has no more than `2`<sup>`h`</sup> leaves.
+
+Combining the previous two observations, we have shown that any compare-based sorting algorithm corresponds to a compare tree of height `h` with:
+
+`N! ≤ number of leaves ≤ 2`<sup>`h`</sup>
+
+The value of `h` is precisely the worst-case number of compares, so we can take the logarithm (base 2) of both sides of this equation and conclude that the number of compares used by any algorithm must be at least `lg(N!)`
 
 ![comparison-sort-theorem-proof](./images/comparison-sort-theorem.png)
 

@@ -66,7 +66,7 @@ export class ResidualGraph extends Graph {
     /**
      * The Breadth First Search.
      * Returns the sink if an augmented path from s to t exists.
-     * @complexity O(V + E)
+     * @timeO(V + E)
      */
     bfs(): Vertex | undefined {
         const queue = new Queue<Vertex>();

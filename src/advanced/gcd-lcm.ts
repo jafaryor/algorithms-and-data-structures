@@ -1,6 +1,6 @@
 /**
  * Finds the Greatest Common Divisor (GCD) of two numbers.
- * @complexity O(lg b)
+ * @timeO(lg b)
  */
 export function euclid(a: number, b: number): number {
     if (b === 0) {
@@ -12,7 +12,7 @@ export function euclid(a: number, b: number): number {
 
 /**
  * Finds the Greatest Common Divisor (GCD) of two numbers in iterative manner.
- * @complexity O(lg b)
+ * @timeO(lg b)
  */
 export function euclidIterative(a: number, b: number): number {
     let temp: number;
@@ -29,7 +29,7 @@ export function euclidIterative(a: number, b: number): number {
 /**
  * Extended Euclidean algorithm, which return gcd(a, b) = ax + by.
  * @note the "a: and "b" must be non-negative numbers.
- * @complexity O(lg b) since the number of recursive is equals
+ * @timeO(lg b) since the number of recursive is equals
  *              to number of recursive calls of euclid() function.
  */
 export function gcd(

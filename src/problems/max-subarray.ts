@@ -15,7 +15,7 @@ export interface SubArray {
 
 /**
  * Finds the maximum sum including the middle element.
- * @complexity - O(n)
+ * @time- O(n)
  */
 function findMaxCrossingSubArray(
     array: number[],
@@ -56,7 +56,7 @@ function findMaxCrossingSubArray(
 
 /**
  * finds maximum sub-array using divide-and-conquier method
- * @complexity - O(n logn)
+ * @time- O(n logn)
  */
 function findMaxSubArray(
     array: number[],
@@ -98,7 +98,7 @@ export function findMaximumSubArray(array: number[]): SubArray {
 
 /**
  * Kadane's algorithm for solving maximum sub-array problem
- * @complexity - O(n)
+ * @time- O(n)
  */
 export function KadaneAlgorithm(array: number[]): number {
     let currentMax: number = array[0];

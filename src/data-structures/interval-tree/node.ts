@@ -49,7 +49,7 @@ export class Interval {
 
     /**
      * Checks if the two intervals overlap.
-     * @complexity O(1)
+     * @timeO(1)
      */
     isOverlapWith(interval: Interval): boolean {
         return (

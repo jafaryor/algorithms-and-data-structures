@@ -16,7 +16,7 @@ export class Flow {
 
     /**
      * Inits the residual graph's flow by setting flow for all edges to 0.
-     * @complexity O()
+     * @timeO()
      */
     private initFlow(): void {
         for (const u of this.residualGraph.vertices) {

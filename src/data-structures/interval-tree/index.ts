@@ -12,7 +12,7 @@ export class IntervalTree<T> extends RedBlackTree<T> {
     /**
      * Finds a node in tree whose interval overlaps provided interval.
      * If there is no interval that overlaps interval, undefined is returned.
-     * @complexity O(lg n)
+     * @timeO(lg n)
      */
     searchInterval(interval: Interval): IntervalNode<T> | undefined {
         let current = this.root;
@@ -30,7 +30,7 @@ export class IntervalTree<T> extends RedBlackTree<T> {
 
     /**
      * Inserts a node into the tree.
-     * @complexity O(lg n) + O(lg n)
+     * @timeO(lg n) + O(lg n)
      */
     insert(node: IntervalNode<T>): void {
         super.insert(node);
@@ -44,7 +44,7 @@ export class IntervalTree<T> extends RedBlackTree<T> {
 
     /**
      * Removes a node from the tree.
-     * @complexity O(lg n) + O(lg n)
+     * @timeO(lg n) + O(lg n)
      */
     delete(node: IntervalNode<T>): void {
         let startNode: IntervalNode<T> | undefined;
@@ -73,7 +73,7 @@ export class IntervalTree<T> extends RedBlackTree<T> {
 
     /**
      * Fixes the involved nodes' max after left rotation.
-     * @complexity O(1)
+     * @timeO(1)
      */
     leftRotate(node: IntervalNode<T>): void {
         const right = node.right!;
@@ -86,7 +86,7 @@ export class IntervalTree<T> extends RedBlackTree<T> {
 
     /**
      * Fixes the involved nodes' max after right rotation.
-     * @complexity O(1)
+     * @timeO(1)
      */
     rightRotate(node: IntervalNode<T>): void {
         const left = node.left!;

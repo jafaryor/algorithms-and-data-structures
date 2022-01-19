@@ -8,7 +8,7 @@ import {randomFromArray} from '../utils';
 
 /**
  * The approximation algorithm for the Vertex-Cover Problem.
- * @complexity O(E^2)
+ * @timeO(E^2)
  */
 export function approxVertexCover(graph: Graph): Edge[] {
     const cover = [] as Edge[];
@@ -30,7 +30,7 @@ export function approxVertexCover(graph: Graph): Edge[] {
 
 /**
  * Removes all edges incident on a vertex.
- * @complexity O(E)
+ * @timeO(E)
  */
 function removeIncidentEdgesOn(vertex: Vertex, edges: Edge[]): Edge[] {
     const result = [] as Edge[];
@@ -50,7 +50,7 @@ function removeIncidentEdgesOn(vertex: Vertex, edges: Edge[]): Edge[] {
 
 /**
  * The approximation algorithm for the Traveling-Salesman Problem.
- * @complexity O(E + V*lgV)
+ * @timeO(E + V*lgV)
  */
 export function approxTourFrom(root: Vertex, graph: Graph): Edge[] {
     const minSpanningTree = graph.primMinimumSpanningTree(root);
@@ -66,7 +66,7 @@ export function approxTourFrom(root: Vertex, graph: Graph): Edge[] {
 
 /**
  * The approximation greedy algorithm for the Set-Covering Problem
- * @complexity O(|set| * |family|)
+ * @timeO(|set| * |family|)
  */
 export function approxSetCover<T>(
     set: Set<T>,

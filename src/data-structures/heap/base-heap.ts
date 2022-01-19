@@ -35,7 +35,7 @@ export abstract class BinaryHeap<T> {
 
     /**
      * Returns the root node (min/max).
-     * @complexity O(1)
+     * @timeO(1)
      */
     peek(): HeapNode<T> {
         if (!this.nodes.length) throw new Error('The Heap is empty!');
@@ -45,7 +45,7 @@ export abstract class BinaryHeap<T> {
 
     /**
      * Removes root node and put last node instead of root.
-     * @complexity O(lg n)
+     * @timeO(lg n)
      */
     poll(): HeapNode<T> {
         if (!this.nodes.length) throw new Error('The Heap is empty!');
@@ -67,7 +67,7 @@ export abstract class BinaryHeap<T> {
     /**
      * Adds new node to right-most parent.
      * Heap is populate from left to right.
-     * @complexity O(lg n)
+     * @timeO(lg n)
      */
     add(node: HeapNode<T>): void {
         this.nodes.push(node);
@@ -90,7 +90,7 @@ export abstract class BinaryHeap<T> {
 
     /**
      * Finds node's index by its value.
-     * @complexity O(n)
+     * @timeO(n)
      */
     findIndex(value: T): number | undefined {
         for (let i = 0; i < this.nodes.length; i++) {
@@ -102,7 +102,7 @@ export abstract class BinaryHeap<T> {
 
     /**
      * Checks if a node with the certain value exists.
-     * @complexity O(n)
+     * @timeO(n)
      */
     includes(value: T): boolean {
         for (const node of this.nodes) {
@@ -184,7 +184,7 @@ export abstract class BinaryHeap<T> {
 
     /**
      * Build min/max heap from provided array.
-     * @complexity O(n)
+     * @timeO(n)
      */
     private build() {
         // Math.floor(this.size / 2) = amount of parent nodes.

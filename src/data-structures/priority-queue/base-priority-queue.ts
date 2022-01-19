@@ -9,7 +9,7 @@ export abstract class PriorityQueue<T> {
 
     /**
      * Checks if the queue is empty.
-     * @complexity O(1)
+     * @timeO(1)
      */
     isEmpty(): boolean {
         return this.heap.isEmpty();
@@ -17,7 +17,7 @@ export abstract class PriorityQueue<T> {
 
     /**
      * Inserts item to the queue.
-     * @complexity O(lg n)
+     * @timeO(lg n)
      */
     insert(node: HeapNode<T>) {
         this.heap.add(node);
@@ -33,7 +33,7 @@ export abstract class PriorityQueue<T> {
 
     /**
      * Finds node's index by its value.
-     * @complexity O(n)
+     * @timeO(n)
      */
     findIndex(value: T): number | undefined {
         return this.heap.findIndex(value);
@@ -41,7 +41,7 @@ export abstract class PriorityQueue<T> {
 
     /**
      * Checks if a node with the certain value exists.
-     * @complexity O(n)
+     * @timeO(n)
      */
     includes(value: T): boolean {
         return this.heap.includes(value);

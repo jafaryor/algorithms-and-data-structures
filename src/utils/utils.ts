@@ -47,7 +47,7 @@ export function shuffle(array: any[]): any[] {
 
 /**
  * finds max and min in the array
- * @complexity - O(n)
+ * @time- O(n)
  * @param array
  */
 export function findExtremes(array: number[]): Extremes {
@@ -62,7 +62,7 @@ export function findExtremes(array: number[]): Extremes {
 
 /**
  * optimized option of the findExtremes utility function
- * @complexity - O(3n/2)
+ * @time- O(3n/2)
  * @param array
  */
 export function findMinAndMax(array: number[]): Extremes {

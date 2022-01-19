@@ -33,8 +33,8 @@ import {Matrix} from '../data-structures/matrix';
 /**
  * Return the length of the longest common subsequence.
  * The final result is in the lcs[m][n].
- * @complexity - O(n*m)
- * @spaceComplexity - O(n*m)
+ * @time- O(n*m)
+ * @space- O(n*m)
  */
 export function longestCommonSubsequence(x: string, y: string): number[][] {
     const m = x.length;
@@ -64,7 +64,7 @@ export function longestCommonSubsequence(x: string, y: string): number[][] {
  * Prints longest common subsequence.
  * Note: There might be multiple solutions, but this it prints the first
  * longest that starts from left of first input.
- * @complexity - O(m + n). Since it decrements,
+ * @time- O(m + n). Since it decrements,
  * at least one of i and j in each recursive call.
  * Note: Must stat with i = x.length nad j = y.length.
  * @see - /images/lcs-backtrack.png

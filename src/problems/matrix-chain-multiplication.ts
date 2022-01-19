@@ -85,8 +85,8 @@ function getMatrixDimensions(matrixSizes: MatrixSize[]): number[] {
  * multiplication for the set of three matrices and so on.
  * Until the set of matrices of length n is reached.
  *
- * @complexity - O(n^3) because each loop takes on at most n-1 values.
- * @spaceComplexity - O(n^2)
+ * @time- O(n^3) because each loop takes on at most n-1 values.
+ * @space- O(n^2)
  * @see - images/matrix-chain-multiplication-complexity.png
  */
 export function matrixChainOrder(
@@ -130,8 +130,8 @@ export function matrixChainOrder(
 
 /**
  * Recursive implementation of the problem.
- * @complexity - O(n^3)
- * @spaceComplexity - O(n^2)
+ * @time- O(n^3)
+ * @space- O(n^2)
  */
 export function recursiveMatrixChain(matrixSizes: MatrixSize[]): number[][] {
     const n = matrixSizes.length + 1;
@@ -145,7 +145,7 @@ export function recursiveMatrixChain(matrixSizes: MatrixSize[]): number[][] {
 
 /**
  * The recursiveMatrixChain helper function.
- * @complexity - O(n^3)
+ * @time- O(n^3)
  * Proof: There two types of call:
  * 1. Call in which costs[i][j] = Infinity.
  * 2. Calls in which costs[i][j] < Infinity.
@@ -185,7 +185,7 @@ function lookupChain(
 /**
  * Prints the matrix-chain multiplication optimal parenthesis.
  * Initial call should be with i = 1, j = n.
- * @complexity - O(n)
+ * @time- O(n)
  */
 export function printOptimalParenthesis(
     positions: number[][],

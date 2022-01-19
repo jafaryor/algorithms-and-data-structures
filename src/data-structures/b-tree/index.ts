@@ -20,7 +20,7 @@ export class BTree<T> {
 
     /**
      * Builds the tree.
-     * @complexity O(1)
+     * @timeO(1)
      */
     private build(): BTreeNode<T> {
         // Create a leaf as a root.
@@ -33,7 +33,7 @@ export class BTree<T> {
      * Returns the reference to the node with a specific key.
      * @param node - a node to start search from
      * @param key - key to be searched for
-     * @complexity - O(t * log_t(n)), where:
+     * @time- O(t * log_t(n)), where:
      * t - linear search in array of keys of length <= t
      * log_t(n) - height of the tree
      * @note - If replace the linear search of key with binary search,
@@ -68,8 +68,8 @@ export class BTree<T> {
 
     /**
      * Inserts a new node into a tree.
-     * @complexity O(t * h) = O(t * log_t(n))
-     * @spaceComplexity O(h) = O(log_t(n))
+     * @timeO(t * h) = O(t * log_t(n))
+     * @spaceO(h) = O(log_t(n))
      */
     insert(key: number, value: T): void {
         if (this.isNodeFull(this.root)) {
@@ -88,8 +88,8 @@ export class BTree<T> {
 
     /**
      * Deletes the key "key" from the subtree rooted at "node".
-     * @complexity O(t * h) = O(t * log_t(n))
-     * @spaceComplexity O(h) = O(log_t(n))
+     * @timeO(t * h) = O(t * log_t(n))
+     * @spaceO(h) = O(log_t(n))
      * @note - must start from root.
      */
     delete(key: number, node: BTreeNode<T>): void {
@@ -99,7 +99,7 @@ export class BTree<T> {
     /**
      * Finds the min key of the tree.
      * @note - must start from root.
-     * @complexity - O(log_t(n))
+     * @time- O(log_t(n))
      */
     min(node?: BTreeNode<T>): number | undefined {
         if (!node) {
@@ -114,7 +114,7 @@ export class BTree<T> {
     /**
      * Finds the max key of the tree.
      * @note - must start from root.
-     * @complexity - O(log_t(n))
+     * @time- O(log_t(n))
      */
     max(node?: BTreeNode<T>): number | undefined {
         if (!node) {
@@ -131,8 +131,8 @@ export class BTree<T> {
      * so that it has an additional child.
      * @param parent - parent node which holds reference to the target node.
      * @param nodeIndex - target's node index in the list of parent's children.
-     * @complexity O(t) - due to loops each running t times.
-     * @spaceComplexity O(1)
+     * @timeO(t) - due to loops each running t times.
+     * @spaceO(1)
      */
     private split(parent: BTreeNode<T>, nodeIndex: number): void {
         // node has 2t-1 keys and 2t children.
@@ -180,10 +180,10 @@ export class BTree<T> {
 
     /**
      * Inserts a key into a non-full node "node".
-     * @complexity O(t * h) = O(t * log_t(n)), where:
+     * @timeO(t * h) = O(t * log_t(n)), where:
      * t - while loop
      * log_t(n) - the height of the tree
-     * @spaceComplexity O(h) = O(log_t(n))
+     * @spaceO(h) = O(log_t(n))
      */
     private insertToNonFull(node: BTreeNode<T>, key: number, value: T): void {
         let i = node.size - 1;

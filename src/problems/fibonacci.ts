@@ -1,7 +1,7 @@
 /**
  * Computes the n-th Fibonacci number using Dynamic Programming.
- * @complexity - O(n)
- * @spaceComplexity - O(n)
+ * @time- O(n)
+ * @space- O(n)
  */
 export function fibonacci(n: number): number {
     const fib = new Array<number>(n);

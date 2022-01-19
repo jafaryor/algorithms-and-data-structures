@@ -1,4 +1,4 @@
-import { insertionSortOfSubArray } from '..';
+import {insertionSortOfSubArray} from '..';
 import {swap, randomFromRange, shuffle} from '../../utils';
 
 export class QuickSorter {
@@ -14,7 +14,7 @@ export class QuickSorter {
      * @time - O(n logn)
      * @space - O(n)
      */
-    public static basicSort(array: number[]): number[] {
+    static basicSort(array: number[]): number[] {
         if (array.length === 0) return [];
 
         const left = [];
@@ -29,7 +29,11 @@ export class QuickSorter {
             }
         }
 
-        return [...QuickSorter.basicSort(left), pivot, ...QuickSorter.basicSort(right)];
+        return [
+            ...QuickSorter.basicSort(left),
+            pivot,
+            ...QuickSorter.basicSort(right),
+        ];
     }
 
     /**
@@ -37,7 +41,7 @@ export class QuickSorter {
      * @time - O(n logn)
      * @space - O(1)
      */
-    public static sort(array: number[]): number[] {
+    static sort(array: number[]): number[] {
         // Randomize/shuffle the array, to avoid worst case.
         shuffle(array);
 
@@ -70,7 +74,11 @@ export class QuickSorter {
     /**
      * Median of 3 Quick Sort (Dijkstra’s solution).
      */
-    public static threeWaySort(array: number[], left = 0, right = array.length - 1): number[] {
+    static threeWaySort(
+        array: number[],
+        left = 0,
+        right = array.length - 1,
+    ): number[] {
         if (left + QuickSorter.M >= right) {
             // Do insertion sort for array of size <= M.
             return insertionSortOfSubArray(array, left, right);
@@ -79,7 +87,7 @@ export class QuickSorter {
         let less = left; // Less than pivot element index.
         let i = left + 1; // Equal to pivot element index.
         let greater = right; // Greater than pivot element index.
-        let pivot = array[left];
+        const pivot = array[left];
 
         // Partition the array.
         while (i <= greater) {
@@ -133,10 +141,10 @@ export class QuickSorter {
             // Swap the found elements, to maintain the invariant property.
             swap(array, i, j);
         }
-        
+
         // Place pivot in the correct location.
         swap(array, left, j);
-        
+
         return j;
     }
 
@@ -145,7 +153,7 @@ export class QuickSorter {
      * @time [expected] - O(n logn)
      * @space - O(1)
      */
-    public static randomizedSort(
+    static randomizedSort(
         array: number[],
         left = 0,
         right = array.length - 1,

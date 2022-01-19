@@ -1,33 +1,28 @@
+import {swap} from '../../utils';
+
 /**
  * Shell Sorting
- * @param array
+ * @timeO(n^(3/2))
  */
 export function shellSort(array: number[]): number[] {
-    // Start with a big gap, then reduce the gap
-    for (
-        let gap = Math.floor(array.length / 2);
-        gap > 0;
-        gap = Math.floor(gap / 2)
-    ) {
-        // Do a gapped insertion sort for this gap size.
-        // The first gap elements a[0..gap-1] are already in gapped order
-        // keep adding one more element until the entire array is
-        // gap sorted
-        for (let i = gap; i < Math.floor(array.length / 2); i += 1) {
-            // add a[i] to the elements that have been gap sorted
-            // save a[i] in temp and make a hole at position i
-            const temp = array[i];
+    const n = array.length;
+    // Interval size.
+    let h = 1;
 
-            // shift earlier gap-sorted elements up until the correct
-            // location for a[i] is found
-            let j;
-            for (j = i; j >= gap && array[j - gap] > temp; j -= gap) {
-                array[j] = array[j - gap];
+    // Find the interval less and closest to the n/3.
+    while (h < n / 3) h = 3 * h + 1;
+
+    while (h >= 1) {
+        // h-sort the array.
+        for (let i = h; i < n; i++) {
+            // Insert a[i] among a[i-h], a[i-2h], a[i-3h], ...
+            for (let j = i; j >= h && array[j] < array[j - h]; j -= h) {
+                swap(array, j, j - h);
             }
-
-            //  put temp (the original a[i]) in its correct location
-            array[j] = temp;
         }
+
+        // Reduce the interval size by third.
+        h = h / 3;
     }
 
     return array;

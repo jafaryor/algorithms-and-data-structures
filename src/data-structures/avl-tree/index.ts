@@ -36,7 +36,7 @@ export class AvlTree<T> extends BinarySearchTree<T> {
 
     /**
      * Rotates the node to the left side.
-     * @complexity O(1)
+     * @timeO(1)
      */
     leftRotate(node: AvlNode<T>): void {
         const right = node.right as AvlNode<T>;
@@ -49,7 +49,7 @@ export class AvlTree<T> extends BinarySearchTree<T> {
 
     /**
      * Rotates the node to the right side.
-     * @complexity O(1)
+     * @timeO(1)
      */
     rightRotate(node: AvlNode<T>): void {
         const left = node.left as AvlNode<T>;
@@ -62,7 +62,7 @@ export class AvlTree<T> extends BinarySearchTree<T> {
 
     /**
      * Inserts a new node into the tree. (Iterative approach)
-     * @complexity O(lg n)
+     * @timeO(lg n)
      */
     insert(node: AvlNode<T>): void {
         super.insert(node);
@@ -72,7 +72,7 @@ export class AvlTree<T> extends BinarySearchTree<T> {
     /**
      * Removes the node from the tree.
      * The idea is the same as in the BinaryTree.
-     * @complexity O(lg n) -> [because of the "successor" method]
+     * @timeO(lg n) -> [because of the "successor" method]
      */
     delete(node: AvlNode<T>): void {
         super.delete(node);
@@ -91,7 +91,7 @@ export class AvlTree<T> extends BinarySearchTree<T> {
 
     /**
      * Restores the avl tree balance.
-     * @complexity O(lg n)
+     * @timeO(lg n)
      */
     private insertFixup(node: AvlNode<T>): void {
         let current = node;
@@ -142,7 +142,7 @@ export class AvlTree<T> extends BinarySearchTree<T> {
 
     /**
      * Restores the avl tree balance.
-     * @complexity O(lg n)
+     * @timeO(lg n)
      */
     private deleteFixup(startNode: AvlNode<T>): void {
         let current: AvlNode<T> | undefined = startNode;
