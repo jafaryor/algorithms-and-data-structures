@@ -22,7 +22,7 @@ export class FibonacciHeap<T> {
     /**
      * Inserts a new node into a heap.
      * Simply inserts a node into root list.
-     * @timeO(1)
+     * @time O(1)
      * @amortizedComplexity O(1)
      */
     insert(node: FibonacciNode<T>): void {
@@ -37,7 +37,7 @@ export class FibonacciHeap<T> {
             // Put the node on the left side of min node.
             node.right = this.min!;
             node.left = this.min!.left;
-            this.min!.left.right = node;
+            this.min!.left!.right = node;
             this.min!.left = node;
 
             // Update the pointer to the min node.
@@ -53,7 +53,7 @@ export class FibonacciHeap<T> {
     /**
      * Merges two heaps into one.
      * Simply concatenates the root lists of both heaps.
-     * @timeO(1)
+     * @time O(1)
      * @amortizedComplexity O(1)
      */
     union(heap: FibonacciHeap<T>): FibonacciHeap<T> {
@@ -63,9 +63,9 @@ export class FibonacciHeap<T> {
 
             // Link: ... left2 ↔ this.min ↔ ... ↔ left1 ↔ heap.min ...
             this.min!.left = left2;
-            left1.right = heap.min!;
+            left1!.right = heap.min!;
             heap.min!.left = left1;
-            left2.right = this.min!;
+            left2!.right = this.min!;
         }
 
         // Sets the new pointer to min node.
@@ -84,7 +84,7 @@ export class FibonacciHeap<T> {
 
     /**
      * Extracts the min node and returns it.
-     * @timeO(lg n)
+     * @time O(lg n)
      * @amortizedComplexity O(lg n)
      */
     extractMin(): FibonacciNode<T> | undefined {
@@ -125,7 +125,7 @@ export class FibonacciHeap<T> {
 
     /**
      * Consolidates the root list after min extraction.
-     * @timeO(lg n)
+     * @time O(lg n)
      * @amortizedComplexity O(lg n)
      */
     consolidate() {
@@ -182,7 +182,7 @@ export class FibonacciHeap<T> {
 
     /**
      * Remove y from the root list, and make y a child of x.
-     * @timeO(1)
+     * @time O(1)
      * @amortizedComplexity O(1)
      */
     heapLink(x: FibonacciNode<T>, y: FibonacciNode<T>) {
@@ -224,7 +224,7 @@ export class FibonacciHeap<T> {
 
     /**
      * Cuts the link between the nodes.
-     * @timeO(1)
+     * @time O(1)
      * @amortizedComplexity O(1)
      */
     cut(x: FibonacciNode<T>, y: FibonacciNode<T>): void {
@@ -259,7 +259,7 @@ export class FibonacciHeap<T> {
 
     /**
      * Deletes a node from a heap.
-     * @timeO(lg n)
+     * @time O(lg n)
      * @amortizedComplexity O(lg n)
      */
     delete(x: FibonacciNode<T>): void {

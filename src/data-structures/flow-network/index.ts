@@ -36,7 +36,7 @@ export class FlowNetwork extends Graph {
     /**
      * The Ford Fulkerson's Algorithm for finding a Max Flow.
      * @note uses DFS to find a path in residual network.
-     * @timeO(E * |f*|), where f* is a maximum flow in the network.
+     * @time O(E * |f*|), where f* is a maximum flow in the network.
      */
     fordFulkersonMaxFlow() {
         /*
@@ -73,7 +73,7 @@ export class FlowNetwork extends Graph {
     /**
      * The Edmonds Karp's Algorithm for finding a Max Flow.
      * @note uses BFS to find a path in residual network.
-     * @timeO(V * E^2)
+     * @time O(V * E^2)
      */
     edmondsKarpMaxFlow(): {maxFlow: number; maxFlowPath: string[]} {
         let maxFlow = 0;

@@ -16,7 +16,7 @@ export class Matrix {
      * @param L - lower-triangle matrix.
      * @param U - upper-triangle matrix.
      * @param P - permutation matrix.
-     * @timeO(n^2)
+     * @time O(n^2)
      */
     static lupSolve(
         L: number[][],
@@ -57,7 +57,7 @@ export class Matrix {
 
     /**
      * Computes an LU decomposition of a matrix using Gaussian Elimination method.
-     * @timeO(n^3)
+     * @time O(n^3)
      */
     static luDecomposition(A: number[][]): {
         L: number[][];
@@ -111,7 +111,7 @@ export class Matrix {
 
     /**
      * Computes an LUP decomposition of a matrix using Gaussian Elimination method.
-     * @timeO(n^3)
+     * @time O(n^3)
      */
     static lupDecomposition(A: number[][]): {
         L: number[][];
@@ -194,7 +194,7 @@ export class Matrix {
     /**
      * Inverts a matrix using LUP decomposition.
      * A * A^(-1) = I = A^(-1) * A
-     * @timeO(n^3)
+     * @time O(n^3)
      */
     static invert(matrix: number[][]): number[][] {
         let e: number[];
@@ -228,7 +228,7 @@ export class Matrix {
     /**
      * Transposes a matrix.
      * Flips a matrix over its main diagonal.
-     * @timeO(N^2)
+     * @time O(N^2)
      */
     static transpose(matrix: number[][]): number[][] {
         const n = matrix.length;
@@ -247,7 +247,7 @@ export class Matrix {
 
     /**
      * Returns an identity matrix of size n x n.
-     * @timeO(n^2)
+     * @time O(n^2)
      */
     static identity(order: number): number[][] {
         const I = [] as number[][];
@@ -262,7 +262,7 @@ export class Matrix {
 
     /**
      * Return a column of a matrix as an array.
-     * @timeO(n)
+     * @time O(n)
      */
     static column(matrix: number[][], j: number): number[] {
         const column = [];
@@ -277,7 +277,7 @@ export class Matrix {
     /**
      * Converts a permutation matrix P to a compact form pi,
      * such that pi[i] indicated that P[i][p[i]] = 1.
-     * @timeO(n)
+     * @time O(n)
      */
     static permutationToCompact(P: number[][]): number[] {
         return P.reduce((pi: number[], row: number[], i: number) => {
@@ -290,7 +290,7 @@ export class Matrix {
     /**
      * Converts a compact representation pi of permutation matrix P to P,
      * such that pi[i] indicated that P[i][p[i]] = 1.
-     * @timeO(n)
+     * @time O(n)
      */
     static compactToPermutation(pi: number[]): number[][] {
         const n = pi.length;
@@ -324,7 +324,7 @@ export class Matrix {
      * Determinant represents the matrix in term of a real number.
      * @assumes the matrix is squared.
      * @note numerically instable, which means the result is not accurate.
-     * @timeO(n^3 + n)
+     * @time O(n^3 + n)
      */
     static determinant(matrix: number[][]): number {
         const n = matrix.length;

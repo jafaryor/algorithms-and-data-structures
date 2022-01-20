@@ -10,7 +10,7 @@ export class BinarySearchTree<T> extends BinaryTree<T> {
 
     /**
      * Recursively searches for a value in the tree starting from root.
-     * @timeO(h)
+     * @time O(h)
      */
     search(
         key: number,
@@ -28,7 +28,7 @@ export class BinarySearchTree<T> extends BinaryTree<T> {
 
     /**
      * Iteratively searches for a value in the binary tree starting from root.
-     * @timeO(h)
+     * @time O(h)
      */
     iterativeSearch(
         key: number,
@@ -49,7 +49,7 @@ export class BinarySearchTree<T> extends BinaryTree<T> {
 
     /**
      * Return the pointer to the node with the minimum key.
-     * @timeO(h)
+     * @time O(h)
      */
     min(
         node: BinarySearchNode<T> | undefined = this.root,
@@ -65,7 +65,7 @@ export class BinarySearchTree<T> extends BinaryTree<T> {
 
     /**
      * Return the pointer to the node with the maximum key.
-     * @timeO(h)
+     * @time O(h)
      */
     max(
         node: BinarySearchNode<T> | undefined = this.root,
@@ -83,7 +83,7 @@ export class BinarySearchTree<T> extends BinaryTree<T> {
      * Returns the pointer to the successor of the node.
      * The successor of a node A is a node with the smallest key,
      * grater than A.key.
-     * @timeO(h)
+     * @time O(h)
      */
     successor(node: BinarySearchNode<T>): BinarySearchNode<T> | undefined {
         if (node.right) return this.min(node.right);
@@ -103,7 +103,7 @@ export class BinarySearchTree<T> extends BinaryTree<T> {
      * Return the pointer to the predecessor of the node.
      * The predecessor of a node A is the node with the greatest key,
      * smaller than A.key.
-     * @timeO(h)
+     * @time O(h)
      */
     predecessor(node: BinarySearchNode<T>): BinarySearchNode<T> | undefined {
         if (node.left) return this.max(node.left);
@@ -121,7 +121,7 @@ export class BinarySearchTree<T> extends BinaryTree<T> {
 
     /**
      * Inserts a new node into the tree. (Recursive approach)
-     * @timeO(h)
+     * @time O(h)
      */
     recursiveInsert(
         newNode: BinarySearchNode<T>,
@@ -148,7 +148,7 @@ export class BinarySearchTree<T> extends BinaryTree<T> {
 
     /**
      * Inserts a new node into the tree. (Iterative approach)
-     * @timeO(h)
+     * @time O(h)
      */
     insert(node: BinarySearchNode<T>): void {
         // Keep pointers to two nodes, child (a) and parent (b).
@@ -172,7 +172,7 @@ export class BinarySearchTree<T> extends BinaryTree<T> {
 
     /**
      * Removes the node from the tree.
-     * @timeO(h) -> [because of the "successor" method]
+     * @time O(h) -> [because of the "successor" method]
      */
     delete(node: BinarySearchNode<T>): void {
         // A node has no left child.

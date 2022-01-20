@@ -156,7 +156,7 @@ export class SinglyLinkedList<T> {
 
     /**
      * Converts to an array.
-     * @timeO(n)
+     * @time O(n)
      */
     toArray(): T[] {
         const array = [] as T[];

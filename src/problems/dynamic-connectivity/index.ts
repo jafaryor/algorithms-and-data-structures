@@ -33,7 +33,7 @@ export class UnionFinder {
 
     /**
      * Returns the number of connected components.
-     * @timeO(1)
+     * @time O(1)
      */
     get size(): number {
         return this.count;
@@ -41,7 +41,7 @@ export class UnionFinder {
 
     /**
      * Checks whether two sites p and q are in the same component.
-     * @timeO(lgN)
+     * @time O(lgN)
      */
     connected(p: number, q: number): boolean {
         return this.find(p) === this.find(q);
@@ -49,7 +49,7 @@ export class UnionFinder {
 
     /**
      * Returns the component id, which contains site p (0 to N-1)
-     * @timeO(lgN)
+     * @time O(lgN)
      */
     find(p: number): number {
         // Follows the link to find a root of p.
@@ -62,7 +62,7 @@ export class UnionFinder {
 
     /**
      * Add connection between p and q sites.
-     * @timeO(lgN)
+     * @time O(lgN)
      */
     union(p: number, q: number): void {
         // Find the root of p.
@@ -89,9 +89,9 @@ export class UnionFinder {
     /**
      * Finds the connected components of the given sites.
      * @param pairs - the given pairs of sites to connect.
-     * @timeof Quick Find: O(N^2)
-     * @timeof Quick Union: O(N^2)
-     * @timeof Weighted Quick Union: O(N * lgN
+     * @time Of Quick Find: O(N^2)
+     * @time Of Quick Union: O(N^2)
+     * @time Of Weighted Quick Union: O(N * lgN
      */
     findConnectedComponents(
         method: QuickFindImplementation = QuickFindImplementation.WEIGHTED_QUICK_UNION,
@@ -130,12 +130,12 @@ export class UnionFinder {
      * The Quick Find implementation.
      */
 
-    // @timeO(1)
+    // @time O(1)
     quickFind(p: number): number {
         return this.componentId[p];
     }
 
-    // @timeO(N)
+    // @time O(N)
     quickFindUnion(p: number, q: number): void {
         const pId = this.quickFind(p);
         const qId = this.quickFind(q);
@@ -155,7 +155,7 @@ export class UnionFinder {
      * The Quick Union implementation.
      */
 
-    // @timeO(N)
+    // @time O(N)
     quickUnionFind(p: number): number {
         while (p !== this.componentId[p]) {
             p = this.componentId[p];
@@ -164,7 +164,7 @@ export class UnionFinder {
         return p;
     }
 
-    // @timeO(N)
+    // @time O(N)
     quickUnion(p: number, q: number): void {
         const pRoot = this.quickUnionFind(p);
         const qRoot = this.quickUnionFind(q);

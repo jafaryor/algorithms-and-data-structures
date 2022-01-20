@@ -66,7 +66,7 @@ export class Graph<T = string> {
 
     /**
      * Returns the graph's edges.
-     * @timeO(V + E)
+     * @time O(V + E)
      */
     getEdges(): Array<Edge<T>> {
         return this.vertices.reduce((edges: Array<Edge<T>>, u: Vertex<T>) => {
@@ -181,7 +181,7 @@ export class Graph<T = string> {
      * Returns the reference to root of a built Breadth First Tree.
      * @note Finds a shortest path from root to all vertices
      *       if the graph is unweighted.
-     * @timeO(V + E)
+     * @time O(V + E)
      */
     breadthFirstSearch(root: Vertex<T>): Vertex<T> {
         const queue = new Queue<Vertex<T>>();
@@ -218,7 +218,7 @@ export class Graph<T = string> {
     /**
      * The Depth First Search.
      * Returns the reference to roots of a built Depth First Trees.
-     * @timeO(V + E)
+     * @time O(V + E)
      */
     depthFirstSearch(): Array<Vertex<T>> {
         const roots = [] as Array<Vertex<T>>;
@@ -269,7 +269,7 @@ export class Graph<T = string> {
 
     /**
      * DFS procedure for a single vertex using STACK to eliminate recursion.
-     * @timeO(V + E)
+     * @time O(V + E)
      */
     depthFirstSearchVisitStack(u: Vertex<T>): void {
         const stack = new Stack<Vertex<T>>();
@@ -320,7 +320,7 @@ export class Graph<T = string> {
      * It arranges vertices an a way that
      * all edges are directed from left to right.
      * @assumes the graph is acyclic.
-     * @timeO(V + E)
+     * @time O(V + E)
      */
     topologicalSort(): Array<Vertex<T>> {
         this.depthFirstSearch();
@@ -341,7 +341,7 @@ export class Graph<T = string> {
      * Kosaraju's Algorithm.
      * Finds a set of strongly connected components and returns their roots.
      * @note The graph should be directed.
-     * @timeO(V + E)
+     * @time O(V + E)
      */
     stronglyConnectedComponents(): Array<Vertex<T>> {
         // To calculate the timestamps.
@@ -375,7 +375,7 @@ export class Graph<T = string> {
      *       but transposing a matrix a O(V*V) operation.
      * @note The transposed graph references the same vertex objects.
      * @note The graph should be directed.
-     * @timeO(V + E)
+     * @time O(V + E)
      */
     transpose(): Graph<T> {
         const list = this.adjacencyList.transpose();
@@ -390,7 +390,7 @@ export class Graph<T = string> {
     /**
      * Returns the number of connected components using DFS.
      * @note The graph should be undirected
-     * @timeO(E + V)
+     * @time O(E + V)
      */
     connectedComponents(): number {
         this.resetVertices();
@@ -438,7 +438,7 @@ export class Graph<T = string> {
      * Checks if the graph has a cycle.
      * Need to check if there a back edge during DFS.
      * @note Always true for undirected graphs.
-     * @timeO(V + E)
+     * @time O(V + E)
      */
     isCyclic(): boolean {
         this.resetVertices();
@@ -484,7 +484,7 @@ export class Graph<T = string> {
     /**
      * Checks if the graph is directed.
      * That is if the graph and its transposed graph have different AdjacencyMatrix/AdjacencyList.
-     * @timeO(E + V + V*V)
+     * @time O(E + V + V*V)
      */
     isDirected(): boolean {
         const transposedGraph = this.transpose();
@@ -494,7 +494,7 @@ export class Graph<T = string> {
 
     /**
      * Checks if two graphs are equal.
-     * @timeO(V * V)
+     * @time O(V * V)
      */
     protected isEqualTo(graph: Graph<T>): boolean {
         if (this.vertices.length !== graph.vertices.length) return false;
@@ -515,7 +515,7 @@ export class Graph<T = string> {
 
     /**
      * Checks if graph is connected.
-     * @timeO(E + V)
+     * @time O(E + V)
      */
     isConnected(): boolean {
         if (this.isDirected()) {
@@ -531,7 +531,7 @@ export class Graph<T = string> {
 
     /**
      * Returns the underlying undirected and unweighted graph of directed graph.
-     * @timeO(V * V)
+     * @time O(V * V)
      */
     underlyingUndirectedGraph(): Graph<T> {
         const undirectedAdjacencyMatrix =
@@ -548,7 +548,7 @@ export class Graph<T = string> {
      * Kruskal's algorithm for finding a minimum spanning tree.
      * Returns the minimum spanning tree as a set of edges.
      * @note Graph must be connected and undirected.
-     * @timeO(E * lgV)
+     * @time O(E * lgV)
      */
     minimumSpanningTree(): Array<Edge<T>> {
         let u: DisjointSetNode<Vertex<T>>;
@@ -586,7 +586,7 @@ export class Graph<T = string> {
      * Prim's algorithm for finding a minimum spanning tree.
      * @param root - the root of future MST. The algorithm starts from the root.
      * @note Graph must be connected and undirected.
-     * @timeO(E + V*lgV)
+     * @time O(E + V*lgV)
      */
     primMinimumSpanningTree(root: Vertex<T>): Array<Edge<T>> {
         const minimumSpanningTree = [] as Array<Edge<T>>;
@@ -643,7 +643,7 @@ export class Graph<T = string> {
      * @note "distance" prop is used to count the number
      *        of paths whose start point is at a vertex.
      * @assumes the graph is acyclic.
-     * @timeO(V + E)
+     * @time O(V + E)
      */
     paths(): number {
         const topologicallySortedVertices = this.topologicalSort();
@@ -676,7 +676,7 @@ export class Graph<T = string> {
      * Bellman Ford Algorithm for calculating shortest path from a single source.
      * Returns true, if the graph contains no negative-weight cycles.
      * @assumes the graph has negative weight edges.
-     * @timeO(V * E)
+     * @time O(V * E)
      */
     bellmanFordShortestPath(root: Vertex<T>): boolean {
         let result: boolean;
@@ -724,7 +724,7 @@ export class Graph<T = string> {
     /**
      * Calculates a shortest paths in directed acyclic graphs from a single source.
      * @assumes the graph is acyclic and has a negative weight edges.
-     * @timeO(V + E)
+     * @time O(V + E)
      */
     dagShortestPath(root: Vertex<T>): void {
         const topologicallySortedVertices = this.topologicalSort();
@@ -746,7 +746,7 @@ export class Graph<T = string> {
     /**
      * Dijkstra Algorithm for calculating shortest path from a single source.
      * @assumes the graph has no edge with negative weight.
-     * @timeO((V + E) * lgV)
+     * @time O((V + E) * lgV)
      */
     dijkstraShortestPath(root: Vertex<T>): Array<Vertex<T>> {
         let u: HeapNode<Vertex<T>>;
@@ -793,7 +793,7 @@ export class Graph<T = string> {
 
     /**
      * Performs a relaxation on edge (u, v).
-     * @timeO(1)
+     * @time O(1)
      */
     protected relax(u: Vertex<T>, v: Vertex<T>, weight: number): void {
         // Checks if the edge (u, v) gives a shorter path.
@@ -811,8 +811,8 @@ export class Graph<T = string> {
     /**
      * The Floyd-Warshall algorithm for finding the all-pair shortest paths.
      * @assumes the graph is an any type and AdjacencyMatrix[i][i] = 0 for all 0 ≤ i < n.
-     * @timeO(V^3)
-     * @spaceO(V^2)
+     * @time O(V^3)
+     * @space O(V^2)
      */
     floydWarshallShortestPaths(): {
         weights: number[][];
@@ -892,7 +892,7 @@ export class Graph<T = string> {
      * @note Returns "undefined" is path is affected by a negative-weight cycle.
      * @param weights - Shortest Path Weights Matrix from Floyd-Warshall Algorithm.
      * @param predecessors - Predecessor Matrix from Floyd-Warshall Algorithm.
-     * @timeO(E)
+     * @time O(E)
      */
     shortestPath(
         i: number,
@@ -925,8 +925,8 @@ export class Graph<T = string> {
      * The Johnson's algorithm for finding the all-pair shortest paths.
      * @assumes the graph is an any type and AdjacencyMatrix[i][i] = 0 for all 0 ≤ i < n.
      * @note DON'T USE 's' AS A VERTEX VALUE.
-     * @timeO(V*lgV * (E + V))
-     * @spaceO(V + V*2)
+     * @time O(V*lgV * (E + V))
+     * @space O(V + V*2)
      */
     johnsonShortestPaths(): number[][] | undefined {
         let u: Vertex<T>;
@@ -994,7 +994,7 @@ export class Graph<T = string> {
      * Returns a reweighted graph used by Johnson's Algorithm.
      * Adds a vertex s, which points to all vertices of graph.
      * All edges leaving s have a zero weight.
-     * @timeO(V)
+     * @time O(V)
      */
     protected getReweightedGraph(): Graph<T> {
         const n = this.n + 1;
@@ -1025,7 +1025,7 @@ export class Graph<T = string> {
     /**
      * Checks if graph has an Euler Circuit (Eulerian).
      * @note Graph should be undirected.
-     * @timeO(V + E)
+     * @time O(V + E)
      */
     isEulerian(): boolean {
         const connectedComponents = this.connectedComponents();
@@ -1044,7 +1044,7 @@ export class Graph<T = string> {
     /**
      * Checks if graph has an Euler path (Semi-Eulerian).
      * @note Graph should be undirected.
-     * @timeO(V + E)
+     * @time O(V + E)
      */
     isSemiEulerian(): boolean {
         const connectedComponents = this.connectedComponents();
@@ -1063,7 +1063,7 @@ export class Graph<T = string> {
     /**
      * Checks if graph has an Euler Circuit (Eulerian).
      * @note Graph should be directed.
-     * @timeO(V + E + V*V)
+     * @time O(V + E + V*V)
      */
     isEuleranCyce(): boolean {
         const scc = this.stronglyConnectedComponents().length;
@@ -1084,7 +1084,7 @@ export class Graph<T = string> {
 
     /**
      * Returns the number of zero degree vertices.
-     * @timeO(V)
+     * @time O(V)
      */
     zeroDegreeVertices(): number {
         let k = 0;
@@ -1101,7 +1101,7 @@ export class Graph<T = string> {
 
     /**
      * Returns the number of odd degree vertices.
-     * @timeO(V)
+     * @time O(V)
      */
     oddDegreeVertices(): number {
         let k = 0;
@@ -1118,7 +1118,7 @@ export class Graph<T = string> {
 
     /**
      * Returns the number of even degree vertices.
-     * @timeO(V)
+     * @time O(V)
      */
     evenDegreeVertices(): number {
         let k = 0;
@@ -1135,7 +1135,7 @@ export class Graph<T = string> {
 
     /**
      * Returns the number of In-Degree Vertices.
-     * @timeO(V)
+     * @time O(V)
      */
     inDegree(vertex: Vertex<T>): number {
         return this.adjacencyMatrix.inDegree(vertex);
@@ -1143,7 +1143,7 @@ export class Graph<T = string> {
 
     /**
      * Returns the number of Out-Degree Vertices.
-     * @timeO(V)
+     * @time O(V)
      */
     outDegree(vertex: Vertex<T>): number {
         return this.adjacencyMatrix.outDegree(vertex);
@@ -1155,7 +1155,7 @@ export class Graph<T = string> {
 
     /**
      * Sets a proper initial state for each vertex.
-     * @timeO(V)
+     * @time O(V)
      */
     protected resetVertices(): void {
         // Unmark all vertices before searching.
@@ -1167,7 +1167,7 @@ export class Graph<T = string> {
     /**
      * Returns the Min Priority Queue with all vertices reset
      * and root marked as discovered.
-     * @timeO(V)
+     * @time O(V)
      */
     protected getMinPriorityQueueWithResetVertices(
         root: Vertex<T>,
@@ -1197,7 +1197,7 @@ export class Graph<T = string> {
 
     /**
      * Return the array of ['1', '2', '3', ... 'n'] which will be used a default vertex values.
-     * @timeO(n)
+     * @time O(n)
      */
     protected getDefaultVertexValues(): string[] {
         return createArrayWithIncrementingValues(this.n, 1).map((k) =>
@@ -1207,7 +1207,7 @@ export class Graph<T = string> {
 
     /**
      * Finds index of a vertex.
-     * @timeO(V)
+     * @time O(V)
      */
     protected findIndex(u: Vertex<T>): number | undefined {
         return this.vertices.findIndex((v: Vertex<T>) => v === u);
@@ -1215,7 +1215,7 @@ export class Graph<T = string> {
 
     /**
      * Checks if an index is valid for the current matrix.
-     * @timeO(1)
+     * @time O(1)
      */
     protected isValidIndex(index?: number): boolean {
         return index != null && index >= 0 && index < this.n;

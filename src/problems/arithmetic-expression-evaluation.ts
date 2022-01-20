@@ -13,7 +13,7 @@ import {Stack} from '..';
  *       of operators. Like priority of "*" is higher than "+".
  * @note Support | + | - | * | / | sqrt |
  * @note A white space should present between operators and value.
- * @timeO(n)
+ * @time O(n)
  */
 export function evaluateArithmeticExpression(expression: string): number {
     let operator: string;
@@ -60,7 +60,7 @@ export function evaluateArithmeticExpression(expression: string): number {
 
 /**
  * Checks if the input is an arithmetic operator.
- * @timeO(1)
+ * @time O(1)
  */
 function isOperator(input: string): boolean {
     return (

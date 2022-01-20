@@ -11,7 +11,7 @@ export class OrderStatisticTree<T> extends RedBlackTree<T> {
 
     /**
      * Returns the pointer to the i-th smallest key in the tree.
-     * @timeO(lg n)
+     * @time O(lg n)
      */
     select(i: number): OrderStatisticNode<T> | undefined {
         let rank = this.getNodeSize(this.root?.left) + 1;
@@ -34,7 +34,7 @@ export class OrderStatisticTree<T> extends RedBlackTree<T> {
     /**
      * Returns the position of the node in the linear order,
      * determined by an inorder tree walk of tree.
-     * @timeO(lg n)
+     * @time O(lg n)
      */
     rank(node: OrderStatisticNode<T>): number {
         let rank = this.getNodeSize(node.left) + 1;
@@ -61,7 +61,7 @@ export class OrderStatisticTree<T> extends RedBlackTree<T> {
 
     /**
      * Inserts a node into the tree.
-     * @timeO(lg n) + O(lg n)
+     * @time O(lg n) + O(lg n)
      */
     insert(node: OrderStatisticNode<T>): void {
         super.insert(node);
@@ -74,7 +74,7 @@ export class OrderStatisticTree<T> extends RedBlackTree<T> {
 
     /**
      * Removes a node from the tree.
-     * @timeO(lg n) + O(lg n)
+     * @time O(lg n) + O(lg n)
      */
     delete(node: OrderStatisticNode<T>): void {
         let startNode: OrderStatisticNode<T>;
@@ -101,7 +101,7 @@ export class OrderStatisticTree<T> extends RedBlackTree<T> {
 
     /**
      * Fixes the involved nodes' size after left rotation.
-     * @timeO(1)
+     * @time O(1)
      */
     leftRotate(node: OrderStatisticNode<T>): void {
         const right = node.right!;
@@ -115,7 +115,7 @@ export class OrderStatisticTree<T> extends RedBlackTree<T> {
 
     /**
      * Fixes the involved nodes' size after right rotation.
-     * @timeO(1)
+     * @time O(1)
      */
     rightRotate(node: OrderStatisticNode<T>): void {
         const left = node.left!;
@@ -129,7 +129,7 @@ export class OrderStatisticTree<T> extends RedBlackTree<T> {
 
     /**
      * Fixes the involved nodes' size after transplantation.
-     * @timeO(1)
+     * @time O(1)
      */
     transplant(
         a: OrderStatisticNode<T>,
@@ -147,7 +147,7 @@ export class OrderStatisticTree<T> extends RedBlackTree<T> {
     /**
      * Returns the pointer to the i-th smallest key in the tree.
      * [Recursive Approach]
-     * @timeO(lg n)
+     * @time O(lg n)
      */
     selectRecursive(i: number): OrderStatisticNode<T> | undefined {
         return this.root && this.selectInSubtree(i, this.root);
@@ -157,7 +157,7 @@ export class OrderStatisticTree<T> extends RedBlackTree<T> {
      * Returns the position of the node in the linear order,
      * determined by an inorder tree walk of tree.
      * [Recursive Approach]
-     * @timeO(lg n)
+     * @time O(lg n)
      */
     rankRecursive(node: OrderStatisticNode<T>): number {
         // The root exist as the tree has at least one node, which is the passed argument.
@@ -166,7 +166,7 @@ export class OrderStatisticTree<T> extends RedBlackTree<T> {
 
     /**
      * Returns the pointer to the i-th smallest key in the subtree.
-     * @timeO(lg n)
+     * @time O(lg n)
      */
     private selectInSubtree(
         i: number,
@@ -193,7 +193,7 @@ export class OrderStatisticTree<T> extends RedBlackTree<T> {
     /**
      * Return the rank of the "key".
      * Starts looking from the "node".
-     * @timeO(lg n)
+     * @time O(lg n)
      */
     private rankInSubtree(node: OrderStatisticNode<T>, key: number): number {
         if (key === node.key) {

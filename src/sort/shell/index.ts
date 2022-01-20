@@ -2,7 +2,7 @@ import {swap} from '../../utils';
 
 /**
  * Shell Sorting
- * @timeO(n^(3/2))
+ * @time O(n^(3/2))
  */
 export function shellSort(array: number[]): number[] {
     const n = array.length;

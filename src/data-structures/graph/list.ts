@@ -46,7 +46,7 @@ export class AdjacencyList<T = string> {
 
     /**
      * Converts to Adjacency Matrix Graph Representation.
-     * @timeO(V * V)
+     * @time O(V * V)
      */
     toAdjacencyMatrix(): AdjacencyMatrix<T> {
         const matrix = [] as Array<Array<number | undefined>>;
@@ -74,7 +74,7 @@ export class AdjacencyList<T = string> {
 
     /**
      * Returns the transposed list.
-     * @timeO(V + E)
+     * @time O(V + E)
      */
     transpose(): {[vertex: string]: Array<AdjacencyListNode<T>>} {
         const list = {} as {[vertex: string]: Array<AdjacencyListNode<T>>};
@@ -99,7 +99,7 @@ export class AdjacencyList<T = string> {
 
     /**
      * Converts to an array of strings.
-     * @timeO(V + E)
+     * @time O(V + E)
      */
     toString(): string[] {
         const array = [] as string[];
@@ -119,7 +119,7 @@ export class AdjacencyList<T = string> {
 
     /**
      * Adds an edge (u, v).
-     * @timeO(1)
+     * @time O(1)
      */
     addEdge(u: Vertex<T>, v: Vertex<T>, weight: number = 1): void {
         this.list[u.value].insert({
@@ -130,7 +130,7 @@ export class AdjacencyList<T = string> {
 
     /**
      * Removes an edge (u, v).
-     * @timeO(V)
+     * @time O(V)
      */
     removeEdge(u: Vertex<T>, v: Vertex<T>): void {
         this.list[u.value].remove(new AdjacencyListNode(v));
@@ -138,7 +138,7 @@ export class AdjacencyList<T = string> {
 
     /**
      * Adds a vertex.
-     * @timeO(1)
+     * @time O(1)
      */
     addVertex(vertex: Vertex<T>): void {
         this.list[vertex.value] = new SinglyLinkedList<AdjacencyListNode<T>>();
@@ -147,7 +147,7 @@ export class AdjacencyList<T = string> {
 
     /**
      * Removes a vertex.
-     * @timeO(V * V)
+     * @time O(V * V)
      */
     removeVertex(vertex: Vertex<T>): void {
         const index = this.findIndex(vertex);
@@ -170,7 +170,7 @@ export class AdjacencyList<T = string> {
 
     /**
      * Finds index of a vertex.
-     * @timeO(V)
+     * @time O(V)
      */
     private findIndex(u: Vertex<T>): number | undefined {
         return this.vertices.findIndex((v: Vertex<T>) => v === u);
@@ -178,7 +178,7 @@ export class AdjacencyList<T = string> {
 
     /**
      * Checks if an index is valid for the current matrix.
-     * @timeO(1)
+     * @time O(1)
      */
     private isValidIndex(index?: number): boolean {
         return index != null && index >= 0 && index < this.n;
@@ -186,7 +186,7 @@ export class AdjacencyList<T = string> {
 
     /**
      * Checks if two vertices are equal.
-     * @timeO(1)
+     * @time O(1)
      */
     private areVerticesEqual(
         u: AdjacencyListNode<T>,

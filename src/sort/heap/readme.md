@@ -1,12 +1,4 @@
 ## Heapsort
-
-|  | Worst | Average | Best |
-|:--|:-:|:-:|---|
-| __Time Complexity__ | `O(n logn)` | `θ(n logn)` | `Ω(n logn)` |
-| __Space Complexity__ | `O(1)` | `θ(1)` | `Ω(1)` |
-| __Stable__ | No |
-| __In Place__ | Yes |
-
 Heapsort is a comparison-based algorithm that uses a binary heap data structure to sort elements. It divides its input into a sorted and an unsorted region, and it iteratively shrinks the unsorted region by extracting the largest element and moving that to the sorted region.
 
 Heapsort primarily competes with quicksort. Quicksort is typically somewhat faster due to some factors, but the worst-case running time for quicksort is `O(n^2)`, which is unacceptable for large data sets. Thus, because of the `O(n*logn)` upper bound on heapsort's running time and constant upper bound on its auxiliary storage.
@@ -20,10 +12,19 @@ On the other hand, merge sort has several advantages over heapsort:
 * Merge sort can be adapted to operate on singly linked lists with `O(1)` extra space. Heapsort can be adapted to operate on doubly linked lists with only `O(1)` extra space overhead.
 * Merge sort is used in _external sorting_; heapsort is not. Locality of reference is the issue.
 
+![heapsort-visual-trace](./images/heapsort-visual-trace.png)
+
 > My current implementation of the algorithm erquires `O(n)` auxiliary space. But it can be optimized to use constant auxiliary space by putting the min at the end of the passed array in each iteration.
 
 ### Complexity
-We have `θ(n)` from biulding heap and `θ(n logn)` from the loop with heapification. Overall complexity: `θ(n*logn + n) = θ(n logn)`
+We have `θ(n)` from biulding heap and `θ(n logn)` from the loop with heapification. Overall complexity: `θ(n*logn + n) = θ(n logn)`.
+
+|  | Worst | Average | Best |
+|:--|:-:|:-:|---|
+| __Time Complexity__ | `O(n logn)` | `θ(n logn)` | `Ω(n logn)` |
+| __Space Complexity__ | `O(1)` | `θ(1)` | `Ω(1)` |
+| __Stable__ | No |
+| __In Place__ | Yes |
 
 ### Usage
 

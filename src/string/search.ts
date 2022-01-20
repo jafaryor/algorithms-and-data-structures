@@ -14,7 +14,7 @@ export class StringSearcher {
      * Knuth-Morris-Pratt algorithm.
      * Searches a pattern in a string.
      * Returns the indexes of the occurrence of the pattern in the string.
-     * @timeO(n + m)
+     * @time O(n + m)
      */
     knuthMorrisPratt(pattern: string, text: string): number[] {
         const m = pattern.length;
@@ -56,7 +56,7 @@ export class StringSearcher {
 
     /**
      * Computer the longest proper prefix which is also suffix.
-     * @timeO(m)
+     * @time O(m)
      */
     private computeLPS(pattern: string): number[] {
         const m = pattern.length;
@@ -92,7 +92,7 @@ export class StringSearcher {
      * any character causing a mismatch with its rightmost
      * occurrence in the pattern.
      * Returns the indexes of the occurrence of the pattern in the string.
-     * @timeO(n * m)
+     * @time O(n * m)
      */
     boyerMoore(pattern: string, text: string): number[] {
         const m = pattern.length;
@@ -142,7 +142,7 @@ export class StringSearcher {
      * in the pattern of each possible character.
      * @note If a character is not present in the table,
      *       then its value is -1.
-     * @timeO(m)
+     * @time O(m)
      */
     private computeRightmostOccurrences(pattern: string): {
         [char: string]: number;
@@ -163,7 +163,7 @@ export class StringSearcher {
     /**
      * Rabin-Karp algorithm.
      * @note works only for extended ASCII characters.
-     * @timeO(n * m)
+     * @time O(n * m)
      */
     rabinKarp(pattern: string, text: string): number[] {
         const n = text.length;
@@ -203,7 +203,7 @@ export class StringSearcher {
 
     /**
      * Calculates the value of R^(m-1) % q.
-     * @timeO(m)
+     * @time O(m)
      */
     private calculateRadixPowers(pattern: string): number {
         let rM = 1;
@@ -217,7 +217,7 @@ export class StringSearcher {
 
     /**
      * Calculates the hash value of the given text.
-     * @timeO(m)
+     * @time O(m)
      */
     private hash(text: string): number {
         let prefix = 0;

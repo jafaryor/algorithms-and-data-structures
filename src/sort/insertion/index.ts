@@ -2,7 +2,7 @@ import {swap} from '../../utils';
 
 /**
  * Insertion Sort
- * @timeO(n^2)
+ * @time O(n^2)
  */
 export function insertionSort(array: number[]): number[] {
     let i: number; // index in unsorted section.

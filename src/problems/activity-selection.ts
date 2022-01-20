@@ -46,7 +46,7 @@
 /**
  * iterative implementation.
  * @param activities - activity list, SORTED by finish times.
- * @timeO(n)
+ * @time O(n)
  */
 export function iterativeActivitySelector(activities: Activity[]): Activity[] {
     let k = 0; // the most addition to the "result" array.
@@ -67,7 +67,7 @@ export function iterativeActivitySelector(activities: Activity[]): Activity[] {
 /**
  * Recursive implementation.
  * @param activities - activity list, SORTED by finish times.
- * @timeO(n) as each activity is examined exactly once in the loop.
+ * @time O(n) as each activity is examined exactly once in the loop.
  */
 export function recursiveActivitySelector(activities: Activity[]): Activity[] {
     // Adds fictitious activity a_0 o start search from.
@@ -81,7 +81,7 @@ export function recursiveActivitySelector(activities: Activity[]): Activity[] {
  * Recursive helper function.
  * @param activities - activity list, SORTED by finish times.
  * @param k - index that defines the subproblem S_k.
- * @timeO(n) as each activity is examined exactly once in the loop.
+ * @time O(n) as each activity is examined exactly once in the loop.
  */
 function recursiveActivitySelectorHelper(
     activities: Activity[],

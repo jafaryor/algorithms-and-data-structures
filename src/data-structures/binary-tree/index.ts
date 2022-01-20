@@ -29,7 +29,7 @@ export abstract class BinaryTree<T> {
 
     /**
      * Checks if the tree is empty.
-     * @timeO(1)
+     * @time O(1)
      */
     isEmpty(): boolean {
         return this.root == null;
@@ -53,7 +53,7 @@ export abstract class BinaryTree<T> {
     /**
      * Prints the tree in the following pattern: [ left | parent | right ]
      * Prints the left -> root -> right
-     * @timeO(n)
+     * @time O(n)
      */
     inorderTraverse(
         node = this.root,
@@ -71,7 +71,7 @@ export abstract class BinaryTree<T> {
     /**
      * Prints the tree in the following pattern: [ parent | left | right ]
      * Prints children -> root
-     * @timeO(n)
+     * @time O(n)
      */
     preorderTraverse(
         node = this.root,
@@ -88,7 +88,7 @@ export abstract class BinaryTree<T> {
     /**
      * Prints the tree in the following pattern: [ left | right | parent ]
      * Prints root -> children
-     * @timeO(n)
+     * @time O(n)
      */
     postorderTraverse(
         node = this.root,
@@ -105,7 +105,7 @@ export abstract class BinaryTree<T> {
     /**
      * Replaces one subtree (a) with another subtree (b).
      * If the "b" is undefined, the subtree "a" will be just removed.
-     * @timeO(1)
+     * @time O(1)
      */
     transplant(a: BinaryNode<T>, b: BinaryNode<T> | undefined): void {
         // "a" is root f the tree.
@@ -121,7 +121,7 @@ export abstract class BinaryTree<T> {
 
     /**
      * Rotates the node to the left side.
-     * @timeO(1)
+     * @time O(1)
      */
     leftRotate(node: BinaryNode<T>): void {
         const right = node.right!;
@@ -151,7 +151,7 @@ export abstract class BinaryTree<T> {
 
     /**
      * Rotates the node to the right side.
-     * @timeO(1)
+     * @time O(1)
      */
     rightRotate(node: BinaryNode<T>): void {
         const left = node.left!;
@@ -181,7 +181,7 @@ export abstract class BinaryTree<T> {
 
     /**
      * Prints (Draws) the binary tree in the console.
-     * @timeO(n)
+     * @time O(n)
      */
     print(
         nodePrinterCallback: nodePrinterCallback<T> = this.printNodeHelper,
@@ -195,7 +195,7 @@ export abstract class BinaryTree<T> {
 
     /**
      * Print helper function.
-     * @timeO(n)
+     * @time O(n)
      */
     private printHelper(node?: BinaryNode<T>, space = 0): string {
         if (!node) return this.printLogs;
@@ -215,7 +215,7 @@ export abstract class BinaryTree<T> {
 
     /**
      * Height getter helper method.
-     * @timeO(n)
+     * @time O(n)
      */
     private heightGetterHelper(node: BinaryNode<T>, height: number): number {
         const leftHeight = node.left

@@ -7,7 +7,7 @@ import {BinarySearchNode} from '../binary-search-tree/node';
 export class SplayTree<T> extends BinarySearchTree<T> {
     /**
      * Searches for a value in the tree starting from root.
-     * @timeO(h)
+     * @time O(h)
      */
     search(
         key: number,
@@ -22,7 +22,7 @@ export class SplayTree<T> extends BinarySearchTree<T> {
 
     /**
      * Inserts a new node into the tree.
-     * @timeO(h)
+     * @time O(h)
      */
     insert(node: BinarySearchNode<T>): void {
         super.insert(node);
@@ -31,7 +31,7 @@ export class SplayTree<T> extends BinarySearchTree<T> {
 
     /**
      * Removes the node from the tree.
-     * @timeO(h) -> [because of the "splay" method]
+     * @time O(h) -> [because of the "splay" method]
      */
     delete(node: BinarySearchNode<T>): void {
         const leftSubtree = new SplayTree<T>();
@@ -68,7 +68,7 @@ export class SplayTree<T> extends BinarySearchTree<T> {
 
     /**
      * Splay the node (turn the node into root).
-     * @timeO(h)
+     * @time O(h)
      */
     private splay(node: BinarySearchNode<T>): void {
         let parent: BinarySearchNode<T>;

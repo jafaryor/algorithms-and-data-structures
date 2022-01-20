@@ -20,7 +20,7 @@ export class BTree<T> {
 
     /**
      * Builds the tree.
-     * @timeO(1)
+     * @time O(1)
      */
     private build(): BTreeNode<T> {
         // Create a leaf as a root.
@@ -68,8 +68,8 @@ export class BTree<T> {
 
     /**
      * Inserts a new node into a tree.
-     * @timeO(t * h) = O(t * log_t(n))
-     * @spaceO(h) = O(log_t(n))
+     * @time O(t * h) = O(t * log_t(n))
+     * @space O(h) = O(log_t(n))
      */
     insert(key: number, value: T): void {
         if (this.isNodeFull(this.root)) {
@@ -88,8 +88,8 @@ export class BTree<T> {
 
     /**
      * Deletes the key "key" from the subtree rooted at "node".
-     * @timeO(t * h) = O(t * log_t(n))
-     * @spaceO(h) = O(log_t(n))
+     * @time O(t * h) = O(t * log_t(n))
+     * @space O(h) = O(log_t(n))
      * @note - must start from root.
      */
     delete(key: number, node: BTreeNode<T>): void {
@@ -131,8 +131,8 @@ export class BTree<T> {
      * so that it has an additional child.
      * @param parent - parent node which holds reference to the target node.
      * @param nodeIndex - target's node index in the list of parent's children.
-     * @timeO(t) - due to loops each running t times.
-     * @spaceO(1)
+     * @time O(t) - due to loops each running t times.
+     * @space O(1)
      */
     private split(parent: BTreeNode<T>, nodeIndex: number): void {
         // node has 2t-1 keys and 2t children.
@@ -180,10 +180,10 @@ export class BTree<T> {
 
     /**
      * Inserts a key into a non-full node "node".
-     * @timeO(t * h) = O(t * log_t(n)), where:
+     * @time O(t * h) = O(t * log_t(n)), where:
      * t - while loop
      * log_t(n) - the height of the tree
-     * @spaceO(h) = O(log_t(n))
+     * @space O(h) = O(log_t(n))
      */
     private insertToNonFull(node: BTreeNode<T>, key: number, value: T): void {
         let i = node.size - 1;

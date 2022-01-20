@@ -11,7 +11,7 @@ export class Trie<T> {
 
     /**
      * Returns the value associated with the given word (key).
-     * @timeO(n)
+     * @time O(n)
      */
     search(word: string): T | undefined {
         const node = this.searchHelper(this.root, word, 0);
@@ -42,7 +42,7 @@ export class Trie<T> {
 
     /**
      * Inserts a word into the trie.
-     * @timeO(n)
+     * @time O(n)
      */
     insert(word: string, value: T): void {
         this.insertHelper(this.root, word, value, 0);
@@ -83,7 +83,7 @@ export class Trie<T> {
 
     /**
      * Deletes a word from the trie.
-     * @timeO(n)
+     * @time O(n)
      */
     delete(word: string): void {
         this.deleteHelper(this.root, word, 0);

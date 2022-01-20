@@ -2,7 +2,7 @@ import {swap} from '../../utils';
 
 /**
  * Selection Sort
- * @timeO(n^2)
+ * @time O(n^2)
  */
 export function selectionSort(array: number[]): number[] {
     let minIndex: number;

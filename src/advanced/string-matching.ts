@@ -6,7 +6,7 @@
  * The naive string-matching algorithm for finding all valid shifts of P in T.
  * @param T - text
  * @param P - pattern
- * @timeO((n - m + 1) * m)
+ * @time O((n - m + 1) * m)
  */
 export function naiveStringMatching(T: string, P: string): number[] {
     const n = T.length;
@@ -33,7 +33,7 @@ export function naiveStringMatching(T: string, P: string): number[] {
  * @param d - size of alphabet
  * @param q - any prime number to avoid big numbers
  * @note all characters are interpreted as radix-10 digits.
- * @timeO((n - m + 1) * m)
+ * @time O((n - m + 1) * m)
  */
 export function rabinKarpMatcher(
     T: string,
@@ -123,7 +123,7 @@ function rabinKarpPreprocess(
  * @param T - text
  * @param P - pattern
  * @param alphabet (∑) - alphabet
- * @timeO(n)
+ * @time O(n)
  */
 export function finiteAutomatonMatcher(
     T: string,
@@ -152,7 +152,7 @@ export function finiteAutomatonMatcher(
  * Creates a transition table from Pattern and Alphabet.
  * @param P - pattern
  * @param alphabet (∑) - alphabet
- * @timeO(m^3 * |∑|)
+ * @time O(m^3 * |∑|)
  */
 function computeTransitionFunction(
     P: string,
@@ -197,7 +197,7 @@ function computeTransitionFunction(
  * The Knuth-Morris-Pratt Algorithm for finding pattern occurrences in a text.
  * @param T - text
  * @param P - pattern
- * @timeO(n + m) = O(n)
+ * @time O(n + m) = O(n)
  */
 export function knuthMorrisPrattMatcher(T: string, P: string): number[] {
     const n = T.length;
@@ -240,7 +240,7 @@ export function knuthMorrisPrattMatcher(T: string, P: string): number[] {
  *      because the suffix of sub-pattern is equal to prefix of pattern.
  *      Example: "cabcad" has the following prefix function [0,0,0,1,2,0].
  * @param P - pattern
- * @timeO(2m) = O(m)
+ * @time O(2m) = O(m)
  */
 function computePrefixFunction(P: string): number[] {
     const m = P.length;

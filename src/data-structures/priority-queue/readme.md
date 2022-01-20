@@ -5,6 +5,14 @@ In a priority queue, an element with high priority is served before an element w
 
 While priority queues are often implemented with heaps, they are conceptually distinct from heaps. A priority queue is an abstract concept like "list" or "map"; just as a list can be implemented with a linked list or an array, a priority queue can be implemented with a heap or a variety of other methods such as an unordered array.
 
+Order of grows of worst-case running time for Priority Queue implementations:
+
+| Data Structure | Insert | Remove Max/Min |
+| --- | --- | --- |
+| Ordered Array | `N` | `1` |
+| Unordered Array | `1` | `N` |
+| Heap | `logN` | `logN` |
+
 There are two types of Priority Queues: _Min Priority Queue_ and _Max Priority Queue_. Thus, a max-priority queue returns the element with the maximum key first whereas, a min-priority queue returns the element with the smallest key first.
 
 ### Applications

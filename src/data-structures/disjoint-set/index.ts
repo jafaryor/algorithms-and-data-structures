@@ -22,7 +22,7 @@ export class DisjointSet<T> {
 
     /**
      * Creates an empty disjoint set.
-     * @timeO(1)
+     * @time O(1)
      * @amortizedComplexity O(1)
      */
     makeSet(value: T, parent?: DisjointSetNode<T>): DisjointSetNode<T> {
@@ -36,7 +36,7 @@ export class DisjointSet<T> {
      * 1. As it recurses, it makes one pass-up the find path to find the root,
      * 2. As the recursion unwinds, it makes a second pass back down
      *    the find path to update each node to point directly to the root.
-     * @timeO(k)
+     * @time O(k)
      * @where k - the rank of root of a set which includes the "node".
      * @amortizedComplexity O(α(n)), where α(n) ≤ 4 for all n.
      */
@@ -50,7 +50,7 @@ export class DisjointSet<T> {
 
     /**
      * Merges two disjoint sets and returns the result set.
-     * @timeO(k1 + k2)
+     * @time O(k1 + k2)
      * @where k1, k2 - the rank of roots of each sets.
      * @amortizedComplexity O(α(n)), where α(n) ≤ 4 for all n.
      */
@@ -70,7 +70,7 @@ export class DisjointSet<T> {
     /**
      * Links the representative(root) of smaller set to
      * the representative(root) of a bigger set (UNION by RANK).
-     * @timeO(1)
+     * @time O(1)
      * @amortizedComplexity O(α(n)), where α(n) ≤ 4 for all n.
      */
     private link(root1: DisjointSetNode<T>, root2: DisjointSetNode<T>): void {
@@ -87,7 +87,7 @@ export class DisjointSet<T> {
 
     /**
      * Checks whether two vertices are in the same connected component/tree.
-     * @timeO(k1 + k2)
+     * @time O(k1 + k2)
      * @where k1, k2 - the rank of roots (number of nodes) of each sets.
      */
     sameComponent(u: DisjointSetNode<T>, v: DisjointSetNode<T>): boolean {
@@ -104,7 +104,7 @@ export class DisjointSet<T> {
     /**
      * Finds a node by its value.
      * Compares by reference.
-     * @timeO(n)
+     * @time O(n)
      */
     findByValue(value: T): DisjointSetNode<T> | undefined {
         for (const node of this.sets) {
@@ -122,8 +122,8 @@ export class DisjointSet<T> {
  * @param edges - an array of edges (two vertices connected to each other),
  * @where each edge represented as an array [indexU, indexV].
  * @where indexU, indexV - index of edges from "edges" array.
- * @timeO(|G.V| + |G.E| * |G.V|)
- * @spaceO(|G.V|)
+ * @time O(|G.V| + |G.E| * |G.V|)
+ * @space O(|G.V|)
  */
 export function connectedComponents<T>(
     vertices: T[],

@@ -13,8 +13,8 @@ export class MergeSorter {
 
     /**
      * Top-down Merge Sort.
-     * @timeO(n log n)
-     * @spaceO(n)
+     * @time O(n log n)
+     * @space O(n)
      */
     private static sortTopDownRecursive(
         array: number[],
@@ -33,8 +33,8 @@ export class MergeSorter {
 
     /**
      * Bottom-up Merge Sort.
-     * @timeO(n log n)
-     * @spaceO(n)
+     * @time O(n log n)
+     * @space O(n)
      */
     static sortBottomUp(array: number[]): number[] {
         // Subarray size.

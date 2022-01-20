@@ -6,7 +6,7 @@ import {Matrix} from '../data-structures';
  * @param b - constant vector, which gives upper bound for constraints.
  * @param c - vector of coefficient of nonbasic variables in objective function.
  * @returns an n-vector x that is an optimal solution to the linear program.
- * @timeO(C(n + m, m))
+ * @time O(C(n + m, m))
  */
 export function simplex(A: number[][], b: number[], c: number[]) {
     let slack = toSlackForm(A, b, c)!;
