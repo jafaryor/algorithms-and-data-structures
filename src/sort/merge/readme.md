@@ -13,7 +13,7 @@ Its prime disadvantage is that it uses extra space proportional to `N`.
 |  | Worst | Average | Best |
 |:--|:-:|:-:|---|
 | __Time Complexity__ | `O(n logn)` | `θ(n logn)` | `Ω(n logn)` |
-| __Space Complexity__ | `O(n + logn` | `θ(n + logn)` | `Ω(n + logn)` |
+| __Space Complexity__ | `O(n)` | `θ(n)` | `Ω(n)` |
 | __Stable__ | Yes |
 | __In Place__ | No |
 

@@ -17,7 +17,7 @@ Here is the three-step divide-and-conquer process for sorting a typical subarray
 |  | Worst | Average | Best |
 |:--|:-:|:-:|---|
 | __Time Complexity__ | `O(n^2)` | `θ(n logn)` | `Ω(n logn)` |
-| __Space Complexity__ | `O(n)` | `θ(logn)` | `Ω(logn)` |
+| __Space Complexity__ | `O(logn)` | `θ(logn)` | `Ω(logn)` |
 | __Stable__ | No |
 | __In Place__ | Yes |
 

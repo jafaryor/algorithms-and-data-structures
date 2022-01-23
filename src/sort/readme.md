@@ -53,4 +53,10 @@ The value of `h` is precisely the worst-case number of compares, so we can take 
 
 ### Corollary: _HeapSort_ and _MergeSort_ are asymptotically optimal comparison sorts.
 
+### Corollary: Quicksort is the fastest general-purpose sort.
+
+The reason  that  quicksort  is  fastest  is  that  it  has  only  a  few  instructions  in  its  inner loop (and it does well with  cache memories because it most often references data sequentially) so that its running time is `~ c N lgN` with the value of `c` smaller than the corresponding constants for other linearithmic sorts. With 3-way partitioning, quicksort  becomes  linear  for  certain  key  distributions  likely  to  arise  in  practice, where other sorts are linearithmic.
+
+You certainly should seriously consider using quicksort in any sort application where running time is important. 
+
 __[More about Sorting Algorithms](https://en.wikipedia.org/wiki/Sorting_algorithm)__
