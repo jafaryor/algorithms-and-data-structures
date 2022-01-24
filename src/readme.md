@@ -700,6 +700,67 @@ A __reduction__ is a situation where an algorithm developed for one problem is u
 
 For example, for finding duplicates, we can sort items and iterate through them to find duplicates. It is easier to find duplicates in this case, as they are next to each other.
 
+#### Sorting reduction
+The following problems  reduce to sorting:
+* Finding the median.
+
+    Given a set of numbers, find the median value.
+
+* Distinct values.
+
+    Determine the number of distinct values in a set of numbers.
+
+* Scheduling to minimize average completion time.
+
+    Given a set of jobs of specified duration to be completed, how can we schedule the jobs on a single processor so as to minimize their average completion time?
+
+#### Shortest-paths reductions
+The  following  problems  reduce  to   shortest  paths  in  weighted digraphs:
+* Single-source shortest paths in undirected graph.
+
+    Given an edge-weighted un-directed graph with nonnegative weights and a source vertex `s`, support queries of the form Is there a path from `s` to a given target vertex `v`? If so, find a shortest such path (one whose total weight is minimal).
+
+* Parallel precedence-constrained scheduling.
+
+    Given a set of jobs of specified du-ration to be completed, with precedence constraints that specify that certain jobs have to be completed before certain other jobs are begun, how can we schedule the jobs on identical processors (as many as needed) such that they are all completed in the minimum amount of time while still respecting the constraints?
+
+* Arbitrage.
+  
+    Find an arbitrage opportunity in a given table of currency-conversion rates.
+
+#### Maxflow reduction
+The following problems reduce to the maxflow problem:
+* Job placement.
+  
+    A college’s job-placement office arranges interviews for a set of students with a set of companies; these interviews result in a set of job offers. As-suming that an interview followed by a job offer represents mutual interest in the student taking a job at the company, it is in everyone’s best interests to maximize the number of job placements. Is it possible to match every student with a job?  What is the maximum number of jobs that can be filled?
+
+* Product  distribution.
+  
+    A  company  that  manufactures  a  single  product  has  fac-tories, where the product is produced; distribution centers, where the product is stored  temporarily;  and  retail  outlets,  where  the  product  is  sold.    The  company must distribute the product from factories through distribution centers to retail outlets on a regular basis, using distribution channels that have varying capacities. Is it possible to get the product from the warehouses to the retail outlets such that supply meets demand everywhere?
+
+* Network  reliability.
+  
+    A simplified model considers a computer network as consisting of a set of trunk lines that connect computers through switches such that there is the possibility of a switched path through trunk lines connecting any two given computers.  What is the minimum number of trunk lines that can be cut to disconnect some pair of computers? 
+
+#### Linear Programming reduction
+The following problems reduce to  linear programming:
+* Maxflow
+* Shortest paths
+* [many, many other problems]
+
+The  “many, many other problems” refers to three ideas:
+1. It  is  very  easy  to  extend  a  model  and  to  add  constraints.
+2. Second,  reduction is transitive, so all the problems that reduce to shortest paths and maximum flow also reduce to linear programming.
+3. Third, and more generally, optimization problems of all sorts  can  be  directly  formulated  as  linear  programming  problems.
+
+In  a  very  real  sense,  linear  programming  is  the  parent  of  problem-solving models, since so many problems reduce to it. Naturally, this idea leads to the question of  whether  there  is  an  even  more  powerful  problem-solving  model  than  linear  programming. What sorts of problems do not reduce to linear programming?  Here is an example of such a problem:
+
+* Load balancing.
+  
+    Given a set of jobs of specified duration to be completed, how can we schedule the jobs on two identical processors so as to minimize the com-pletion time of all the jobs?
+
+Next see NP-Completeness topic (Advanced section).
+
 ---
 
 #### [Introduction to Algorithms by Thomas H. Cormen, Charles E. Leiserson, and Ronald L. Rivest](http://staff.ustc.edu.cn/~csli/graduate/algorithms/book6/toc.htm)

@@ -39,6 +39,7 @@ export class FlowNetwork extends Graph {
      * @time O(E * |f*|), where f* is a maximum flow in the network.
      */
     fordFulkersonMaxFlow() {
+        // TODO: implement it.
         /*
         // The initial flow is 0 across all edges.
         for (each edge (u, v) ∈ G.E) {

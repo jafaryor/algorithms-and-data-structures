@@ -130,6 +130,10 @@ If `f` is a flow in a flow network `G = (V, E)` with source `s` and sink `t`, th
 
 
 ## The basic Ford-Fulkerson algorithm
+It is a generic method for increasing flows incrementally along paths from source to sink.
+
+The flow: Increase the flow along any augmenting path from source to sink, continuing until there are no such paths in the network. This  method  always  finds  a  maxflow,  no  matter  how  we  choose  the  paths.
+
 In each iteration of the `fordFulkersonMaxFlow()` method, we find some augmenting path `p` and use `p` to modify the flow `f`. We replace `f` by `f ↑ f_p`, obtaining a new flow whose value is `|f| + |f_p|`.
 
 ![ford-fulkerson-example](./images/ford-fulkerson-example.png)

@@ -11,7 +11,7 @@ Any "satellite information" associated with a key is stored in the same node as 
 
 ![b-tree-definition](./images/b-tree-definition.png)
 
-The simplest B-tree occurs when `t = 2`. Every internal node then has either 2,3,or 4 children, and we have a __2-3-4 tree__.
+The simplest B-tree occurs when `t = 2`. Every internal node then has either 2, 3, or 4 children, and we have a __2-3-4 tree__.
 
 If `n ≥ 1`, then for any `n`-key B-tree `T` of height `h` and minimum order `t ≥ 2`, `h ≤ log_t((n + 1) / 2)`
 
