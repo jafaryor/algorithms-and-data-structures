@@ -6,7 +6,7 @@ import {QuickSelection} from '../quick';
 export class MedianOfMedians extends QuickSelection {
     /**
      * Quick Selection with Median of Medians technique
-     * @complexity: O(n)
+     * @time O(n)
      * @param array
      * @param k-th smallest element (0 <= k <= array.length-1)
      * @param left - left pointer index
@@ -25,7 +25,7 @@ export class MedianOfMedians extends QuickSelection {
 
     /**
      * QuickSelection which returns the index of k-th smallest element in the modified array
-     * @complexity: O(n)
+     * @time O(n)
      * @param array
      * @param k-th smallest element (0 <= k <= array.length-1)
      * @param left - left pointer index
@@ -58,13 +58,13 @@ export class MedianOfMedians extends QuickSelection {
     /**
      * returns the pivot index
      * Moves the medians to the beginning of the array and repeat the process with these medians
-     * @complexity: O(n)
+     * @time O(n)
      * @param array
      * @param left - left pointer index
      * @param right - right pointer index
      */
     protected pivot(array: number[], left: number, right: number): number {
-        if (right - left < 5) {
+        if (right - left <= 5) {
             // for 5 or less elements just get median
             return this.partition5(array, left, right);
         }
@@ -96,7 +96,7 @@ export class MedianOfMedians extends QuickSelection {
 
     /**
      * returns the median of subarray
-     * @complexity: O(1)
+     * @time O(1)
      * @param array
      * @param left - left pointer index
      * @param right - right pointer index

@@ -23,7 +23,7 @@ Specifically, we have:
 The Fibonacci heap data structure serves a dual purpose.  First, it supports a set of operations that constitutes what is known as a _mergeable heap_.  Second, several Fibonacci-heap operations run in constant amortized time.
 
 ### Mergeable heaps
-A __mergeable heap__ is any data structure that supports the following five operations,in which each element has a key:
+A __mergeable heap__ is any data structure that supports the following five operations, in which each element has a key:
 * `maleHeap()` - creates and returns a new heap containing no elements.
 * `insert(x)` - inserts element `x`, whose key has already been filled in.
 * `min()` - returns a pointer to the element in heap whose key is minimum.
@@ -71,7 +71,7 @@ The sizeof the root list upon calling `consolidate()` is at most `D(n) + t(H) - 
 
 Within a given iteration of the first `for` loop of `consolidate()` procedure, the number of iterations of the `while` loop inside that `for` loop depends on the root list. But we know that every time through the `while` loop, one of the roots is linked to another, and thus the total number of iterations of the while loop over all iterations of the for loop is at most the number of roots in the root list.  Hence, the total amount of work performed in the `for` loop is at most proportional to `D(n) + t(H)`.  Thus, the total actual work in extracting the minimum node is `O(D(n) + t(H))`.
 
-The potential before extracting the minimum node is `t(H) + 2m(H)`,and the potential afterward is at most `(D(n) + 1) + 2m(H)`, since at most `D(n) + 1` roots remain and no nodes become marked during the operation.  The amortized cost is thus at most
+The potential before extracting the minimum node is `t(H) + 2m(H)`, and the potential afterward is at most `(D(n) + 1) + 2m(H)`, since at most `D(n) + 1` roots remain and no nodes become marked during the operation.  The amortized cost is thus at most
 
 ```
 O(D(n) + t(H) + (D(n) + 1) + 2m(H)) - (t(H) + 2m(H))

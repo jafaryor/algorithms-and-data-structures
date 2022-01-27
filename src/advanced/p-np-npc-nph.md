@@ -149,7 +149,7 @@ Some more NP-Complete problems:
 
     The vertex-cover problem is to find a vertex cover of minimum size in a given graph. Restating  this  optimization  problem  as  a  decision  problem,  we  wish  to determine whether a graph has a vertex cover of a given size `k`.
 
-11. __The traveling-salesman problem__ - In the traveling-salesman problem, a salesman must visit `n` cities. Modeling the problem as a complete graph  with `n` vertices,  we  can  say  that  the  salesman  wishes  to  make  a __tour__,or hamiltonian cycle, visiting each city exactly once and finishing at the city he starts from.  The salesman incurs a nonnegative integer cost `c(i, j)` to travel from city `i` to city `j`, and the salesman wishes to make the tour whose total cost is minimum, where the total cost is the sum of the individual costs along the edges of the tour.
+11. __The traveling-salesman problem__ - In the traveling-salesman problem, a salesman must visit `n` cities. Modeling the problem as a complete graph  with `n` vertices,  we  can  say  that  the  salesman  wishes  to  make  a __tour__, or hamiltonian cycle, visiting each city exactly once and finishing at the city he starts from.  The salesman incurs a nonnegative integer cost `c(i, j)` to travel from city `i` to city `j`, and the salesman wishes to make the tour whose total cost is minimum, where the total cost is the sum of the individual costs along the edges of the tour.
 
 12. __Independent set__ - of a graph `G = (V, E)` is a subset `V' ⊆ V` of vertices such that each edge in `E` is incident on at most one vertex in `V'`. 
 

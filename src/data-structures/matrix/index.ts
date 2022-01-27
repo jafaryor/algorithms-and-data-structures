@@ -536,7 +536,7 @@ export class Matrix {
 
     /**
      * Naive method of multiplying compatible matrices.
-     * @time- O(a.rows * a.columns * b.columns)
+     * @time O(a.rows * a.columns * b.columns)
      */
     static multiply(a: number[][], b: number[][]): number[][] {
         const result: number[][] = [];

@@ -32,7 +32,7 @@ export const randomFromRange = (min: number, max: number) =>
 /**
  * Randomizes the array in place.
  * This function computes a uniform random permutation of the array elements.
- * @complexity: O(n)
+ * @time O(n)
  */
 // tslint:disable-next-line: no-any
 export function shuffle(array: any[]): any[] {
@@ -47,7 +47,7 @@ export function shuffle(array: any[]): any[] {
 
 /**
  * finds max and min in the array
- * @time- O(n)
+ * @time O(n)
  * @param array
  */
 export function findExtremes(array: number[]): Extremes {
@@ -62,7 +62,7 @@ export function findExtremes(array: number[]): Extremes {
 
 /**
  * optimized option of the findExtremes utility function
- * @time- O(3n/2)
+ * @time O(3n/2)
  * @param array
  */
 export function findMinAndMax(array: number[]): Extremes {
@@ -118,7 +118,7 @@ export function lastDigitOf(n: number): number | undefined {
  * Primality Test.
  * Checks if the number is prime.
  * @reference: https://en.wikipedia.org/wiki/Primality_test
- * @complexity: O(sqrt(n))
+ * @time O(sqrt(n))
  */
 export function isPrime(n: number): boolean {
     // Corner case
@@ -138,7 +138,7 @@ export function isPrime(n: number): boolean {
  * `Bertrand's postulate` states:
  *   for every `n>1` there is always at least one prime `p` such that `n<p<2n`.
  * @reference: https://en.wikipedia.org/wiki/Bertrand%27s_postulate
- * @complexity: O(n*sqrt(n))
+ * @time O(n*sqrt(n))
  */
 export function findClosestBiggerPrimeNumber(n: number): number {
     for (let i = n; i < 2 * n; i++) {
@@ -152,7 +152,7 @@ export function findClosestBiggerPrimeNumber(n: number): number {
  * The function finds the closest prime, which is smaller than the number.
  * `Bertrand's postulate` states:
  *   for every `n>1` there is always at least one prime `p` such that `n/2<p<n`.
- * @complexity: O(n*sqrt(n))
+ * @time O(n*sqrt(n))
  */
 export function findClosestSmallerPrimeNumber(n: number): number {
     for (let i = n; i > n / 2; i--) {

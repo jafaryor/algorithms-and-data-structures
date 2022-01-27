@@ -2,8 +2,8 @@
  * Given a sorted (in ascending order) array of `n` elements and a
  * target value, write a function to search target in the array.
  * If target exists, then return its index, otherwise return `-1`.
- * @time- O(lg n)
- * @space- O(1)
+ * @time O(lg n)
+ * @space O(1)
  */
 export function binarySearch(
     input: number[],

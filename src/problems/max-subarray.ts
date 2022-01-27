@@ -1,11 +1,7 @@
 /*
-    Suppose that you been offered the opportunity to invest in the Volatile Chemical Corporation.
-    Like the chemicals the company produces, the stock price of the Volatile Chemical Corporation
-    is rather volatile. Your goal is to maximize your profit.
-
-    Instead of looking at the daily prices, let us instead consider the daily change in price,
-    where the change on day i is the difference between the prices after day i-1 and after day i.
-*/
+ * Given an integer array, find the contiguous subarray (containing at least one number)
+ * which has the largest sum and return its sum.
+ */
 
 export interface SubArray {
     left: number;
@@ -14,8 +10,46 @@ export interface SubArray {
 }
 
 /**
+ * Finds maximum sub-array using divide-and-conquer method.
+ * @time O(n logn)
+ */
+function findMaxSubArray(
+    array: number[],
+    left: number,
+    right: number,
+): SubArray {
+    if (left === right) {
+        // base case - only one element
+        return {left, right, sum: array[left]};
+    } else {
+        const mid = Math.floor((left + right) / 2);
+
+        const leftSubArr = findMaxSubArray(array, left, mid);
+        const rightSubArr = findMaxSubArray(array, mid + 1, right);
+        const crossSubArr = findMaxCrossingSubArray(array, left, mid, right);
+
+        if (
+            leftSubArr.sum >= rightSubArr.sum &&
+            leftSubArr.sum >= crossSubArr.sum
+        ) {
+            // if left sub-array's sum is bigger than sum of other sub-arrays
+            return leftSubArr;
+        } else if (
+            rightSubArr.sum >= leftSubArr.sum &&
+            rightSubArr.sum >= crossSubArr.sum
+        ) {
+            // if right sub-array's sum is bigger than sum of other sub-arrays
+            return rightSubArr;
+        } else {
+            // if cross sub-array's sum is bigger than sum of other sub-arrays
+            return crossSubArr;
+        }
+    }
+}
+
+/**
  * Finds the maximum sum including the middle element.
- * @time- O(n)
+ * @time O(n)
  */
 function findMaxCrossingSubArray(
     array: number[],
@@ -54,58 +88,23 @@ function findMaxCrossingSubArray(
     return {left: maxLeft, right: maxRight, sum: leftSum + rightSum};
 }
 
-/**
- * finds maximum sub-array using divide-and-conquier method
- * @time- O(n logn)
- */
-function findMaxSubArray(
-    array: number[],
-    left: number,
-    right: number,
-): SubArray {
-    if (left === right) {
-        // base case - only one element
-        return {left, right, sum: array[left]};
-    } else {
-        const mid = Math.floor((left + right) / 2);
-
-        const leftSubArr = findMaxSubArray(array, left, mid);
-        const rightSubArr = findMaxSubArray(array, mid + 1, right);
-        const crossSubArr = findMaxCrossingSubArray(array, left, mid, right);
-
-        if (
-            leftSubArr.sum >= rightSubArr.sum &&
-            leftSubArr.sum >= crossSubArr.sum
-        ) {
-            // if left sub-array's sum is bigger than sum of other sub-arrays
-            return leftSubArr;
-        } else if (
-            rightSubArr.sum >= leftSubArr.sum &&
-            rightSubArr.sum >= crossSubArr.sum
-        ) {
-            // if right sub-array's sum is bigger than sum of other sub-arrays
-            return rightSubArr;
-        } else {
-            // if cross sub-array's sum is bigger than sum of other sub-arrays
-            return crossSubArr;
-        }
-    }
-}
-
 export function findMaximumSubArray(array: number[]): SubArray {
     return findMaxSubArray(array, 0, array.length - 1);
 }
 
 /**
  * Kadane's algorithm for solving maximum sub-array problem
- * @time- O(n)
+ * Greedy algorithm.
+ * @time O(n)
  */
 export function KadaneAlgorithm(array: number[]): number {
     let currentMax: number = array[0];
 
+    // Start with the 2nd element since we already used the first one.
     return array.reduce((max, item) => {
+        // If currentMax is negative, throw it away. Otherwise, keep adding to it.
         currentMax = Math.max(item, currentMax + item);
 
         return Math.max(max, currentMax);
-    });
+    }); // "max" is already initialized with the first element.
 }

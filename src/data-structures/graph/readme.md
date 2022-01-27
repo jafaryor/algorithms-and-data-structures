@@ -6,13 +6,13 @@ We  can  choose  between  two  standard  ways  to  represent  a  graph `G = (V, 
 
 ![graph-representations](./images/graph-representations.png)
 
-The __adjacency-list representation__ of  a  graph `G = (V, E)` consists  of  an  array `Adj` of `|V|` lists, one for each vertex in `V`.  For each `u ∈ V`, the adjacency list `Adj[u]` contains all the vertices such that there is an edge `(u, v) ∈ E`. That is, `Adj[u]` consists of all the vertices adjacent to `u` in `G`.
+The __adjacency-list representation__ of  a  graph `G = (V, E)` consists  of  an  array `Adj` of `|V|` lists, one for each vertex in `V`.  For each `u ∈ V`, the adjacency list `Adj[u]` contains all the vertices such that there is an edge `(u, v) ∈ E`. That is, `Adj[u]` consists of all the vertices adjacent to `u` in `G`.
 
-If `G` is a directed graph, the sum of the lengths of all the adjacency lists is `|E|`, since an edge of the form `(u, v)` is represented by having `v` appear in `Adj[u]`. If `G` is an undirected graph, the sum of the lengths of all the adjacency lists is `2|E|`, since if `(u, v)` is an undirected edge, then `u` appears in `v`’s adjacency list and vice versa. For both directed and undirected graphs, the adjacency-list representation has the desirable property that the amount of memory it requires is `θ(V + E)`.
+If `G` is a directed graph, the sum of the lengths of all the adjacency lists is `|E|`, since an edge of the form `(u, v)` is represented by having `v` appear in `Adj[u]`. If `G` is an undirected graph, the sum of the lengths of all the adjacency lists is `2|E|`, since if `(u, v)` is an undirected edge, then `u` appears in `v`’s adjacency list and vice versa. For both directed and undirected graphs, the adjacency-list representation has the desirable property that the amount of memory it requires is `θ(V + E)`.
 
 We can readily adapt adjacency lists to represent __weighted graphs__, that is, graphs for which each edge has an associated __weight__, typically given by a __weight function__ `w: E -> ℝ`. For example, let `G = (V, E)` be a weighted  graph  with weight function `w`.   We  simply  store  the  weight `w(u ,v)` of  the  edge `(u, v) ∈ E` with vertex `v` in `u`’s adjacency list.
 
-A potential disadvantage of the adjacency-list representation is that it provides no quicker way to determine whether a given edge `(u, v)` is present in the graph than to search for `v` in the adjacency list `Adj[u]`.  An adjacency-matrix representation of the graph remedies this disadvantage, but at the cost of using asymptotically more memory.
+A potential disadvantage of the adjacency-list representation is that it provides no quicker way to determine whether a given edge `(u, v)` is present in the graph than to search for `v` in the adjacency list `Adj[u]`.  An adjacency-matrix representation of the graph remedies this disadvantage, but at the cost of using asymptotically more memory.
 
 ### Adjacency-matrix Representation
 For the adjacency-matrix representation of a graph `G = (V, E)`, we assume that the vertices are numbered `1, 2, ..., |V|` in some arbitrary manner.  Then the adjacency-matrix  representation  of  a  graph `G` consists  of  `|V| x |V|` matrix `A = (a[i, j])` such that: `a[i, j] = {1, if (i, j) ∈ E, 0 otherwise}`
@@ -89,7 +89,7 @@ Depth-first  search  explores  edges out of the most recently discovered vertex 
 
 As in breadth-first search, whenever depth-first search discovers a vertex `v` dur-ing a scan of the adjacency list of an already discovered vertex `u`, it records this event  by setting `v`’s predecessor  attribute `v.p` to `u`.
 
-Unlike  breadth-first  search,whose predecessor subgraph forms a tree, the predecessor subgraph produced bya  depth-first  search  may  be  composed  of  several  trees,  because  the  search  may repeat from multiple sources.  Therefore, we define the __predecessor subgraph__ of a depth-first search slightly differently from that of a breadth-first search:
+Unlike  breadth-first  search, whose predecessor subgraph forms a tree, the predecessor subgraph produced bya  depth-first  search  may  be  composed  of  several  trees,  because  the  search  may repeat from multiple sources.  Therefore, we define the __predecessor subgraph__ of a depth-first search slightly differently from that of a breadth-first search:
 
 `G_p = (V, E_p)`, where `E_p = {(v.p, v): v ∈ V and v.p ≠ null}`.
 
@@ -109,8 +109,8 @@ Per-haps  the  most  basic  property  of  depth-first  search  is  that  the  pr
 Another important property of depth-first search is that discovery and finishing times have __parenthesis structure__.  If we represent the discovery of vertex `u` with a left parenthesis __“(u”__ and represent its finishing by a right parenthesis __“u)”__, then the  history  of discoveries  and finishings  makes a well-formed  expression  in the sense that the parentheses are properly nested.
 
 #### Theorem (Parenthesis theorem)
-In any depth-first search of a (directed or undirected) graph `G = (V, E)`,for any two vertices `u` and `v`, exactly one of the following three conditions holds:
-* the intervals `[u.d, u.f]` and `[v.d, v.f]` are entirely disjoint, and neither `u` nor `v` is a descendant of the other in the depth-first forest,
+In any depth-first search of a (directed or undirected) graph `G = (V, E)`, for any two vertices `u` and `v`, exactly one of the following three conditions holds:
+* the intervals `[u.d, u.f]` and `[v.d, v.f]` are entirely disjoint, and neither `u` nor `v` is a descendant of the other in the depth-first forest,
 * the interval `[u.d, u.f]` is  contained entirely within the interval `[v.d, v.f]`, and `u` is a descendant of `v` in a depth-first tree, or
 * the interval `[v.d, v.f]` is contained entirely within the interval `[u.d, u.f]`, and `v` is a descendant of `u` in a depth-first tree.
 
@@ -118,7 +118,7 @@ In any depth-first search of a (directed or undirected) graph `G = (V, E)`,for a
 Vertex `v` is a proper descendant of vertex `u` in the depth-first forest for a (directed or undirected) graph `G` if and only if `u.d < v.d < v.f < u.f`.
 
 #### Theorem (White-path theorem)
-In a depth-first forest of a (directed or undirected) graph `G = (V, E)`, vertex `v` is a descendant of vertex `u` if and only if at the time `u.d` that the search discovers `u`,there is a path from `u` to `v` consisting entirely of white vertices.
+In a depth-first forest of a (directed or undirected) graph `G = (V, E)`, vertex `v` is a descendant of vertex `u` if and only if at the time `u.d` that the search discovers `u`, there is a path from `u` to `v` consisting entirely of white vertices.
 
 #### Classification of edges
 The type of each edge canprovide important information about a graph.
@@ -130,7 +130,7 @@ We can define four edge types in terms of the depth-first forest `G_p` produced 
 
 ![edges-classification](./images/edges-classification.jpg)
 
-The DFS algorithm has enough information to classify some edges as it encounters them.  The key idea is that when we first explore an edge `(u, v)`,the color of vertex `v` tells us something about the edge:
+The DFS algorithm has enough information to classify some edges as it encounters them.  The key idea is that when we first explore an edge `(u, v)`, the color of vertex `v` tells us something about the edge:
 1. `WHITE` indicates a _tree edge_.
 2. `GRAY` indicates a _back edge_.
 3. `BLACK` indicates a _forward_ or _cross edge_.
@@ -144,7 +144,7 @@ In a depth-first search of an _undirected_ graph `G`, every edge of `G` is eithe
 ## Topological sort
 A __topological sort__ of a __dag__ (_directed acyclic graph_) `G = (V, E)` is a linear ordering of all its vertices such that if `G` contains an edge `(u, v)`, then `u` appears before `v` in the ordering. We can view a topological sort of a graph as an ordering of its vertices along a horizontal line so that all directed edges go from left to right.
 
-> If the graph contains a cycle,then no linear ordering is possible.
+> If the graph contains a cycle, then no linear ordering is possible.
 
 As an example that arises when Jafar gets dressed  in the morning.   The professor  must put on certain garments before others(e.g., socks before shoes). Other items may be put on in any order (e.g., socks and pants).
 
@@ -342,7 +342,7 @@ In a __shortest-paths problem__,  we are given a _weighted_, _directed_  graph `
 
 ![shortest-path-definition](./images/shortest-path-definition.png)
 
-Edge  weights  can  represent  metrics  other  than  distances,  such  as  time,  cost,penalties,  loss,  or any other  quantity  that accumulates  linearly  along  a path and that we would want to minimize.
+Edge  weights  can  represent  metrics  other  than  distances,  such  as  time,  cost, penalties, loss,  or any other  quantity  that accumulates  linearly  along  a path and that we would want to minimize.
 
 > The breadth-first-search  algorithm is a shortest-paths algorithm that works on unweighted graphs.
 
@@ -382,7 +382,7 @@ The process of relaxing an edge `(u, v)` consists of testing whether we can impr
 ![shortest-path-properties](./images/shortest-path-properties.png)
 
 ### The Bellman-Ford Algorithm
-TheBellman-Ford algorithm solves the single-source  shortest-paths  problem in the general case in which edge weights may be negative.  Given a weighted,  directed graph `G = (V, E)` with sources and weight function `w: E -> ℝ`,theBellman-Ford algorithm returns a boolean value indicating whether or not there isa negative-weight  cycle that is reachable  from the source.  If there is such a cy-cle, the algorithm indicates that no solution exists.  If there is no such cycle, the algorithm produces the shortest paths and their weights.
+TheBellman-Ford algorithm solves the single-source  shortest-paths  problem in the general case in which edge weights may be negative.  Given a weighted,  directed graph `G = (V, E)` with sources and weight function `w: E -> ℝ`, the Bellman-Ford algorithm returns a boolean value indicating whether or not there isa negative-weight  cycle that is reachable  from the source.  If there is such a cy-cle, the algorithm indicates that no solution exists.  If there is no such cycle, the algorithm produces the shortest paths and their weights.
 
 Example:
 
@@ -507,7 +507,7 @@ Johnson’s algorithm uses the technique of __reweighting__, which works as foll
 We can preprocess `G` to determine the new weight function `ω` in `O(V * E)` time.
 
 #### Lemma 25.1 (Reweighting does not change shortest paths)
-Given a weighted, directed graph `G` with weight function `w: E -> ℝ`,let `h: V -> ℝ` be any function mapping vertices to real numbers. For each edge `(u, v) ∈ E`, define:
+Given a weighted, directed graph `G` with weight function `w: E -> ℝ`, let `h: V -> ℝ` be any function mapping vertices to real numbers. For each edge `(u, v) ∈ E`, define:
 
 `ω(u, v) = w(u, v) + h(u) - h(v)`
 

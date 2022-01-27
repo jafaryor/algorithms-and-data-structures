@@ -3,7 +3,7 @@ import {swap} from '../../utils';
 export class QuickSelection {
     /**
      * Returns the k-th smallest element of list within left..right inclusive
-     * @complexity: O(n)
+     * @time O(n)
      * @param array - source
      * @param left - left pointer index
      * @param right - right pointer index
@@ -36,7 +36,7 @@ export class QuickSelection {
 
     /**
      * QuickSelect Algorithm implemented with loop instead of recursion
-     * @complexity: O(n)
+     * @time O(n)
      * @param array - source
      * @param left - left pointer index
      * @param right - right pointer index
@@ -80,7 +80,7 @@ export class QuickSelection {
      * partitions the array so that
      * left side with respect to the pivot is less than the pivot
      * and the right side is bigger than the pivot
-     * @complexity: O(n)
+     * @time O(n)
      * @param array - array to be partitioned
      * @param left - left pointer index
      * @param right - right pointer index

@@ -37,7 +37,7 @@ For example, `[3]_7 = {..., -11, -4, 3, 10, 17, ...}` we can also denote this se
 
 We can say that writing `a ∈ [b]_n` is the same as writing `a ≡ b (mod n)`.
 
-The set of all such equivalence classes is `ℤ_n = {[a]_n: 0 ≤ a ≤ n-1}`. When you see the definition `ℤ_n = {0, 1, ..., n-1}`. you should read it as equivalent to equation above with the understanding that `0` represents `[0]_n`, `1` represents `[1]_n`, and so on; each class is represented by its smallest nonnegative element. You should keep the underlying equivalence classes in mind,however. For example, if we refer to `-1` as a member of `ℤ_n`, we are really referring to `[n-1]_n`, since `-1 ≡ n-1 (mod n)`.
+The set of all such equivalence classes is `ℤ_n = {[a]_n: 0 ≤ a ≤ n-1}`. When you see the definition `ℤ_n = {0, 1, ..., n-1}`. you should read it as equivalent to equation above with the understanding that `0` represents `[0]_n`, `1` represents `[1]_n`, and so on; each class is represented by its smallest nonnegative element. You should keep the underlying equivalence classes in mind, however. For example, if we refer to `-1` as a member of `ℤ_n`, we are really referring to `[n-1]_n`, since `-1 ≡ n-1 (mod n)`.
 
 If `d` is a divisor of `a` and `d` is also a divisor of `b`, then `d` is a __common divisor__ of `a` and `b`.
 
@@ -79,7 +79,7 @@ For any integers `a` and `b`, if `d | a` and `d | b`, then `d | gcd(a, b)`.
 For all integers `a` and `b` and any nonnegative integer `n`, `gcd(an, bn) = n * gcd(a, b)`.
 
 #### Corollary
-For all positive integers `n`, `a` , and `b`, if `n | ab` and `gcd(a, n)`,then `n | b`.
+For all positive integers `n`, `a` , and `b`, if `n | ab` and `gcd(a, n)`, then `n | b`.
 
 >  if `a | b` and `b ∣ c`, then `a ∣ c`.
 
@@ -98,7 +98,7 @@ There is exactly one way to write any composite integer `a` as a product of the 
 
 `a = p`<sub>`1`</sub><sup>`e`<sub>`1`</sub></sup>` * p`<sub>`2`</sub><sup>`e`<sub>`2`</sub></sup>` * ... * p`<sub>`r`</sub><sup>`e`<sub>`r`</sub></sup>
 
-where the `p`<sub>`i`</sub> are prime, `p`<sub>`1`</sub>` < p`<sub>`2`</sub>` < ... < p`<sub>`r`</sub>,and the `e`<sub>`i`</sub> are positive integers.
+where the `p`<sub>`i`</sub> are prime, `p`<sub>`1`</sub>` < p`<sub>`2`</sub>` < ... < p`<sub>`r`</sub>, and the `e`<sub>`i`</sub> are positive integers.
 
 ### Greatest common devisor
 We restrict ourselves in this section to nonnegative integers.  This restriction is justified duw to equation `gcd(a, b) = gcd(|a|, |b|)`.

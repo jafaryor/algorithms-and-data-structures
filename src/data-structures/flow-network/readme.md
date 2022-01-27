@@ -5,7 +5,7 @@ We further require that if `E` contains an edge `(u, v)`,  then there is no edge
 
 If `(u, v) ∉ E`, then for convenience we define `c(u, v) = 0`, and we disallow  self-loops.
 
-We distinguish two vertices in a flow network: a __source__ `s` and a __sink__ `t`. For convenience, we assume that each vertex lies on some path from the source to the sink. That is, for each vertex `v ∈ V`,the flow network contains a paths `s ↝ v ↝ t`.  The graph is therefore connected and, since each vertex other than `s` has at least one entering edge, `|E| ≥ |V| - 1`.
+We distinguish two vertices in a flow network: a __source__ `s` and a __sink__ `t`. For convenience, we assume that each vertex lies on some path from the source to the sink. That is, for each vertex `v ∈ V`, the flow network contains a paths `s ↝ v ↝ t`.  The graph is therefore connected and, since each vertex other than `s` has at least one entering edge, `|E| ≥ |V| - 1`.
 
 Let `G = (V, E)` be a flow network with a capacity function `c`. Let `s` be the source of the network, and let `t` be the sink. A __flow__ in `G` is a real-valued function `f: V x V -> ℝ` that satisfies the following two properties:
 
@@ -49,7 +49,7 @@ Intuitively, given a flow network `G` and a flow `f`, the residual network `G_f`
 
 An edge of the flow network can admit an amount of additional flow equal to the edge’s capacity  minus the flow on that  edge.   If that  value is positive,  we place that  edge  into `G_f` with  a  “residual  capacity”  of `c_f(u, v) = c(u, v) - f(u, v)`. The  only  edges  of `G` that  are  in `G_f` are  those  that  can  admit  more  flow;  those edges `(u, v)` whose flow equals their capacity have `c_f(u, v) = 0`, and they are not in `G_f`.
 
-The residual  network `G_f` may also contain  edges that  are not  inG,however.As an algorithm manipulates the flow, with the goal of increasing the total flow, it might need to decrease the flow on a particular edge.  In order to represent a possible decrease of a positive flow `f(u, v)` on an edge in `G`, we place an edge `(v, u)` into `G_f` with residual capacity `c_f(v, u) = f(u, v)` - that is, an edge that can admit flow in the opposite direction to `(u, v)`, at most canceling out the flow on `(u, v)`. These reverse edges in the residual network allow an algorithm to send back flow it  has  already  sent  along  an  edge.   Sending  flow back  along  an  edge  is  equivalent to decreasing the flow on the edge,  which is a necessary operation in many algorithms.
+The residual  network `G_f` may also contain  edges that  are not  in `G`, however.As an algorithm manipulates the flow, with the goal of increasing the total flow, it might need to decrease the flow on a particular edge.  In order to represent a possible decrease of a positive flow `f(u, v)` on an edge in `G`, we place an edge `(v, u)` into `G_f` with residual capacity `c_f(v, u) = f(u, v)` - that is, an edge that can admit flow in the opposite direction to `(u, v)`, at most canceling out the flow on `(u, v)`. These reverse edges in the residual network allow an algorithm to send back flow it  has  already  sent  along  an  edge.   Sending  flow back  along  an  edge  is  equivalent to decreasing the flow on the edge,  which is a necessary operation in many algorithms.
 
 More formally, suppose that we have a flow network `G = (V, E)` with source `s` and sink `t`. Let `f` be a flow in `G`, and consider a pair of vertices `u, v ∈ V`. We define the __residual capacity__ `c_f(u, v)` by
 
@@ -74,7 +74,7 @@ A flow in a residual network provides a roadmap for adding flow to the original 
 The intuition behind this definition follows the definition of the residual network. We increase  the  flow  on `(u, v)` by `f'(u, v)` but  decrease  it  by `f'(v, u)` because pushing flow on the reverse edge in the residual network signifies decreasing the flow  in  the  original  network. Pushing  flow  on  the  reverse  edge  in  the  residual network is also known as __cancellation__.
 
 #### Lemma
-Let `G = (V, E)` be a flow network with source `s` and sink `t`,and let `f` be a flow in `G`. Let `G_f` be the residual network of `G` induced by `f`,and let `f'` be a flow in `G_f`.  Then the function `f ↑ f'` is a flow in `G` with value `|f ↑ f'| = |f| + |f'|`.
+Let `G = (V, E)` be a flow network with source `s` and sink `t`, and let `f` be a flow in `G`. Let `G_f` be the residual network of `G` induced by `f`, and let `f'` be a flow in `G_f`.  Then the function `f ↑ f'` is a flow in `G` with value `|f ↑ f'| = |f| + |f'|`.
 
 
 ## Augmenting paths
@@ -174,7 +174,7 @@ We can use the Ford-Fulkerson method to find a maximum matching in an undirected
 
 ![bipartite-graph](./images/bipartite-graph.png)
 
-We define the __corresponding flow network__ `G = (V, E)` for the bipartite graph `G` as follows. We let the source `s` and sink `t` be new vertices not in `V`,and we let `V' = V ∪ {s, t}`. If the vertex partition of `G` is `V = L ∪ R`, the directed edges of `G'` are the edges of `E`, directed from `L` to `R`, along with `|V|` new directed edges:
+We define the __corresponding flow network__ `G = (V, E)` for the bipartite graph `G` as follows. We let the source `s` and sink `t` be new vertices not in `V`, and we let `V' = V ∪ {s, t}`. If the vertex partition of `G` is `V = L ∪ R`, the directed edges of `G'` are the edges of `E`, directed from `L` to `R`, along with `|V|` new directed edges:
 
 `E' = {(s, u): u ∈ L} ∪ {(u, v): (u, v) u ∈ E} ∪ {(v, t): v ∈ R}`
 

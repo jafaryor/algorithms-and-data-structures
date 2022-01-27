@@ -1,7 +1,7 @@
 ## Linear Programming
 Many problems  take the form  of maximizing  or minimizing  an objective,  given limited resources  and competing  constraints.   If we can specify  the objective  asa  linear  function  of  certain  variables,  and  if  we  can  specify  the  constraints  on resources as equalities or inequalities  on those variables,  then we have a __linear-programming problem__.
 
-In the general linear-programming problem, we wish to optimize a linear function subject to a set of linear inequalities. Given a set of real numbers `a_1, a_2, ..., a_n` and a set of variables `x_1, x_2, ..., x_n`,we define a linear function `f` on those variables by 
+In the general linear-programming problem, we wish to optimize a linear function subject to a set of linear inequalities. Given a set of real numbers `a_1, a_2, ..., a_n` and a set of variables `x_1, x_2, ..., x_n`, we define a linear function `f` on those variables by 
 
 `f(x_1, x_2, ..., x_n) = a_1 * x_1 + a_2 + x_2 + ... + a_n * x_n`
 
@@ -46,7 +46,7 @@ In standard form, we are given `n` real numbers `c_1, c_2, ..., c_n` real  numbe
 
 We call  expression  __(`*`)__  the __objective function__ and the `n + m` inequalities in lines __(`**`)__ and __(`***`)__ the constraints.Then __constraints__ in line __(`***`)__ are the __non-negativity constraints__. An arbitrary linear program need not have non-negativity constraints, but standard form requires them.
 
-Sometimes we find it convenient to express a linear program in a more compact form. If we create an `m x n` matrix `A = (a_ij)`, an `m`-vector `b = (b_i)`,an `n`-vector `c = (c_j)`, and an `n`-vector `x = (x_j)`, then we can rewrite the linear program as:
+Sometimes we find it convenient to express a linear program in a more compact form. If we create an `m x n` matrix `A = (a_ij)`, an `m`-vector `b = (b_i)`, an `n`-vector `c = (c_j)`, and an `n`-vector `x = (x_j)`, then we can rewrite the linear program as:
 
 maximize `c`<sup>`T`</sup>`x`
 
@@ -73,7 +73,7 @@ It is always possible  to convert  a linear  program,  given as minimizing  or m
 
     > __Standard form requires the whole vector `x` to be `≥ 0`.__
 
-    Suppose that some variable `x_j` does not have a non-negativity constraint (`x_j < 0`). Then, we replace each occurrence of `x_j` by `x'_j - x"_j`, and add the non-negativity constraints `x'_j ≥ 0` and `x"_j ≥ 0`. Thus, if the objective function has a term `c_j * x_j`, we replace it by `c_j * x'_j - c_j * x"_j`, and if constraint `i` has a term `a_ij * x_j`,we replace it by `a_ij * x'_j - a_ij * x"_j`. Any feasible solution `x` to the new linear program corresponds to a feasible solution `x` to the original linear program with `x_j = x'_j - x"_j` and with the same objective value.  Also, any feasible solution `x` to the original linear program corresponds to a feasible solution `x` to the new linear program with `x'_j = x_j` and `x"_j = 0` if `x_j ≥ 0`, or with `x"_j = x_j` and `x'_j = 0` if `x_j < 0`.
+    Suppose that some variable `x_j` does not have a non-negativity constraint (`x_j < 0`). Then, we replace each occurrence of `x_j` by `x'_j - x"_j`, and add the non-negativity constraints `x'_j ≥ 0` and `x"_j ≥ 0`. Thus, if the objective function has a term `c_j * x_j`, we replace it by `c_j * x'_j - c_j * x"_j`, and if constraint `i` has a term `a_ij * x_j`, we replace it by `a_ij * x'_j - a_ij * x"_j`. Any feasible solution `x` to the new linear program corresponds to a feasible solution `x` to the original linear program with `x_j = x'_j - x"_j` and with the same objective value.  Also, any feasible solution `x` to the original linear program corresponds to a feasible solution `x` to the new linear program with `x'_j = x_j` and `x"_j = 0` if `x_j ≥ 0`, or with `x"_j = x_j` and `x'_j = 0` if `x_j < 0`.
 
     ```
     minimize:       -2 * x1 + 3 * x2
@@ -134,7 +134,7 @@ We can formulate  the single-source  shortest-paths  problem  as a linear  progr
 
 In the single-pair shortest-path problem, we are given a weighted, directed graph `G = (V, E)`,  with weight function `w: E -> ℝ` mapping  edges to real-valued weights,  a  source  vertex `s`,  and  destination  vertex `t`. We  wish  to  compute  the value `d_t`, which is the weight of a shortest path from `s` to `t`.
 
-To express this problem as a linear program, we need to determine a set of variables and constraints that define when we have a shortest path from `s` to `t`. Fortunately, the Bellman-Ford algorithm  does  exactly  this.   When the Bellman-Ford algorithm  terminates,  it has computed, for each vertex `v`, a value `d_v` (using subscript notation here rather than attribute notation) such that for each edge `(u, v) ∈ E`,we have `d_v ≤ d_u + w(u, v)`.
+To express this problem as a linear program, we need to determine a set of variables and constraints that define when we have a shortest path from `s` to `t`. Fortunately, the Bellman-Ford algorithm  does  exactly  this.   When the Bellman-Ford algorithm  terminates,  it has computed, for each vertex `v`, a value `d_v` (using subscript notation here rather than attribute notation) such that for each edge `(u, v) ∈ E`, we have `d_v ≤ d_u + w(u, v)`.
 
 The source vertex initially receives a value `d_s = 0`, which never changes.  Thus we obtain the following linear program to compute the shortest-path weight from `s` to `t`:
 
@@ -149,7 +149,7 @@ You might be surprised that this linear program maximizes an objective function 
 This linear program has `|V|` variables `d_v`, one for each vertex `v ∈ V`.It also has `|E| + 1` constraints:  one for each edge, plus the additional constraint that the source vertex’s shortest-path weight always has the value `0`.
 
 ### Shortest Paths
-In the general linear-programming problem, we are given an `m x n` matrix `A`,an `m`-vector `b`, and an `n`-vector `c`. We wish to find a vector `x` of `n` elements that maximizes the objective function `∑[i = 1 -> n](c_i * x_i)` subject to the `m` constraints given by `Ax ≤ b`.
+In the general linear-programming problem, we are given an `m x n` matrix `A`, an `m`-vector `b`, and an `n`-vector `c`. We wish to find a vector `x` of `n` elements that maximizes the objective function `∑[i = 1 -> n](c_i * x_i)` subject to the `m` constraints given by `Ax ≤ b`.
 
 #### Lemma
 Let `x = (x1, x2, ..., x_n)` be a solution to a system `Ax ≤ b` of  difference  constraints, and let `d` be any constant.  Then `x + d = (x1 + d, x2 + d, ..., x_n + d)` is a solution to `Ax ≤ b` as well.
@@ -157,7 +157,7 @@ Let `x = (x1, x2, ..., x_n)` be a solution to a system `Ax ≤ b` of  difference
 ### Constraint graphs
 We  can  interpret  systems  of  difference  constraints  from  a  graph-theoretic  point of  view.   In  a  system `Ax ≤ b` of  difference  constraints,  we  view  the `m x n` linear-programming  matrix `A` as the transpose of an incidence matrix for a graph with `n` vertices and `m` edges.  Each vertex `v_i` in the graph, for `i = 1, 2, ..., n`, corresponds to one of the `n` unknown variables `x_i`. Each directed edge in the graph corresponds  to one of the min equalities  involving  two unknowns.
 
-More formally, given a system `Ax ≤ b` of difference constraints, the corresponding __constraint graph__ is a weighted, directed graph `G = (V, E)`,where `V = {v0, v1, ..., v_n}` and `E = {(v_i, v_j): x_j - x_i ≤ b_k is a constraint} ⋃ {(v0, v1), (v0, v2), (v0, v3), ..., (v0, v_n)}`.
+More formally, given a system `Ax ≤ b` of difference constraints, the corresponding __constraint graph__ is a weighted, directed graph `G = (V, E)`, where `V = {v0, v1, ..., v_n}` and `E = {(v_i, v_j): x_j - x_i ≤ b_k is a constraint} ⋃ {(v0, v1), (v0, v2), (v0, v3), ..., (v0, v_n)}`.
 
 ![constraint-graph](./images/constraint-graph.png)
 
@@ -193,7 +193,7 @@ The real power of linear programming comes from the ability to solve new problem
 
 Consider, for example, the following generalization of the maximum-flow problem.  Suppose that, in addition to a capacity `c(u, v)` for each edge `(u, v)`, we are given a real-valued costa `a(u, v)`. As in the maximum-flow problem, we assume that `c(u, v) = 0` if `(u, v) ∉ E`, and that there are no antiparallel edges.  If we send `f_uv` units of flow over edge `(u, v)`, we incur a cost of `a(u, v) * f_uv`.  We are also given a flow demand `d`.We wish to send `d` units of flow from `s` to `t` while minimizing the total cost incurred by the flow. This problem is known as the minimum-cost-flow problem.
 
-There are polynomial-time algorithms specifically designed for the minimum-cost-flow problem. We can, however,express the minimum-cost-flow problem as a linear program.  The linear program looks similar to the one for the maximum-flow problem with the additional constraint  that the value of the flow be exactly `d` units,  and with the new objective function of minimizing the cost:
+There are polynomial-time algorithms specifically designed for the minimum-cost-flow problem. We can, however, express the minimum-cost-flow problem as a linear program.  The linear program looks similar to the one for the maximum-flow problem with the additional constraint  that the value of the flow be exactly `d` units,  and with the new objective function of minimizing the cost:
 
 ![min-cost-flow-linear-program](./images/min-cost-flow-linear-program.png)
 
@@ -202,7 +202,7 @@ Example
 ![min-cost-flow-example](./images/min-cost-flow-example.png)
 
 ### Multicommodity flow
-In a __multicommodity-flow problem__,we are again given a directed graph `G = (V, E)` in which each edge `(u, v) ∈ E` has a nonnegative capacity `c(u, v) ≥ 0`. As in the maximum-flow problem, we implicitly assume that `c(u, v) = 0` for `(u, v) ∉ E`, and that the graph has no antiparallel edges.  In addition,  we are given `k` different commodities, `K_1, K_2, ..., K_k`, where we specify commodity `i` by the triple `K_i = (s_i, t_i, d_i)`. Here, vertex `s_i` is the source of commodity `i`, vertex `t_i` is the sink of commodity `i`, and `d_i` is the demand for commodity `i`, which is the desired flow value for the commodity from `s_i` to `t_i`. We define a flow for commodity `i`, denoted by `f_i`, (so that `f_iuv` is the flow of commodity `i` from vertex `u` to vertex `v`) to be a real-valued function that satisfies the flow-conservation and capacity constraints.  We now define `f_uv`, the aggregate flow, to be the sum of the various commodity flows, so that `f_uv = ∑[i = 1 -> k](f_iuv)`. The aggregate flow on edge `(u, v)` must be no more than the capacity of edge `(u, v)`. We are  not trying  to minimize  any  objective  function  in this  problem;  we need only determine whether such a flow exists. Thus, we write a linear program with a “null” objective function:
+In a __multicommodity-flow problem__, we are again given a directed graph `G = (V, E)` in which each edge `(u, v) ∈ E` has a nonnegative capacity `c(u, v) ≥ 0`. As in the maximum-flow problem, we implicitly assume that `c(u, v) = 0` for `(u, v) ∉ E`, and that the graph has no antiparallel edges.  In addition,  we are given `k` different commodities, `K_1, K_2, ..., K_k`, where we specify commodity `i` by the triple `K_i = (s_i, t_i, d_i)`. Here, vertex `s_i` is the source of commodity `i`, vertex `t_i` is the sink of commodity `i`, and `d_i` is the demand for commodity `i`, which is the desired flow value for the commodity from `s_i` to `t_i`. We define a flow for commodity `i`, denoted by `f_i`, (so that `f_iuv` is the flow of commodity `i` from vertex `u` to vertex `v`) to be a real-valued function that satisfies the flow-conservation and capacity constraints.  We now define `f_uv`, the aggregate flow, to be the sum of the various commodity flows, so that `f_uv = ∑[i = 1 -> k](f_iuv)`. The aggregate flow on edge `(u, v)` must be no more than the capacity of edge `(u, v)`. We are  not trying  to minimize  any  objective  function  in this  problem;  we need only determine whether such a flow exists. Thus, we write a linear program with a “null” objective function:
 
 ![multicommodity-flow-linear-program](./images/multicommodity-flow-linear-program.png)
 
@@ -282,7 +282,7 @@ x2 = 4 - 8 * x3/3 - 2 * x5/3 + x6/3
 x4 = 18 - x3/2 + x5/2
 ```
 
-At this point, all coefficients in the objective function are negative. This situation occurs only when we have rewritten the linear program so that the basic solution is an optimal solution.  Thus, for this problem,the  solution.`(8, 4, 0, 18, 0, 0)`,  with  objective  value `28`, is  optimal.
+At this point, all coefficients in the objective function are negative. This situation occurs only when we have rewritten the linear program so that the basic solution is an optimal solution.  Thus, for this problem, the  solution.`(8, 4, 0, 18, 0, 0)`,  with  objective  value `28`, is  optimal.
 
 We  can  now return to our original linear program. The only variables in the original linear program are `x1`, `x2`, and `x3`, and so our solution is `x1 = 8`, `x2 = 4`, and `x3 = 0`, with objective value `3 * 8 + 1 * 4 + 2 * 0 = 28`.
 
@@ -351,7 +351,7 @@ Then `x` is an optimal  solution  to  the  primal  linear  program, `y` is  an  
 ![linear-program-duality-sum](./images/linear-program-duality-sum.png)
 
 ### The initial basic feasible solution
-A  linear  program  can  be  feasible,  yet  the  initial  basic  solution  might  not  be feasible.  In order to determine whether a linear program has any feasible solutions,we will formulate an __auxiliary linear program `L`<sub>`aux`</sub>__.  For this auxiliary linear program,we can find (with a little work) a slack form for which the basic solution is feasible.
+A  linear  program  can  be  feasible,  yet  the  initial  basic  solution  might  not  be feasible.  In order to determine whether a linear program has any feasible solutions, we will formulate an __auxiliary linear program `L`<sub>`aux`</sub>__.  For this auxiliary linear program, we can find (with a little work) a slack form for which the basic solution is feasible.
 
 #### Lemma
 Let `L` be a linear program in standard form, given as in. Let `x_0` bea new variable, and let `L`<sub>`aux`</sub> be the following linear program with `n + 1` variables:

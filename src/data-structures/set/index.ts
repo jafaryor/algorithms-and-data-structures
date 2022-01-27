@@ -26,7 +26,7 @@ export class Set<T> {
 
     /**
      * adds value to the set
-     * @complexity: O(n)
+     * @time O(n)
      * @param value
      */
     add(value: T): void {
@@ -37,7 +37,7 @@ export class Set<T> {
 
     /**
      * removes the value from the set
-     * @complexity: O(n)
+     * @time O(n)
      * @param value
      */
     remove(value: T): void {
@@ -50,7 +50,7 @@ export class Set<T> {
 
     /**
      * true, is the set contains the value
-     * @complexity: O(n)
+     * @time O(n)
      * @param value
      */
     contains(value: T): boolean {
@@ -59,7 +59,7 @@ export class Set<T> {
 
     /**
      * set union
-     * @complexity: O(k*n)
+     * @time O(k*n)
      * @param set - set has length of k
      */
     union(set: Set<T>): Set<T> {
@@ -72,7 +72,7 @@ export class Set<T> {
 
     /**
      * set intersect
-     * @complexity: O(k*n)
+     * @time O(k*n)
      * @param set - set has length of k
      */
     intersect(set: Set<T>): Set<T> {
@@ -89,7 +89,7 @@ export class Set<T> {
 
     /**
      * set difference
-     * @complexity: O(k*n)
+     * @time O(k*n)
      * @param set - set has length of k
      */
     difference(set: Set<T>): Set<T> {
@@ -106,7 +106,7 @@ export class Set<T> {
 
     /**
      * true, if the set is subset of the passed set
-     * @complexity: O(n)
+     * @time O(n)
      */
     isSubsetOf(set: Set<T>): boolean {
         return this.values.every(set.contains, set);
@@ -114,7 +114,7 @@ export class Set<T> {
 
     /**
      * traverses through the list
-     * @complexity: O(n)
+     * @time O(n)
      */
     // tslint:disable-next-line: no-any
     traverse(fn: Function): any {

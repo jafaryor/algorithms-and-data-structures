@@ -59,7 +59,7 @@ This matrix has determinant and therefore it is invertible (that is non-singular
 
 Using the LU decomposition algorithms, we can solve these equations in time `θ(n^3)`. A faster algorithm for `n`-point interpolation is based on __Lagrange’s formula__ which takes `θ(n^2)`.
 
-The point-value representation is convenient for multiplying polynomials. We must face the problem, however, that `degree(C)  = degree(A) + degree(B)`;if `A` and `B` are of degree-bound `n`,then `C` is of degree-bound `2n`.  A standard point-value representation for `A` and `B` consists of `n` point-value pairs for each polynomial.  When we multiply these together, we get `n` point-value pairs, but we need `2n` pairs to interpolate a unique polynomial `C` of degree-bound `2n`. We must therefore begin with _“extended”_ point-value representations for `A` and for`B` consisting of `2n` point-value pairs each. Given an extended point-value representation for `A`,
+The point-value representation is convenient for multiplying polynomials. We must face the problem, however, that `degree(C)  = degree(A) + degree(B)`;if `A` and `B` are of degree-bound `n`, then `C` is of degree-bound `2n`.  A standard point-value representation for `A` and `B` consists of `n` point-value pairs for each polynomial.  When we multiply these together, we get `n` point-value pairs, but we need `2n` pairs to interpolate a unique polynomial `C` of degree-bound `2n`. We must therefore begin with _“extended”_ point-value representations for `A` and for`B` consisting of `2n` point-value pairs each. Given an extended point-value representation for `A`,
 
 ![point-value-multiplication](./images/point-value-multiplication.png)
 

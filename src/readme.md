@@ -17,7 +17,7 @@ The __running time__ of an algorithm on a particular input is the number of prim
 
 It is convenient to define the notion of step so that it is as machine-independent as possible. For the moment, let us adopt the following view.
 
-A constant amount of time is required to execute each line of our pseudocode. One line may take a different amount of time than another line, but we shall assume that each execution of the ith line takes time `c[i]`, where `c[i]` is a constant.
+A constant amount of time is required to execute each line of our pseudocode. One line may take a different amount of time than another line, but we shall assume that each execution of the `i`th line takes time `c[i]`, where `c[i]` is a constant.
 
 This viewpoint is in keeping with the RAM model, and it also reflects how the pseudocode would be implemented on most actual computers.
 
@@ -37,7 +37,6 @@ We say that the running time is `O(n^2)` to capture the notion that the _order o
 We usually consider one algorithm to be _more efficient_ than another if its worst-case running time has a smaller order of growth.
 
 ## Complexity of Algorithms
-
 __Time complexity__: The number of computations the algorithm does.
 
 __Auxiliary Space__: The extra space that is taken by an algorithm temporarily to finish its work
@@ -53,14 +52,14 @@ __[Youtube Playlist about Time and Space Complexity Analysis](https://www.youtub
 ## Asymptotic notation
 Asymptotic notation is a way to describe behavior of functions in the limit, describe growth of functions.
 
-It is about focusing on whatís important by abstracting away low-order terms and constant factors.
+It is about focusing on what is important by abstracting away low-order terms and constant factors.
 
-Because `θ(g(n))` is a set, we could write `f(n) ∈ θ(g(n))` to indicate that f.n/ is a member of `θ(g(n))`. Instead, we will usually write `f(n) = θ(g(n))` to express the same notion.
+Because `θ(g(n))` is a set, we could write `f(n) ∈ θ(g(n))` to indicate that `f(n)` is a member of `θ(g(n))`. Instead, we will usually write `f(n) = θ(g(n))` to express the same notion.
 
 A way to compare sizes of functions:
 * __`θ` ≈ `=`__
 
-    `θ(g(n))` = `{` `f(n)`: there exist positive constants `c1`, `c2`, and `n0` such that: `0 ≤ c1g(n) ≤ f(n) ≤ c2g(n)` for all `n ≥ n0` `}`
+    `θ(g(n))` = `{f(n)`: there exist positive constants `c1`, `c2`, and `n0` such that: `0 ≤ c1g(n) ≤ f(n) ≤ c2g(n)` for all `n ≥ n0}`
 
     > We say that `g(n)` is an asymptotically tight bound for `f(n)`.
 
@@ -68,7 +67,7 @@ A way to compare sizes of functions:
 
     Consequently, the function `g(n)` itself must be asymptotically nonnegative, or else the set `θ(g(n))` is empty.
 
-    Previously we introduced an informal notion of `θ`-notation that amounted to throwing away lower-order terms and ignoring the leading coefficient of the highest-order term. Let us briefly justify this intuition by using the formal definition to show that `n^2/2 - 3n = θ(n2)`. To do so, we must determine positive constants `c1`, `c2`, and `n0` such that:
+    Previously we introduced an informal notion of `θ`-notation that amounted to throwing away lower-order terms and ignoring the leading coefficient of the highest-order term. Let us briefly justify this intuition by using the formal definition to show that `n^2/2 - 3n = θ(n^2)`. To do so, we must determine positive constants `c1`, `c2`, and `n0` such that:
 
     `c1 * n^2 ≤ n^2/2 - 3n ≤ c2 * n^2`
 
@@ -86,7 +85,7 @@ A way to compare sizes of functions:
 
     The `θ`-notation asymptotically bounds a function from above and below. When we have only an __asymptotic upper bound__, we use `O`-notation.
 
-    `O(g(n))` = `{` `f(n)`: there exist positive constants `c`, and `n0` such that: `0 ≤ f(n) ≤ cg(n)` for all `n ≥ n0` `}`
+    `O(g(n))` = `{f(n)`: there exist positive constants `c`, and `n0` such that: `0 ≤ f(n) ≤ cg(n)` for all `n ≥ n0}`
 
     `θ(g(n)) ⊆ O(g(n))` - `θ(g(n))` is a subset of `O(g(n))`
 
@@ -94,13 +93,13 @@ A way to compare sizes of functions:
 
     `Ω`-notation provides an __asymptotic lower bound__.
 
-    `Ω(g(n))` = `{` `f(n)`: there exist positive constants `c`, and `n0` such that: `0 ≤ cg(n) ≤ f(n)` for all `n ≥ n0` `}`
+    `Ω(g(n))` = `{f(n)`: there exist positive constants `c`, and `n0` such that: `0 ≤ cg(n) ≤ f(n)` for all `n ≥ n0}`
 
 * __`o` ≈ `>`__
 
     We use `o`-notation to denote an _upper bound_ that is _not asymptotically tight_.
 
-    `o(g(n))` = `{` `f(n)`: for any positive constants `c > 0`, ther exists a constant `n0 > 0` such that: `0 ≤ f(n) < cg(n)` for all `n ≥ n0` `}`
+    `o(g(n))` = `{f(n)`: for any positive constants `c > 0`, ther exists a constant `n0 > 0` such that: `0 ≤ f(n) < cg(n)` for all `n ≥ n0}`
 
     Example: `n^1.9999 = o(n2)`
 
@@ -112,7 +111,7 @@ A way to compare sizes of functions:
 
     We use `ω`-notation to denote a _lower_ bound that is _not asymptotically tight_.
 
-    `ω(g(n))` = `{` `f(n)`: for any positive constants `c > 0`, ther exists a constant `n0 > 0` such that: `0 ≤ cg(n) < f(n)` for all `n ≥ n0` `}`
+    `ω(g(n))` = `{f(n)`: for any positive constants `c > 0`, ther exists a constant `n0 > 0` such that: `0 ≤ cg(n) < f(n)` for all `n ≥ n0}`
 
     Example: `n^2 / 2 = ω(n)`
 
@@ -456,9 +455,10 @@ Informally, the running time of a dynamic-programming algorithm depends on the  
 
 Usually, the subproblem graph gives an alternative way to perform the  same analysis. Each vertex corresponds to a subproblem, and the choices for a  subproblem are the edges incident to that subproblem.
 
+> Whenever you see a question that asks for the maximum or minimum of something, consider Dynamic Programming as a possibility.
 
 ## Greedy Algorithms
-Algorithms  for optimization  problems typically  go through  a sequence  of  steps,with a set of choices at each step. For many optimization problems, using dynamic programming to determine the best choices is overkill; simpler, more efficient algorithms will do. A __greedy algorithm__ always makes the choice that looks best at the moment. That is, it makes a locally optimal choice in the hope that this choice will lead to a globally optimal solution.
+Algorithms  for optimization  problems typically  go through  a sequence  of  steps, with a set of choices at each step. For many optimization problems, using dynamic programming to determine the best choices is overkill; simpler, more efficient algorithms will do. A __greedy algorithm__ always makes the choice that looks best at the moment. That is, it makes a locally optimal choice in the hope that this choice will lead to a globally optimal solution.
 
 ### Greedy choice property
 We can assemble a globally optimal solution by making locally optimal (greedy) choices. In other words, when we are considering which choice to make, we make the choice that looks best in the current problem, without considering results from subproblems.
@@ -470,7 +470,7 @@ In a greedy algorithm, we make whatever choice seems best at the moment and then
 A  dynamic-programming  algorithm  proceeds  bottom  up,  whereas  a  greedy  strategy  usually progresses in a top-down fashion, making one greedy choice after another, reducing each given problem instance to a smaller one.
 
 ### Optimal substructure
-A problem exhibits __optimal substructure__ if an optimal solution to the  problem contains within it optimal solutions to subproblems. This property is a key ingredient of assessing the applicability of dynamic programming as well as greedy algorithms.
+A problem exhibits __optimal substructure__ if an optimal solution to the problem contains within its optimal solutions to subproblems. This property is a key ingredient of assessing the applicability of dynamic programming as well as greedy algorithms.
 
 See also these problems:
 * Activity Selection Problem (`problems/activity-selection.ts`)
@@ -492,7 +492,7 @@ The most common techniques used in amortized analysis:
     In aggregate analysis,  we show that for all `n`, a sequence of `n` operations  takes worst-case time `T(n)` in total. In the worst case, the average cost, or amortized cost, per operation is therefore `T(n)/n`. Note that this amortized cost applies to each operation,  even when there are several types of operations in the sequence.
 
     #### Incrementing a binary counter (Example)
-    consider the problem of implementing a `k`-bit binary counter that counts upward from `0`. We use an array `A[0..k-1]` of bits, where `A.length = k`, as the counter. A binary number `x` that is stored in the counter has its lowest-order bit in `A[0]` and its highest-order bit in `A[k-1]`, so that `Σ[i=0 -> k-1](A[i] * 2^i)`. Initially, `x = 0`, and thus `A[i] = 0` for `i = 0, 1, ..., k-1`. To add `1` (modulo `2^k`) to the value in the counter, we use the following procedure.
+    Consider the problem of implementing a `k`-bit binary counter that counts upward from `0`. We use an array `A[0..k-1]` of bits, where `A.length = k`. A binary number `x` that is stored in the counter has its lowest-order bit in `A[0]` and its highest-order bit in `A[k-1]`, so that `Σ[i=0 -> k-1](A[i] * 2^i)`. Initially, `x = 0`, and thus `A[i] = 0` for `i = 0, 1, ..., k-1`. To add `1` (modulo `2^k`) to the value in the counter, we use the following procedure.
 
     ```typescript
     function increment(A: number[]) {
@@ -511,11 +511,11 @@ The most common techniques used in amortized analysis:
 
     A cursory analysis yields a bound that is correct but not tight. A single execution of `increment()` takes time `θ(k)` in the worst case, in which array `A` contains all 1s. Thus, a sequence of `n` `increment()` operations on an initially zero counter takes time `O(nk)` in the worst case.
 
-    We can tighten our analysis to yield a worst-case cost of `O(n)` for a sequence of `n` `increment()` operations by observing that not all bits flip each time `increment()` is called. As the table below shows, `A[0]` does flip each time `increment()` is called. The next bit up, `A[1]`, flips only every other time:  a sequence of `n` `increment()` operations on an initially zero counter causes `A[1]` to flip `⌊n/2⌋` times. Similarly,bit `A[2]` flips only every fourth time, or `⌊n/4⌋` times in a sequence of `n` `increment()` operations.
+    We can tighten our analysis to yield a worst-case cost of `O(n)` for a sequence of `n` `increment()` operations by observing that not all bits flip each time `increment()` is called. As the table below shows, `A[0]` does flip each time `increment()` is called. The next bit up, `A[1]`, flips only every other time:  a sequence of `n` `increment()` operations on an initially zero counter causes `A[1]` to flip `⌊n/2⌋` times. Similarly,bit `A[2]` flips only every fourth time, or `⌊n/4⌋` times in a sequence of `n` `increment()` operations.
 
     ![binary-counter](./images/binary-counter.png)
 
-    In general, for `i = 0, 1, ..., k-1`, bit `A[i]` flips `⌊n/2^i⌋` times in a sequence  of `n` `increment()` operations on an initially zero counter.   For `i ≥ k`, bit `A[i]` does not exist, and so it cannot flip. The  total number of flips in the sequence is thus
+    In general, for `i = 0, 1, ..., k-1`, bit `A[i]` flips `⌊n/2^i⌋` times in a sequence  of `n` `increment()` operations on an initially zero counter. For `i ≥ k`, bit `A[i]` does not exist, and so it cannot flip. The  total number of flips in the sequence is thus
 
     `Σ[i=0 -> k-1](⌊n/2^i⌋) < n * Σ[i=0 -> ∞](1/2^i) = 2n`
 
@@ -545,7 +545,7 @@ The most common techniques used in amortized analysis:
 
     > #### We associate the potential with the data structure as a whole rather than with specific objects within the data structure.
 
-    The potential method works as follows. We will perform `n` operations, starting with an initial data structure `D_0`. For each `i = 1, 2, ..., n`,we let `c_i` be the actual cost of the `i`-th operation and `D_i` be the data structure that results after applying the `i`-th operation to data structure `D_i-1`. A __potential function__ `Ф` maps each data structure `D_i` to a real number `Ф(D_i)`, which is the __potential__ associated with data structure `D_i`. The __amortized cost__ `C_i` of the `i`-th operation with respect to potential function `Ф` is defined by:
+    The potential method works as follows. We will perform `n` operations, starting with an initial data structure `D_0`. For each `i = 1, 2, ..., n`, we let `c_i` be the actual cost of the `i`-th operation and `D_i` be the data structure that results after applying the `i`-th operation to data structure `D_i-1`. A __potential function__ `Ф` maps each data structure `D_i` to a real number `Ф(D_i)`, which is the __potential__ associated with data structure `D_i`. The __amortized cost__ `C_i` of the `i`-th operation with respect to potential function `Ф` is defined by:
 
     `C_i = c_i + Ф(D_i) - Ф(D_i-1)`
 
@@ -556,7 +556,7 @@ The most common techniques used in amortized analysis:
     In practice, we do not always know how many operations might be performed. Therefore, if we require that `Ф(D_i) ≥ Ф(D_0)` for all `i`, then we guarantee, as in the accounting method, that we pay in advance. We usually just define `Ф(D_0)` to be `0` and then show that `Ф(D_i) ≥ 0` for all `i`.
 
     #### Incrementing a binary counter (Example)
-    We again look at incrementing a binary counter. This time, we define the potential of the counter after the ith `increment()` operation to be `b_i`, the number of 1s in the counter after the `i`-th operation.
+    We again look at incrementing a binary counter. This time, we define the potential of the counter after the `i`th `increment()` operation to be `b_i`, the number of 1s in the counter after the `i`-th operation.
 
     Let us compute the amortized cost of an `increment()` operation. Suppose that the `i`-th  `increment()` operation resets `t_i` bits. The actual cost of the operation is therefore at most `t_i + 1`, since in addition to resetting `t_i` bits, it sets at most one bit to 1. If `b_i > 0`, then the `i`-th operation resets all `k` bits, and so `b_i-1 = t_i = k`. If `b_i > 0`, then `b_i = b_i-1 - t_i + 1`. In either case, `b_i ≤ b_i-1 - t_i + 1`, and the potential difference is:
 
@@ -587,20 +587,20 @@ Upon inserting an item into a full table, we can __expand__ the table by allocat
 A common heuristic allocates a new table with twice as many slots as the old one. If the only table operations are insertions, then the load factor of the table is always at least `1/2`, and thus the amount of wasted space never exceeds half the total space in the table.
 
 #### Aggregate Analysis
-Let us analyze a sequence of `n` `TABLE-INSERT()` operations on an initially empty table. What is the cost `c_i` of the `i`-th operation? If the current table has room for the new item (or if this is the first operation), then `c_i = 1`, since we need only perform the one __elementary insertion__. If the current table is full, however, and an expansion occurs, then `ci = i`: the cost is `1` for the elementary insertion plus `i - 1` for the items that we must copy from the old table to the new table. If we perform `n` operations,  the worst-case cost of an operation is `O(n)`, which leads to an upper bound of `O(n^2)` on the total running time for `n` operations.
+Let us analyze a sequence of `n` `TABLE-INSERT()` operations on an initially empty table. What is the cost `c_i` of the `i`-th operation? If the current table has room for the new item (or if this is the first operation), then `c_i = 1`, since we need only perform the one __elementary insertion__. If the current table is full, however, and an expansion occurs, then `c_i = i`: the cost is `1` for the elementary insertion plus `i - 1` for the items that we must copy from the old table to the new table. If we perform `n` operations,  the worst-case cost of an operation is `O(n)`, which leads to an upper bound of `O(n^2)` on the total running time for `n` operations.
 
 This bound is not tight, because we rarely expand the table in the course of `n` `TABLE-INSERT()` operations. Specifically, the `i`-th  operation  causes  an expansion only when `i - 1` is an exact power of `2`. The amortized cost of an operation is in fact `O(1)`, as we can show using aggregate analysis. The cost of the `i`-th operation is:
 
 ![dynamic-table-insert-amortized-cost](./images/dynamic-table-insert-amortized-cost.png)
 
-because at most `n` operations cost1and the costs of the remaining operations forma geometric series. Since the total cost of `n` `TABLE-INSERT()` operations is bounded by `3n`, the amortized cost of a single operation is at most `3`.
+Since the total cost of `n` `TABLE-INSERT()` operations is bounded by `3n`, the amortized cost of a single operation is at most `3`.
 
 #### Potential Method
 We start by defining a potential function `Ф` that is `0` immediately after an expansion but builds to the table size by the time the table is full, so that we can pay for the next expansion by the potential. The function:
 
 `Ф(T) = 2 * T.num - T.size`
 
-is one possibility. Immediately after an expansion, we have `T.num = T.size/2`,and thus `Ф(T) = 0`, as desired. Immediately before an expansion, we  have `T.num = T.size`, and thus `Ф(T) = T.num`, as desired. The initial value of  the potential is `0`, and since the table is always at least half full, `T.num ≥ T.size/2`, which implies that `Ф(T)` is always nonnegative.
+is one possibility. Immediately after an expansion, we have `T.num = T.size/2`, and thus `Ф(T) = 0`, as desired. Immediately before an expansion, we  have `T.num = T.size`, and thus `Ф(T) = T.num`, as desired. The initial value of  the potential is `0`, and since the table is always at least half full, `T.num ≥ T.size/2`, which implies that `Ф(T)` is always nonnegative.
 
 To analyze the amortized cost of the `i`-th `TABLE-INSERT()` operation, we let `num_i` denote the number of items stored in the table after the `i`-th operation, `size_i` denote the total size of the table after the `i`-th operation, and `Ф_i` denote the potential after the `i`-th operation. Initially, we have `num_0 = 0`, `size_0 = 0`, and `Ф_0 = 0`.
 
@@ -624,9 +624,10 @@ C_i = c_i + Ф_i - Ф_i-1 =
 ```
 
 #### Table expansion and contraction
-To implement a `TABLE-DELETE` operation, it is simple enough to remove the specified item from the table. In order to limit the amount of wasted space, however,we might wish to __contract__ the table when the load factor becomes too small. Table contraction is analogous to table expansion: when the number of items in the table drops too low, we allocate a new, smaller table and then copy the items from the old table into the new one. We can then free the storage for the old table by return-ing it to the memory-management system.  Ideally, we would like to preserve two properties:
+To implement a `TABLE-DELETE` operation, it is simple enough to remove the specified item from the table. In order to limit the amount of wasted space, however, we might wish to __contract__ the table when the load factor becomes too small. Table contraction is analogous to table expansion: when the number of items in the table drops too low, we allocate a new, smaller table and then copy the items from the old table into the new one. We can then free the storage for the old table by return-ing it to the memory-management system.  Ideally, we would like to preserve two properties:
 
-1. The load factor of the dynamic table is bounded below by a positive constant.2. The amortized cost of a table operation is bounded above by a constant.
+1. The load factor of the dynamic table is bounded below by a positive constant.
+2. The amortized cost of a table operation is bounded above by a constant.
 
 You might think that we should double the table size upon inserting an item into a full table and halve the size when a deleting  an item would cause the table to become less than half full. This strategy would guarantee that the load factor of the table never drops below `1/2`, but unfortunately, it can cause the amortized cost of an operation to be quite large.
 
@@ -722,7 +723,7 @@ The  following  problems  reduce  to   shortest  paths  in  weighted digraphs:
 
 * Parallel precedence-constrained scheduling.
 
-    Given a set of jobs of specified du-ration to be completed, with precedence constraints that specify that certain jobs have to be completed before certain other jobs are begun, how can we schedule the jobs on identical processors (as many as needed) such that they are all completed in the minimum amount of time while still respecting the constraints?
+    Given a set of jobs of specified duration to be completed, with precedence constraints that specify that certain jobs have to be completed before certain other jobs are begun, how can we schedule the jobs on identical processors (as many as needed) such that they are all completed in the minimum amount of time while still respecting the constraints?
 
 * Arbitrage.
   
@@ -732,11 +733,11 @@ The  following  problems  reduce  to   shortest  paths  in  weighted digraphs:
 The following problems reduce to the maxflow problem:
 * Job placement.
   
-    A college’s job-placement office arranges interviews for a set of students with a set of companies; these interviews result in a set of job offers. As-suming that an interview followed by a job offer represents mutual interest in the student taking a job at the company, it is in everyone’s best interests to maximize the number of job placements. Is it possible to match every student with a job?  What is the maximum number of jobs that can be filled?
+    A college’s job-placement office arranges interviews for a set of students with a set of companies; these interviews result in a set of job offers. Assuming that an interview followed by a job offer represents mutual interest in the student taking a job at the company, it is in everyone’s best interests to maximize the number of job placements. Is it possible to match every student with a job?  What is the maximum number of jobs that can be filled?
 
 * Product  distribution.
   
-    A  company  that  manufactures  a  single  product  has  fac-tories, where the product is produced; distribution centers, where the product is stored  temporarily;  and  retail  outlets,  where  the  product  is  sold.    The  company must distribute the product from factories through distribution centers to retail outlets on a regular basis, using distribution channels that have varying capacities. Is it possible to get the product from the warehouses to the retail outlets such that supply meets demand everywhere?
+    A  company  that  manufactures  a  single  product  has  factories, where the product is produced; distribution centers, where the product is stored  temporarily;  and  retail  outlets,  where  the  product  is  sold. The  company must distribute the product from factories through distribution centers to retail outlets on a regular basis, using distribution channels that have varying capacities. Is it possible to get the product from the warehouses to the retail outlets such that supply meets demand everywhere?
 
 * Network  reliability.
   

@@ -37,7 +37,7 @@ export class DoublyLinkedList<T> {
 
     /**
      * inserts a value to the list.
-     * @complexity: O(1)
+     * @time O(1)
      * @param value
      */
     insert(value: T) {
@@ -55,7 +55,7 @@ export class DoublyLinkedList<T> {
 
     /**
      * removes the node from list with the data equal to value.
-     * @complexity: O(n)
+     * @time O(n)
      * @param value
      */
     remove(value: T) {
@@ -70,7 +70,7 @@ export class DoublyLinkedList<T> {
 
     /**
      * searches for the value
-     * @complexity: O(n)
+     * @time O(n)
      * @param value
      * @returns pointer to the node
      */
@@ -82,7 +82,7 @@ export class DoublyLinkedList<T> {
 
     /**
      * traverses through the list
-     * @complexity: O(n)
+     * @time O(n)
      * @param fn
      */
     // tslint:disable-next-line: no-any
@@ -109,7 +109,7 @@ export class DoublyLinkedList<T> {
 
     /**
      * prints the list
-     * @complexity: O(n)
+     * @time O(n)
      */
     print(): void {
         let output = '';

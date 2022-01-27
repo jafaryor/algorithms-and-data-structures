@@ -5,7 +5,7 @@
 | __Time Complexity__ | `O(n)` | `θ(n)` | `Ω(n)` |
 | __Space Complexity__ | `O(1)` | `θ(1)` | `Ω(1)` |
 
-the _Median of Medians_ is an approximate (median) selection algorithm, frequently used to supply a good pivot for an exact selection algorithm, mainly the quickselect, that selects the kth largest element. Median of medians finds an approximate median in linear time.
+the _Median of Medians_ is an approximate (median) selection algorithm, frequently used to supply a good pivot for an exact selection algorithm, mainly the quickselect, that selects the `k`th largest element. Median of medians finds an approximate median in linear time.
 
 It divides its input into groups of at most five elements, computes the median of each of those groups using some subroutine, then recursively computes the true median of the `n/5` medians found in the previous step.
 
@@ -32,7 +32,7 @@ The time for dividing lists, finding the medians of the sublists, and partitioni
     = O(n)
 
 ### Space Complexity
-After the first call median of medians will spit out a smaller array, now we need to evaluate the ith element of this smaller array. Note that the ith element of this smaller array is the result, so i do not need to pass back any information to the earlier call.
+After the first call median of medians will spit out a smaller array, now we need to evaluate the `i`th element of this smaller array. Note that the `i`th element of this smaller array is the result, so i do not need to pass back any information to the earlier call.
 
 In quick sort, i need to put back the sorted small arrays back into the correct position and so recursion occurs. With median of medians, after the loop (tail recursion), i will be left with the answer.
 

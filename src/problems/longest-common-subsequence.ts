@@ -26,15 +26,15 @@ import {Matrix} from '../data-structures/matrix';
  * 1. Finding an LCS of X_(m-1) and Y
  * 2. Finding an LCS of X and Y_(n-1)
  * Whichever of these two LCSs is longer is an LCS of X and Y.
- * Because these cases exhaust all possibilities,we know that one of the
+ * Because these cases exhaust all possibilities, we know that one of the
  * optimal subproblem solutions must appear within an LCS of X and Y.
  */
 
 /**
  * Return the length of the longest common subsequence.
  * The final result is in the lcs[m][n].
- * @time- O(n*m)
- * @space- O(n*m)
+ * @time O(n*m)
+ * @space O(n*m)
  */
 export function longestCommonSubsequence(x: string, y: string): number[][] {
     const m = x.length;
@@ -64,7 +64,7 @@ export function longestCommonSubsequence(x: string, y: string): number[][] {
  * Prints longest common subsequence.
  * Note: There might be multiple solutions, but this it prints the first
  * longest that starts from left of first input.
- * @time- O(m + n). Since it decrements,
+ * @time O(m + n). Since it decrements,
  * at least one of i and j in each recursive call.
  * Note: Must stat with i = x.length nad j = y.length.
  * @see - /images/lcs-backtrack.png

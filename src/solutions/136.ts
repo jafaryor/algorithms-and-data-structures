@@ -3,8 +3,8 @@
 */
 
 /**
- * @time-complexity: O(n)
- * @space-complexity: O(1)
+ * @timecomplexity: O(n)
+ * @spacecomplexity: O(1)
  * @param {number[]} nums
  * @return {number}
  */

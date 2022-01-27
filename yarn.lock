@@ -1201,11 +1201,6 @@
   "resolved" "https://registry.npmjs.org/fs.realpath/-/fs.realpath-1.0.0.tgz"
   "version" "1.0.0"
 
-"fsevents@^2.3.2":
-  "integrity" "sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA=="
-  "resolved" "https://registry.npmjs.org/fsevents/-/fsevents-2.3.2.tgz"
-  "version" "2.3.2"
-
 "function-bind@^1.1.1":
   "integrity" "sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A=="
   "resolved" "https://registry.npmjs.org/function-bind/-/function-bind-1.1.1.tgz"
@@ -1304,7 +1299,7 @@
   "resolved" "https://registry.npmjs.org/human-signals/-/human-signals-2.1.0.tgz"
   "version" "2.1.0"
 
-"husky@^7.0.4":
+"husky@^7.0.0":
   "integrity" "sha512-vbaCKN2QLtP/vD4yvs6iz6hBEo6wkSzs8HpRah1Z6aGmF2KW5PdYuAd7uX5a+OyBZHBhd+TFLqgjUgytQr4RvQ=="
   "resolved" "https://registry.npmjs.org/husky/-/husky-7.0.4.tgz"
   "version" "7.0.4"
@@ -2475,12 +2470,7 @@
     "make-error" "^1.1.1"
     "yn" "3.1.1"
 
-"tslib@^1.13.0":
-  "integrity" "sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg=="
-  "resolved" "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz"
-  "version" "1.14.1"
-
-"tslib@^1.8.1":
+"tslib@^1.13.0", "tslib@^1.8.1":
   "integrity" "sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg=="
   "resolved" "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz"
   "version" "1.14.1"

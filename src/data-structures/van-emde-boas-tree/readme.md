@@ -10,7 +10,7 @@ We call the set `{0, 1, 2, ..., u-1}` the __universe__ of values that can be sto
 > We assume that `u` is an exact power of `2`, i.e., `u = 2^k` for some integer `k ≥ 1`.
 
 ### Preliminary approaches
-To store a dynamic set of values from the universe `{0, 1, 2, ..., u-1}`, we maintain an array `A[0 ... u-1]` of `u` bits. The entry `A[x]` holds a `1` if the value `x` is in the dynamic set, and it holds a `0` otherwise. Although we can perform `insert()`, `delete()`, and `search()` operations in `O(1)` time with a bit vector, the remaining operations: `min()`, `max()`, `successor()`, and `predecessor()` each take `θ(u)` time in the worst case because we might have to scan through `u` elements.
+To store a dynamic set of values from the universe `{0, 1, 2, ..., u-1}`, we maintain an array `A[0 ... u-1]` of `u` bits. The entry `A[x]` holds a `1` if the value `x` is in the dynamic set, and it holds a `0` otherwise. Although we can perform `insert()`, `delete()`, and `search()` operations in `O(1)` time with a bit vector, the remaining operations: `min()`, `max()`, `successor()`, and `predecessor()` each take `θ(u)` time in the worst case because we might have to scan through `u` elements.
 
 We can short-cut long scans in the bit vector by superimposing (наложение) a binary tree of bits on top of it.
 
@@ -29,9 +29,9 @@ Instead of superimposing a binary tree on top of the bit vector, we superimpose 
 
 As  before, each  internal  node  stores  the  logical-or  of  the  bits  within  its  sub-tree, so that the `√u` internal nodes at depth `1` summarize each group of `√u` values.
 
-We  can  think  of  these  nodes  as  an  array `summary[0 ... √u - 1]`, where `summary[i]` contains  a `1` if  and only  if  the sub-array `A[i√u ... (i + 1)√u - 1]` contains a `1`.   We call this `√u`-bit sub-array of `A` the __`i`-th cluster__.
+We  can  think  of  these  nodes  as  an  array `summary[0 ... √u - 1]`, where `summary[i]` contains  a `1` if  and only  if  the sub-array `A[i√u ... (i + 1)√u - 1]` contains a `1`.   We call this `√u`-bit sub-array of `A` the __`i`-th cluster__.
 
-For a given value of `x`, the bit `A[x]` appears  in  cluster  number &lfloor;`x/√u`&rfloor;.  Now `insert()` becomes an `O(1)` time  operation:  to  insert `x`, set both `A[x]` and `summary[`&lfloor;`x/√u`&rfloor;`]` to `1`. We can use the summary array to perform each of the operations `min()`, `max()`, `successor()`, `predecessor()`, and `delete()` in `O(√u)` time.
+For a given value of `x`, the bit `A[x]` appears  in  cluster  number &lfloor;`x/√u`&rfloor;.  Now `insert()` becomes an `O(1)` time  operation:  to  insert `x`, set both `A[x]` and `summary[`&lfloor;`x/√u`&rfloor;`]` to `1`. We can use the summary array to perform each of the operations `min()`, `max()`, `successor()`, `predecessor()`, and `delete()` in `O(√u)` time.
 
 In each of the above operations, we search through at most two clusters of `√u` bits plus the summary array, and so each operation takes `O(√u)` time.
 
@@ -57,7 +57,7 @@ The function `index(x, y)` builds an element number from `x` and `y`, treating `
 ### Proto van Emde Boas structures
 For the universe `{0, 1, 2, ..., u-1}`, we define a __proto van Emde Boas__ structure, or __proto-vEB__ structure,  which we denote  as `proto-vEB(u)`,  recursively  as follows.
 * Each `proto-vEB(u)` structure contains an attribute `u` giving its universe size.
-* If `u = 2`, then it is the base size, and it contains an array `A[0 .. 1]` of two bits.
+* If `u = 2`, then it is the base size, and it contains an array `A[0 .. 1]` of two bits.
 * Otherwise, `u = 2^(2^k)` for  some  integer `k ≥ 1`, so that `u ≥ 4`. In  addition to the universe size `u`, the data structure `proto-vEB(u)` contains the following attributes:
   * a pointer named summary to a `proto-vEB(√u)` structure and.
   * an array cluster `[0 .. √u-1]` of `√u` pointers, each to a `proto-vEB(√u))` structure.

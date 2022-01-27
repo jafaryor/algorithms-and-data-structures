@@ -14,7 +14,7 @@ export class StackWithTwoQueues<T> {
 
     /**
      * adds value to the stack
-     * @complexity: O(1)
+     * @time O(1)
      * @param value
      */
     push(value: T): void {
@@ -23,7 +23,7 @@ export class StackWithTwoQueues<T> {
 
     /**
      * take the top item from the stack and return its value
-     * @complexity: O(n)
+     * @time O(n)
      * @returns the pulled out item's value
      */
     pop(): T | undefined {
@@ -38,7 +38,7 @@ export class StackWithTwoQueues<T> {
 
     /**
      * returns the value of the top item
-     * @complexity: O(n)
+     * @time O(n)
      */
     peek(): T | undefined {
         this.moveItemsToSecondQueue();
@@ -79,7 +79,7 @@ export class StackWithTwoQueues<T> {
 
     /**
      * moves all items except the last one from the first queue to the second queue
-     * @complexity: O(n)
+     * @time O(n)
      */
     private moveItemsToSecondQueue(): void {
         while (this.queue01.length > 1) {

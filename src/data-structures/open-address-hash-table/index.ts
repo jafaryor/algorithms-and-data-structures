@@ -36,7 +36,7 @@ export class OpenAddressHashTable<T> {
 
     /**
      * Insert the key/value pair to the table.
-     * @complexity: O(1/(1-n/m))
+     * @time O(1/(1-n/m))
      * @note: under the assumption of uniform hashing.
      */
     insert(key: number, value: T) {
@@ -63,7 +63,7 @@ export class OpenAddressHashTable<T> {
 
     /**
      * Delete the node with @key.
-     * @complexity: O(1/(1-n/m))
+     * @time O(1/(1-n/m))
      * @note: under the assumption of uniform hashing.
      */
     delete(key: number): T | null {
@@ -89,7 +89,7 @@ export class OpenAddressHashTable<T> {
 
     /**
      * Search the node with key equal to @key in the table.
-     * @complexity: O(1/(1-n/m))
+     * @time O(1/(1-n/m))
      * @note: under the assumption of uniform hashing.
      */
     search(key: number): T | null {

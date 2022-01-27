@@ -14,7 +14,7 @@ export class QueueWithTwoStacks<T> {
 
     /**
      * adds value to queue
-     * @complexity: O(1)
+     * @time O(1)
      * @param value
      */
     enqueue(value: T): void {
@@ -23,7 +23,7 @@ export class QueueWithTwoStacks<T> {
 
     /**
      * pulls out the first element from the queue
-     * @complexity: O(n)
+     * @time O(n)
      * @returns the value of the pulled out item
      */
     dequeue(): T | undefined {
@@ -36,7 +36,7 @@ export class QueueWithTwoStacks<T> {
 
     /**
      * return the value of the first item
-     * @complexity: O(n)
+     * @time O(n)
      * @returns the value of the first item
      */
     peek(): T | undefined {
@@ -71,7 +71,7 @@ export class QueueWithTwoStacks<T> {
 
     /**
      * moves the items from the first stack to the second one
-     * @complexity: O(n)
+     * @time O(n)
      */
     private moveItemsToSecondStack(): void {
         while (!this.stack01.isEmpty()) {

@@ -44,7 +44,7 @@ export class HashTable<T> {
 
     /**
      * Inserts the value at the head of the list T[hash(value.key)].
-     * @complexity: O(1)
+     * @time O(1)
      */
     insert(key: number, value: T) {
         const hash = this.calculateHash(key);
@@ -64,7 +64,7 @@ export class HashTable<T> {
 
     /**
      * Delete the value from the list T[hash(value.key)].
-     * @complexity: O(1 + n/m)
+     * @time O(1 + n/m)
      */
     delete(key: number): T | null {
         const hash = this.calculateHash(key);
@@ -85,7 +85,7 @@ export class HashTable<T> {
 
     /**
      * Search for an value with key k in list T[hash(k)].
-     * @complexity: O(1 + n/m)
+     * @time O(1 + n/m)
      */
     search(key: number): HashTableListNode<T> | null {
         const hash = this.calculateHash(key);

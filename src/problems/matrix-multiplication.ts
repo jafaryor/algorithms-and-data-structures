@@ -4,7 +4,7 @@ import {Matrix} from '../data-structures/matrix/index';
  * Multiplies two squared array of the same order by
  * Divide and Conquer method.
  * @constrains - works only with matrices of even order (0, 2, 4, 6, ...)
- * @time- O(n^3)
+ * @time O(n^3)
  */
 export function matrixMultiplyWithDivideAndConquer(
     a: number[][],
@@ -72,7 +72,7 @@ export function matrixMultiplyWithDivideAndConquer(
 
 /**
  * Multiplies two squared array by Strassen's Algorithm
- * @complexity: O(n^(lg7))
+ * @time O(n^(lg7))
  * @url: https://www.geeksforgeeks.org/easy-way-remember-strassens-matrix-equation/
  * @code: https://github.com/dmitr1y/StrassenVizi/blob/master/files/js/Strassen.js
  */

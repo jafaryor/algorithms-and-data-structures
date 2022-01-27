@@ -39,7 +39,7 @@ export class SinglyLinkedList<T> {
 
     /**
      * searches for the value
-     * @complexity: O(n)
+     * @time O(n)
      * @param value
      * @returns pointer to the node
      */
@@ -55,7 +55,7 @@ export class SinglyLinkedList<T> {
 
     /**
      * Inserts a node to the end of the list
-     * @complexity: O(1)
+     * @time O(1)
      * @param value
      */
     insert(value: T): void {
@@ -74,7 +74,7 @@ export class SinglyLinkedList<T> {
 
     /**
      * inserts a node after the value
-     * @complexity: O(n)
+     * @time O(n)
      * @param value
      * @param newValue
      */
@@ -97,7 +97,7 @@ export class SinglyLinkedList<T> {
 
     /**
      * removes the node
-     * @complexity: O(n)
+     * @time O(n)
      * @param value
      */
     remove(value: T): T | null {
@@ -140,7 +140,7 @@ export class SinglyLinkedList<T> {
 
     /**
      * traverses through the list
-     * @complexity: O(n)
+     * @time O(n)
      * @param fn
      */
     // tslint:disable-next-line: no-any
@@ -170,7 +170,7 @@ export class SinglyLinkedList<T> {
 
     /**
      * prints the list
-     * @complexity: O(n)
+     * @time O(n)
      */
     print(): void {
         let output = '';

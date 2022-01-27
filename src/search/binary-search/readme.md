@@ -14,17 +14,19 @@ Derivation:
 * 2nd step: `T(n/2)=T(n/4) + 1 ……[ T(n/4)= T(n/2^2) ]`
 * 3rd step: `T(n/4)=T(n/8) + 1 ……[ T(n/8)= T(n/2^3) ]`
 * ...
-* kth step: `T(n/2^k-1)=T(n/2^k) + 1*(k times)`
+* kth step: `T(n/2^k-1)=T(n/2^k) + k`
 
-Adding all the equations we get, `T(n) = T(n/2^k) + k`. (__*__)
+Adding all the equations we get, `T(n) = T(n/2^k) + k` (__*__)
 
-=> `n/2^k= 1` [So how many times we need to divide by 2 until we have only one element left]
+Since we know that in the last step, we check an array cut of length 1 (in the worst case of course), we assert:
+
+=> `n/2^k = 1` [So how many times we need to divide by 2 until we have only one element left]
 
 => `n=2^k`
 
-=> `log n=k` [taken `log(base 2)` on both sides ]
+=> `log n = k` [taken `log(base 2)` on both sides ]
 
-Put `k= log` n in equation __*__.
+Put `k = log` in in equation __*__.
 
 => `T(n) = T(1) + log n`
 

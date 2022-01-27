@@ -30,6 +30,6 @@ Counting sort beats the lower bound of `Ω(n lgn)`, because it is not a comparis
 
 * __Step III__
 
-    In this step we place the input array `A` element at sorted position by taking help of constructed count array `C` ,i.e what we constructed in step two. We used the result array `B` to store the sorted elements. Here we handled the index of `B` start from zero.
+    In this step we place the input array `A` element at sorted position by taking help of constructed count array `C`, i.e what we constructed in step two. We used the result array `B` to store the sorted elements. Here we handled the index of `B` start from zero.
 
     ![counting-sort-III](./images/counting-sort-III.gif)

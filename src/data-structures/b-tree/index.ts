@@ -33,7 +33,7 @@ export class BTree<T> {
      * Returns the reference to the node with a specific key.
      * @param node - a node to start search from
      * @param key - key to be searched for
-     * @time- O(t * log_t(n)), where:
+     * @time O(t * log_t(n)), where:
      * t - linear search in array of keys of length <= t
      * log_t(n) - height of the tree
      * @note - If replace the linear search of key with binary search,
@@ -99,7 +99,7 @@ export class BTree<T> {
     /**
      * Finds the min key of the tree.
      * @note - must start from root.
-     * @time- O(log_t(n))
+     * @time O(log_t(n))
      */
     min(node?: BTreeNode<T>): number | undefined {
         if (!node) {
@@ -114,7 +114,7 @@ export class BTree<T> {
     /**
      * Finds the max key of the tree.
      * @note - must start from root.
-     * @time- O(log_t(n))
+     * @time O(log_t(n))
      */
     max(node?: BTreeNode<T>): number | undefined {
         if (!node) {

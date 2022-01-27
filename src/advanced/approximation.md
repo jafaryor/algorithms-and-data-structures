@@ -6,7 +6,7 @@ Many problems of practical significance are NP-complete, yet they are too import
 
 We call an algorithm that returns near-optimal solutions an __approximation algorithm__.
 
-We say that an algorithm for a problem has an approximation ratio of `ρ(n)` if,for any input  of size `n`,  the cost `C` of the solution produced  by the algorithm  is within a factor of `ρ(n)` of the cost `C'` of an optimal solution:
+We say that an algorithm for a problem has an approximation ratio of `ρ(n)` if, for any input  of size `n`,  the cost `C` of the solution produced  by the algorithm  is within a factor of `ρ(n)` of the cost `C'` of an optimal solution:
 
 `max(C/C', C'/C) ≤ ρ(n)`
 
@@ -59,12 +59,12 @@ We shall first compute a structure — a minimum spanning tree — whose weight 
 #### Theorem
 `approxTourFrom()` is  a  polynomial-time 2-approximation  algorithm  for  the traveling-salesman problem with the triangle inequality.
 
-Meaning if the cost function for an instance of the traveling-salesman problem satisfies the triangle inequality,then `approxTourFrom()` returns a tour whose cost is not more than twice the cost of an optimal tour (`≤ 2 × optimal solution`).
+Meaning if the cost function for an instance of the traveling-salesman problem satisfies the triangle inequality, then `approxTourFrom()` returns a tour whose cost is not more than twice the cost of an optimal tour (`≤ 2 × optimal solution`).
 
 > `approxTourFrom()` is usually not the best practical choice for this problem. There are other approximation algorithms that typically perform much better in practice.
 
 ### The general Traveling-Salesman Problem
-If we drop the assumption that the cost function `c` satisfies the triangle inequality,then we cannot find good approximate tours in polynomial time unless `P = NP`.
+If we drop the assumption that the cost function `c` satisfies the triangle inequality, then we cannot find good approximate tours in polynomial time unless `P = NP`.
 
 #### Theorem
 If `P ≠ NP`, then for any constant `ρ ≥ 1`, there is no polynomial-time approximation algorithm with approximation ratio `ρ` for the general traveling-salesman problem.
@@ -112,7 +112,7 @@ An  instance  of  the  subset-sum  problem  is  a pair `(S, t)`, where `S` is a 
 
 Example: we may have a truck that can carry no more than `t` pounds, and `n` different boxes to ship, the `i`th of which weighs `x_i` pounds. We wish to fill the truck with as heavy a load as possible without exceeding the given weight limit.
 
-Suppose  that  we  computed,  for  each  subset `S'` of `S`,  the  sum  of  the  elements in `S'`,  and  then  we  selected,  among  the  subsets  whose  sum  does  not  exceed `t`, the one whose sum was closest to `t`.  Clearly this algorithm would return the optimal solution,  but it could take exponential  time.  To implement this algorithm,we  could  use  an  iterative  procedure  that,  in  iteration `i`,  computes  the  sums  of all  subsets  of `{x_1, x_2, ..., x_i}`,  using  as  a  starting  point  the  sums  of  all  subsets of `{x_1, x_2, ..., x_i-1}`. In doing so, we would realize that once a particular subset `S'` had a sum exceeding `t`, there would be no reason to maintain it, since no super-set of `S'` could be the optimal solution.
+Suppose  that  we  computed,  for  each  subset `S'` of `S`,  the  sum  of  the  elements in `S'`,  and  then  we  selected,  among  the  subsets  whose  sum  does  not  exceed `t`, the one whose sum was closest to `t`.  Clearly this algorithm would return the optimal solution,  but it could take exponential  time.  To implement this algorithm, we  could  use  an  iterative  procedure  that,  in  iteration `i`,  computes  the  sums  of all  subsets  of `{x_1, x_2, ..., x_i}`,  using  as  a  starting  point  the  sums  of  all  subsets of `{x_1, x_2, ..., x_i-1}`. In doing so, we would realize that once a particular subset `S'` had a sum exceeding `t`, there would be no reason to maintain it, since no super-set of `S'` could be the optimal solution.
 
 ---
 
