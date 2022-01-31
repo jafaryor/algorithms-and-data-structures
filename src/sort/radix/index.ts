@@ -3,7 +3,7 @@ import {countSort} from '../count';
 /**
  * LSD Radix Sort
  * Current implementation works only with positive integers
- * @time complexity: O(wn)
+ * @time complexity: O(d(n + b))
  * @space complexity: O(w + n)
  * @param array
  */

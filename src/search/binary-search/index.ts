@@ -14,7 +14,7 @@ export function binarySearch(
     let pivot: number;
 
     while (left <= right) {
-        pivot = Math.floor(left + (right - left) / 2);
+        pivot = left + Math.floor((right - left) / 2);
 
         if (input[pivot] === target) {
             return pivot;

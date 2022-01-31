@@ -94,7 +94,7 @@ function binarySearch(
     let median: number;
 
     while (right - left > 1) {
-        median = left + (right - left) / 2;
+        median = left + Math.floor((right - left) / 2);
 
         if (sequence[median] >= key) {
             right = median;

@@ -14,10 +14,10 @@ On the other hand, merge sort has several advantages over heapsort:
 
 ![heapsort-visual-trace](./images/heapsort-visual-trace.png)
 
-> My current implementation of the algorithm erquires `O(n)` auxiliary space. But it can be optimized to use constant auxiliary space by putting the min at the end of the passed array in each iteration.
+> My current implementation of the algorithm requires `O(n)` auxiliary space. But it can be optimized to use constant auxiliary space by putting the min at the end of the passed array in each iteration.
 
 ### Complexity
-We have `θ(n)` from biulding heap and `θ(n logn)` from the loop with heapification. Overall complexity: `θ(n*logn + n) = θ(n logn)`.
+We have `θ(n)` from building heap and `θ(n logn)` from the loop with heapification. Overall complexity: `θ(n*logn + n) = θ(n logn)`.
 
 |  | Worst | Average | Best |
 |:--|:-:|:-:|---|

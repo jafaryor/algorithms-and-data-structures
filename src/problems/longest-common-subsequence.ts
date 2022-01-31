@@ -45,7 +45,7 @@ export function longestCommonSubsequence(x: string, y: string): number[][] {
         for (let j = 0; j <= n; j++) {
             if (i === 0 || j === 0) {
                 // First row and fist columns are zeros,
-                // because eac character compares against an empty string.
+                // because each character compares against an empty string.
                 lcs[i][j] = 0;
             } else if (x[i - 1] === y[j - 1]) {
                 // Theorem case 1.

@@ -91,7 +91,7 @@ export class UnionFinder {
      * @param pairs - the given pairs of sites to connect.
      * @time Of Quick Find: O(N^2)
      * @time Of Quick Union: O(N^2)
-     * @time Of Weighted Quick Union: O(N * lgN
+     * @time Of Weighted Quick Union: O(N * lgN)
      */
     findConnectedComponents(
         method: QuickFindImplementation = QuickFindImplementation.WEIGHTED_QUICK_UNION,

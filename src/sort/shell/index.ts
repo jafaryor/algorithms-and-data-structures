@@ -22,7 +22,7 @@ export function shellSort(array: number[]): number[] {
         }
 
         // Reduce the interval size by third.
-        h = h / 3;
+        h = Math.floor(h / 3);
     }
 
     return array;

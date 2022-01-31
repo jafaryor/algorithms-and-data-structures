@@ -59,13 +59,13 @@ Here is the three-step divide-and-conquer process for sorting a typical subarray
 
     There are `log_4/3(n)` levels and each leves requires `cn` time. Overall time complexity: `Θ(n*log_4/3(n)) = Θ(n*lgn)`
 
-    The other case we'll look at to understand why quicksort's average-case running time is `O(n*lgn)` is what would happen if the half of the time that we don't get a 3-to-1 split, we got the worst-case split. Let's suppose that the 3-to-1 and worst-case splits alternate, and think of a node in the tree with k kk elements in its subarray. Then we'd see a part of the tree that looks like this:
+    The other case we'll look at to understand why quicksort's average-case running time is `O(n*lgn)` is what would happen if the half of the time that we don't get a 3-to-1 split, we got the worst-case split. Let's suppose that the 3-to-1 and worst-case splits alternate, and think of a node in the tree with `k` elements in its subarray. Then we'd see a part of the tree that looks like this:
 
     ![quick-sort-second-average-case](./images/quick-sort-second-average-case.png)
 
     Therefore, even if we got the worst-case split half the time and a split that's 3-to-1 or better half the time, the running time would be about twice the running time of getting a 3-to-1 split every time. Again, that's just a constant factor, and it gets absorbed into the big-O notation.
 
-    > The Space Complexity is the height of the tree which is equal to `log__4/3(n)` (size of the stack).
+    > The Space Complexity is the height of the tree which is equal to `log_4/3(n)` (size of the stack).
 
 > __Optimal pivot is in the middle, because when you move it to the left or to the right (or take biggest or smallest item), you increase depth of recursion. In the worst case you will get O(n^2) except of O(n*log2(n)) when taking the middle.__
 

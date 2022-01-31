@@ -1,17 +1,17 @@
 ## Shellsort
 Shellsort  is  a  simple  extension  of  insertion  sort  that  gains speed  by  allowing  exchanges  of  array  entries  that  are  far  apart,  to  produce  partially sorted arrays that can be efficiently sorted, eventually by insertion sort.
 
-The idea is to rearrange the array to give it the property that taking every `h`th entry (starting anywhere) yields a sorted subsequence. Such an array is said to be __`h`-sorted__. Put another  way, an __`h`-sorted__  array  is  `h` independent sorted subsequences, interleaved (чередующийся) together. By `h`-sorting for some large values of `h`, we can move items in the array long distances and thus make it easier to `h`-sort for smaller values of `h`.  Using  such a procedure for any sequence of values ofh that ends in 1 will produce a sorted array: that is __shellsort__.
+The idea is to rearrange the array to give it the property that taking every `h`th entry (starting anywhere) yields a sorted subsequence. Such an array is said to be __`h`-sorted__. Put another  way, an __`h`-sorted__  array  is  `h` independent sorted subsequences, interleaved (чередующийся) together. By `h`-sorting for some large values of `h`, we can move items in the array long distances and thus make it easier to `h`-sort for smaller values of `h`.  Using  such a procedure for any sequence of values of `h` that ends in `1` will produce a sorted array: that is __shellsort__.
 
-How do we decide what increment sequence to use? In general, this question is a difficult one to answer. The performance of the algorithm depends not just on the num-ber of increments, but also on arithmetical interactions among the increments such as the  size  of  their  common  divi-sors and other properties. Many different   increment   sequences have  been  studied  in  the  literature,  but  no  provably  best sequence  has  been  found.
+How do we decide what increment sequence to use? In general, this question is a difficult one to answer. The performance of the algorithm depends not just on the number of increments, but also on arithmetical interactions among the increments such as the  size  of  their  common  divisors and other properties. Many different   increment   sequences have  been  studied  in  the  literature,  but  no  provably  best sequence  has  been  found.
 
 ![shell-sort-visual-trace](./images/shell-sort-visual-trace.png)
 
-Shellsort  is  useful  even  for large    arrays,    particularly    by contrast  with  selection  sort  and insertion  sort.  It  also  performs well  on  arrays  that  are  in  arbitrary order (not necessarily ran-dom).
+Shellsort  is  useful  even  for large    arrays,    particularly    by contrast  with  selection  sort  and insertion  sort.  It  also  performs well  on  arrays  that  are  in  arbitrary order (not necessarily random).
 
-Shellsort is an in-place comparison sort.
+> Shellsort is an in-place comparison sort.
 
-> __Shellsrt is not stable__
+> __Shellsort is not stable__
 
 > Shellsort  is  much faster  than  insertion  sort  and selection sort, and its speed advantage increases with the array size.
 
@@ -30,4 +30,4 @@ The  most  important result in the present context is the knowledge that the run
 | __In Place__ | Yes |
 
 ### Example
-[Youtube Video](https://www.youtube.com/watch?v=CmPA7zE8mx0)
+[Youtube Video](https://www.youtube.com/watch?v=ddeLSDsYVp8)
