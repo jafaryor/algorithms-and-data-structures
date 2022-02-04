@@ -624,7 +624,7 @@ C_i = c_i + Ф_i - Ф_i-1 =
 ```
 
 #### Table expansion and contraction
-To implement a `TABLE-DELETE` operation, it is simple enough to remove the specified item from the table. In order to limit the amount of wasted space, however, we might wish to __contract__ the table when the load factor becomes too small. Table contraction is analogous to table expansion: when the number of items in the table drops too low, we allocate a new, smaller table and then copy the items from the old table into the new one. We can then free the storage for the old table by return-ing it to the memory-management system.  Ideally, we would like to preserve two properties:
+To implement a `TABLE-DELETE` operation, it is simple enough to remove the specified item from the table. In order to limit the amount of wasted space, however, we might wish to __contract__ the table when the load factor becomes too small. Table contraction is analogous to table expansion: when the number of items in the table drops too low, we allocate a new, smaller table and then copy the items from the old table into the new one. We can then free the storage for the old table by returning it to the memory-management system.  Ideally, we would like to preserve two properties:
 
 1. The load factor of the dynamic table is bounded below by a positive constant.
 2. The amortized cost of a table operation is bounded above by a constant.
@@ -719,7 +719,7 @@ The following problems  reduce to sorting:
 The  following  problems  reduce  to   shortest  paths  in  weighted digraphs:
 * Single-source shortest paths in undirected graph.
 
-    Given an edge-weighted un-directed graph with nonnegative weights and a source vertex `s`, support queries of the form Is there a path from `s` to a given target vertex `v`? If so, find a shortest such path (one whose total weight is minimal).
+    Given an edge-weighted undirected graph with nonnegative weights and a source vertex `s`, support queries of the form Is there a path from `s` to a given target vertex `v`? If so, find a shortest such path (one whose total weight is minimal).
 
 * Parallel precedence-constrained scheduling.
 
@@ -758,7 +758,7 @@ In  a  very  real  sense,  linear  programming  is  the  parent  of  problem-sol
 
 * Load balancing.
   
-    Given a set of jobs of specified duration to be completed, how can we schedule the jobs on two identical processors so as to minimize the com-pletion time of all the jobs?
+    Given a set of jobs of specified duration to be completed, how can we schedule the jobs on two identical processors so as to minimize the completion time of all the jobs?
 
 Next see NP-Completeness topic (Advanced section).
 

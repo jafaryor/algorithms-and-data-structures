@@ -1,7 +1,7 @@
 ## String Matching
 Text-editing programs frequently need to find all occurrences  of a pattern in the text. Typically, the text is a document being edited, and the pattern searched for is a particular word supplied by the user. Efficient algorithms for this problem—called __“string matching”__—can greatly aid the responsiveness of the text-editing program.  Internet search engines also use them to find Web pages relevant to queries.
 
-We  formalize  the  string-matching  problem  as  follows.    We  assume  that  the __text__  is  an  array `T[1 ... n]` of  length `n` and  that  the  __pattern__  is  an  array `P[1 ... m]` of  length `m` n.   We  further  assume  that  the  elements  of `P` and `T` are  characters drawn from a finite __alphabet__ `∑`.  For example,  we may have `∑ = {0, 1}` or `∑ = {a, b, ..., z}`.  The character arrays `P` and `T` are often called __strings__ of characters.
+We  formalize  the  string-matching  problem  as  follows.    We  assume  that  the __text__  is  an  array `T[1 ... n]` of  length `n` and  that  the  __pattern__  is  an  array `P[1 ... m]` of  length `m`.   We  further  assume  that  the  elements  of `P` and `T` are  characters drawn from a finite __alphabet__ `∑`.  For example,  we may have `∑ = {0, 1}` or `∑ = {a, b, ..., z}`.  The character arrays `P` and `T` are often called __strings__ of characters.
 
 ![string-matching-example](./images/string-matching-example.png)
 
@@ -9,7 +9,7 @@ We say that pattern `P` __occurs with shift `s`__ in text `T` (or, equivalently,
 
 The process of finding all valid shifts is called __matching__.
 
-We  denote  by `⅀` the  set  of  all  finite-length  strings  formed using  characters  from  the  alphabet `∑`.   In  this  chapter,  we consider  only  finite-length strings.  The zero-length __empty string__, denoted `Ɛ`, also belongs to `⅀`. The length  of  a string `x` is denoted `|x|`.The __concatenation__ of  two strings `x` and `y`, denoted `xy`, has length `|x| + |y|` and consists of the characters from `x` followed by the characters from `y`.
+We  denote  by `⅀` the  set  of  all  finite-length  strings  formed using  characters  from  the  alphabet `∑`. In  this  chapter,  we consider  only  finite-length strings.  The zero-length __empty string__, denoted `Ɛ`, also belongs to `⅀`. The length  of  a string `x` is denoted `|x|`.The __concatenation__ of  two strings `x` and `y`, denoted `xy`, has length `|x| + |y|` and consists of the characters from `x` followed by the characters from `y`.
 
 We say that a string `w` is a __prefix__ of a string `x`, denoted `w ⊏ x`, if `x = wy` for some string `y ∈ ⅀`.  Note that if `w ⊏ x`, then `|w| ≤ |x|`.  Similarly, we say that a string `w` is a __suffix__ of a string `x`, denoted `w ⊐ x`, if `x = yw` for some `y ∈ ⅀`. As with a prefix, `w ⊐ x` implies `|w| ≤ |x|`. For example, we have `ab ⊏ abcca` and `cca ⊐ abcca`. The empty string `Ɛ` is both a suffix and a prefix of every string. For any strings `x` and `y` and any character `a`, we have `x ⊐ y` if and only if `xa ⊐ ya`.
 

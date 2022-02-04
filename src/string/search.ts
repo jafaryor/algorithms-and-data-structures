@@ -74,10 +74,10 @@ export class StringSearcher {
                 i++;
                 j++;
             } else if (i !== 0) {
-                // The first character is not matched.
+                // Mismatch after at least one matching character.
                 i = lps[i - 1];
             } else {
-                // Mismatch after at least  one matching character.
+                // The first character is not matched.
                 lps[j] = 0;
                 j++;
             }
@@ -169,7 +169,7 @@ export class StringSearcher {
         const n = text.length;
         const m = pattern.length;
 
-        // Pattern always should be longer than the text.
+        // Text always should be longer than the pattern.
         if (n < m) return [];
 
         // The hash value of the pattern.

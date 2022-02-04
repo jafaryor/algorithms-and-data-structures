@@ -42,7 +42,7 @@ Example:
 
 
 #### Deletion
-Deletion from a B-tree is analogous to insertion but a little more complicated, be-cause we can delete a key from any node—not just a leaf—and when we delete a key from an internal node,  we will have to rearrange the node’s children.  As in insertion, we must guard against deletion producing a tree whose structure violates the B-tree properties. Just as we had to ensure that a node didn’t get too big due to insertion, we must ensure that a node doesn’t get too small during deletion (except that the root is allowed to have fewer than the minimum number `t - 1` of keys).Just as a simple insertion algorithm might have to back up if a node on the path to where the key was to be inserted was full, a simple approach to deletion might have to back up if a node (other than the root) along the path to where the key is to be deleted has the minimum number of keys.
+Deletion from a B-tree is analogous to insertion but a little more complicated, because we can delete a key from any node—not just a leaf—and when we delete a key from an internal node,  we will have to rearrange the node’s children.  As in insertion, we must guard against deletion producing a tree whose structure violates the B-tree properties. Just as we had to ensure that a node didn’t get too big due to insertion, we must ensure that a node doesn’t get too small during deletion (except that the root is allowed to have fewer than the minimum number `t - 1` of keys).Just as a simple insertion algorithm might have to back up if a node on the path to where the key was to be inserted was full, a simple approach to deletion might have to back up if a node (other than the root) along the path to where the key is to be deleted has the minimum number of keys.
 
 Deletion has several cases which should be covered separately:
 
@@ -57,8 +57,6 @@ Example:
 
 #### Min and Max
 Finding the minimum (maximum) in a B-tree is quite similar to finding a minimum in a binary search tree. We need to find the left most (right most) leaf for the given root, and return the first key.
-
-
 
 ---
 

@@ -317,7 +317,7 @@ If `pickEnteringVariable()` and `pickLeavingVariable()` of `simplex()` always br
 Assuming that `toSlackForm()` returns a slack form for which the basic solution is feasible, `simplex()` either reports that a linear program is unbounded, or it terminates with a feasible solution in at most `C(n + m, m)` iterations.
 
 ### Duality
-Given a linear program in which the objective is to maximize, we shall describe how to formulate a __dual__ linear program in which the objective is to minimize and whose optimal value is identical to that of the original linear program. When refer-ring to dual linear programs, we call the original linear program the __primal__.
+Given a linear program in which the objective is to maximize, we shall describe how to formulate a __dual__ linear program in which the objective is to minimize and whose optimal value is identical to that of the original linear program. When referring to dual linear programs, we call the original linear program the __primal__.
 
 Given a primal linear program in standard form, as in __(`*`)__, __(`**`)__ , __(`***`)__ , we define the dual linear program as:
 

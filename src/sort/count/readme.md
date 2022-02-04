@@ -11,7 +11,7 @@ Counting sort is an integer sorting algorithm that assumes that each of the `n` 
 
 In the most general case, the input to counting sort consists of a collection of n items, each of which has a non-negative integer key whose maximum value is at most `k`.
 
-Counting sort is used as sub-routing in other sorting algorithms. It can also be used stand-alone to sort an array if the range of elements in the array is small as compared to the total number of elements in the array.
+Counting sort is used as sub-routing in other sorting algorithms. It can also be used standalone to sort an array if the range of elements in the array is small as compared to the total number of elements in the array.
 
 Counting sort beats the lower bound of `Ω(n lgn)`, because it is not a comparison sort.
 

@@ -12,7 +12,7 @@ We call the set `{0, 1, 2, ..., u-1}` the __universe__ of values that can be sto
 ### Preliminary approaches
 To store a dynamic set of values from the universe `{0, 1, 2, ..., u-1}`, we maintain an array `A[0 ... u-1]` of `u` bits. The entry `A[x]` holds a `1` if the value `x` is in the dynamic set, and it holds a `0` otherwise. Although we can perform `insert()`, `delete()`, and `search()` operations in `O(1)` time with a bit vector, the remaining operations: `min()`, `max()`, `successor()`, and `predecessor()` each take `θ(u)` time in the worst case because we might have to scan through `u` elements.
 
-We can short-cut long scans in the bit vector by superimposing (наложение) a binary tree of bits on top of it.
+We can shortcut long scans in the bit vector by superimposing (наложение) a binary tree of bits on top of it.
 
 ![open-addressing](./images/open-addressing.png)
 

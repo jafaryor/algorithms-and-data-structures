@@ -28,7 +28,7 @@ Insertion  sort  is  slow  for  large  unordered  arrays  because  the  only  ex
 | __In Place__ | Yes |
 
 ### Usage
-> __It is efficient at sorting extremely short arrays due to a very low constant factor in its complexity. It is also extremely good at sorting arrays that are already “almost” sorted. A common use is for re-sorting arrays that have had some small updates to their elements.__
+> __It is efficient at sorting extremely short arrays due to a very low constant factor in its complexity. It is also extremely good at sorting arrays that are already “almost” sorted. A common use is for resorting arrays that have had some small updates to their elements.__
 
 ### Example
 ![insertion-sort](./images/insertion-sort.gif)

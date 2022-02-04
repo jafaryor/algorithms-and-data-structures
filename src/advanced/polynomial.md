@@ -3,7 +3,7 @@ A __polynomial__ in the variable `x` over an algebraic field `F` represents a fu
 
 `a`<sub>`0`</sub>` + a`<sub>`1`</sub>` * x + a`<sub>`2`</sub>` * x`<sup>`2`</sup>` + ... + a`<sub>`n-1`</sub>` * x`<sup>`n-1`</sup>
 
-We call  the  values `a0, a1, ... a_(n-1)` the __coefficients__ of  the  polynomial.   The coefficients are drawn from a field `F`, typically the set `ℂ` of complex numbers.  A polynomial `A(x)` has __degree__ `k` if its highest  nonzero coefficient  is `a`<sub>`k`</sub>;  we write that `degree(A) = k`.  Any integer strictly greater than the degree of a polynomial is a degree-bound of that polynomial.
+We call  the  values `a0, a1, ... a_(n-1)` the __coefficients__ of  the  polynomial.   The coefficients are drawn from a field `F`, typically the set `ℂ` of complex numbers.  A polynomial `A(x)` has __degree__ `k` if its highest  nonzero coefficient  is `a`<sub>`k`</sub>;  we write that `degree(A) = k`.  Any integer strictly greater than the degree of a polynomial is a __degree-bound__ of that polynomial.
 
 ### Operations
 We can define a variety  of  operations  on polynomials:
@@ -13,13 +13,13 @@ We can define a variety  of  operations  on polynomials:
 
     `A(x) = 6x^3 + 7x^3 - 10x + 9`, `B(x) = -2x^3 + 4x - 5`, then `C(x) = 4x^3 + 7x^2 - 6x + 4`
 
-2. __Polynomial multiplication__ if `A(x)` and `B(x)` are polynomials  of  degree-bound `n`, their product `C(x)` is a polynomial  of degree-bound `2n - 1` such that `C(x) = A(x)B(x)` for all `x` in the underlying  field.   You probably  have multi-plied polynomials before, by multiplying each term in `A(x)` by each term in `B(x)` and  then  combining  terms  with  equal  powers.
+2. __Polynomial multiplication__ if `A(x)` and `B(x)` are polynomials  of  degree-bound `n`, their product `C(x)` is a polynomial  of degree-bound `2n - 1` such that `C(x) = A(x)B(x)` for all `x` in the underlying  field.   You probably  have multiplied polynomials before, by multiplying each term in `A(x)` by each term in `B(x)` and  then  combining  terms  with  equal  powers.
 
     ![polynomial-multiplication](./images/polynomial-multiplication.png)
 
     `A(x) = 6x^3 + 7x^3 - 10x + 9`, `B(x) = -2x^3 + 4x - 5`, then `C(x) = -12x^6 - 14x^5 + 44x^4 - 20x^3 - 75x^2 + 86x - 45`
 
-    Note that `degree(C) = degree(A) + degree(B)`, implying that if `A` is a polynomial of degree-bound `n_a` and `B` is a polynomial of degree-bound `n_b`, then `C` is a polynomial of degree-bound `n_a + n_b = 1`.  Since a polynomial of degree-bound `k` is also a polynomial of degree-bound `k + 1`, we will normally say that the product polynomial `C` is a polynomial of degree-bound `n_a + n_b`.
+    Note that `degree(C) = degree(A) + degree(B)`.
 
 ### Representations
 #### Coefficient representation
@@ -59,7 +59,9 @@ This matrix has determinant and therefore it is invertible (that is non-singular
 
 Using the LU decomposition algorithms, we can solve these equations in time `θ(n^3)`. A faster algorithm for `n`-point interpolation is based on __Lagrange’s formula__ which takes `θ(n^2)`.
 
-The point-value representation is convenient for multiplying polynomials. We must face the problem, however, that `degree(C)  = degree(A) + degree(B)`;if `A` and `B` are of degree-bound `n`, then `C` is of degree-bound `2n`.  A standard point-value representation for `A` and `B` consists of `n` point-value pairs for each polynomial.  When we multiply these together, we get `n` point-value pairs, but we need `2n` pairs to interpolate a unique polynomial `C` of degree-bound `2n`. We must therefore begin with _“extended”_ point-value representations for `A` and for`B` consisting of `2n` point-value pairs each. Given an extended point-value representation for `A`,
+![lagrange-formula](./images/lagrange-formula.gif)
+
+The point-value representation is convenient for multiplying polynomials. We must face the problem, however, that `degree(C)  = degree(A) + degree(B)`; if `A` and `B` are of degree-bound `n`, then `C` is of degree-bound `2n`.  A standard point-value representation for `A` and `B` consists of `n` point-value pairs for each polynomial.  When we multiply these together, we get `n` point-value pairs, but we need `2n` pairs to interpolate a unique polynomial `C` of degree-bound `2n`. We must therefore begin with _“extended”_ point-value representations for `A` and for`B` consisting of `2n` point-value pairs each. Given an extended point-value representation for `A`,
 
 ![point-value-multiplication](./images/point-value-multiplication.png)
 
@@ -68,7 +70,7 @@ Given two input polynomials in extended point-value form, we see that the time t
 ### Roots representation
 Any polynomial is uniquely determined by the set of its roots. Any plynomial of degree `n` has `n` roots.
 
-If `r`<sub>`0`</sub>`, r`<sub>`0`</sub>`, ..., r`<sub>`0`</sub> are roots of a polynomial `A(x)`, then `A(x)` can be represented as:
+If `r`<sub>`0`</sub>`, r`<sub>`1`</sub>`, ..., r`<sub>`n-1`</sub> are roots of a polynomial `A(x)`, then `A(x)` can be represented as:
 
 `c(x - r`<sub>`0`</sub>`)(x - r`<sub>`1`</sub>`) ... (x - r`<sub>`n-1`</sub>`)`
 
@@ -85,7 +87,7 @@ Addition is very hard to implement for root representation.
 
 As we can see the best representations to work with are coefficient and point-value representations.
 
-In order to implement all operation in less than `θ(n^2)` time, we meed as algorithm that could convert coefficient representation to point-value representation and vise-versa. This algorithm is called __Fast Fourier Transformation (FFT)__ and it runs in `θ(n * lgn)`.
+In order to implement all operation in less than `θ(n^2)` time, we need an algorithm that could convert coefficient representation to point-value representation and vise-versa. This algorithm is called __Fast Fourier Transformation (FFT)__ and it runs in `θ(n * lgn)`.
 
 ### Fast multiplication of polynomials in coefficient form
 Given the FFT, we have the following `θ(n * lgn)`-time procedure for multiplying two polynomials `A(x)` and `B(x)` of degree-bound `n`, where the input and output representations are in coefficient form. We assume that `n` is a power of `2`; we can always meet this requirement by adding high-order zero coefficients.

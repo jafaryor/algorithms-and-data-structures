@@ -5,7 +5,7 @@ We identify each set by a __representative__, which is some member of the set. I
 
 As in the other dynamic-set implementations we have studied, we represent each element of a set by an __object__.  Letting `x` denote an object, we wish to support the following operations:
 * `makeSet(x)` - creates a new set whose only member (and thus representative) s `x`. Since the sets are disjoint, we require that `x` not already be in some other set.
-* `union(x, y)` - unites the dynamic sets that contain `x` and `y`, say `S_x` and `S_y`, into a new set that is the union of these two sets.  We assume that the two sets are dis-joint prior to the operation. The representative of the resulting set is any member of `S_x U S_y`.
+* `union(x, y)` - unites the dynamic sets that contain `x` and `y`, say `S_x` and `S_y`, into a new set that is the union of these two sets.  We assume that the two sets are disjoint prior to the operation. The representative of the resulting set is any member of `S_x U S_y`.
 * `findSet(x)` - returns a pointer  to the representative  of the (unique)  set containing `x`.
 
 ### Application

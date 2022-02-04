@@ -6,7 +6,7 @@ The __spell checking__ is the most popular application of Tries.
 ### Properties
 As with search trees, tries are data structures composed of nodes that contain links that are either null or references to other nodes. Each node is pointed to by just one other node, which is called its parent (except for one node, the root, which has no nodes pointing to it), and each node may has `R` links, where `R` is the alphabet size.
 
-Although  links  point  to  nodes,  we  can  view  each  link  as  point-ing  to  a  trie,  the  trie  whose  root  is  the  referenced  node.
+Although  links  point  to  nodes,  we  can  view  each  link  as  pointing  to  a  trie,  the  trie  whose  root  is  the  referenced  node.
 
 Each node also has a corresponding __value__, which may be `null` or the value associated  with  one  of  the  string  keys  in the  symbol  table.  Specifically,  we  store the value associated with each key in the node corresponding to its last character. 
 
@@ -24,7 +24,7 @@ Finding  the  value  associated with a given string key in a trie is a simple pr
 * The search terminated with a `null` link (as in the search for shore depicted at bottom right above). This result is also a search miss. 
 
 ### Insertion
-As with binary search trees, we insert by first doing a search: in a trie that means using the characters of the key to guide us down the trie until reach-ing the last character of the key or a null link. At this point, one of the following two conditions holds:
+As with binary search trees, we insert by first doing a search: in a trie that means using the characters of the key to guide us down the trie until reaching the last character of the key or a null link. At this point, one of the following two conditions holds:
 * We  encountered a `null` link before reaching the last character of the key.   In this case, there is no trie node corresponding to the last character in the key, so we need to create nodes for each of the characters in the key not yet encountered and set the value in the last one to the value to be associated with the key.
 * We encountered the last character of the key before reaching a `null` link.  In this case, we set that node’s value to the value to be associated with the key (whether or not that value is `null`), as usual with our associative array convention.
 
@@ -35,14 +35,14 @@ In all cases, we examine or create a node in the trie for each key character.
 Keys in the trie are implicitly represented by paths from the root that end at nodes with non-null values.
 
 ### Deletion
-The  first  step  needed  to  delete  a  key-value  pair from a trie is to use a normal search to find the node cor-responding  to  the  key  and  set  the  corresponding  value  to `null`.
+The  first  step  needed  to  delete  a  key-value  pair from a trie is to use a normal search to find the node corresponding  to  the  key  and  set  the  corresponding  value  to `null`.
 
 If  that  node  has  a  non-null  link  to  a  child,  then  no more  work  is  required;  if  all  the  links  are  null,  we  need  to remove the node from the data structure. If doing so leaves all the links null in its parent, we need to remove that node, and so forth. 
 
 ![trie-deletion](./images/trie-deletion.png)
 
 ### Time Complexity
-From a theoretical standpoint, the complexity of `search()` is optimal for search hit—we could not expect to do better than search time proportional to the length of the search key. Whatever algorithm or data structure we are using, we can-not know that we have found a key that we seek without examining all of its characters.
+From a theoretical standpoint, the complexity of `search()` is optimal for search hit—we could not expect to do better than search time proportional to the length of the search key. Whatever algorithm or data structure we are using, we cannot know that we have found a key that we seek without examining all of its characters.
 
 Suppose  that  we  are  searching  for  a  key  in  a trie and find that the link in the root node that corresponds to its first character is null. In this case, we know that the key is not in the table on the basis of examining just one node. This case is typical: one of the most important properties of tries is that search misses  typically  require  examining  just  a  few  nodes.  If  we  assume  that  the  keys  are drawn from the random string model (each character is equally likely to have any one of the R different character values) we can prove this fact:
 

@@ -29,7 +29,7 @@ To maintain the invariant for the call `union(p, q)`, we first check whether the
 ### Quick Union
 The next algorithm that we consider is a complementary method that concentrates on speeding up the `union()` operation. It is based on the same data structure — the site-indexed `componentId[]` array but we interpret the values differently. Specifically, the `componentId[]` entry for  each  site  is  the  name  of  another site in the same component (possibly itself)—we refer to this connection as a _link_.
 
-To implement `find()`, we start at the given site, follow its link to an-other site, follow that site’s link to yet another  site,  and  so  forth, following links until reaching a root (a site that has a link to itself).
+To implement `find()`, we start at the given site, follow its link to another site, follow that site’s link to yet another  site,  and  so  forth, following links until reaching a root (a site that has a link to itself).
 
 > Two sites are in the same component if and only  if  this  process  leads  them  to  the same root.
 
@@ -37,7 +37,7 @@ To validate this process, we need `union(p, q)` to maintain this invariant, whic
 
 ![quick-find-union](./../images/quick-find-union.png)
 
-Representing  sites  as _nodes_ (labeled circles) and links as arrows from one node to an-other gives a graphical representation of the data structure that makes it relatively easy to  understand  the  operation  of  the  algorithm.  The  resulting  structures  are _trees_—in technical  terms.
+Representing  sites  as _nodes_ (labeled circles) and links as arrows from one node to another gives a graphical representation of the data structure that makes it relatively easy to  understand  the  operation  of  the  algorithm.  The  resulting  structures  are _trees_—in technical  terms.
 
 The quick-union algorithm would seem to be faster than the quick-find algorithm, because it does not have to go through the entire array for each input pair.
 
@@ -77,7 +77,7 @@ _Proof_: We prove a stronger fact by (strong) induction: The height of every tre
 ## Path compression
 Can  we  find  an  algorithm  that  has guaranteed  constant-time-per-operation  performance?  This  question  is  an  extremely  difficult  one  that  plagued researchers for many years.
 
-For example, the following meth-od, known as  __path compression__, is easy to implement. Ideally, we would like every node to link directly to the root of its tree, but we do not want to pay the price of changing a large number of links, as we did in the quick-find algorithm. We can approach the ideal simply by making all the nodes that we do examine directly link to the root.
+For example, the following method, known as  __path compression__, is easy to implement. Ideally, we would like every node to link directly to the root of its tree, but we do not want to pay the price of changing a large number of links, as we did in the quick-find algorithm. We can approach the ideal simply by making all the nodes that we do examine directly link to the root.
 
 To implement path compression, we just add another loop to `find()` that sets the `componentId[]` entry corresponding to each node encountered along the way to link directly to the root. The net result is to flatten the trees almost completely, approximating the ideal achieved by the quick-find algorithm.
 

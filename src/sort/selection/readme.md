@@ -1,5 +1,5 @@
 ## Selection Sort
-The idea behind selection sort is simple: First, find the smallest item in the array and exchange it with the first entry (itself if the first entry is already the smallest). Then, find the next smallest item and exchange it with the sec-ond entry. Continue in this way until the entire array is sorted.
+The idea behind selection sort is simple: First, find the smallest item in the array and exchange it with the first entry (itself if the first entry is already the smallest). Then, find the next smallest item and exchange it with the second entry. Continue in this way until the entire array is sorted.
 
 Selection sort is a sorting algorithm, specifically an in-place comparison sort. It is inefficient on large lists, and generally performs worse than the similar insertion sort.
 
