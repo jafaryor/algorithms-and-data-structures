@@ -6,7 +6,7 @@ We  can  choose  between  two  standard  ways  to  represent  a  graph `G = (V, 
 
 ![graph-representations](./images/graph-representations.png)
 
-The __adjacency-list representation__ of  a  graph `G = (V, E)` consists  of  an  array `Adj` of `|V|` lists, one for each vertex in `V`.  For each `u ∈ V`, the adjacency list `Adj[u]` contains all the vertices such that there is an edge `(u, v) ∈ E`. That is, `Adj[u]` consists of all the vertices adjacent to `u` in `G`.
+The __adjacency-list representation__ of  a  graph `G = (V, E)` consists  of  an  array `Adj` of `|V|` lists, one for each vertex in `V`.  For each `u ∈ V`, the adjacency list `Adj[u]` contains all the vertices such that there is an edge `(u, v) ∈ E`. That is, `Adj[u]` consists of all the vertices adjacent to `u` in `G`.
 
 If `G` is a directed graph, the sum of the lengths of all the adjacency lists is `|E|`, since an edge of the form `(u, v)` is represented by having `v` appear in `Adj[u]`. If `G` is an undirected graph, the sum of the lengths of all the adjacency lists is `2|E|`, since if `(u, v)` is an undirected edge, then `u` appears in `v`’s adjacency list and vice versa. For both directed and undirected graphs, the adjacency-list representation has the desirable property that the amount of memory it requires is `θ(V + E)`.
 
@@ -89,7 +89,7 @@ Depth-first  search  explores  edges out of the most recently discovered vertex 
 
 As in breadth-first search, whenever depth-first search discovers a vertex `v` during a scan of the adjacency list of an already discovered vertex `u`, it records this event  by setting `v`’s predecessor  attribute `v.p` to `u`.
 
-Unlike  breadth-first  search, whose predecessor subgraph forms a tree, the predecessor subgraph produced bya  depth-first  search  may  be  composed  of  several  trees,  because  the  search  may repeat from multiple sources.  Therefore, we define the __predecessor subgraph__ of a depth-first search slightly differently from that of a breadth-first search:
+Unlike  breadth-first  search, whose predecessor subgraph forms a tree, the predecessor subgraph produced by a  depth-first  search  may  be  composed  of  several  trees,  because  the  search  may repeat from multiple sources.  Therefore, we define the __predecessor subgraph__ of a depth-first search slightly differently from that of a breadth-first search:
 
 `G_p = (V, E_p)`, where `E_p = {(v.p, v): v ∈ V and v.p ≠ null}`.
 
@@ -104,7 +104,7 @@ These timestamps are integers between `1` and `2|V|`, since there is one discove
 ![depth-first-search](./images/depth-first-search.png)
 
 #### Properties
-Per-haps  the  most  basic  property  of  depth-first  search  is  that  the  predecessor  sub-graph `G_p` does  indeed  form  a  forest  of  trees,  since  the  structure  of  the  depth-first trees exactly mirrors the structure of recursive calls of `depthFirstSearchVisit()`.That is, `u = v.p` if and only if `depthFirstSearchVisit(v)` was called during a search of `u`’s  adjacency list.  Additionally,  vertex `v` is a descendant  of vertex `u` in the depth-first forest if and only if `v` is discovered during the time in which `u` is gray.
+Perhaps  the  most  basic  property  of  depth-first  search  is  that  the  predecessor  sub-graph `G_p` does  indeed  form  a  forest  of  trees,  since  the  structure  of  the  depth-first trees exactly mirrors the structure of recursive calls of `depthFirstSearchVisit()`.That is, `u = v.p` if and only if `depthFirstSearchVisit(v)` was called during a search of `u`’s  adjacency list.  Additionally,  vertex `v` is a descendant  of vertex `u` in the depth-first forest if and only if `v` is discovered during the time in which `u` is gray.
 
 Another important property of depth-first search is that discovery and finishing times have __parenthesis structure__.  If we represent the discovery of vertex `u` with a left parenthesis __“(u”__ and represent its finishing by a right parenthesis __“u)”__, then the  history  of discoveries  and finishings  makes a well-formed  expression  in the sense that the parentheses are properly nested.
 
@@ -173,9 +173,13 @@ The __strongly connected component (SCC)__  of  a  directed graph `G = (V, E)` i
 
 Transpose of graph `G` is `G^T = (V, E^T)`, where `E^T = {(u, v): (v, u) ∈ E}`. That is, `E^T` consists of the edges of `G` with their directions reversed.
 
-It is interesting to observe that `G` and `G^T` have exactly the same strongly connected components: `u` and `v` are reach-able from each other in `G` if and only if they are reachable from each other in `G^T`.
+It is interesting to observe that `G` and `G^T` have exactly the same strongly connected components: `u` and `v` are reachable from each other in `G` if and only if they are reachable from each other in `G^T`.
 
 ![strongly-connected-components](./images/strongly-connected-components.png)
+
+An algorithm for finding the strongly connected components of a directed graph is called a [Kosaraju's algorithm](https://www.youtube.com/watch?v=Jb1XlDsr46o).
+
+An algorithm for finding the strongly connected components of a directed graph is called a [Tarjan's algorithm](https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm).
 
 #### Lemma
 Let `C` and `C'` be distinct strongly connected components in directed graph `G = (V, E)`, let `u, v ∈ C`, let `u', v' ∈ C'`, and suppose that `G` contains a path `u -> u'`. Then `G` cannot also contain a path `v' -> v`.
@@ -203,7 +207,7 @@ In mathematics, a __bijection__, one-to-one correspondence, or invertible functi
 
 In graph theory, an __isomorphism__ of graphs `G` and `H` is a _bijection_ between the vertex sets of `G` and `H`: `f: V(G) -> V(H)` such that any two vertices `u` and `v` of `G` are adjacent in `G` if and only if `f(u)` and `f(v)` are adjacent in `H`.
 
-If an isomorphism exists between two graphs, then the graphs are called isomorphic and denoted as `G  H`.
+If an isomorphism exists between two graphs, then the graphs are called __isomorphic__.
 
 In other words two graphs are isomorphic, is they have a similar structure
 
@@ -220,7 +224,7 @@ __Eulerian Path__ is a path in graph that visits every edge exactly once. __Eule
 
 The problem is same as following question: “_Is it possible to draw a given graph without lifting pencil from the paper and without tracing any of the edges more than once?_”.
 
-A graph is called __Eulerian__ if it has an __Eulerian Cycle__ and called Semi-Eulerian if it has an Eulerian Path.
+A graph is called __Eulerian__ if it has an __Eulerian Cycle__ and called __Semi-Eulerian__ if it has an Eulerian Path.
 
 ### Undirected Graph
 _An undirected graph has Eulerian Cycle_ if following two conditions are true:
@@ -311,7 +315,7 @@ Note: `disjointSet.findByValue()` is considered to have complexity of `O(1)`.
 
 ![kruskal-algorithm-example.png](./images/kruskal-algorithm-example.png)
 
-### Prim's algorithm
+### Prim's Algorithm
 Prim’s algorithm operates much like Dijkstra’s algorithm for finding shortest paths in a graph
 
 Prim’s algorithm has the property that the edges in the set `A` always form  a single  tree.
@@ -336,6 +340,16 @@ Within the `forEach()` loop, we can implement the test for membership in `Q` in 
 #### Improvement
 We can improve the asymptotic running time of Prim’s algorithm by using Fibonacci heaps. A Fibonacci heap holds `|V|` elements, an `extractMin()` operation  takes `O(lgV)` amortized time and a `decreaseKey()` operation takes `O(1)` amortized time. Therefore, if we use a Fibonacci heap to implement the min-priority queue, the running time of Prim’s algorithm improves to `O(E + V*lgV)`.
 
+### Prim's Algorithm vs Kruskal’s Algorithm
+| __Prim__ | __Kruskal__ |
+| --- | --- |
+| Prim’s algorithm has a time complexity of `O(E log V)`. Can be improved to `O(E + V*lgV)` using Fibonacci Heap | Kruskal’s algorithm’s time complexity is `O(E log V)` |
+| It starts to build the Minimum Spanning Tree from any vertex in the graph | It starts to build the Minimum Spanning Tree from the vertex carrying minimum weight in the graph |
+| It traverses one node more than one time to get the minimum distance | It traverses one node only once |
+| Prim’s algorithm gives connected component as well as it works only on connected graph | Kruskal’s algorithm can generate forest(disconnected components) at any instant as well as it can work on disconnected components |
+| Prim’s algorithm runs faster in dense graphs | Kruskal’s algorithm runs faster in sparse graphs |
+| Prim’s algorithm is a greedy algorithm. | Kruskal’s algorithm is a greedy algorithm. |
+
 
 ## Single-Source Shortest Paths
 In a __shortest-paths problem__,  we are given a _weighted_, _directed_  graph `G = (V, E)`, with weight function `w: E -> ℝ` mapping  edges to real-valued weights. The weight `w(p)` of path `p = <v0, v1, ... v_k>` is the sum of the weights of its constituent edges.
@@ -349,7 +363,7 @@ Edge  weights  can  represent  metrics  other  than  distances,  such  as  time,
 given a graph `G = (V, E)`, we want to find a shortest path from a given source vertex `s ∈ V` to each vertex `v ∈ V`.  The algorithm  for the single-source  problem can solve many other problems, including the following variants:
 * __Single-destination shortest-paths problem__: Find a shortest path to a given _destination_ vertex `t` from each vertex `v`. By reversing the direction of each edge in the graph, we can reduce this problem to a single-source problem.
 * __Single-pair shortest-path problem__: Find a shortest  path from `u` to `v` for  given vertices `u` and `v`. If we solve the single-source problem with source vertex `u`, we solve this problem also.  Moreover, all known algorithms for this problem have  the  same  worst-case  asymptotic  running  time  as  the  best  single-source algorithms.
-* All-pairs shortest-paths problem:Find a shortest path from `u` to `v` for every pair of vertices `u` and `v`.  Although we can solve this problem by running a single-source algorithm once from each vertex, we usually can solve it faster.
+* All-pairs shortest-paths problem: Find a shortest path from `u` to `v` for every pair of vertices `u` and `v`.  Although we can solve this problem by running a single-source algorithm once from each vertex, we usually can solve it faster.
 
 #### Optimal substructure of a shortest path
 Shortest-paths  algorithms  typically  rely  on  the  property  that  a  shortest  path  between  two vertices  contains  other  shortest  paths  within it.
@@ -382,7 +396,7 @@ The process of relaxing an edge `(u, v)` consists of testing whether we can impr
 ![shortest-path-properties](./images/shortest-path-properties.png)
 
 ### The Bellman-Ford Algorithm
-TheBellman-Ford algorithm solves the single-source  shortest-paths  problem in the general case in which edge weights may be negative.  Given a weighted,  directed graph `G = (V, E)` with sources and weight function `w: E -> ℝ`, the Bellman-Ford algorithm returns a boolean value indicating whether or not there isa negative-weight  cycle that is reachable  from the source.  If there is such a cycle, the algorithm indicates that no solution exists.  If there is no such cycle, the algorithm produces the shortest paths and their weights.
+The Bellman-Ford algorithm solves the single-source  shortest-paths  problem in the general case in which edge weights may be negative.  Given a weighted,  directed graph `G = (V, E)` with sources and weight function `w: E -> ℝ`, the Bellman-Ford algorithm returns a boolean value indicating whether or not there is a negative-weight  cycle that is reachable  from the source.  If there is such a cycle, the algorithm indicates that no solution exists.  If there is no such cycle, the algorithm produces the shortest paths and their weights.
 
 Example:
 
@@ -448,11 +462,11 @@ we consider the problem of finding shortest paths between all pairs of vertices 
 
 We  can  solve  an  all-pairs  shortest-paths  problem  by  running  a  single-source shortest-paths  algorithm `|V|` times,  once  for  each  vertex  as  the  source.
 
-We allow negative-weight edges, but we assume for the time being that the inputgraph contains no negative-weight cycles.
+We allow negative-weight edges, but we assume for the time being that the input graph contains no negative-weight cycles.
 
 The tabular  output  of  the  all-pairs  shortest-paths  algorithms here is an `n x n` matrix `D = (d_ij)`, where entry `d_ij` contains the weight of a shortest path from vertex `i` to vertex `j`. That is, if we let `ẟ(i, j)` denote the shortest-path weight from vertex `i` to vertex `j`,  then `d_ij = ẟ(i, j)`.
 
-To solve the all-pairs shortest-paths problem on an input adjacency matrix, we need to compute not only the shortest-path weights but also a __predecessor matrix__ `P = (p_ij)`, where `p_ij` is `mull` if either `i ≠ j` or  there  is  no  path  from `i` to `j`, and otherwise `p_ij` is the predecessor of `j` on some shortest path from `i`. Use `predecessorMatrixToString(i, j)` to print the shortest paths from vertex `i` to vertex `j`.
+To solve the all-pairs shortest-paths problem on an input adjacency matrix, we need to compute not only the shortest-path weights but also a __predecessor matrix__ `P = (p_ij)`, where `p_ij` is `null` if either `i ≠ j` or  there  is  no  path  from `i` to `j`, and otherwise `p_ij` is the predecessor of `j` on some shortest path from `i`. Use `predecessorMatrixToString(i, j)` to print the shortest paths from vertex `i` to vertex `j`.
 
 ### The Floyd-Warshall algorithm
 The Floyd-Warshall algorithm is a dynamic-programming algorithm, runs in `θ(V^3)` time.
@@ -461,7 +475,7 @@ The Floyd-Warshall algorithm is a dynamic-programming algorithm, runs in `θ(V^3
 
 #### [And take a look at this lecture notes](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-design-and-analysis-of-algorithms-spring-2015/lecture-notes/MIT6_046JS15_lec11.pdf)
 
-Tha idea is to gradually build routes between nodes `i` and `j` to find the optimal path. One by one pick all vertices and updates all shortest paths which include the picked vertex as an intermediate vertex in the shortest path. When we pick vertex number `k` as an intermediate vertex, we already have considered vertices `{0, 1, 2, ..., k-1}` as intermediate vertices. For every pair `(i, j)` of the source and destination vertices respectively, there are two possible cases.
+Tha idea is to gradually build routes between nodes `i` and `j` to find the optimal path. One by one picks all vertices and updates all shortest paths which include the picked vertex as an intermediate vertex in the shortest path. When we pick vertex number `k` as an intermediate vertex, we already have considered vertices `{0, 1, 2, ..., k-1}` as intermediate vertices. For every pair `(i, j)` of the source and destination vertices respectively, there are two possible cases.
 1) `k` is not an intermediate vertex in shortest path from `i` to `j`. We keep the value of `d[i][j]` as it is.
 2) `k` is an intermediate vertex in shortest path from `i` to `j`. We update the value of `d[i][j]` as `d[i][k]` + `d[k][j]` if `d[i][j] > d[i][k] + d[k][j]`.
 
@@ -473,10 +487,10 @@ Below is the solution from Floyd-Warshall algorithm of above graph.
 
 Why do we require that `w_ii = 0` for all `1 ≤ i ≤ n`?
 
-This is consistent with the fact that the shortest path from a vertex to itself is the empty path of weight 0. If there were another path of weight less than 00 then it must be a negative-weight cycle, since it starts and ends at `v_i`.
+This is consistent with the fact that the shortest path from a vertex to itself is the empty path of weight 0. If there were another path of weight less than 0 then it must be a negative-weight cycle, since it starts and ends at `v_i`.
 
 ### Transitive closure of a graph
-Given a directed graph, find out if a vertex `j` is reachable from another vertex `i` for all vertex pairs `(i, j)` in the given graph. Here reachable mean that there is a path from vertex `i` to `j`. The reach-ability matrix is called the transitive closure of a graph.
+Given a directed graph, find out if a vertex `j` is reachable from another vertex `i` for all vertex pairs `(i, j)` in the given graph. Here reachable mean that there is a path from vertex `i` to `j`. The reachability matrix is called the transitive closure of a graph.
 
 ![transitive-closure](./images/transitive-closure.png)
 
