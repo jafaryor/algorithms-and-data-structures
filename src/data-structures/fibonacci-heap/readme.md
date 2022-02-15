@@ -24,7 +24,7 @@ The Fibonacci heap data structure serves a dual purpose.  First, it supports a s
 
 ### Mergeable heaps
 A __mergeable heap__ is any data structure that supports the following five operations, in which each element has a key:
-* `maleHeap()` - creates and returns a new heap containing no elements.
+* `makeHeap()` - creates and returns a new heap containing no elements.
 * `insert(x)` - inserts element `x`, whose key has already been filled in.
 * `min()` - returns a pointer to the element in heap whose key is minimum.
 * `extractMin()` - deletes the element from heap whose key is minimum.
@@ -41,7 +41,7 @@ From a theoretical standpoint, Fibonacci heaps are especially desirable when the
 From a practical point of view, however, the constant factors and programming complexity of Fibonacci heaps make them less desirable than ordinary binary (or `k`-ary) heaps for most applications, except for certain applications that manage large amounts of data. Thus, Fibonacci heaps are predominantly of theoretical interest.
 
 ### Structure
-AFibonacci heap is a collection of rooted trees that are _min-heap ordered_.That is, each tree obeys the _min-heap property_: the key of a node is greater than or equal to the key of its parent.
+A Fibonacci heap is a collection of rooted trees that are _min-heap ordered_.That is, each tree obeys the _min-heap property_: the key of a node is greater than or equal to the key of its parent.
 
 ![fibonacci-heap-structure](./images/fibonacci-heap-structure.png)
 

@@ -15,4 +15,4 @@ We can label the nodes of any `n`-node binary tree with the keys `k1, k2, ..., k
 
 ![formula](./images/formula.png)
 
-[Watch the YouTube video](https://www.youtube.com/watch?v=wAy6nDMPYAE) fro more details.
+[Watch the YouTube video](https://www.youtube.com/watch?v=wAy6nDMPYAE) for more details.

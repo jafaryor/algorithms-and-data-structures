@@ -17,7 +17,7 @@ The  definitions  of  the  approximation  ratio  and  of  a `ρ(n)`-approximatio
 * For a maximization problem, `0 < C ≤ C'`, and the ratio `C'/C` gives the factor by which the cost of an optimal solution is larger than the cost of the approximate solution. 
 * Similarly, for a minimization problem, `0 < C' ≤ C`, and the ratio `C/C'` gives the factor by which the cost of the approximate  solution is larger  than the cost of an optimal  solution.
 
-The approximation ratio of an approximation  algorithm  is  never  less  than `1`, since `C/C' ≤ 1` implies `C'/C ≥ 1`. Therefore, a `1`-approximation algorithm produces an optimal solution, and an approximation algorithm with a large approximation ratio may return a solution tha tis much worse than optimal.
+The approximation ratio of an approximation  algorithm  is  never  less  than `1`, since `C/C' ≤ 1` implies `C'/C ≥ 1`. Therefore, a `1`-approximation algorithm produces an optimal solution, and an approximation algorithm with a large approximation ratio may return a solution that is much worse than optimal.
 
 Some NP-complete problems allow polynomial-time approximation algorithms that can achieve increasingly better approximation ratios by using more and more computation time. That is, we can trade computation time for the quality of the approximation. In order to find how much better the result will get in this case, we use approximation schema.
 
@@ -31,7 +31,7 @@ A __vertex cover__ of an undirected graph `G = (V, E)` is a subset `V' ⊆ V` su
 
 The vertex-cover problem is to find a vertex cover of minimum size in a given graph. We call such a vertex cover an optimal vertex cover. This problem is the optimization version of an NP-complete decision problem.
 
-Even though we don’t know how to find an optimal vertex cover in a graphGin  polynomial  time,  we  can  efficiently  find  a  vertex  cover  that  is  near-optimal.
+Even though we don’t know how to find an optimal vertex cover in a graph `G` in  polynomial  time,  we  can  efficiently  find  a  vertex  cover  that  is  near-optimal.
 
 ![vertex-cover-example](./images/vertex-cover-example.png)
 

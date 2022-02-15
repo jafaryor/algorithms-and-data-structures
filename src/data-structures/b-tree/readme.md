@@ -1,9 +1,11 @@
 ## B-Tree
 B-trees are balanced search trees designed to work well on disks or other direct-access secondary storage devices. B-trees are similar to red-black  trees, but they are better at minimizing disk I/O operations.
 
-B-trees differ significantly from red-black trees in that B-tree nodes may have many children, from a handful to thousands.
+The need for B-tree arose with the rise in the need for lesser time in accessing the physical storage media like a hard disk. The secondary storage devices are slower with a larger capacity. There was a need for such types of data structures that minimize the disk accesses.
 
-B-trees are similar to red-black trees in that every `n`-node B-tree has height `O(lg n)`, although the height of a B-tree can be considerably less than that of a red-black tree because its branching factor can be much larger.
+Other data structures such as a binary search tree, avl tree, red-black tree, etc can store only one key in one node. If you have to store a large number of keys, then the height of such trees becomes very large and the access time increases.
+
+However, B-tree can store many keys in a single node and can have multiple child nodes. This decreases the height significantly allowing faster disk accesses.
 
 Many database systems use B-trees, or variants of B-trees, to store information.
 

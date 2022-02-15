@@ -5,7 +5,7 @@ import {FibonacciNode} from './node';
  * The Fibonacci Heap.
  */
 export class FibonacciHeap<T> {
-    /** Minimum node - pointer to teh root a tree containing the min key. */
+    /** Minimum node - pointer to the root a tree containing the min key. */
     min?: FibonacciNode<T>;
     /** Number of nodes in the entire heap. */
     n = 0;
@@ -51,7 +51,7 @@ export class FibonacciHeap<T> {
     }
 
     /**
-     * Merges two heaps into one.
+     * Merges two Fibonacci heaps into one.
      * Simply concatenates the root lists of both heaps.
      * @time O(1)
      * @amortizedComplexity O(1)
@@ -105,7 +105,7 @@ export class FibonacciHeap<T> {
          */
 
         if (z === z.right) {
-            // z was te only node in the root list.
+            // z was the only node in the root list.
             // Just delete the pointer to it.
             // Heap is empty now.
             this.min = undefined;

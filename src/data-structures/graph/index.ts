@@ -359,13 +359,25 @@ export class Graph<T = string> {
                     v.timestamps.blacken - u.timestamps.blacken,
             );
         /**
-         * As the edges are reversed and we DFS performs on transposed graph
+         * As the edges are reversed, we DFS on transposed graph
          * with decreasing visited time, During the DFS of transposed graph,
-         * we will not encounter a WHITE vertex from other DF-tree.
+         * we will not reach a vertex from other connected components,
+         * because all edges are reversed.
+         * The components that were reachable before, are not reachable in transposed graph.
          */
 
         // Returns the root of each strongly connected component.
         return transposedGraph.depthFirstSearch();
+    }
+
+    /**
+     * Tarjan's Algorithm.
+     * Finds a set of strongly connected components and returns their roots.
+     * @note The graph should be directed.
+     * @time O(V + E)
+     */
+    tarjanStronglyConnectedComponents(): Array<Vertex<T>> {
+        return [];
     }
 
     /**

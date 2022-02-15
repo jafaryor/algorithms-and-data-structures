@@ -5,8 +5,8 @@ The keys in a binary search tree are always stored in such a way as to satisfy t
 
 > Let `x` be a node in a binary search tree. If `y` is a node in the left subtree of `x`, then `y.key ≤ x.key`. If `y` is a node in the right subtree of `x`, then `y.key ≥ x.key`.
 
-__Theorem:__ If `x` is the root of an `n`-node subtree, then the call INORDER-TREE-WALK.x/
-takes ‚.n/ time
+__Theorem:__ If `x` is the root of an `n`-node subtree, then the call INORDER-TREE-WALK(x)
+takes `O(n)` time.
 
 Proof:
 `T(n) = 2T(n/2) + c`
@@ -85,7 +85,7 @@ Two solutions:
 
 ## Radix trees (Tries)
 Given two strings `a = a_0a_1a_2 ... a_p` and `b = b_0b_1b_2 ... b_q`, where each `a_i` and each `b_j` is in some ordered set of characters, we say that string `a` is lexicographically less than string `b` if either:
-1. there exists an integer `j`, where `0 ≤ j ≤ min(p.q)`, such that `a_i = b_i` fro all `i = 0, 1, ..., j-1` and `a_j < b_j`
+1. there exists an integer `j`, where `0 ≤ j ≤ min(p.q)`, such that `a_i = b_i` for all `i = 0, 1, ..., j-1` and `a_j < b_j`
 
 OR
 

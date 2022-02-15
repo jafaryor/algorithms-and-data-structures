@@ -37,9 +37,7 @@ Generally, we think of problems that are solvable by polynomial-time algorithms 
 
     > NP = {Polynomial time non-deterministic algorithms}
 
-3. __NP-Hard__ - are the hardest problems overall. A problem `L` is in NP-Hard if:
-
-    * Every problem in NP is reducible to `L` in polynomial time.
+3. __NP-Hard__ - `H` is NP-hard when for every problem `L` in NP, there is a polynomial-time reduction from `L` to `H`.
 
 4. __NPC (NP-Complete)__ - are the hardest problems in NP set. A problem `L` is in NPC if:
 
@@ -83,7 +81,7 @@ By “reducing” solving problem `A` to solving problem `B`, we use the “easi
 
 Recalling that NP-completeness is about showing how hard a problem is rather than how easy it is, we use polynomial-time reductions in the opposite way to show that a problem is NP-complete.
 
-Let us take the idea a step further, and show how we could use polynomial-time reductions to show that no polynomial-time algorithm can exist for a particular problem `B`.  Suppose we have a decision problem `A` for which we already know that no polynomial-time algorithm can exist. (Let us not concern ourselves for now with how to find such a problem `A`.)  Suppose further that we have a polynomial-time reduction transforming instances of `A` to instances of `B`. Now we can use a simple proof by contradiction to show that no polynomial-time  algorithm  can  exist  for `B`.   Suppose  otherwise;  i.e.,  suppose  that `B` has a polynomial-time  algorithm.   Then,  using  the  reduction method,  we would have a way to solve problemAin polynomial time, which contradicts our assumption that there is no polynomial-time algorithm for `A`.
+Let us take the idea a step further, and show how we could use polynomial-time reductions to show that no polynomial-time algorithm can exist for a particular problem `B`.  Suppose we have a decision problem `A` for which we already know that no polynomial-time algorithm can exist. (Let us not concern ourselves for now with how to find such a problem `A`.)  Suppose further that we have a polynomial-time reduction transforming instances of `A` to instances of `B`. Now we can use a simple proof by contradiction to show that no polynomial-time  algorithm  can  exist  for `B`.   Suppose  otherwise;  i.e.,  suppose  that `B` has a polynomial-time  algorithm.   Then,  using  the  reduction method,  we would have a way to solve problem `A` in polynomial time, which contradicts our assumption that there is no polynomial-time algorithm for `A`.
 
 Because the technique of reduction relies on having a problem already known to be  NP-complete  in  order  to  prove  a different  problem  NP-complete,  we need  a “first” NP-complete problem. The problem we shall use is the _SAT_ problem, in which we are given a boolean combinational circuit composed of AND, OR, and NOT gates, and we wish to know whether there exists some set of boolean inputs to this circuit that causes its output to be `1`.
 

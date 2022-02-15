@@ -693,7 +693,7 @@ C_i = c_i + Ф_i - Ф_i-1 =
 
 When the `i`-th operation is a `TABLE-DELETE()` and `α_i-1 ≥ 1/2`, the amortized cost is also bounded above by a constant.
 
-In summary, since the amortized cost of each operation is bounded above bya constant, the actual time for any sequence of `n` operations on a dynamic table is `O(n)`.
+In summary, since the amortized cost of each operation is bounded above by a constant, the actual time for any sequence of `n` operations on a dynamic table is `O(n)`.
 
 
 ### Reduction

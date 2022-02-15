@@ -1,5 +1,5 @@
 ## Linear Programming
-Many problems  take the form  of maximizing  or minimizing  an objective,  given limited resources  and competing  constraints.   If we can specify  the objective  asa  linear  function  of  certain  variables,  and  if  we  can  specify  the  constraints  on resources as equalities or inequalities  on those variables,  then we have a __linear-programming problem__.
+Many problems  take the form  of maximizing  or minimizing  an objective,  given limited resources  and competing  constraints.   If we can specify  the objective  as a  linear  function  of  certain  variables,  and  if  we  can  specify  the  constraints  on resources as equalities or inequalities  on those variables,  then we have a __linear-programming problem__.
 
 In the general linear-programming problem, we wish to optimize a linear function subject to a set of linear inequalities. Given a set of real numbers `a_1, a_2, ..., a_n` and a set of variables `x_1, x_2, ..., x_n`, we define a linear function `f` on those variables by 
 
@@ -13,7 +13,9 @@ is a __linear equality__ and the inequalities
 
 `f(x_1, x_2, ..., x_n) ≤ b` and `f(x_1, x_2, ..., x_n) ≥ b`
 
-are __linear inequalities__. We use the general term __linear constraints__ to denote either linear  equalities  or linear  inequalities. In linear  programming,  we do not allow strict  inequalities.
+are __linear inequalities__. We use the general term __linear constraints__ to denote either linear  equalities  or linear  inequalities.
+
+> In linear  programming,  we do not allow strict  inequalities.
 
 Formally, a __linear-programming problem__ is  the  problem  of either minimizing or maximizing a linear function subject to a finite set of linear constraints. If we are to minimize, then we call the linear program a __minimization linear program__,  and  if  we  are  to  maximize,  then  we  call  the  linear  program  a __maximization linear program__.
 
@@ -40,7 +42,7 @@ Conceptually, we could evaluate the objective function `x_1 + x_2` at each point
 ### Standard form
 A linear program in __standard form__ is the maximization of a linear function subject to linear inequalities, whereas a linear program in __slack form__ is the maximization of a linear function subject to linear equalities.
 
-In standard form, we are given `n` real numbers `c_1, c_2, ..., c_n` real  numbers `b_1, b_2, ..., b_m` and `m` `n` real numbers `a_ij` for `i = 1, 2, ..., m` and `j = 1, 2, ..., n`. We wish to find `n` real numbers `x_1, x_2, ..., x_n` that maximize
+In standard form, we are given `n` real numbers `c_1, c_2, ..., c_n` real  numbers `b_1, b_2, ..., b_m` and `m x n` real numbers `a_ij` for `i = 1, 2, ..., m` and `j = 1, 2, ..., n`. We wish to find `n` real numbers `x_1, x_2, ..., x_n` that maximize
 
 ![linear-program-standard-form](./images/linear-program-standard-form.png)
 
@@ -87,7 +89,7 @@ It is always possible  to convert  a linear  program,  given as minimizing  or m
                     x1, x2', x2" ≥ 0
     ```
 
-3. There might bee _quality constraints_, which have an equal  sign rather  than a less-than-or-equal-to sign.
+3. There might be _equality constraints_, which have an equal  sign rather  than a less-than-or-equal-to sign.
 
     Suppose that a linear program has an equality constraint `f(x_1, x_2, ..., x_n)`. Since `x = y` if and only if both `x ≥ y` and `x ≤ y`, we can replace this equality constraint by the pair of inequality constraints `f(x_1, x_2, ..., x_n) ≤ b` and `f(x_1, x_2, ..., x_n) ≥ b`.
 
@@ -98,13 +100,13 @@ It is always possible  to convert  a linear  program,  given as minimizing  or m
 When converting one linear program `L` into another linear program `L'`, we would like the property that an optimal solution to `L'` yields an optimal solution to `L`. To capture  this  idea,  we  say  that  two  maximization  linear  programs `L` and `L'` are __equivalent__.
 
 ### Slack Form
-To efficiently solve a linear program with the simplex algorithm, we prefer to ex-press it in a form in which some of the constraints are equality constraints.  More precisely, we shall convert it into a form in which the non-negativity constraints are the only inequality constraints, and the remaining constraints are equalities.
+To efficiently solve a linear program with the simplex algorithm, we prefer to express it in a form in which some of the constraints are equality constraints.  More precisely, we shall convert it into a form in which the non-negativity constraints are the only inequality constraints, and the remaining constraints are equalities.
 
 Let `Ax ≤ b` be an inequality  constraint. We introduce  a new variable `s` and rewrite inequality as the two constraints: `s = b - Ax`, `s ≥ 0`.
 
 We call `s` a __slack variable__ because it measures the slack,  or difference,  between the left-hand and right-hand sides of original equation.
 
-When  converting  from standard to slack form, we shall use `x`<sub>`n + i`</sub> (instead of `s`) to denote the slack variable associated with the `i`th inequality. The `i`th constraint is therefore:
+When  converting  from standard to slack form, we shall use `x`<sub>`n + i`</sub> (instead of `s`) to denote the slack variable associated with the `i`-th inequality. The `i`th constraint is therefore:
 
 `x`<sub>`n + i`</sub>` = b_i - ∑[j = 1 -> n](a_ij * x_j)`.
 

@@ -1,5 +1,6 @@
 /**
  * Finds the Greatest Common Divisor (GCD) of two numbers.
+ * @note assume a > b >= 0. If a < b, swap a and b.
  * @time O(lg b)
  */
 export function euclid(a: number, b: number): number {

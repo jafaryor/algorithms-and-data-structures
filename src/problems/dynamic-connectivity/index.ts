@@ -1,5 +1,5 @@
 /**
- * Solves the Dynamic Connectivity problem.
+ * Solves the Dynamic Connectivity problem using disjoint set data structure.
  * Weighted Quick Union Implementation.
  */
 export class UnionFinder {
@@ -12,6 +12,7 @@ export class UnionFinder {
     // The sizes of the components.
     private readonly componentSize: number[];
 
+    // TODO: Use Disjoint Set Data Structure from "data-structures/disjoint-set".
     constructor(n: number, pairs: number[][]) {
         this.count = n;
         this.pairs = pairs;

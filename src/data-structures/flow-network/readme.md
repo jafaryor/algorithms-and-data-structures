@@ -143,7 +143,7 @@ In each iteration of the `fordFulkersonMaxFlow()` method, we find some augmentin
 ### Analysis
 In practice, the maximum-flow problem often arises with integral capacities.  If the capacities are rational numbers, we can apply an appropriate scaling transformation to make them all integral. If `f*` denotes a maximum flow in the transformed network, then a straightforward  implementation of  `fordFulkersonMaxFlow()` executes the while loop at most `|f*|` times, since the flow value increases by at least one unit in each iteration.
 
-Let us assume that we keep a data structure corresponding to a directed graph `G' = (V, E')`, where `E] = {(u, v): (u, v) ∈ E or (v, u) ∈ E}`. Edges in the network `G` are also edges in `G'`, and therefore we can easily maintain capacities and flows in this data structure.  Given a flow `f` on `G`, the edges in the residual network `G_f` consist  of all edges `(u, v)` of `G'` such that `c_f(u, v) > 0`. The time to find a path ina residual network is therefore `O(V + E') = O(E)` if we use either depth-first search or breadth-first search.  Each iteration of the while loop thus takes `O(E)` time, as does the initialization step, making the total running time of the algorithm is `O(E|f*|)`.
+Let us assume that we keep a data structure corresponding to a directed graph `G' = (V, E')`, where `E] = {(u, v): (u, v) ∈ E or (v, u) ∈ E}`. Edges in the network `G` are also edges in `G'`, and therefore we can easily maintain capacities and flows in this data structure.  Given a flow `f` on `G`, the edges in the residual network `G_f` consist  of all edges `(u, v)` of `G'` such that `c_f(u, v) > 0`. The time to find a path in a residual network is therefore `O(V + E') = O(E)` if we use either depth-first search or breadth-first search.  Each iteration of the while loop thus takes `O(E)` time, as does the initialization step, making the total running time of the algorithm is `O(E|f*|)`.
 
 ![ford-fulkerson-worst-case](./images/ford-fulkerson-worst-case.png)
 
@@ -178,7 +178,7 @@ We define the __corresponding flow network__ `G = (V, E)` for the bipartite grap
 
 `E' = {(s, u): u ∈ L} ∪ {(u, v): (u, v) u ∈ E} ∪ {(v, t): v ∈ R}`
 
-To complete the construction,  we assign unit capacity to each edge in `E'`.Since each vertex in `V` has at least one incident edge, `|E| ≥ |V| / 2`. Thus, `|E| ≤ |E'| = |E| + |V| ≤ 3|E|`, and so `|E'| = θ(E)`.
+To complete the construction,  we assign unit capacity to each edge in `E'`. Since each vertex in `V` has at least one incident edge, `|E| ≥ |V| / 2`. Thus, `|E| ≤ |E'| = |E| + |V| ≤ 3|E|`, and so `|E'| = θ(E)`.
 
 
 ## Push-relabel algorithms
