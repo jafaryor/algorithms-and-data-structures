@@ -177,9 +177,9 @@ It is interesting to observe that `G` and `G^T` have exactly the same strongly c
 
 ![strongly-connected-components](./images/strongly-connected-components.png)
 
-An algorithm for finding the strongly connected components of a directed graph is called a [Kosaraju's algorithm](https://www.youtube.com/watch?v=Jb1XlDsr46o).
-
-An algorithm for finding the strongly connected components of a directed graph is called a [Tarjan's algorithm](https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm).
+Two most popular algorithms for finding the strongly connected components in a directed graph are:
+* [Kosaraju's algorithm](https://www.youtube.com/watch?v=Jb1XlDsr46o).
+* [Tarjan's algorithm](https://www.youtube.com/watch?v=wUgWX0nc4NY).
 
 #### Lemma
 Let `C` and `C'` be distinct strongly connected components in directed graph `G = (V, E)`, let `u, v ∈ C`, let `u', v' ∈ C'`, and suppose that `G` contains a path `u -> u'`. Then `G` cannot also contain a path `v' -> v`.
@@ -249,9 +249,15 @@ A directed graph has an Eulerian cycle if following conditions are true:
 ### Fleury’s Algorithm
 An edge in an undirected connected graph is a __bridge__ if removing it disconnects the graph. For a disconnected undirected graph, definition is similar, a bridge is an edge removing which increases number of disconnected components.
 
-A vertex in an undirected connected graph is an __articulation point__ (or cut vertex) if removing it (and edges through it) disconnects the graph. For a disconnected undirected graph, an articulation point is a vertex removing which increases number of connected components.
+A vertex in an undirected connected graph is an __articulation point__ (or __cut vertex__) if removing it (and edges through it) disconnects the graph. For a disconnected undirected graph, an articulation point is a vertex removing which increases number of connected components.
 
 Both represent vulnerabilities in a connected network and are useful for designing reliable networks.
+
+A graph is said to be __biconnected__ if: 
+1. It is connected, i.e. it is possible to reach every vertex from every other vertex, by a simple path. 
+2. Even after removing any vertex the graph remains connected.
+
+A connected graph is biconnected if it is connected and doesn’t have any _Articulation Point_.
 
 Fleury’s Algorithm for printing Eulerian trail or cycle in an _undirected graph_:
 1. Make sure the graph has either `0` or `2` odd vertices.

@@ -343,7 +343,7 @@ export class Graph<T = string> {
      * @note The graph should be directed.
      * @time O(V + E)
      */
-    stronglyConnectedComponents(): Array<Vertex<T>> {
+    kosarajuSCC(): Array<Vertex<T>> {
         // To calculate the timestamps.
         this.depthFirstSearch();
 
@@ -376,8 +376,85 @@ export class Graph<T = string> {
      * @note The graph should be directed.
      * @time O(V + E)
      */
-    tarjanStronglyConnectedComponents(): Array<Vertex<T>> {
-        return [];
+    tarjanSCC(): number {
+        const stack = new Stack<Vertex<T>>();
+        // To store reference to the strongly connected components.
+        let sccCount = 0;
+
+        /**
+         * We use vertex.connectedComponent as low link value.
+         *  - The low link value is the lowest vertex ID reachable from the current vertex.
+         * We use vertex.timestamps.blacken as the ID assigned during DFS.
+         * We use vertex.timestamps.grayed as a sign currently being in the stack.
+         *  - Infininty, is used as the default value.
+         *  - 1, is used when the vertex is inside the stack.
+         */
+        this.resetVertices();
+        this.time = 0;
+
+        // Performs DFS on each vertex of the graph.
+        for (const vertex of this.vertices) {
+            if (vertex.isBlack) continue;
+
+            sccCount += this.tarjanSCCHelper(vertex, stack);
+        }
+
+        return sccCount;
+    }
+
+    /**
+     * DFS procedure for Tarjan's Algorithm.
+     */
+    private tarjanSCCHelper(u: Vertex<T>, stack: Stack<Vertex<T>>): number {
+        let sccCount = 0;
+
+        stack.push(u);
+
+        // Mark vertex as inside the stack.
+        u.paintGray(1);
+        // Assign a unique ID to a vertex.
+        u.paintBlack(++this.time);
+        // Low link value is the ID of the vertex.
+        u.connectedComponent = this.time;
+
+        // Explore all the adjacent vertices.
+        this.adjacencyList.list[u.value].forEach(
+            (v: SinglyLinkedListNode<AdjacencyListNode<T>>) => {
+                // Checks if the vertex is unvisited.
+                if (v.data.vertex.isWhite) {
+                    sccCount += this.tarjanSCCHelper(v.data.vertex, stack);
+                }
+
+                // Checks if the vertex is inside the stack.
+                if (v.data.vertex.timestamps.grayed === 1) {
+                    u.connectedComponent = Math.min(
+                        u.connectedComponent!,
+                        v.data.vertex.connectedComponent!,
+                    );
+                }
+            },
+        );
+
+        // After having visited all the neighbors of the vertex,
+        // if we are at the start of a strongly connected component (SCC),
+        // empty the seen stack until we are back to the start of a SCC.
+        if (u.timestamps.blacken === u.connectedComponent) {
+            // The root of SCC is found.
+
+            for (let v = stack.pop(); v; v = stack.pop()) {
+                // Mark vertex as not inside the stack.
+                v.timestamps.grayed = Infinity;
+                // Low link value of "v" is the ID of the "u".
+                v.connectedComponent = u.timestamps.blacken;
+
+                // Don't extract "u" since we might not yet visited all of its edges
+                if (v === u) break;
+            }
+
+            sccCount++;
+        }
+
+        return sccCount;
     }
 
     /**
@@ -1078,7 +1155,7 @@ export class Graph<T = string> {
      * @time O(V + E + V*V)
      */
     isEuleranCyce(): boolean {
-        const scc = this.stronglyConnectedComponents().length;
+        const scc = this.kosarajuSCC().length;
         const zeroDegreeVertices = this.zeroDegreeVertices();
         const isStronglyConnected = scc - zeroDegreeVertices === 1;
 

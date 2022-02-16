@@ -188,17 +188,24 @@ describe('Graph', () => {
 
         describe('stronglyConnectedComponents', () => {
             it('case 01', () => {
-                expect(
-                    graph.stronglyConnectedComponents().map((v) => v.value),
-                ).toEqual(['1']);
+                expect(graph.kosarajuSCC().map((v) => v.value)).toEqual(['1']);
             });
 
             it('case 02', () => {
+                expect(graph.tarjanSCC()).toEqual(1);
+            });
+
+            it('case 03', () => {
                 graph.removeVertex(vertices[1]);
 
-                expect(
-                    graph.stronglyConnectedComponents().map((v) => v.value),
-                ).toEqual(['3', '1']);
+                expect(graph.kosarajuSCC().map((v) => v.value)).toEqual([
+                    '3',
+                    '1',
+                ]);
+            });
+
+            it('case 04', () => {
+                expect(graph.tarjanSCC()).toEqual(2);
             });
         });
 
@@ -339,9 +346,11 @@ describe('Graph', () => {
                 graph.removeEdge(vertices[0], vertices[3]);
                 graph.addEdge(vertices[3], vertices[0], 5);
 
-                expect(
-                    graph.stronglyConnectedComponents().map((v) => v.value),
-                ).toEqual(['3', '6', '1']);
+                expect(graph.kosarajuSCC().map((v) => v.value)).toEqual([
+                    '3',
+                    '6',
+                    '1',
+                ]);
                 expect(graph.adjacencyList.toString()).toEqual([
                     '1 -> 2 (3)',
                     '2 -> 5 (7)',
@@ -353,12 +362,17 @@ describe('Graph', () => {
             });
 
             it('case 02', () => {
+                expect(graph.tarjanSCC()).toEqual(3);
+            });
+
+            it('case 03', () => {
                 graph.removeEdge(vertices[5], vertices[5]);
                 graph.addEdge(vertices[5], vertices[2], 9);
 
-                expect(
-                    graph.stronglyConnectedComponents().map((v) => v.value),
-                ).toEqual(['3', '1']);
+                expect(graph.kosarajuSCC().map((v) => v.value)).toEqual([
+                    '3',
+                    '1',
+                ]);
                 expect(graph.adjacencyList.toString()).toEqual([
                     '1 -> 2 (3)',
                     '2 -> 5 (7)',
@@ -367,6 +381,10 @@ describe('Graph', () => {
                     '5 -> 4 (9)',
                     '6 -> 2 (8) -> 3 (9)',
                 ]);
+            });
+
+            it('case 04', () => {
+                expect(graph.tarjanSCC()).toEqual(2);
             });
         });
 
