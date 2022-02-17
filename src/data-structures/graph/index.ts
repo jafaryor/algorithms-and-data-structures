@@ -316,21 +316,56 @@ export class Graph<T = string> {
      ********************************************************************************/
 
     /**
-     * Topological Sort.
-     * It arranges vertices an a way that
-     * all edges are directed from left to right.
-     * @assumes the graph is acyclic.
+     * Kahn's Algorithms for Topological Sort.
+     * In each iteration, the algorithm removes a vertex,
+     * with no incoming edges and insert it into the result.
      * @time O(V + E)
      */
     topologicalSort(): Array<Vertex<T>> {
-        this.depthFirstSearch();
+        const queue = new Queue<Vertex<T>>();
+        const result = [] as Array<Vertex<T>>;
 
-        // Vertices sorted, with its vertices arranged from left to right
-        // in order of decreasing visited/blackened time.
-        return [...this.vertices].sort(
-            (u: Vertex<T>, v: Vertex<T>) =>
-                v.timestamps.blacken - u.timestamps.blacken,
-        );
+        // Count in-degree of each vertex.
+        for (const u of this.vertices) {
+            this.adjacencyList.list[u.value].forEach(
+                (v: SinglyLinkedListNode<AdjacencyListNode<T>>) => {
+                    v.data.vertex.degree.in++;
+                },
+            );
+        }
+
+        // Add all vertices with in-degree = 0 to the queue.
+        for (const u of this.vertices) {
+            if (u.degree.in === 0) queue.enqueue(u);
+        }
+
+        while (!queue.isEmpty()) {
+            const u = queue.dequeue()!;
+            result.push(u);
+
+            // Since u is removed from the graph,
+            // the in-degree of its children will be reduced by 1.
+            // And some its children might become in-degree = 0.
+            this.adjacencyList.list[u.value].forEach(
+                (v: SinglyLinkedListNode<AdjacencyListNode<T>>) => {
+                    v.data.vertex.degree.in--;
+
+                    // If the in-degree of "v" becomes 0,
+                    // then add "v" to the queue.
+                    if (v.data.vertex.degree.in === 0) {
+                        queue.enqueue(v.data.vertex);
+                    }
+                },
+            );
+        }
+
+        if (result.length !== this.vertices.length) {
+            throw new Error(
+                'The graph is cyclic! No topological sort possible.',
+            );
+        }
+
+        return result;
     }
 
     /********************************************************************************
@@ -372,7 +407,8 @@ export class Graph<T = string> {
 
     /**
      * Tarjan's Algorithm.
-     * Finds a set of strongly connected components and returns their roots.
+     * Finds a set of strongly connected components and returns the number of SCCs.
+     * Basically, we run DFS and group each SCC by the ID of its root.
      * @note The graph should be directed.
      * @time O(V + E)
      */

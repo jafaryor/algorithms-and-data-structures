@@ -146,7 +146,7 @@ A __topological sort__ of a __dag__ (_directed acyclic graph_) `G = (V, E)` is a
 
 > If the graph contains a cycle, then no linear ordering is possible.
 
-As an example that arises when Jafar gets dressed  in the morning.   The professor  must put on certain garments before others(e.g., socks before shoes). Other items may be put on in any order (e.g., socks and pants).
+As an example that arises when professor gets dressed in the morning.   The professor  must put on certain garments before others(e.g., socks before shoes). Other items may be put on in any order (e.g., socks and pants).
 
 ![topological-sort-example](./images/topological-sort-example.png)
 
@@ -155,15 +155,9 @@ A topological sort of this dag therefore gives an order for getting dressed.
 #### Lemma
 A directed graph `G` is acyclic if and only if a depth-first search of `G` yields no back edges.
 
-#### Theorem
-The `topologicalSort()` produces  a  topological  sort  of  the  directed  acyclic  graph.
+A popular algorithm for topological sorting is the [Kahn’s algorithm](https://www.youtube.com/watch?v=cIBFEhD77b4). Its running time is `O(V + E)`. Its advantage is that, it can detect cycles in a graph.
 
-_Proof_: Suppose that  DFS  is run on a given dag `G = (V, E)` to determine  finishing (time when vertex is blacken) times for its vertices.  It suffices to show that for any pair of distinct vertices `u, v ∈ V`, if `G` contains an edge from `u` to `v`, then `v.f < u.f`.  Consider any edge `(u, v)` explored by `DFS`.
-
-* When this edge is explored, `v` cannot be gray, since then `v` would be an ancestor of `u` and `(u, v)` would be a back edge, contradicting above Lemma.  * Therefore, `v` must be either white or black. If `v` is white, it becomes a descendant of `u`, and so `v.f < u.f`.
-* If `v` is black, it has already been finished/visited, so that `v.f` has already been set.
-
-Because we are still exploring from `u`, we have yet to assign a timestamp to `u.f`, and so once we do, we will have `v.f < u.f` as well.  Thus,  for any edge `(u, v)` in the dag, we have `v.f < u.f`,  proving  the theorem.
+> Note: The topological sort is not unique. It differs depending on the which vertex is chosen at each iteration.
 
 
 ## Strongly connected components

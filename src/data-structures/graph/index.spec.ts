@@ -70,6 +70,29 @@ describe('Graph', () => {
     });
 
     describe('Undirected, Unweighted, Cyclic', () => {
+        const stub = getDirectedWeightedAcyclicStub();
+
+        beforeAll(() => {
+            matrix = stub.matrix;
+            graph = new Graph({matrix});
+            vertices = graph.vertices;
+        });
+
+        describe('Topological Sort', () => {
+            it('case 01', () => {
+                expect(graph.topologicalSort().map((v) => v.value)).toEqual([
+                    '3',
+                    '1',
+                    '5',
+                    '4',
+                    '6',
+                    '2',
+                ]);
+            });
+        });
+    });
+
+    describe('Undirected, Unweighted, Cyclic', () => {
         const stub = getUndirectedUnweightedCyclicStub();
 
         beforeAll(() => {
@@ -160,28 +183,6 @@ describe('Graph', () => {
                     '4 b [Infinity] (8/9)',
                     '5 b [Infinity] (5/6)',
                     '6 b [Infinity] (1/12)',
-                ]);
-            });
-        });
-
-        describe('topologicalSort', () => {
-            it('case 01', () => {
-                expect(graph.topologicalSort().map((v) => v.value)).toEqual([
-                    '1',
-                    '2',
-                    '5',
-                    '3',
-                    '6',
-                    '4',
-                ]);
-
-                expect(graph.toString()).toEqual([
-                    '1 b [Infinity] (1/12)',
-                    '2 b [Infinity] (2/11)',
-                    '3 b [Infinity] (3/8)',
-                    '4 b [Infinity] (4/5)',
-                    '5 b [Infinity] (9/10)',
-                    '6 b [Infinity] (6/7)',
                 ]);
             });
         });
@@ -315,28 +316,6 @@ describe('Graph', () => {
                     '4 b [Infinity] (4/5)',
                     '5 b [Infinity] (3/6)',
                     '6 b [Infinity] (1/8)',
-                ]);
-            });
-        });
-
-        describe('topologicalSort', () => {
-            it('case 01', () => {
-                expect(graph.topologicalSort().map((v) => v.value)).toEqual([
-                    '3',
-                    '6',
-                    '1',
-                    '2',
-                    '5',
-                    '4',
-                ]);
-
-                expect(graph.toString()).toEqual([
-                    '1 b [Infinity] (1/8)',
-                    '2 b [Infinity] (2/7)',
-                    '3 b [Infinity] (9/12)',
-                    '4 b [Infinity] (4/5)',
-                    '5 b [Infinity] (3/6)',
-                    '6 b [Infinity] (10/11)',
                 ]);
             });
         });
@@ -834,6 +813,52 @@ export function getDirectedWeightedCyclicStub() {
             '4 -> 2 (6)',
             '5 -> 4 (9)',
             '6 -> 6 (0)',
+        ],
+    };
+}
+
+/**
+ * Directed, Weighted, Acyclic Graph (DAG).
+ */
+export function getDirectedWeightedAcyclicStub() {
+    const vertices = createArrayWithIncrementingValues(6, 1).map(
+        (k) => new Vertex(k.toString()),
+    );
+
+    return {
+        vertices,
+        matrix: [
+            [undefined, 4, undefined, 6, undefined, undefined],
+            [undefined, undefined, undefined, undefined, undefined, undefined],
+            [1, undefined, undefined, undefined, 3, undefined],
+            [undefined, 7, undefined, undefined, undefined, undefined],
+            [undefined, undefined, undefined, 9, undefined, 2],
+            [undefined, 0, undefined, undefined, undefined, undefined],
+        ],
+        list: {
+            '1': [
+                {vertex: vertices[2], weight: 4},
+                {vertex: vertices[4], weight: 6},
+            ],
+            '2': [],
+            '3': [
+                {vertex: vertices[1], weight: 1},
+                {vertex: vertices[5], weight: 3},
+            ],
+            '4': [{vertex: vertices[2], weight: 7}],
+            '5': [
+                {vertex: vertices[4], weight: 9},
+                {vertex: vertices[6], weight: 2},
+            ],
+            '6': [{vertex: vertices[2], weight: 0}],
+        },
+        stringList: [
+            '1 -> 2 (4) -> 4 (6)',
+            '2 ->',
+            '3 -> 1 (1) -> 5 (3)',
+            '4 -> 2 (7)',
+            '5 -> 4 (9) -> 6 (2)',
+            '6 -> 2 (0)',
         ],
     };
 }
