@@ -23,6 +23,16 @@ export class Vertex<T = string> {
     };
     /** The number of connected component where the vertex belongs to. */
     connectedComponent?: number;
+    // A vertex degree is the number of edges connected to it.
+    degree: {
+        // In-degree is the number of edges pointing to the vertex.
+        in: number;
+        // Out-degree is the number of edges pointing from the vertex.
+        out: number;
+    } = {
+        in: 0,
+        out: 0,
+    };
 
     constructor(
         /** @note The value should be unique. */
@@ -56,6 +66,8 @@ export class Vertex<T = string> {
         this.predecessor = undefined;
         this.timestamps.grayed = Infinity;
         this.timestamps.blacken = Infinity;
+        this.degree.in = 0;
+        this.degree.out = 0;
     }
 
     /**

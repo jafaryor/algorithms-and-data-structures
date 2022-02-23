@@ -162,7 +162,7 @@ A __topological sort__ of a __dag__ (_directed acyclic graph_) `G = (V, E)` is a
 
 > If the graph contains a cycle, then no linear ordering is possible.
 
-As an example that arises when Jafar gets dressed  in the morning.   The professor  must put on certain garments before others(e.g., socks before shoes). Other items may be put on in any order (e.g., socks and pants).
+As an example that arises when professor gets dressed in the morning.   The professor  must put on certain garments before others(e.g., socks before shoes). Other items may be put on in any order (e.g., socks and pants).
 
 ![topological-sort-example](./images/topological-sort-example.png)
 
@@ -171,15 +171,9 @@ A topological sort of this dag therefore gives an order for getting dressed.
 #### Lemma
 A directed graph `G` is acyclic if and only if a depth-first search of `G` yields no back edges.
 
-#### Theorem
-The `topologicalSort()` produces  a  topological  sort  of  the  directed  acyclic  graph.
+A popular algorithm for topological sorting is the [Kahn’s algorithm](https://www.youtube.com/watch?v=cIBFEhD77b4). Its running time is `O(V + E)`. Its advantage is that, it can detect cycles in a graph.
 
-_Proof_: Suppose that  DFS  is run on a given dag `G = (V, E)` to determine  finishing (time when vertex is blacken) times for its vertices.  It suffices to show that for any pair of distinct vertices `u, v ∈ V`, if `G` contains an edge from `u` to `v`, then `v.f < u.f`.  Consider any edge `(u, v)` explored by `DFS`.
-
-* When this edge is explored, `v` cannot be gray, since then `v` would be an ancestor of `u` and `(u, v)` would be a back edge, contradicting above Lemma.  * Therefore, `v` must be either white or black. If `v` is white, it becomes a descendant of `u`, and so `v.f < u.f`.
-* If `v` is black, it has already been finished/visited, so that `v.f` has already been set.
-
-Because we are still exploring from `u`, we have yet to assign a timestamp to `u.f`, and so once we do, we will have `v.f < u.f` as well.  Thus,  for any edge `(u, v)` in the dag, we have `v.f < u.f`,  proving  the theorem.
+> Note: The topological sort is not unique. It differs depending on the which vertex is chosen at each iteration.
 
 
 ## Strongly connected components
@@ -193,9 +187,9 @@ It is interesting to observe that `G` and `G^T` have exactly the same strongly c
 
 ![strongly-connected-components](./images/strongly-connected-components.png)
 
-An algorithm for finding the strongly connected components of a directed graph is called a [Kosaraju's algorithm](https://www.youtube.com/watch?v=Jb1XlDsr46o).
-
-An algorithm for finding the strongly connected components of a directed graph is called a [Tarjan's algorithm](https://en.wikipedia.org/wiki/Tarjan%27s_strongly_connected_components_algorithm).
+Two most popular algorithms for finding the strongly connected components in a directed graph are:
+* [Kosaraju's algorithm](https://www.youtube.com/watch?v=Jb1XlDsr46o).
+* [Tarjan's algorithm](https://www.youtube.com/watch?v=wUgWX0nc4NY).
 
 #### Lemma
 Let `C` and `C'` be distinct strongly connected components in directed graph `G = (V, E)`, let `u, v ∈ C`, let `u', v' ∈ C'`, and suppose that `G` contains a path `u -> u'`. Then `G` cannot also contain a path `v' -> v`.
@@ -265,9 +259,15 @@ A directed graph has an Eulerian cycle if following conditions are true:
 ### Fleury’s Algorithm
 An edge in an undirected connected graph is a __bridge__ if removing it disconnects the graph. For a disconnected undirected graph, definition is similar, a bridge is an edge removing which increases number of disconnected components.
 
-A vertex in an undirected connected graph is an __articulation point__ (or cut vertex) if removing it (and edges through it) disconnects the graph. For a disconnected undirected graph, an articulation point is a vertex removing which increases number of connected components.
+A vertex in an undirected connected graph is an __articulation point__ (or __cut vertex__) if removing it (and edges through it) disconnects the graph. For a disconnected undirected graph, an articulation point is a vertex removing which increases number of connected components.
 
 Both represent vulnerabilities in a connected network and are useful for designing reliable networks.
+
+A graph is said to be __biconnected__ if: 
+1. It is connected, i.e. it is possible to reach every vertex from every other vertex, by a simple path. 
+2. Even after removing any vertex the graph remains connected.
+
+A connected graph is biconnected if it is connected and doesn’t have any _Articulation Point_.
 
 Fleury’s Algorithm for printing Eulerian trail or cycle in an _undirected graph_:
 1. Make sure the graph has either `0` or `2` odd vertices.
