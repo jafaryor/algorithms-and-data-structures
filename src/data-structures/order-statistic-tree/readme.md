@@ -5,7 +5,7 @@ The __rank__ of an element is its position in the linear order of the set.
 
 An order-statistic tree `T` is simply a red-black tree with additional  information stored in each node. Besides the usual red-black tree attributes, we have another attribute, `size`. This attribute contains the number of  (internal) nodes in the subtree rooted at the node (including the node itself), that is, the __size of the subtree__.
 
-We do not require keys to be distinct in an order-statistic tree. In the presence of equal keys, the above notion of rank is not well defined. We remove this ambiguity for an order-statistic tree by defining the rank of an element as the position at which it would be printed in an _inorder walk_ of the tree. In tree below for example, the key `14` stored in a black node has rank `5`, and the key `14` stored in a red node has rank `6`.
+We do not require keys to be distinct in an order-statistic tree. In the presence of equal keys, the above notion of rank is not well defined. We remove this ambiguity for an order-statistic tree by defining the rank of an element as the position at which it would be printed in an _inorder walk_ of the tree. In tree below for example, the key `14` stored in a black node has rank `5`.
 
 ![order-statistic-tree](../../images/order-statistic-tree.png)
 

@@ -141,6 +141,22 @@ The DFS algorithm has enough information to classify some edges as it encounters
 In a depth-first search of an _undirected_ graph `G`, every edge of `G` is either a tree edge or a back edge.
 
 
+### Best-first Search
+All search methods can be broadly classified into two categories:
+* __Uninformed (or Exhaustive or Blind) methods__, where the search is carried out without any additional information that is already provided in the problem statement. Some examples include Breadth First Search, Depth First Search etc.
+* __Informed (or Heuristic) methods__, where search is carried out by using additional information to determine the next step towards finding the solution. Best First Search is an example of such algorithms
+
+Informed search methods are more efficient, low in cost and high in performance as compared to the uninformed search methods.
+
+In BFS and DFS, when we are at a node, we can consider any of the adjacent as next node. So both BFS and DFS blindly explore paths without considering any cost function. The idea of Best First Search is to use an evaluation function to decide which adjacent is most promising and then explore.
+
+It makes use of the concept of priority queues and heuristic search. The objective of this algorithm is to reach the goal state or final state from an initial state by the shortest route possible.
+
+> It can get stuck in loops.
+
+#### [Watch more here](https://www.youtube.com/watch?v=dv1m3L6QXWs)
+
+
 ## Topological sort
 A __topological sort__ of a __dag__ (_directed acyclic graph_) `G = (V, E)` is a linear ordering of all its vertices such that if `G` contains an edge `(u, v)`, then `u` appears before `v` in the ordering. We can view a topological sort of a graph as an ordering of its vertices along a horizontal line so that all directed edges go from left to right.
 

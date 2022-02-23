@@ -6,7 +6,7 @@ Open Addressing is an alternative to chaining for handling collisions. In Open A
 > Examining a slot is known as a __probe__.
 
 Operations:
-* `insert(k)` - keep probing until an empty or dummy slot if found. Once found, insert `k`.
+* `insert(k)` - keep probing until an empty or dummy slot is found. Once found, insert `k`.
 * `search(k)` - keep probing until slot's key doesn't become equal to `k` or an empty slot is reached.
 * `delete(k)` - Delete operation is inserting. If we simply delete a key, then search may fail. So slots of deleted keys are marked specially as 'deleted'. To mark a node deleted, we have used __dummy node__ with key `-1`.
 
@@ -23,7 +23,7 @@ The ideal situation is __uniform hashing__. It's hard to implement true uniform 
 
     Linearly probe for next slot. Then when the end is reached, start from very first slot.
 
-    __Advntage:__ Easy to implement.
+    __Advantage:__ Easy to implement.
 
     __Disadvantage:__ __Primary Clustering__ will happen since most of the values will be stored in the same part of the table since the position is only incremented by 1. Clustering is the tendency to store most values in adjacent locations near the hash position rather than distributing values equally across all open table locations. This problem will cause performance issues as the cluster grows larger.
 
@@ -56,7 +56,7 @@ The ideal situation is __uniform hashing__. It's hard to implement true uniform 
 __Theorem:__ Given an open-address hash table with load factor `α = n/m < 1`, the expected number of probes in an unsuccessful search is at most `1 / (1 - α)`, assuming _uniform hashing_.
 
 
-__Corollary:__ Inserting an element into an open-address hash table with load factor  ̨ requires at most `1 / (1 - α)` probes on average, assuming _uniform hashing_.
+__Corollary:__ Inserting an element into an open-address hash table with load factor `α`, ̨requires at most `1 / (1 - α)` probes on average, assuming _uniform hashing_.
 
 
 __Theorem:__ Given an open-address hash table with load factor `α < 1`, the expected number of probes in a successful search is at most `1/α * ln(1/(1-α))` assuming _uniform hashing_ and assuming that each key in the table is equally likely to be searched for.
@@ -68,7 +68,7 @@ _Difference:_
 | - | - |
 | Chaining is simpler to implement.	| Open Addressing requires more computation. |
 | In chaining, Hash table never fills up, we can always add more elements to chain. | In open addressing, table may become full. |
-| Chaining is Less sensitive to the hash function or load factors. | Open addressing requires extra care for to avoid clustering and load factor. |
+| Chaining is less sensitive to the hash function or load factors. | Open addressing requires extra care to avoid clustering and load factor. |
 | Chaining is mostly used when it is unknown how many and how frequently keys may be inserted or deleted. | Open addressing is used when the frequency and number of keys is known. |
 | Cache performance of chaining is not good as keys are stored using linked list. | Open addressing provides better cache performance as everything is stored in the same table. |
 | Wastage of Space (Some Parts of hash table in chaining are never used). | In Open addressing, a slot can be used even if an input doesn’t map to it. |

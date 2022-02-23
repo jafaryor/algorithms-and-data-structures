@@ -6,7 +6,7 @@ The __transpose__ of a matrix `A` is the matrix `A`<sup>`T`</sup> obtained by ex
 
 A __vector__ is a one-dimensional array of numbers.
 
-The unit vector `e`<sub>`i`</sub> is the vector  whose `i`th  element  is `1` and  all  of  whose  other elements are `0`.
+The unit vector `e`<sub>`i`</sub> is the vector  whose `i`th  element  is `1` and  all  of  its  other elements are `0`.
 
 A __zero matrix__ is a matrix  all of  whose entries  are `0`.
 

@@ -15,6 +15,11 @@ Order of grows of worst-case running time for Priority Queue implementations:
 
 There are two types of Priority Queues: _Min Priority Queue_ and _Max Priority Queue_. Thus, a max-priority queue returns the element with the maximum key first whereas, a min-priority queue returns the element with the smallest key first.
 
+### Priority Queue vs Heap
+A priority queue is an abstract data type. We do not specify the implementation when it is abstract. You could implement a PriorityQueue with an unsorted array if you wanted to. Would it be the most efficient way to implement it? No, but it would still be a priority queue. It just so happens that a heap is a very good data structure to implement a priority queue
+
+A binary heap is not an abstract data type; it is an actual implementation of a data structure.
+
 ### Applications
 * Bandwidth management
 
@@ -35,3 +40,5 @@ There are two types of Priority Queues: _Min Priority Queue_ and _Max Priority Q
 ---
 
 #### [Read More](https://www.codesdope.com/course/data-structures-priority-queues/)
+
+### [Watch](https://www.youtube.com/watch?v=wptevk0bshY)

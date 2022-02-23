@@ -7,6 +7,8 @@ __Splaying__ is a process in which a node is transferred to the root by performi
 
 > A splay tree is not always a balanced tree and may become unbalanced after some operations.
 
+A Splay Tree is a specific variation of binary tree, specifying certain attributes of how the tree should be implemented. An Optimal Binary Search Tree is any binary tree for which the lookup cost is minimized.
+
 ---
 
 #### [Read More](https://www.codesdope.com/course/data-structures-splay-trees/)
