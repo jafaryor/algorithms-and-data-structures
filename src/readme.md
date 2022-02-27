@@ -417,6 +417,8 @@ Dynamic programming, like the divide-and-conquer method, solves problems by comb
 
 Dynamic programming is typically applied to optimization problems. In such problems there can be many possible solutions. Each solution has a value, and we wish to find a solution with the optimal (minimum or maximum) value. We call such a solution an optimal solution to the problem, as opposed to the optimal solution, since there may be several solutions that achieve the optimal value.
 
+> Whenever you see a question that asks for the maximum or minimum of something, consider Dynamic Programming as a possibility.
+
 The development of a dynamic-programming algorithm can be broken into a sequence of four steps.
 1. Characterize the structure of an optimal solution.
 2. Recursively define the value of an optimal solution.

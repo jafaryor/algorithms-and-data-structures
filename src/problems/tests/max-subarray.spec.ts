@@ -1,4 +1,8 @@
-import {findMaximumSubArray, KadaneAlgorithm} from '../max-subarray';
+import {
+    findMaximumSubArray,
+    kadaneAlgorithm,
+    maxSubArray,
+} from '../max-subarray';
 
 describe('MaxSubArrayProblemSpec', () => {
     let input: number[];
@@ -31,14 +35,17 @@ describe('MaxSubArrayProblemSpec', () => {
         sum = 7;
     });
 
-    // Divide and Conquire Method
+    // Kadane Algorihm.
+    afterEach(() => expect(kadaneAlgorithm(input)).toEqual(sum));
+
+    // Divide and Conquer without max subarray indices.
+    afterEach(() => expect(maxSubArray(input)).toEqual(sum));
+
+    // Divide and Conquer Method.
     afterEach(() => {
         const result = findMaximumSubArray(input);
 
         expect(input.slice(result.left, result.right + 1)).toEqual(output);
         expect(result.sum).toEqual(sum);
     });
-
-    // Kadane Algorihm
-    afterEach(() => expect(KadaneAlgorithm(input)).toEqual(sum));
 });
