@@ -1,6 +1,6 @@
 /*
  * Given an integer array, find the contiguous subarray (containing at least one number)
- * which has the largest sum (product) and return its sum (product).
+ * which has the largest sum and return its sum.
  * https://medium.com/@rsinghal757/kadanes-algorithm-dynamic-programming-how-and-why-does-it-work-3fd8849ed73d
  */
 
@@ -16,7 +16,6 @@ export function kadaneAlgorithm(array: number[]): number {
     return array.reduce((maxSubarray, item) => {
         // If currentMax is negative, throw it away. Otherwise, keep adding to it.
         currentSubarray = Math.max(item, currentSubarray + item);
-        // If need to find max product, replace "+" with "*".
 
         return Math.max(maxSubarray, currentSubarray);
     }); // "maxSubarray" is already initialized with the first element.
