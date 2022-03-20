@@ -88,7 +88,7 @@ export class StringSearcher {
 
     /**
      * Boyer-Moore algorithm.
-     * Scans from right to left in the pattern, skip-ping to align
+     * Scans from right to left in the pattern, skipping to align
      * any character causing a mismatch with its rightmost
      * occurrence in the pattern.
      * Returns the indexes of the occurrence of the pattern in the string.

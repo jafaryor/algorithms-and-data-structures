@@ -13,6 +13,7 @@ import {DisjointSet} from '../disjoint-set';
 import {DisjointSetNode} from '../disjoint-set/node';
 import {MinPriorityQueue} from '../priority-queue';
 import {HeapNode} from '../heap/node';
+import {UnionFinder} from '../../problems/dynamic-connectivity';
 
 /**
  * The Graph.
@@ -319,6 +320,7 @@ export class Graph<T = string> {
      * Kahn's Algorithms for Topological Sort.
      * In each iteration, the algorithm removes a vertex,
      * with no incoming edges and insert it into the result.
+     * @note works for directed acyclic graphs (DAG) only.
      * @time O(V + E)
      */
     topologicalSort(): Array<Vertex<T>> {
@@ -663,6 +665,39 @@ export class Graph<T = string> {
             this.adjacencyMatrix.underlyingUndirectedMatrix();
 
         return new Graph({matrix: undirectedAdjacencyMatrix});
+    }
+
+    /**
+     * Checks if the graph is a valid tree.
+     * 1. Graph is connected.
+     * 2. Graph is acyclic.
+     */
+    isValidTree(): boolean {
+        let acyclic = true;
+        const unionFinder = new UnionFinder();
+
+        unionFinder.count = this.n;
+        unionFinder.parent = new Array(this.n);
+        unionFinder.size = new Array(this.n);
+
+        for (let i = 0; i < this.n; i++) {
+            unionFinder.parent[i] = i;
+            unionFinder.size[i] = 1;
+        }
+
+        for (const u of this.vertices) {
+            this.adjacencyList.list[u.value].forEach(
+                (v: SinglyLinkedListNode<AdjacencyListNode<T>>) => {
+                    if (unionFinder.connected(Number(u.data), Number(v.data))) {
+                        acyclic = false;
+
+                        return;
+                    } else unionFinder.union(Number(u.data), Number(v.data));
+                },
+            );
+        }
+
+        return acyclic && unionFinder.count === 1;
     }
 
     /********************************************************************************

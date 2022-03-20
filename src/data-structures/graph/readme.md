@@ -42,6 +42,17 @@ The __incidence matrix__ of a directed graph `G = (V, E)` with no self-loops is 
 * `1, if edge j enters vertex i`
 * `0, otherwise`
 
+## Tree
+A graph `G` is a __tree__ if the following two conditions are met:
+1. `G` is _fully connected_. In other words, for every pair of nodes in `G`, there is a path between them.
+2. `G` contains _no cycles_. In other words, there is exactly one path between each pair of nodes in G.
+
+`G` is __fully connected__ if, and only if, we started a depth-first search from a single source and discovered all nodes in G during it.
+
+`G` is __acyclic__ if, and only if, the depth-first search never goes back to an already discovered node.
+
+> A Tree with n `V` vertices have `V-1` edges. Any less, and it can't possibly be fully connected. Any more, and it has to contain cycles.
+
 ## Search
 Searching a graph means systematically following the edges of the graph so as to visit  the vertices  of the graph.
 

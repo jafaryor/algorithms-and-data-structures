@@ -14,16 +14,14 @@ describe('Dynamic Connectivity Problem', () => {
         [1, 0],
         [6, 7],
     ];
-    let unionFinder: UnionFinder;
+    const unionFinder = new UnionFinder();
 
     describe('Quick Find', () => {
-        beforeEach(() => {
-            unionFinder = new UnionFinder(10, pairs);
-        });
-
         it('should find connected components', () => {
             expect(
                 unionFinder.findConnectedComponents(
+                    10,
+                    pairs,
                     QuickFindImplementation.QUICK_FIND,
                 ),
             ).toEqual([1, 1, 1, 8, 8, 1, 1, 1, 8, 8]);
@@ -31,13 +29,11 @@ describe('Dynamic Connectivity Problem', () => {
     });
 
     describe('Quick Union', () => {
-        beforeEach(() => {
-            unionFinder = new UnionFinder(10, pairs);
-        });
-
         it('should find connected components', () => {
             expect(
                 unionFinder.findConnectedComponents(
+                    10,
+                    pairs,
                     QuickFindImplementation.QUICK_UNION,
                 ),
             ).toEqual([1, 1, 1, 8, 3, 0, 5, 1, 8, 8]);
@@ -45,12 +41,8 @@ describe('Dynamic Connectivity Problem', () => {
     });
 
     describe('Weighted Quick Union', () => {
-        beforeEach(() => {
-            unionFinder = new UnionFinder(10, pairs);
-        });
-
         it('should find connected components', () => {
-            expect(unionFinder.findConnectedComponents()).toEqual([
+            expect(unionFinder.findConnectedComponents(10, pairs)).toEqual([
                 6, 2, 6, 4, 4, 6, 6, 2, 4, 4,
             ]);
         });

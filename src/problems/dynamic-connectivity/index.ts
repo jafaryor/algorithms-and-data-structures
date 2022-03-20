@@ -3,42 +3,12 @@
  * Weighted Quick Union Implementation.
  */
 export class UnionFinder {
-    // The input pairs.
-    private readonly pairs: number[][];
-    // The id of components.
-    private readonly componentId: number[];
     // Number of components (connected).
-    private count: number;
+    count: number;
+    // The id of components.
+    parent: number[];
     // The sizes of the components.
-    private readonly componentSize: number[];
-
-    // TODO: Use Disjoint Set Data Structure from "data-structures/disjoint-set".
-    constructor(n: number, pairs: number[][]) {
-        this.count = n;
-        this.pairs = pairs;
-        this.componentId = new Array(n);
-        this.componentSize = new Array(n);
-
-        // Initially, we start with N components,
-        // each site in its own component, so we initialize
-        // componentId[i] to i for all i from 0  to N-1.
-        for (let i = 0; i < n; i++) {
-            this.componentId[i] = i;
-        }
-
-        // Initially, each component has size 1.
-        for (let i = 0; i < n; i++) {
-            this.componentSize[i] = 1;
-        }
-    }
-
-    /**
-     * Returns the number of connected components.
-     * @time O(1)
-     */
-    get size(): number {
-        return this.count;
-    }
+    size: number[];
 
     /**
      * Checks whether two sites p and q are in the same component.
@@ -54,8 +24,8 @@ export class UnionFinder {
      */
     find(p: number): number {
         // Follows the link to find a root of p.
-        while (p !== this.componentId[p]) {
-            p = this.componentId[p];
+        while (p !== this.parent[p]) {
+            p = this.parent[p];
         }
 
         return p;
@@ -74,14 +44,14 @@ export class UnionFinder {
         // Nothing to do if p and q are already in the same component.
         if (pRoot === qRoot) return;
 
-        if (this.componentSize[pRoot] < this.componentSize[qRoot]) {
-            // Make pRoot the root of qRoot.
-            this.componentId[pRoot] = qRoot;
-            this.componentSize[qRoot] += this.componentSize[pRoot];
-        } else {
+        if (this.size[pRoot] < this.size[qRoot]) {
             // Make qRoot the root of pRoot.
-            this.componentId[qRoot] = pRoot;
-            this.componentSize[pRoot] += this.componentSize[qRoot];
+            this.parent[pRoot] = qRoot;
+            this.size[qRoot] += this.size[pRoot];
+        } else {
+            // Make pRoot the root of qRoot.
+            this.parent[qRoot] = pRoot;
+            this.size[pRoot] += this.size[qRoot];
         }
 
         this.count--;
@@ -95,10 +65,10 @@ export class UnionFinder {
      * @time Of Weighted Quick Union: O(N * lgN)
      */
     findConnectedComponents(
+        n: number,
+        pairs: number[][],
         method: QuickFindImplementation = QuickFindImplementation.WEIGHTED_QUICK_UNION,
     ): number[] {
-        let p;
-        let q;
         let union: Function;
 
         switch (method) {
@@ -116,15 +86,25 @@ export class UnionFinder {
             }
         }
 
-        for (let i = 0; i < this.pairs.length; i += 1) {
-            p = this.pairs[i][0];
-            q = this.pairs[i][1];
+        this.count = n;
+        this.parent = new Array(n);
+        this.size = new Array(n);
 
-            if (this.connected(p, q)) continue;
-            else union(p, q);
+        // Initially, we start with N components,
+        // each site in its own component, so we initialize
+        // componentId[i] to i for all i from 0  to N-1.
+        for (let i = 0; i < n; i++) {
+            this.parent[i] = i;
+            // Initially, each component has size 1.
+            this.size[i] = 1;
         }
 
-        return this.componentId;
+        for (const pair of pairs) {
+            if (this.connected(pair[0], pair[1])) continue;
+            else union(pair[0], pair[1]);
+        }
+
+        return this.parent;
     }
 
     /**
@@ -133,7 +113,7 @@ export class UnionFinder {
 
     // @time O(1)
     quickFind(p: number): number {
-        return this.componentId[p];
+        return this.parent[p];
     }
 
     // @time O(N)
@@ -145,8 +125,8 @@ export class UnionFinder {
         if (pId === qId) return;
 
         // Rename all sites in component pId to component qId.
-        for (let i = 0; i < this.componentId.length; i++) {
-            if (this.componentId[i] === pId) this.componentId[i] = qId;
+        for (let i = 0; i < this.parent.length; i++) {
+            if (this.parent[i] === pId) this.parent[i] = qId;
         }
 
         this.count--;
@@ -158,8 +138,8 @@ export class UnionFinder {
 
     // @time O(N)
     quickUnionFind(p: number): number {
-        while (p !== this.componentId[p]) {
-            p = this.componentId[p];
+        while (p !== this.parent[p]) {
+            p = this.parent[p];
         }
 
         return p;
@@ -175,7 +155,7 @@ export class UnionFinder {
 
         // Add q as an immediate descendant of p.
         // Basically connects q's root to p's root.
-        this.componentId[pRoot] = qRoot;
+        this.parent[pRoot] = qRoot;
 
         this.count--;
     }

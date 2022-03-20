@@ -19,7 +19,7 @@ We shall consider three different implementations, all based on using the site-i
 
 
 ### Quick Find
-One  approach  is  to  maintain  the  invariant  that p  and q  are  connected if and only if `componentId[p]` is equal to `componentId[q]`.  In  other  words,  all  sites  in  a  component  must have  the  same  value  in `componentId[]`.  This  method  is  called quick-find  because `find(p)` just returns `componentId[p]`.
+One  approach  is  to  maintain  the  invariant  that `p`  and `q`  are  connected if and only if `componentId[p]` is equal to `componentId[q]`.  In  other  words,  all  sites  in  a  component  must have  the  same  value  in `componentId[]`.  This  method  is  called quick-find  because `find(p)` just returns `componentId[p]`.
 
 To maintain the invariant for the call `union(p, q)`, we first check whether they are already in the same component, in which case there is nothing to do. Otherwise, we are faced  with  the  situation  that  all  of  the `componentId[]` entries corresponding  to  sites  in  the  same  component  as `p` have  one  value  and  all  of  the `componentId[]` entries corresponding to sites in the same component  as `q` have another value. To combine the two components into one,  we  have  to  make  all  of  the `componentId[]` entries  corresponding  to  both  sets  of  sites  the  same  value,  as shown in the example below.
 

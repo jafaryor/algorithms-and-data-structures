@@ -57,8 +57,18 @@ export function longestCommonSubsequence(x: string, y: string): number[][] {
         }
     }
 
+    // lcs[m][n] is the length of the longest common subsequence.
     return lcs;
 }
+
+/**
+ * You might have noticed in the Approach 3 animation that we only ever looked at the
+ * current column and the previous column. After that, previously computed columns
+ * are no longer needed. We can save a lot of space by instead of keeping track of an
+ * entire 2D array, only keeping track of the last two columns.
+ * This reduces the space complexity to be proportional to the length of the word going down.
+ * We should make sure this is the shortest of the two words.
+ */
 
 /**
  * Prints longest common subsequence.
