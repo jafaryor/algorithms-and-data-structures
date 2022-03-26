@@ -126,6 +126,36 @@ export class SinglyLinkedList<T> {
     }
 
     /**
+     * Floyd's Tortoise and Hare Algorithm.
+     * If the list is cyclic, returns the entrance of the cycle.
+     * Otherwise return "null".
+     * @time O(n)
+     */
+    isCyclic(): SinglyLinkedListNode<T> | null {
+        let tortoise = this.head;
+        let hare = this.head;
+
+        while (hare && hare.next) {
+            tortoise = tortoise!.next;
+            hare = hare.next.next;
+
+            if (tortoise === hare) {
+                // Cycle is found.
+                tortoise = this.head;
+
+                while (tortoise !== hare) {
+                    tortoise = tortoise!.next;
+                    hare = hare!.next;
+                }
+
+                return tortoise;
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * removes the head node
      */
     removeHead() {
