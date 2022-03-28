@@ -19,7 +19,7 @@ Floyd's algorithm is separated into two distinct phases:
 
     After `F` iterations, tortoise points to the orange node and hare points to some node `X`. where `F ≡ X (mod C)`. This is because hare traverses `2F` nodes over the course of `F` iterations, exactly `F` of which are in the cycle.
 
-    After `C - X` more iterations, tortoise obviously points to node `C - X`, but (less obviously) hare also points to the same node. To see why, remember that hare traverses `2(C - h)` from its starting position of `X`:
+    After `C - X` more iterations, tortoise obviously points to node `C - X`, but (less obviously) hare also points to the same node. To see why, remember that hare traverses `2(C - X)` from its starting position of `X`:
 
     `X + 2(C - X) = 2C - X ≡ C - X (mod C)`
 
