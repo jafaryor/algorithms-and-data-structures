@@ -141,36 +141,6 @@ export class AdjacencyMatrix<T = string> {
     }
 
     /**
-     * Returns the number of In-Degree Vertices.
-     * @time O(V)
-     */
-    inDegree(vertex: Vertex<T>): number {
-        let k = 0;
-        const j = this.findIndex(vertex)!;
-
-        for (let i = 0; i < this.n; i++) {
-            if (this.matrix[i][j]) k++;
-        }
-
-        return k;
-    }
-
-    /**
-     * Returns the number of Out-Degree Vertices.
-     * @time O(V)
-     */
-    outDegree(vertex: Vertex<T>): number {
-        let k = 0;
-        const i = this.findIndex(vertex)!;
-
-        for (let j = 0; j < this.n; j++) {
-            if (this.matrix[i][j]) k++;
-        }
-
-        return k;
-    }
-
-    /**
      * Sets a weight to (u, v).
      * @time O(V)
      */

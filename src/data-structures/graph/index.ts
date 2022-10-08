@@ -1179,134 +1179,114 @@ export class Graph<T = string> {
     }
 
     /********************************************************************************
-     * EULERIAN PATH
+     * EULERIAN PATH && CYCLE for DIRECTED GRAPHS
      ********************************************************************************/
 
     /**
-     * Checks if graph has an Euler Circuit (Eulerian).
-     * @note Graph should be undirected.
+     * Outputs the Eulerian Path.
      * @time O(V + E)
      */
-    isEulerian(): boolean {
-        const connectedComponents = this.connectedComponents();
-        const zeroDegreeVertices = this.zeroDegreeVertices();
-        // Note that odd count can never be 1 for undirected graph.
-        const oddDegreeVertices = this.oddDegreeVertices();
-        // Don't count zero degree vertices.
-        const isConnected = connectedComponents - zeroDegreeVertices === 1;
+    findEulerianPath(): string[] {
+        const path: string[] = [];
+        let startVertex: Vertex<T> = this.vertices[0];
 
-        if (!isConnected) return false;
-        else if (oddDegreeVertices === 0) return true;
+        if (!this.hasEulerianPath()) return [];
 
-        return false;
+        // Find starting node.
+        for (const vertex of this.vertices) {
+            // Find that unique starting node.
+            if (vertex.degree.out - vertex.degree.in === 1) {
+                startVertex = vertex;
+            }
+            // Start at any vertex with outgoing edge.
+            if (vertex.degree.out > 0) startVertex = vertex;
+        }
+
+        // DFS.
+        const dfs = (u: Vertex<T>) => {
+            this.adjacencyList.list[u.value].forEach(
+                (v: SinglyLinkedListNode<AdjacencyListNode<T>>) => {
+                    // Skip the visited edges.
+                    if (v.data.vertex.isBlack) return;
+
+                    v.data.vertex.markAsVisited();
+                    dfs(v.data.vertex);
+                },
+            );
+
+            // Build the path back to front.
+            path.unshift(u.value);
+        };
+
+        // Start DFS from that starting vertex.
+        dfs(startVertex);
+
+        // Why "+1", because each edge is represented by two connected vertices.
+        return path.length === this.edges.length + 1 ? path : [];
     }
 
     /**
      * Checks if graph has an Euler path (Semi-Eulerian).
      * @note Graph should be undirected.
-     * @time O(V + E)
+     * @time O(3V + 2E)
      */
-    isSemiEulerian(): boolean {
-        const connectedComponents = this.connectedComponents();
-        const zeroDegreeVertices = this.zeroDegreeVertices();
-        // Note that odd count can never be 1 for undirected graph.
-        const oddDegreeVertices = this.oddDegreeVertices();
-        // Don't count zero degree vertices.
-        const isConnected = connectedComponents - zeroDegreeVertices === 1;
+    hasEulerianPath(): boolean {
+        let startVertrices = 0;
+        let endVertices = 0;
 
-        if (!isConnected) return false;
-        else if (oddDegreeVertices === 2) return true;
+        if (!this.isConnected()) return false;
 
-        return false;
+        this.countDegrees();
+
+        for (const vertex of this.vertices) {
+            if (Math.abs(vertex.degree.in - vertex.degree.out) > 1) {
+                return false;
+            } else if (vertex.degree.out - vertex.degree.in === 1) {
+                startVertrices++;
+            } else if (vertex.degree.in - vertex.degree.out === 1) {
+                endVertices++;
+            }
+        }
+
+        return (
+            (endVertices === 0 && startVertrices === 0) ||
+            (endVertices === 1 && startVertrices === 1)
+        );
     }
 
     /**
-     * Checks if graph has an Euler Circuit (Eulerian).
+     * Checks if graph has an Euler Cycle (Eulerian).
      * @note Graph should be directed.
-     * @time O(V + E + V*V)
+     * @time O(3V + 2E)
      */
-    isEuleranCyce(): boolean {
-        const scc = this.kosarajuSCC().length;
-        const zeroDegreeVertices = this.zeroDegreeVertices();
-        const isStronglyConnected = scc - zeroDegreeVertices === 1;
+    hasEulerianCycle(): boolean {
+        if (!this.isConnected()) return false;
 
-        // Check if all non-zero degree vertices are strongly connected.
-        if (!isStronglyConnected) return false;
+        this.countDegrees();
 
-        // Check if in degree and out degree of every vertex is same.
-        // TODO: Store "inDegree" and "outDegree" within a vertex to decrease complexity.
         for (const vertex of this.vertices) {
-            if (this.inDegree(vertex) !== this.outDegree(vertex)) return false;
+            if (vertex.degree.in !== vertex.degree.out) return false;
         }
 
         return true;
     }
 
     /**
-     * Returns the number of zero degree vertices.
-     * @time O(V)
+     * Count in-degree and out-degree of each vertices.
+     * @note works for directed graphs
+     * @time: O(V + E)
      */
-    zeroDegreeVertices(): number {
-        let k = 0;
+    countDegrees(): void {
+        this.resetVertices();
 
         for (const u of this.vertices) {
-            // Skips the full lists.
-            if (!this.adjacencyList.list[u.value].isEmpty()) continue;
-
-            k++;
+            this.adjacencyList.list[u.value].forEach(
+                (v: SinglyLinkedListNode<AdjacencyListNode<T>>) => {
+                    u.degree.out++;
+                    v.data.vertex.degree.in++;
+                },
+            );
         }
-
-        return k;
-    }
-
-    /**
-     * Returns the number of odd degree vertices.
-     * @time O(V)
-     */
-    oddDegreeVertices(): number {
-        let k = 0;
-
-        for (const u of this.vertices) {
-            // Skips the even degree vertices.
-            if (this.adjacencyList.list[u.value].length % 2 === 0) continue;
-
-            k++;
-        }
-
-        return k;
-    }
-
-    /**
-     * Returns the number of even degree vertices.
-     * @time O(V)
-     */
-    evenDegreeVertices(): number {
-        let k = 0;
-
-        for (const u of this.vertices) {
-            // Skips the odd degree vertices.
-            if (this.adjacencyList.list[u.value].length % 2 !== 0) continue;
-
-            k++;
-        }
-
-        return k;
-    }
-
-    /**
-     * Returns the number of In-Degree Vertices.
-     * @time O(V)
-     */
-    inDegree(vertex: Vertex<T>): number {
-        return this.adjacencyMatrix.inDegree(vertex);
-    }
-
-    /**
-     * Returns the number of Out-Degree Vertices.
-     * @time O(V)
-     */
-    outDegree(vertex: Vertex<T>): number {
-        return this.adjacencyMatrix.outDegree(vertex);
     }
 
     /********************************************************************************

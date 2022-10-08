@@ -241,31 +241,54 @@ The problem is not known to be solvable in polynomial time nor to be NP-complete
 
 
 ## Eulerian Path
-__Eulerian Path__ is a path in graph that visits every edge exactly once. __Eulerian Circuit__ is an Eulerian Path which starts and ends on the same vertex.
+__Eulerian Path__ is a trail in a finite graph that visits every edge exactly once (allowing for revisiting vertices).
+
+__Eulerian Circuit__ is an Eulerian Path which starts and ends on the same vertex.
 
 The problem is same as following question: “_Is it possible to draw a given graph without lifting pencil from the paper and without tracing any of the edges more than once?_”.
 
 A graph is called __Eulerian__ if it has an __Eulerian Cycle__ and called __Semi-Eulerian__ if it has an Eulerian Path.
 
-### Undirected Graph
-_An undirected graph has Eulerian Cycle_ if following two conditions are true:
-* All vertices with non-zero degree are connected. We don’t care about vertices with zero degree because they don’t belong to Eulerian Cycle or Path (we only consider all edges).
-* All vertices have even (четный) degree.
-
+### Eulerian Checks
 _An undirected graph has Eulerian Path_ if following two conditions are true:
-* All vertices with non-zero degree are connected. We don’t care about vertices with zero degree because they don’t belong to Eulerian Cycle or Path (we only consider all edges).
-* If zero or two vertices have odd (нечетный) degree and all other vertices have even degree. Note that only one vertex with odd degree is not possible in an undirected graph (sum of all degrees is always even in an undirected graph)
+* Every vertex should have an even degree or only two vertices should have odd degrees.
+
+_A directed graph has Eulerian Path_ if following two conditions are true:
+* Each vertex should have the same in-degree and out-degree except for two of them.
+* One of these vertex will be the _start vertex_ which has one more out-going edge than in-going edges. The other one will be the _end vertex_ which has one more in-going edge than out-going edges.
+
+> Note that only one vertex with odd degree is not possible in an undirected graph (sum of all degrees is always even in an undirected graph)
 
 > Note that a graph with no edges is considered Eulerian because there are no edges to traverse.
+
+_An undirected graph has Eulerian Cycle_ if following two conditions are true:
+* It has Eulerian Path
+* Each vertex should have an even degree.
+
+_A directed graph has Eulerian Cycle_ if following two conditions are true:
+* It has Eulerian Path
+* Every vertex should have equal in-degree and out-degree edges.
 
 ![euler-01](./images/euler-01.png)
 ![euler-02](./images/euler-02.png)
 ![euler-03](./images/euler-03.png)
 
-### Directed Graph
-A directed graph has an Eulerian cycle if following conditions are true:
-* All vertices with nonzero degree belong to a single strongly connected component. 
-* In degree is equal to the out degree for every vertex.
+### Hierholzer's Algorithm
+Hierholzer proposed an efficient algorithm to find the Eulerian cycle in linear time `O(|E|)`. The algorithm can be applied to both undirected and directed graphs.
+
+The basic idea of Hierholzer's algorithm is the stepwise construction of the Eulerian cycle by connecting disjunctive circles.
+
+To be more specific, the algorithm consists of two steps:
+1. It starts with a random node and then follows an arbitrary unvisited edge to a neighbor. This step is repeated until one returns to the starting node. This yields a first circle in the graph.
+2. If this circle covers all nodes it is an Eulerian cycle and the algorithm is finished. Otherwise, one chooses another node among the cycles' nodes with unvisited edges and constructs another circle, called subtour.
+
+To find the _Eulerian path_, inspired from the original Hierzolher's algorithm, we simply change one condition of loop, rather than stopping at the starting point, we stop at the vertex where we do not have any unvisited edges.
+
+To summarize, the main idea to find the Eulerian path consists of two steps:
+1. Starting from any vertex, we keep following the unused edges until we get stuck at certain vertex where we have no more unvisited outgoing edges.
+2. We then backtrack to the nearest neighbor vertex in the current path that has unused edges and we repeat the process until all the edges have been used.
+
+The first vertex that we got stuck at would be the end point of our Eulerian path. So if we follow all the stuck points backwards, we could reconstruct the Eulerian path at the end.
 
 ### Fleury’s Algorithm
 An edge in an undirected connected graph is a __bridge__ if removing it disconnects the graph. For a disconnected undirected graph, definition is similar, a bridge is an edge removing which increases number of disconnected components.
@@ -284,6 +307,7 @@ Fleury’s Algorithm for printing Eulerian trail or cycle in an _undirected grap
 1. Make sure the graph has either `0` or `2` odd vertices.
 2. If there are `0` odd vertices, start anywhere. If there are `2` odd vertices, start at one of them.
 3. Follow edges one at a time. If you have a choice between a bridge and a non-bridge, always choose the non-bridge.
+
 
 ## Hamiltonian Path
 Hamiltonian Path in an undirected graph is a path that visits each vertex exactly once. A Hamiltonian cycle (or Hamiltonian circuit) is a Hamiltonian Path such that there is an edge (in the graph) from the last vertex to the first vertex of the Hamiltonian Path.
