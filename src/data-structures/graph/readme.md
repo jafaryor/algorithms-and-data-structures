@@ -340,16 +340,18 @@ A minimum spanning tree has `V – 1` edges where `V` is the number of vertices 
 Let `G = (V, E)` be a connected, undirected graph with a real-valued weight function `w` defined on `E`. Let `A` be a subset of `E` that is included in some minimum spanning tree for `G`, let `(S, V-S)` be any cut of `G` that respects `A`, and let `(u, v)` be a light edge crossing `(S, V-S)`. Then, edge `(u, v)` is safe for `A`.
 
 ### Kruskal’s Algorithm
-The set `A` is a forest whose vertices are all those of the given graph.
+Kruskal's algorithm is a greedy algorithm for building a minimum spanning tree in a weighted and undirected graph.
 
-The safe edge added to `A` is always a least-weight edge in the graph that connects two distinct components.
+The algorithm operates by identifying the lowest-weighted edge that is not part of the MST. Then, if the nodes that belong to the edge are not connected, the edge is added to the MST. This process is repeated until all nodes are connected. Since we do not add an edge when its nodes are already connected, no cycles are formed. 
 
-Kruskal’s algorithm finds a safe edge to add to the growing forest by finding, of all the edges that connect any two trees in the forest, an edge `(u, v)` of least weight. So, it is a greedy algorithm.
+But how can we determine if including an edge will form a cycle or not? For this purpose, we can use a disjoint set data structure also called a union-find data structure.
 
 Below are the steps for finding MST using Kruskal’s algorithm
 1. Sort all the edges in non-decreasing order of their weight. 
 2. Pick the smallest edge. Check if it forms a cycle with the spanning tree formed so far. If cycle is not formed, include this edge. Else, discard it. 
 3. Repeat step #2 until there are `V-1` edges in the spanning tree.
+
+![kruskal](./images/kruskal.gif)
 
 #### Complexity Analysis
 The time to sort the edges is `O(E lgE)`.
@@ -369,15 +371,17 @@ Note: `disjointSet.findByValue()` is considered to have complexity of `O(1)`.
 ### Prim's Algorithm
 Prim’s algorithm operates much like Dijkstra’s algorithm for finding shortest paths in a graph
 
-Prim’s algorithm has the property that the edges in the set `A` always form  a single  tree.
+Prim's algorithm is also a greedy algorithm for building a minimum spanning tree in a weighted and undirected graph.
 
-Like Kruskal’s algorithm, Prim’s algorithm is also a Greedy algorithm. It starts with an empty spanning tree. The idea is to maintain two sets of vertices. The first set contains the vertices already included in the MST, the other set contains the vertices not yet included. At every step, it considers all the edges that connect the two sets, and picks the minimum weight edge from these edges. After picking the edge, it moves the other endpoint of the edge to the set containing MST.
+In this algorithm, we include an arbitrary node in the MST and keep on adding the lowest-weighted edges of the nodes present in the MST until all nodes are included in the MST and no cycles are formed.
 
-So, at every step of Prim’s algorithm, we find a cut, pick the minimum weight edge from the cut and include this vertex to MST Set.
+The idea is to maintain two sets of vertices. The first set contains the vertices already included in the MST, the other set contains the vertices not yet included. At every step, it considers all the edges that connect the two sets, and picks the minimum weight edge from these edges. After picking the edge, it moves the other endpoint of the edge to the set containing MST.
+
+So, at every step of Prim’s algorithm, we find a cut, pick the minimum weight edge from the cut and include this vertex to MST Set. We use Minimum Priority Queue to pick the min-weighted edge from the cut.
 
 ![prim-algorithm-example](./images/prim-algorithm-example.png)
 
-Watch this [video](https://www.youtube.com/watch?v=eB61LXLZVqs&t=202s) to find out how the algorithm works.
+![prims](./images/prims.gif)
 
 #### Complexity Analysis
 We can use the `buildMinHeap()` procedure to perform lines `O(V)` time. The body of the `while` loop executes `|V|` times, and since each `extractMin()` operation takes `O(lgV)` time, the total time for all calls to `extractMin()` is `O(V * lgV)`.
