@@ -451,13 +451,15 @@ The process of relaxing an edge `(u, v)` consists of testing whether we can impr
 ![shortest-path-properties](./images/shortest-path-properties.png)
 
 ### The Bellman-Ford Algorithm
+Like Dijkstra's algorithm, Bellman-Ford proceeds by relaxation, in which approximations to the correct distance are replaced by better ones until they eventually reach the solution. The Bellman-Ford algorithm simply relaxes all the edges and does this `∣V∣ − 1` times, where `|V|` is the number of vertices in the graph. In each of these repetitions, the number of vertices with correctly calculated distances grows, from which it follows that eventually, all vertices will have their correct distances. This method allows the Bellman-Ford algorithm to be applied to a wider class of inputs than Dijkstra.
+
+An important part to understanding the Bellman Ford's working is that at each step, the relaxations lead to the discovery of new shortest paths to nodes. After the first iteration over all the vertices, the algorithm finds out all the shortest paths from the source to nodes which can be reached with one hop (one edge). That makes sense because the only edges we'll be able to relax are the ones that are directly connected to the source as all the other nodes have shortest distances set to `Infinite` initially. Similarly, after the `K + 1`th step, Bellman-Ford will find the shortest distances for all the nodes that can be reached from the source using a maximum of `K` stops.
+
 The Bellman-Ford algorithm solves the single-source  shortest-paths  problem in the general case in which edge weights may be negative.  Given a weighted,  directed graph `G = (V, E)` with sources and weight function `w: E -> ℝ`, the Bellman-Ford algorithm returns a boolean value indicating whether or not there is a negative-weight  cycle that is reachable  from the source.  If there is such a cycle, the algorithm indicates that no solution exists.  If there is no such cycle, the algorithm produces the shortest paths and their weights.
 
 Example:
 
 ![bellman-ford-example](./images/bellman-ford-example.png)
-
-
 
 #### Lemma
 Let `G = (V, E)` be a weighted, directed graph with source `s` and weight  function `w: E -> ℝ`, and assume that `G` contains no negative-weight cycles that are reachable from `s`. Then, after the `|V| - 1` iterations of the for loop of `bellmanFordShortestPath()`, we have `v.d = ẟ(s, v)` for all vertices `v` that are reachable from `s`.
@@ -476,7 +478,9 @@ An interesting application of this algorithm arises in determining critical path
 * Negating the edge weights and running `dagShortestPath()`, or
 * Running  `dagShortestPath()`, with the modification that we replace `∞` by `-∞` before the `for` loop starts and  `>` by `<` in the `relax()` procedure.
 
-### Dijkstra’s algorithm
+### Dijkstra’s Algorithm
+Like Prim’s MST, generate a SPT (shortest path tree) with a given source as a root. Maintain two sets, one set contains vertices included in the shortest-path tree, other set includes vertices not yet included in the shortest-path tree. At every step of the algorithm, find a vertex that is in the other set (set not yet included) and has a minimum distance from the source.
+
 Dijkstra’s  algorithm  maintains  a  set `S` of  vertices  whose  final  shortest-path weights from the source `s` have already been determined.  The algorithm repeatedly selects the vertex `u ∈ V - S` with the minimum shortest-path estimate, adds `u` to `S`, and relaxes all edges leaving `u`.
 
 ![dijkstra-example](./images/dijkstra-example.png)
@@ -484,7 +488,7 @@ Dijkstra’s  algorithm  maintains  a  set `S` of  vertices  whose  final  short
 Because Dijkstra’s algorithm always chooses the “lightest” or “closest” vertex in `V - S` to add to set `S`, we say that it uses a greedy strategy.
 
 #### Complexity Analysis
-Each `extractMin()` operation then takes time `O(lgV)`.  As before, there are `|V|` such operations. The time to build the binary min-heap is `O(V)`. Each `increasePriority()` operation takes time `O(lgV)`, and there are still at most `|E|` such operations. The total running time is therefore `O((V + E) * lgV)`, which is `O(E * lgV)` if all vertices are reachable from the source.
+Each `extractMin()` operation takes `O(lgV)` time. As before, there are `|V|` such operations. The time to build the binary min-heap is `O(V)`. Each `increasePriority()` operation takes time `O(lgV)`, and there are still at most `|E|` such operations. The total running time is therefore `O((V + E) * lgV)`, which is `O(E * lgV)` if all vertices are reachable from the source.
 
 `O(V) + O(E) + O(V*lgV) + O(E*lgV) = `
     `= O((1 + V) * lgV) + O((1 + E) * lgV) = `
@@ -513,7 +517,7 @@ Where:
 
 
 ## All-Pair Shortest Paths
-we consider the problem of finding shortest paths between all pairs of vertices in a graph. This problem might arise in making a table of distances between all pairs of cities for a road atlas. We are given a weighted, directed graph `G = (V, E)` with a weight function `w: E -> ℝ` that maps edges to real-valued  weights. We wish to find, for every pair of vertices `u, v ∈ V`, a shortest (least-weight) path from `u` to `v`, where the weight of a path is the sum of the weights of its constituent edges.
+We consider the problem of finding shortest paths between all pairs of vertices in a graph. This problem might arise in making a table of distances between all pairs of cities for a road atlas. We are given a weighted, directed graph `G = (V, E)` with a weight function `w: E -> ℝ` that maps edges to real-valued  weights. We wish to find, for every pair of vertices `u, v ∈ V`, a shortest (least-weight) path from `u` to `v`, where the weight of a path is the sum of the weights of its constituent edges.
 
 We  can  solve  an  all-pairs  shortest-paths  problem  by  running  a  single-source shortest-paths  algorithm `|V|` times,  once  for  each  vertex  as  the  source.
 

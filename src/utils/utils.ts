@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import {Extremes} from './types';
+import { Extremes } from './types';
 
 /**
  * swaps two item in place
@@ -27,9 +27,10 @@ export function swap(
  * @param max - max range value
  */
 export const randomFromRange = (min: number, max: number) =>
-    Math.floor(Math.random() * (max - min + 1) + min);
+    Math.trunc(Math.random() * (max - min + 1) + min);
 
 /**
+ * Fisher-Yates shuffle algorithm.
  * Randomizes the array in place.
  * This function computes a uniform random permutation of the array elements.
  * @time O(n)
@@ -56,7 +57,7 @@ export function findExtremes(array: number[]): Extremes {
             min: Math.min(extreme.min, item),
             max: Math.max(extreme.max, item),
         }),
-        {min: Infinity, max: -Infinity},
+        { min: Infinity, max: -Infinity },
     );
 }
 
@@ -86,7 +87,7 @@ export function findMinAndMax(array: number[]): Extremes {
         }
     }
 
-    return {min, max};
+    return { min, max };
 }
 
 /**

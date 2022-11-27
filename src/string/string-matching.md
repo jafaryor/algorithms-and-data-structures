@@ -80,15 +80,15 @@ Example of `π`:
 * For `"AAABAAA"`, `π = [0, 1, 2, 0, 1, 2, 3]]`.
 
 #### Complexity Analysis
-We start by making some  observations  about `k`. 
+The worst case for matching the pattern is the one in which you've to visit each index of the LPS array, when mismatch occurs. For example, pattern "aaaa" which creates LPS arrays as `[0,1,2,3]`  makes it possible.
 
-1. `computePrefixFunction()` starts `k` at `0`,  and  the only  way that `k` increases is by the increment operation (`k++`), which executes at most once per iteration of the `for` loop. Thus, the total increase in `k` is at most `m - 1`. 
-2. Since `k < q` upon entering the `for` loop and each iteration of the loop increments `q`, we always have `k < q`.  Therefore, the assignments of `π[q]` ensure that `π[q] < q` for all `q = 1, 2, ..., m`, which means that each iteration of the `while` loop decreases `k`.
-3. `k` never becomes negative.
+Now, for the worst case matching in the text, we want to maximize the such mismatches that forces us to visit all the indices of the LPS array. That would be a text with repeated pattern, but with the last character as a mismatch. For example, `"aaabaaacaaabaaacaaabaaac"`.
 
-Putting these facts together, we see that the total decrease in `k` from the `while` loop is bounded from above by the total increase in `k` over all iterations of the `for` loop, which is `m - 1`. Thus, the `while` loop iterates at most `m - 1` times in all. So, the total time is `O(m + m - 1) = O(m)`.
+Let the length of the text be n and that of pattern be m. Number of the occurences of such pattern in the text is `n/m`. And for each of these occurences, we are performing `m` comparisions. Not to forget that we are also traversing `n` characters of the text.
 
-These two procedures (`knuthMorrisPrattMatcher()` and `computePrefixFunction()`) have much in common, because both match a string against the pattern `P`: `knuthMorrisPrattMatcher()` matches the text `T` against `P`, and `computePrefixFunction()` matches `P` against itself. That is why the complexity analysis of these two functions are similar.
+Therefore, the worst case time for KMP matching would be `O(n + (n/m)*m)`, which is basically `O(n)`.
+
+Total worst case time complexity, including LPS creation, would be `O(n+m)`.
 
 #### [The Knuth-Morris-Pratt Algorithm for Pattern Searching](https://www.educative.io/edpresso/what-is-the-knuth-morris-pratt-algorithm)
 

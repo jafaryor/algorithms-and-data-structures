@@ -457,7 +457,9 @@ Informally, the running time of a dynamic-programming algorithm depends on the  
 
 Usually, the subproblem graph gives an alternative way to perform the  same analysis. Each vertex corresponds to a subproblem, and the choices for a  subproblem are the edges incident to that subproblem.
 
-> Whenever you see a question that asks for the maximum or minimum of something, consider Dynamic Programming as a possibility.
+There are two ways to solve the DP problems:
+1. _Top-Down DP_, also known as __Memoization DP__, uses recursive function and memoization.
+2. _Bottom-Up DP_, also known as __Tabulation DP__, uses iteration and DP array.
 
 ## Greedy Algorithms
 Algorithms  for optimization  problems typically  go through  a sequence  of  steps, with a set of choices at each step. For many optimization problems, using dynamic programming to determine the best choices is overkill; simpler, more efficient algorithms will do. A __greedy algorithm__ always makes the choice that looks best at the moment. That is, it makes a locally optimal choice in the hope that this choice will lead to a globally optimal solution.
