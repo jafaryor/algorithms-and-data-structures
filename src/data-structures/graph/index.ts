@@ -3,17 +3,17 @@ import {
     createArrayAndFillWith,
     createArrayWithIncrementingValues,
 } from '../../utils';
-import { AdjacencyList, AdjacencyListNode } from './list';
-import { AdjacencyMatrix } from './matrix';
-import { Edge, Vertex } from './vertex';
-import { Queue } from '../queue';
-import { Stack } from '../stack';
-import { SinglyLinkedListNode } from '../singly-linked-list/node';
-import { DisjointSet } from '../disjoint-set';
-import { DisjointSetNode } from '../disjoint-set/node';
-import { MinPriorityQueue } from '../priority-queue';
-import { HeapNode } from '../heap/node';
-import { UnionFinder } from '../../problems/dynamic-connectivity';
+import {AdjacencyList, AdjacencyListNode} from './list';
+import {AdjacencyMatrix} from './matrix';
+import {Edge, Vertex} from './vertex';
+import {Queue} from '../queue';
+import {Stack} from '../stack';
+import {SinglyLinkedListNode} from '../singly-linked-list/node';
+import {DisjointSet} from '../disjoint-set';
+import {DisjointSetNode} from '../disjoint-set/node';
+import {MinPriorityQueue} from '../priority-queue';
+import {HeapNode} from '../heap/node';
+import {UnionFinder} from '../../problems/dynamic-connectivity';
 
 /**
  * The Graph.
@@ -52,7 +52,7 @@ export class Graph<T = string> {
         // The value of each vertex.
         vertexValues?: string[];
         // Required if initialize by Adjacency List.
-        list?: { [vertex: string]: Array<AdjacencyListNode<T>> };
+        list?: {[vertex: string]: Array<AdjacencyListNode<T>>};
         // The list of vertex objects which were used in list above.
         vertices?: Array<Vertex<T>>;
     }) {
@@ -103,7 +103,7 @@ export class Graph<T = string> {
      * Initializes the graph by adjacency list.
      */
     protected initByList(
-        list: { [vertex: string]: Array<AdjacencyListNode<T>> },
+        list: {[vertex: string]: Array<AdjacencyListNode<T>>},
         vertices: Array<Vertex<T>>,
     ): void {
         this.vertices = vertices;
@@ -507,7 +507,7 @@ export class Graph<T = string> {
     transpose(): Graph<T> {
         const list = this.adjacencyList.transpose();
 
-        return new Graph({ list, vertices: [...this.vertices] });
+        return new Graph({list, vertices: [...this.vertices]});
     }
 
     /********************************************************************************
@@ -664,7 +664,7 @@ export class Graph<T = string> {
         const undirectedAdjacencyMatrix =
             this.adjacencyMatrix.underlyingUndirectedMatrix();
 
-        return new Graph({ matrix: undirectedAdjacencyMatrix });
+        return new Graph({matrix: undirectedAdjacencyMatrix});
     }
 
     /**
@@ -1095,7 +1095,7 @@ export class Graph<T = string> {
         // The vertex which points all other vertices.
         const s = reweightedGraph.vertices[this.n];
         // h function for each vertex.
-        const h = {} as { [key: string]: number };
+        const h = {} as {[key: string]: number};
         // Shortest path weights matrix.
         const d = [] as number[][];
 
@@ -1175,7 +1175,7 @@ export class Graph<T = string> {
         // Adds a new vertex s and adds 0 weight edges from s to all vertices.
         matrix.push(createArrayAndFillWith(n, 0));
 
-        return new Graph({ matrix, vertexValues });
+        return new Graph({matrix, vertexValues});
     }
 
     /********************************************************************************

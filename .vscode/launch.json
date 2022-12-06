@@ -18,10 +18,9 @@
             "name": "Jest",
             "type": "node",
             "request": "launch",
-            "program": "${workspaceRoot}/node_modules/.bin/jest",
-            "args": ["ts-node/register", "${relativeFile}"],
-            "cwd": "${workspaceRoot}",
-            "protocol": "inspector",
+            "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
+            "args": ["--verbose", "-i", "--no-cache", "--testPathPattern", "${fileBasename}"],
+            "console": "integratedTerminal",
             "internalConsoleOptions": "openOnSessionStart"
         }
     ]

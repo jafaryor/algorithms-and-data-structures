@@ -1,5 +1,5 @@
 import * as _ from 'lodash';
-import { Extremes } from './types';
+import {Extremes} from './types';
 
 /**
  * swaps two item in place
@@ -57,7 +57,7 @@ export function findExtremes(array: number[]): Extremes {
             min: Math.min(extreme.min, item),
             max: Math.max(extreme.max, item),
         }),
-        { min: Infinity, max: -Infinity },
+        {min: Infinity, max: -Infinity},
     );
 }
 
@@ -87,7 +87,7 @@ export function findMinAndMax(array: number[]): Extremes {
         }
     }
 
-    return { min, max };
+    return {min, max};
 }
 
 /**
