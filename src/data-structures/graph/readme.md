@@ -418,7 +418,7 @@ Edge  weights  can  represent  metrics  other  than  distances,  such  as  time,
 given a graph `G = (V, E)`, we want to find a shortest path from a given source vertex `s ∈ V` to each vertex `v ∈ V`.  The algorithm  for the single-source  problem can solve many other problems, including the following variants:
 * __Single-destination shortest-paths problem__: Find a shortest path to a given _destination_ vertex `t` from each vertex `v`. By reversing the direction of each edge in the graph, we can reduce this problem to a single-source problem.
 * __Single-pair shortest-path problem__: Find a shortest  path from `u` to `v` for  given vertices `u` and `v`. If we solve the single-source problem with source vertex `u`, we solve this problem also.  Moreover, all known algorithms for this problem have  the  same  worst-case  asymptotic  running  time  as  the  best  single-source algorithms.
-* All-pairs shortest-paths problem: Find a shortest path from `u` to `v` for every pair of vertices `u` and `v`.  Although we can solve this problem by running a single-source algorithm once from each vertex, we usually can solve it faster.
+* __All-pairs shortest-paths problem__: Find a shortest path from `u` to `v` for every pair of vertices `u` and `v`.  Although we can solve this problem by running a single-source algorithm once from each vertex, we usually can solve it faster.
 
 #### Optimal substructure of a shortest path
 Shortest-paths  algorithms  typically  rely  on  the  property  that  a  shortest  path  between  two vertices  contains  other  shortest  paths  within it.

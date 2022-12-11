@@ -59,7 +59,6 @@ Alternatively, we can generate a de Bruijn sequence of order 4 for an alphabet o
 
 The very fact that every code overlaps the previous one means that this sequence of key presses is guaranteed to be significantly shorter than just working our way from the start.
 
-
 ### Generating de Bruijn Sequences
 We start by generating a set of nodes. If we’re working with a de Bruijn sequence of order `k` then each node contains a unique string of length `k-1` from our alphabet. For example, given our alphabet of binary digits and a de Bruijn sequence of _order 3_, we would generate every unique string of length 2: `00`, `01`, `10`, `11`.
 
