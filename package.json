@@ -29,7 +29,7 @@
         "typescript": "^4.5.4"
     },
     "dependencies": {
-        "class-validator": "^0.13.2",
+        "class-validator": "^0.14.0",
         "lodash": "^4.17.20"
     },
     "husky": {
