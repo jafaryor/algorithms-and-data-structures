@@ -227,3 +227,20 @@ export function randomFromArray<T>(array: T[]): T {
 
     return array[randomIndex];
 }
+
+/**
+ * Returns a deep copy of an object.
+ */
+export function deepClone(value: any) : any{
+    if (typeof value !== 'object' || value === null) {
+        return value;
+    }
+  
+    if (Array.isArray(value)) {
+        return value.map((item) => deepClone(item));
+    }
+  
+    return Object.fromEntries(
+        Object.entries(value).map(([key, value]) => [key, deepClone(value)]),
+    );
+}
